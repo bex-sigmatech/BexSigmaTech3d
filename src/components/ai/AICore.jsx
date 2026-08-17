@@ -461,25 +461,38 @@ export default function AICore() {
     e.preventDefault()
     const callsign = inputName.trim() || 'COMMANDER'
 
-    // Fetch AI response from server
+    // Immediate transition trigger
+    voiceEmitter.emit('NAME_SUBMITTED', { userName: callsign })
+    submitIdentity(callsign)
+
+    // Non-blocking background fetch for AI audio/text response
     try {
-      const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5001'
+      const backendUrl = import.meta.env.VITE_BACKEND_URL
+        || (typeof window !== 'undefined' && window.location.hostname === 'localhost'
+          ? 'http://localhost:5001'
+          : 'https://bexsigmatech3d.onrender.com')
+
+      const controller = new AbortController()
+      const timeoutId = setTimeout(() => controller.abort(), 3000)
+
       const res = await fetch(`${backendUrl}/api/ai/chat`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ prompt: `User callsign: ${callsign}`, userName: callsign })
+        body: JSON.stringify({ prompt: `User callsign: ${callsign}`, userName: callsign }),
+        signal: controller.signal
       })
-      const data = await res.json()
-      if (data && data.response) {
-        setAiCustomReply(data.response)
-        aiVoice.speakCustomText(data.response)
+      clearTimeout(timeoutId)
+
+      if (res.ok) {
+        const data = await res.json()
+        if (data && data.response) {
+          setAiCustomReply(data.response)
+          aiVoice.speakCustomText(data.response)
+        }
       }
     } catch (err) {
-      console.warn('AI API offline, using built-in TTS')
+      console.warn('AI API response pending or offline:', err.message)
     }
-
-    voiceEmitter.emit('NAME_SUBMITTED', { userName: callsign })
-    submitIdentity(callsign)
   }
 
   // 3D Card Hover Tilt logic
