@@ -1,0 +1,1 @@
+# BexSigmaTech3d
