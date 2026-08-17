@@ -465,7 +465,7 @@ app.post('/api/ai/chat', async (req, res) => {
 })
 
 /* ── Start Server ── */
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`\n🚀 BEX Sigma Tech Payment API running on http://localhost:${PORT}`)
   console.log(`   Cashfree App ID: ${process.env.CASHFREE_APP_ID || '⚠️  NOT SET — add to .env'}`)
   console.log(`   Cashfree Environment: ${process.env.CASHFREE_ENV || 'SANDBOX'}`)
