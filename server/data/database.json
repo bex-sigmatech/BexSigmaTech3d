@@ -1,0 +1,153 @@
+{
+  "orders": [
+    {
+      "id": "bex_vision-spatial_1786721172759",
+      "payment_id": 209025322930272,
+      "order_id": "bex_vision-spatial_1786721172759",
+      "productId": "vision-spatial",
+      "productName": "VisionSpatial Designer",
+      "amount": 28900,
+      "customerEmail": "anonymous@bexsigmatech.io",
+      "customerName": "jk",
+      "status": "VERIFIED",
+      "downloadUrl": "http://localhost:5001/api/download?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9kdWN0SWQiOiJ2aXNpb24tc3BhdGlhbCIsImN1c3RvbWVyRW1haWwiOiJndWVzdCIsImNyZWF0ZWRBdCI6MTc4NjcyMTIwMTYyNSwiaWF0IjoxNzg2NzIxMjAxLCJleHAiOjE3ODY4MDc2MDF9.n7u6Bhzl5Tui_mtjTkSI_uSnZhjrcSF2fApkNfiVbh0",
+      "timestamp": "2026-08-14T15:26:41.626Z"
+    },
+    {
+      "id": "bex_dashboard-suite_1786720984924",
+      "payment_id": 209024553936416,
+      "order_id": "bex_dashboard-suite_1786720984924",
+      "productId": "dashboard-suite",
+      "productName": "One Dashboard BI Suite",
+      "amount": 25600,
+      "customerEmail": "anonymous@bexsigmatech.io",
+      "customerName": "jk",
+      "status": "VERIFIED",
+      "downloadUrl": "http://localhost:5001/api/download?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9kdWN0SWQiOiJkYXNoYm9hcmQtc3VpdGUiLCJjdXN0b21lckVtYWlsIjoiZ3Vlc3QiLCJjcmVhdGVkQXQiOjE3ODY3MjExNjA2MDIsImlhdCI6MTc4NjcyMTE2MCwiZXhwIjoxNzg2ODA3NTYwfQ.lO2v8bxR14h3V9g46vACF89Rftd0AHttAg3VXp12B1k",
+      "timestamp": "2026-08-14T15:26:00.605Z"
+    }
+  ],
+  "downloads": [],
+  "aiChats": [
+    {
+      "id": "chat_1786720971511",
+      "userPrompt": "User callsign: jk",
+      "aiResponse": "Command logged, jk. BEX SIGMA TECH neural grid is operating at peak capacity. All biometric signatures and quantum encryption keys verified.",
+      "modelUsed": "BEX Neural Core (Local)",
+      "timestamp": "2026-08-14T15:22:51.511Z"
+    },
+    {
+      "id": "chat_1786698058574",
+      "userPrompt": "User callsign: COMMANDER",
+      "aiResponse": "Command logged, COMMANDER. BEX SIGMA TECH neural grid is operating at peak capacity. All biometric signatures and quantum encryption keys verified.",
+      "modelUsed": "BEX Neural Core (Local)",
+      "timestamp": "2026-08-14T09:00:58.574Z"
+    },
+    {
+      "id": "chat_1786697828500",
+      "userPrompt": "User callsign: kandavel",
+      "aiResponse": "Command logged, kandavel. BEX SIGMA TECH neural grid is operating at peak capacity. All biometric signatures and quantum encryption keys verified.",
+      "modelUsed": "BEX Neural Core (Local)",
+      "timestamp": "2026-08-14T08:57:08.500Z"
+    },
+    {
+      "id": "chat_1786697491906",
+      "userPrompt": "User callsign: jk",
+      "aiResponse": "Command logged, jk. BEX SIGMA TECH neural grid is operating at peak capacity. All biometric signatures and quantum encryption keys verified.",
+      "modelUsed": "BEX Neural Core (Local)",
+      "timestamp": "2026-08-14T08:51:31.906Z"
+    },
+    {
+      "id": "chat_1786697408422",
+      "userPrompt": "User callsign: jk",
+      "aiResponse": "Command logged, jk. BEX SIGMA TECH neural grid is operating at peak capacity. All biometric signatures and quantum encryption keys verified.",
+      "modelUsed": "BEX Neural Core (Local)",
+      "timestamp": "2026-08-14T08:50:08.422Z"
+    },
+    {
+      "id": "chat_1786697250739",
+      "userPrompt": "User callsign: jk",
+      "aiResponse": "Command logged, jk. BEX SIGMA TECH neural grid is operating at peak capacity. All biometric signatures and quantum encryption keys verified.",
+      "modelUsed": "BEX Neural Core (Local)",
+      "timestamp": "2026-08-14T08:47:30.739Z"
+    },
+    {
+      "id": "chat_1786697230781",
+      "userPrompt": "User callsign: jk",
+      "aiResponse": "Command logged, jk. BEX SIGMA TECH neural grid is operating at peak capacity. All biometric signatures and quantum encryption keys verified.",
+      "modelUsed": "BEX Neural Core (Local)",
+      "timestamp": "2026-08-14T08:47:10.781Z"
+    },
+    {
+      "id": "chat_1786697179741",
+      "userPrompt": "User callsign: jk",
+      "aiResponse": "Command logged, jk. BEX SIGMA TECH neural grid is operating at peak capacity. All biometric signatures and quantum encryption keys verified.",
+      "modelUsed": "BEX Neural Core (Local)",
+      "timestamp": "2026-08-14T08:46:19.741Z"
+    },
+    {
+      "id": "chat_1786696704733",
+      "userPrompt": "User callsign: jk",
+      "aiResponse": "Command logged, jk. BEX SIGMA TECH neural grid is operating at peak capacity. All biometric signatures and quantum encryption keys verified.",
+      "modelUsed": "BEX Neural Core (Local)",
+      "timestamp": "2026-08-14T08:38:24.733Z"
+    },
+    {
+      "id": "chat_1786696021224",
+      "userPrompt": "User callsign: jk",
+      "aiResponse": "Command logged, jk. BEX SIGMA TECH neural grid is operating at peak capacity. All biometric signatures and quantum encryption keys verified.",
+      "modelUsed": "BEX Neural Core (Local)",
+      "timestamp": "2026-08-14T08:27:01.224Z"
+    },
+    {
+      "id": "chat_1786695969706",
+      "userPrompt": "User callsign: jk",
+      "aiResponse": "Command logged, jk. BEX SIGMA TECH neural grid is operating at peak capacity. All biometric signatures and quantum encryption keys verified.",
+      "modelUsed": "BEX Neural Core (Local)",
+      "timestamp": "2026-08-14T08:26:09.706Z"
+    },
+    {
+      "id": "chat_1786695894368",
+      "userPrompt": "User callsign: jk",
+      "aiResponse": "Command logged, jk. BEX SIGMA TECH neural grid is operating at peak capacity. All biometric signatures and quantum encryption keys verified.",
+      "modelUsed": "BEX Neural Core (Local)",
+      "timestamp": "2026-08-14T08:24:54.368Z"
+    },
+    {
+      "id": "chat_1786695631821",
+      "userPrompt": "User callsign: COMMANDER",
+      "aiResponse": "Command logged, COMMANDER. BEX SIGMA TECH neural grid is operating at peak capacity. All biometric signatures and quantum encryption keys verified.",
+      "modelUsed": "BEX Neural Core (Local)",
+      "timestamp": "2026-08-14T08:20:31.821Z"
+    },
+    {
+      "id": "chat_1786695328494",
+      "userPrompt": "User callsign: jk",
+      "aiResponse": "Command logged, jk. BEX SIGMA TECH neural grid is operating at peak capacity. All biometric signatures and quantum encryption keys verified.",
+      "modelUsed": "BEX Neural Core (Local)",
+      "timestamp": "2026-08-14T08:15:28.494Z"
+    },
+    {
+      "id": "chat_1786695112180",
+      "userPrompt": "User callsign: COMMANDER",
+      "aiResponse": "Command logged, COMMANDER. BEX SIGMA TECH neural grid is operating at peak capacity. All biometric signatures and quantum encryption keys verified.",
+      "modelUsed": "BEX Neural Core (Local)",
+      "timestamp": "2026-08-14T08:11:52.180Z"
+    },
+    {
+      "id": "chat_1786694865487",
+      "userPrompt": "User callsign: Kandavel",
+      "aiResponse": "Command logged, Kandavel. BEX SIGMA TECH neural grid is operating at peak capacity. All biometric signatures and quantum encryption keys verified.",
+      "modelUsed": "BEX Neural Core (Local)",
+      "timestamp": "2026-08-14T08:07:45.487Z"
+    },
+    {
+      "id": "chat_1786694797651",
+      "userPrompt": "hello",
+      "aiResponse": "Callsign recognized. Welcome back, COMMANDER. All orbital telemetry systems and 8K mainframe nodes are operational.",
+      "modelUsed": "BEX Neural Core (Local)",
+      "timestamp": "2026-08-14T08:06:37.651Z"
+    }
+  ],
+  "systemLogs": []
+}
