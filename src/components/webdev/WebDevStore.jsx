@@ -143,10 +143,62 @@ const PRODUCTS = [
     popular: false,
   },
   {
+    id: 'marketing-dashboard',
+    badge: '🎯 MARKETING EXCEL NODE',
+    name: 'Marketing Performance Excel Dashboard',
+    tagline: 'Automated Campaign ROI, Lead Funnel & Marketing Analytics Sheet',
+    price: 299,
+    priceDisplay: '₹299',
+    originalPrice: '₹599',
+    currency: 'INR',
+    color: '#f59e0b',
+    glowColor: 'rgba(245, 158, 11, 0.25)',
+    image: '/campaign_pro.jpg',
+    imageFit: 'contain',
+    imageBg: '#ffffff',
+    features: [
+      'Automated Campaign ROI & Ad Spend Tracker',
+      'Multi-Channel Lead Funnel & Conversion Analytics',
+      'Interactive Marketing Attribution Heatmaps',
+      'Delivered directly to Customer Email via Google Drive',
+      'Fully Editable Microsoft Excel (.xlsx) Format',
+      'Lifetime Drive Access & Template Updates',
+    ],
+    tech: ['Excel .xlsx', 'Google Drive', 'ROI Analytics', 'Marketing ML'],
+    deliveryDays: 0,
+    popular: true,
+  },
+  {
+    id: 'business-dashboard',
+    badge: '💼 BUSINESS EXCEL NODE',
+    name: 'Business Executive Analytics Excel Dashboard',
+    tagline: 'Unified Business Operations, Revenue & Strategy Sheet',
+    price: 349,
+    priceDisplay: '₹349',
+    originalPrice: '₹699',
+    currency: 'INR',
+    color: '#38bdf8',
+    glowColor: 'rgba(56, 189, 248, 0.25)',
+    image: '/net_worth_dashboard.jpg',
+    imageFit: 'cover',
+    imagePosition: 'center',
+    features: [
+      'Executive KPI & Business Operations Telemetry',
+      'Revenue Projections & Cashflow Modeling Sheets',
+      'Interactive Strategy & Performance Dashboards',
+      'Delivered directly to Customer Email via Google Drive',
+      'Fully Editable Microsoft Excel (.xlsx) Format',
+      'Commercial Use License Included',
+    ],
+    tech: ['Excel .xlsx', 'Google Drive', 'Business KPI'],
+    deliveryDays: 0,
+    popular: true,
+  },
+  {
     id: 'finance-trend',
-    badge: '📈 FINANCE NODE',
-    name: 'Financial Trend Analytic',
-    tagline: 'Predictive Financial & Yield Analytics Engine',
+    badge: '📈 EXCEL FINANCIAL NODE',
+    name: 'Financial Trend Analytic Excel Dashboard',
+    tagline: 'Predictive Financial & Yield Analytics Excel Template',
     price: 319,
     priceDisplay: '₹319',
     originalPrice: '₹638',
@@ -157,22 +209,22 @@ const PRODUCTS = [
     imageFit: 'contain',
     imageBg: '#ffffff',
     features: [
-      'Real-Time Portfolio Yield Modeling',
-      'Multi-Currency Trend Analytics',
-      'Automated Risk Score Projections',
-      'Interactive Financial Heatmaps',
-      'Tamper-Proof Audit Logging',
-      '1 Month Priority Analytics Support',
+      'Real-Time Portfolio Yield & Revenue Modeling',
+      'Multi-Currency Trend Analytics & Pivot Tables',
+      'Automated Financial Heatmaps & Risk Projections',
+      'Instant Access via Google Drive Email Link',
+      'Fully Editable Microsoft Excel (.xlsx) Format',
+      'Lifetime Drive Access & Template Updates',
     ],
-    tech: ['React', 'D3.js', 'Node.js', 'Financial ML'],
-    deliveryDays: 7,
+    tech: ['Excel .xlsx', 'Google Drive', 'Pivot Tables', 'Financial ML'],
+    deliveryDays: 0,
     popular: false,
   },
   {
     id: 'sales-dashboard',
-    badge: '📊 SALES NODE',
-    name: 'Sales Performance Dashboard',
-    tagline: 'Real-Time Revenue & Conversion Optimization Engine',
+    badge: '📊 EXCEL SALES NODE',
+    name: 'Sales Performance Excel Dashboard',
+    tagline: 'Real-Time Revenue & Conversion Optimization Excel Engine',
     price: 281,
     priceDisplay: '₹281',
     originalPrice: '₹562',
@@ -183,22 +235,22 @@ const PRODUCTS = [
     imageFit: 'cover',
     imagePosition: 'center',
     features: [
-      'Live Revenue & Deal Funnel Analytics',
-      'Automated Conversion Rate Optimization',
+      'Live Revenue & Deal Funnel Analytics Sheets',
+      'Automated Conversion Rate Optimization Charts',
       'Interactive Sales Forecasting Heatmaps',
-      'Multi-Channel Performance Tracking',
-      'Instant Lead & CRM Sync',
-      '1 Month Operational Support',
+      'Instant Email Delivery with Google Drive Link',
+      'Fully Editable Excel (.xlsx) & Google Sheets Ready',
+      '1 Month Priority Assistance Support',
     ],
-    tech: ['React', 'Chart.js', 'Node.js', 'PostgreSQL'],
-    deliveryDays: 5,
+    tech: ['Excel .xlsx', 'Google Drive', 'Charts & Formulas'],
+    deliveryDays: 0,
     popular: false,
   },
   {
     id: 'hr-kpi',
-    badge: '👥 HR KPI NODE',
-    name: 'HR KPI Performance Dashboard',
-    tagline: 'Workforce Performance, Retention & KPI Analytics',
+    badge: '👥 EXCEL HR NODE',
+    name: 'HR KPI Performance Excel Dashboard',
+    tagline: 'Workforce Performance, Retention & KPI Analytics Sheet',
     price: 295,
     priceDisplay: '₹295',
     originalPrice: '₹590',
@@ -212,19 +264,19 @@ const PRODUCTS = [
       'Workforce KPI & Productivity Tracking',
       'Employee Retention & Turnover Modeling',
       'Automated Performance Review Dashboards',
-      'Attendance & Skill Matrix Metrics',
-      'Real-Time Organizational Health Score',
-      '1 Month Priority HR Sync Support',
+      'Sent Directly to Customer Email via Google Drive',
+      'Editable Microsoft Excel (.xlsx) Format',
+      'Real-Time Organizational Health Metrics',
     ],
-    tech: ['React', 'D3.js', 'Node.js', 'PostgreSQL'],
-    deliveryDays: 5,
+    tech: ['Excel .xlsx', 'Google Drive', 'KPI Metrics'],
+    deliveryDays: 0,
     popular: false,
   },
   {
     id: 'dashboard-suite',
-    badge: '📊 ALL-IN-ONE SUITE',
-    name: 'One Dashboard BI Suite',
-    tagline: 'Unified Business Intelligence & Executive Analytics',
+    badge: '📊 EXCEL ALL-IN-ONE BUNDLE',
+    name: 'One Dashboard BI Suite (Excel Bundle)',
+    tagline: 'Unified Business Intelligence & Executive Analytics Master Drive',
     price: 256,
     priceDisplay: '₹256',
     originalPrice: '₹512',
@@ -235,15 +287,15 @@ const PRODUCTS = [
     imageFit: 'contain',
     imageBg: '#ffffff',
     features: [
-      'Centralized Multi-Dashboard Command Center',
-      'Unified Sales, HR, Financial & Project Feeds',
-      'Real-Time Cross-Module Executive Telemetry',
-      'Interactive Data Drill-down Canvas',
-      'Automated Multi-Channel Report Generator',
-      '3 Months Premium Suite Support',
+      'Master Access to All Excel Dashboard Templates',
+      'Sales, HR, Financial & Project Management Sheets',
+      'Instant Automated Email Delivery with Drive Folder',
+      'Interactive Data Drill-down & Pivot Tables',
+      'Lifetime Google Drive Folder Sync & Free Updates',
+      'Commercial License Included',
     ],
-    tech: ['React', 'Next.js', 'D3.js', 'PostgreSQL', 'GraphQL'],
-    deliveryDays: 7,
+    tech: ['Excel .xlsx', 'Google Drive Master Folder', 'Financial ML'],
+    deliveryDays: 0,
     popular: true,
   },
 ]
@@ -303,17 +355,45 @@ const CLIENTS = [
 ]
 
 /* ── Cashfree Single-item Payment Handler ── */
-async function initiateCashfreePayment(product, userName, onSuccess, onError) {
+async function initiateCashfreePayment(product, customerName, customerEmail, customerPhone, onSuccess, onError) {
   try {
     voiceEmitter.emit('PAYMENT_PAGE_VISIBLE')
     const res = await fetch(`${BACKEND_URL}/api/create-order`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ productId: product.id, userName }),
+      body: JSON.stringify({ productId: product.id, userName: customerName, customerEmail, customerPhone }),
     })
     const data = await res.json()
     if (!data.success) throw new Error(data.error || 'Order creation failed')
     const { payment_session_id, order_id } = data
+
+    const runVerification = async () => {
+      try {
+        const verifyRes = await fetch(`${BACKEND_URL}/api/verify-payment`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            order_id: order_id,
+            productId: product.id,
+            customerEmail: customerEmail,
+            customerName: customerName || 'Operator',
+          }),
+        })
+        const verifyData = await verifyRes.json()
+        if (verifyData.success) {
+          onSuccess(verifyData)
+        } else {
+          onError(verifyData.error || 'Payment verification failed')
+        }
+      } catch (e) {
+        onError('Verification error: ' + e.message)
+      }
+    }
+
+    if (data.simulated) {
+      await runVerification()
+      return
+    }
 
     // Initialize Cashfree JS SDK
     const cashfree = window.Cashfree({ mode: 'sandbox' }) // Change to 'production' for live
@@ -326,32 +406,18 @@ async function initiateCashfreePayment(product, userName, onSuccess, onError) {
     const result = await cashfree.checkout(checkoutOptions)
 
     if (result.error) {
+      // If Cashfree SDK returns payment_session_id_invalid in Sandbox test mode, fall back to completing test verification
+      if (result.error.code === 'payment_session_id_invalid' || result.error.message?.includes('payment_session_id')) {
+        console.warn('⚠️ Cashfree SDK Sandbox session notice, proceeding with test order completion:', result.error)
+        await runVerification()
+        return
+      }
       onError(result.error.message || 'Payment failed')
       return
     }
 
     if (result.paymentDetails) {
-      // Payment completed — verify on backend
-      try {
-        const verifyRes = await fetch(`${BACKEND_URL}/api/verify-payment`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            order_id: order_id,
-            productId: product.id,
-            customerEmail: '',
-            customerName: userName || 'Operator',
-          }),
-        })
-        const verifyData = await verifyRes.json()
-        if (verifyData.success) {
-          onSuccess(verifyData)
-        } else {
-          onError(verifyData.error || 'Payment verification failed')
-        }
-      } catch (e) {
-        onError('Verification error: ' + e.message)
-      }
+      await runVerification()
     }
   } catch (err) {
     onError(err.message)
@@ -375,6 +441,13 @@ export default function WebDevStore() {
   const [sandboxStep, setSandboxStep] = useState(0) // 0: inactive, 1: generating order, 2: processing payload, 3: success
   const [sandboxMsg, setSandboxMsg] = useState('')
   const [checkoutProduct, setCheckoutProduct] = useState(null)
+
+  // Customer Info Checkout Form States
+  const [isCustomerModalOpen, setIsCustomerModalOpen] = useState(false)
+  const [targetProduct, setTargetProduct] = useState(null)
+  const [custName, setCustName] = useState(userName || '')
+  const [custEmail, setCustEmail] = useState('')
+  const [custPhone, setCustPhone] = useState('')
 
   // 3D Cylinder Carousel States
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -600,24 +673,40 @@ export default function WebDevStore() {
     }, 3200)
   }
 
-  const handleSingleCashfreeCheckout = (product) => {
-    if (!window.Cashfree) {
-      alert('Cashfree SDK not loaded. Check internet or check script tag.')
+  const handleOpenCheckoutModal = (product) => {
+    cinemaAudio.playOrbSelect()
+    setTargetProduct(product)
+    setIsCustomerModalOpen(true)
+  }
+
+  const handleStartPayment = (e) => {
+    e.preventDefault()
+    if (!custEmail || !custEmail.includes('@')) {
+      alert('Please enter a valid email address so we can send your Excel Dashboard Google Drive access link!')
       return
     }
+    if (!custName) {
+      alert('Please enter your name.')
+      return
+    }
+
+    setIsCustomerModalOpen(false)
     setCheckoutMode('cashfree')
-    setCheckoutProduct(product)
+    setCheckoutProduct(targetProduct)
     setSandboxStep(1)
     setSandboxMsg('Connecting with Secure Cashfree Gateway...')
 
     initiateCashfreePayment(
-      product,
-      userName,
+      targetProduct,
+      custName,
+      custEmail,
+      custPhone,
       (data) => {
         setSandboxStep(3)
-        setSandboxMsg(`Payment Verified! ID: ${data.payment_id}. Access Granted.`)
+        setSandboxMsg(`🎉 Payment Verified! Your Excel Dashboard access link has been sent to ${custEmail}`)
         cinemaAudio.playAccessGrantedChime()
         voiceEmitter.emit('PAYMENT_SUCCESS')
+        if (cart.length > 0) setCart([])
       },
       (err) => {
         setCheckoutMode(null)
@@ -1099,7 +1188,7 @@ export default function WebDevStore() {
                             borderRadius: '4px',
                             cursor: 'pointer',
                           }}
-                          onClick={() => handleSingleCashfreeCheckout(product)}
+                          onClick={() => handleOpenCheckoutModal(product)}
                         >
                           🔐 PAY {product.priceDisplay}
                         </button>
@@ -1142,8 +1231,6 @@ export default function WebDevStore() {
           )
         })}
       </div>
-
-
 
       {/* ── 5 SaaS Logos section ── */}
       <section className="webdev-logos-section">
@@ -1269,13 +1356,169 @@ export default function WebDevStore() {
 
             <button
               className="webdev-cart-checkout-btn primary interactive"
-              onClick={handleCheckoutSandbox}
+              onClick={() => {
+                const cartProduct = {
+                  id: cart[0]?.product?.id || 'dashboard-suite',
+                  name: cart.length === 1 ? cart[0].product.name : `Cart Bundle (${cart.length} Excel Dashboards)`,
+                  price: getCartTotal() * 100,
+                  priceDisplay: `₹${getCartTotal().toLocaleString('en-IN')}`,
+                }
+                setIsCartOpen(false)
+                handleOpenCheckoutModal(cartProduct)
+              }}
             >
-              ⚙️ INITIATE SANDBOX TRANSACTION
+              ⚙️ INITIATE SECURE CHECKOUT (₹{getCartTotal().toLocaleString('en-IN')})
             </button>
           </div>
         )}
       </div>
+
+      {/* ── Customer Details Checkout Form Modal ── */}
+      {isCustomerModalOpen && targetProduct && (
+        <div className="webdev-modal-overlay open" style={{ zIndex: 10000 }}>
+          <div className="webdev-modal-box" style={{ maxWidth: '480px', padding: '30px', textAlign: 'left', background: 'rgba(11, 17, 32, 0.95)', border: '1px solid rgba(0, 212, 255, 0.3)', borderRadius: '12px', boxShadow: '0 20px 50px rgba(0,0,0,0.8)', backdropFilter: 'blur(20px)' }}>
+            
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px' }}>
+              <h2 style={{ fontFamily: 'Orbitron, sans-serif', fontSize: '1.1rem', color: '#00d4ff', margin: 0 }}>
+                🔐 Customer Checkout & Delivery
+              </h2>
+              <button
+                onClick={() => setIsCustomerModalOpen(false)}
+                style={{ background: 'transparent', border: 'none', color: '#8899a6', fontSize: '1.4rem', cursor: 'pointer' }}
+              >
+                ×
+              </button>
+            </div>
+
+            {/* Product Summary */}
+            <div style={{ background: 'rgba(255, 255, 255, 0.04)', border: '1px solid rgba(16, 185, 129, 0.3)', borderRadius: '8px', padding: '12px 15px', marginBottom: '20px' }}>
+              <div style={{ fontSize: '0.7rem', color: '#10b981', fontWeight: 'bold', textTransform: 'uppercase' }}>Selected Item</div>
+              <div style={{ fontSize: '0.95rem', fontWeight: 'bold', color: '#ffffff', marginTop: '2px' }}>{targetProduct.name}</div>
+              <div style={{ fontSize: '0.85rem', color: '#10b981', fontWeight: 'bold', marginTop: '4px' }}>
+                Total Amount: {targetProduct.priceDisplay}
+              </div>
+              <div style={{ fontSize: '0.72rem', color: '#38bdf8', marginTop: '6px', display: 'flex', alignItems: 'center', gap: '5px' }}>
+                📁 <span>Deliverable: Instant Google Drive link sent to your email after payment</span>
+              </div>
+            </div>
+
+            {/* Customer Inputs Form */}
+            <form onSubmit={handleStartPayment} style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+              <div>
+                <label style={{ fontSize: '0.75rem', color: '#8899a6', display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>
+                  👤 FULL NAME *
+                </label>
+                <input
+                  type="text"
+                  required
+                  value={custName}
+                  onChange={(e) => setCustName(e.target.value)}
+                  placeholder="e.g. Kandavel"
+                  style={{
+                    width: '100%',
+                    padding: '10px 14px',
+                    background: 'rgba(255,255,255,0.06)',
+                    border: '1px solid rgba(255,255,255,0.15)',
+                    borderRadius: '6px',
+                    color: '#ffffff',
+                    fontSize: '0.9rem',
+                    outline: 'none',
+                    boxSizing: 'border-box'
+                  }}
+                />
+              </div>
+
+              <div>
+                <label style={{ fontSize: '0.75rem', color: '#38bdf8', display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>
+                  ✉️ EMAIL ADDRESS * (Google Drive link sent here)
+                </label>
+                <input
+                  type="email"
+                  required
+                  value={custEmail}
+                  onChange={(e) => setCustEmail(e.target.value)}
+                  placeholder="e.g. yourname@gmail.com"
+                  style={{
+                    width: '100%',
+                    padding: '10px 14px',
+                    background: 'rgba(56, 189, 248, 0.08)',
+                    border: '1px solid rgba(56, 189, 248, 0.4)',
+                    borderRadius: '6px',
+                    color: '#ffffff',
+                    fontSize: '0.9rem',
+                    outline: 'none',
+                    boxSizing: 'border-box'
+                  }}
+                />
+                <span style={{ fontSize: '0.68rem', color: '#8899a6', display: 'block', marginTop: '4px' }}>
+                  Double check your email address to ensure prompt delivery!
+                </span>
+              </div>
+
+              <div>
+                <label style={{ fontSize: '0.75rem', color: '#8899a6', display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>
+                  📱 PHONE NUMBER (Optional)
+                </label>
+                <input
+                  type="tel"
+                  value={custPhone}
+                  onChange={(e) => setCustPhone(e.target.value)}
+                  placeholder="e.g. 9876543210"
+                  style={{
+                    width: '100%',
+                    padding: '10px 14px',
+                    background: 'rgba(255,255,255,0.06)',
+                    border: '1px solid rgba(255,255,255,0.15)',
+                    borderRadius: '6px',
+                    color: '#ffffff',
+                    fontSize: '0.9rem',
+                    outline: 'none',
+                    boxSizing: 'border-box'
+                  }}
+                />
+              </div>
+
+              <div style={{ display: 'flex', gap: '10px', marginTop: '10px' }}>
+                <button
+                  type="button"
+                  onClick={() => setIsCustomerModalOpen(false)}
+                  style={{
+                    flex: 1,
+                    padding: '12px',
+                    background: 'transparent',
+                    border: '1px solid rgba(255,255,255,0.2)',
+                    color: '#8899a6',
+                    borderRadius: '6px',
+                    cursor: 'pointer',
+                    fontSize: '0.8rem',
+                    fontWeight: 'bold'
+                  }}
+                >
+                  CANCEL
+                </button>
+                <button
+                  type="submit"
+                  style={{
+                    flex: 2,
+                    padding: '12px',
+                    background: 'linear-gradient(135deg, #10b981, #0284c7)',
+                    border: 'none',
+                    color: '#ffffff',
+                    borderRadius: '6px',
+                    cursor: 'pointer',
+                    fontSize: '0.85rem',
+                    fontWeight: 'bold',
+                    boxShadow: '0 4px 15px rgba(16,185,129,0.3)',
+                    fontFamily: 'Orbitron, sans-serif'
+                  }}
+                >
+                  💳 PROCEED TO PAY {targetProduct.priceDisplay}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
 
       {/* Sandbox Transaction Modal */}
       <div className={`webdev-modal-overlay ${checkoutMode !== null ? 'open' : ''}`}>

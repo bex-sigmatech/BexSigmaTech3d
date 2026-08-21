@@ -1,6 +1,110 @@
 {
   "orders": [
     {
+      "id": "bex_sales-dashboard_1787316561795",
+      "payment_id": 211464036018112,
+      "order_id": "bex_sales-dashboard_1787316561795",
+      "productId": "sales-dashboard",
+      "productName": "Sales Performance Excel Dashboard",
+      "amount": 28100,
+      "customerEmail": "kandavel9894@gmail.com",
+      "customerName": "jk",
+      "status": "VERIFIED",
+      "downloadUrl": "http://localhost:5001/api/download?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9kdWN0SWQiOiJzYWxlcy1kYXNoYm9hcmQiLCJjdXN0b21lckVtYWlsIjoia2FuZGF2ZWw5ODk0QGdtYWlsLmNvbSIsImNyZWF0ZWRBdCI6MTc4NzMxNjU3ODE1MywiaWF0IjoxNzg3MzE2NTc4LCJleHAiOjE3ODc0MDI5Nzh9.PikRwbPDvVrTYBDBklPB-wyzFoKj8gAzCOnyQfpd0Ck",
+      "timestamp": "2026-08-21T12:49:38.155Z"
+    },
+    {
+      "id": "bex_marketing-dashboard_1787315972419",
+      "payment_id": "pay_1787316500727",
+      "order_id": "bex_marketing-dashboard_1787315972419",
+      "productId": "marketing-dashboard",
+      "productName": "Marketing Performance Excel Dashboard",
+      "amount": 29900,
+      "customerEmail": "bexsigmatech@gmail.com",
+      "customerName": "Test Customer",
+      "status": "VERIFIED",
+      "downloadUrl": "http://localhost:5001/api/download?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9kdWN0SWQiOiJtYXJrZXRpbmctZGFzaGJvYXJkIiwiY3VzdG9tZXJFbWFpbCI6ImJleHNpZ21hdGVjaEBnbWFpbC5jb20iLCJjcmVhdGVkQXQiOjE3ODczMTY1MDA4MDcsImlhdCI6MTc4NzMxNjUwMCwiZXhwIjoxNzg3NDAyOTAwfQ.NJK_SbpU3LxFb7gNz-PEO8feqZWw7u2G8kK5weuldbs",
+      "timestamp": "2026-08-21T12:48:20.808Z"
+    },
+    {
+      "id": "bex_sales-dashboard_1787316393341",
+      "payment_id": 211463346173888,
+      "order_id": "bex_sales-dashboard_1787316393341",
+      "productId": "sales-dashboard",
+      "productName": "Sales Performance Excel Dashboard",
+      "amount": 28100,
+      "customerEmail": "kandavel9894@gmail.com",
+      "customerName": "jk",
+      "status": "VERIFIED",
+      "downloadUrl": "http://localhost:5001/api/download?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9kdWN0SWQiOiJzYWxlcy1kYXNoYm9hcmQiLCJjdXN0b21lckVtYWlsIjoia2FuZGF2ZWw5ODk0QGdtYWlsLmNvbSIsImNyZWF0ZWRBdCI6MTc4NzMxNjQxNjA2NywiaWF0IjoxNzg3MzE2NDE2LCJleHAiOjE3ODc0MDI4MTZ9._hiD2nycKUl9edxhrgUkTikv1NFZot4UVKbshIqDAsg",
+      "timestamp": "2026-08-21T12:46:56.069Z"
+    },
+    {
+      "id": "bex_marketing-dashboard_1787315972419",
+      "payment_id": "pay_1787316161737",
+      "order_id": "bex_marketing-dashboard_1787315972419",
+      "productId": "marketing-dashboard",
+      "productName": "Marketing Performance Excel Dashboard",
+      "amount": 29900,
+      "customerEmail": "bexsigmatech@gmail.com",
+      "customerName": "Test Customer",
+      "status": "VERIFIED",
+      "downloadUrl": "http://localhost:5001/api/download?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9kdWN0SWQiOiJtYXJrZXRpbmctZGFzaGJvYXJkIiwiY3VzdG9tZXJFbWFpbCI6ImJleHNpZ21hdGVjaEBnbWFpbC5jb20iLCJjcmVhdGVkQXQiOjE3ODczMTYxNjE4MjQsImlhdCI6MTc4NzMxNjE2MSwiZXhwIjoxNzg3NDAyNTYxfQ.laNmY_ODR4yuK3qnBkG8oLgVpLqhVHFkhlr9AAwm6xc",
+      "timestamp": "2026-08-21T12:42:41.826Z"
+    },
+    {
+      "id": "bex_sales-dashboard_1787316025418",
+      "payment_id": 211461838910624,
+      "order_id": "bex_sales-dashboard_1787316025418",
+      "productId": "sales-dashboard",
+      "productName": "Sales Performance Excel Dashboard",
+      "amount": 28100,
+      "customerEmail": "kandavel9894@gmail.com",
+      "customerName": "jk",
+      "status": "VERIFIED",
+      "downloadUrl": "http://localhost:5001/api/download?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9kdWN0SWQiOiJzYWxlcy1kYXNoYm9hcmQiLCJjdXN0b21lckVtYWlsIjoia2FuZGF2ZWw5ODk0QGdtYWlsLmNvbSIsImNyZWF0ZWRBdCI6MTc4NzMxNjA0MTQxOCwiaWF0IjoxNzg3MzE2MDQxLCJleHAiOjE3ODc0MDI0NDF9.rOlefTw4xmJNTXaa2_xtqrDuhBWjk3AdDCPSquNXLeQ",
+      "timestamp": "2026-08-21T12:40:41.421Z"
+    },
+    {
+      "id": "bex_dashboard-suite_1787315666008",
+      "payment_id": 211460367307936,
+      "order_id": "bex_dashboard-suite_1787315666008",
+      "productId": "dashboard-suite",
+      "productName": "One Dashboard BI Suite (Excel Bundle)",
+      "amount": 25600,
+      "customerEmail": "kandavel9894@gmail.com",
+      "customerName": "jk",
+      "status": "VERIFIED",
+      "downloadUrl": "http://localhost:5001/api/download?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9kdWN0SWQiOiJkYXNoYm9hcmQtc3VpdGUiLCJjdXN0b21lckVtYWlsIjoia2FuZGF2ZWw5ODk0QGdtYWlsLmNvbSIsImNyZWF0ZWRBdCI6MTc4NzMxNTY4MjYxOCwiaWF0IjoxNzg3MzE1NjgyLCJleHAiOjE3ODc0MDIwODJ9.Ab7U3I9LbnW_sA8la7YPitrNw02yJZokpjqGggdB8Og",
+      "timestamp": "2026-08-21T12:34:42.622Z"
+    },
+    {
+      "id": "bex_vision-spatial_1787315413009",
+      "payment_id": 211459330774176,
+      "order_id": "bex_vision-spatial_1787315413009",
+      "productId": "vision-spatial",
+      "productName": "VisionSpatial Designer",
+      "amount": 28900,
+      "customerEmail": "anonymous@bexsigmatech.io",
+      "customerName": "jk",
+      "status": "VERIFIED",
+      "downloadUrl": "http://localhost:5001/api/download?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9kdWN0SWQiOiJ2aXNpb24tc3BhdGlhbCIsImN1c3RvbWVyRW1haWwiOiJndWVzdCIsImNyZWF0ZWRBdCI6MTc4NzMxNTQ0NTQ0MiwiaWF0IjoxNzg3MzE1NDQ1LCJleHAiOjE3ODc0MDE4NDV9.kfD8MjU77nauvXwDkS0nMLMXGMf7kt9DQfN-fIYfZqk",
+      "timestamp": "2026-08-21T12:30:45.446Z"
+    },
+    {
+      "id": "bex_finance-trend_1787315345727",
+      "payment_id": "pay_1787315370819",
+      "order_id": "bex_finance-trend_1787315345727",
+      "productId": "finance-trend",
+      "productName": "Financial Trend Analytic Excel Dashboard",
+      "amount": 31900,
+      "customerEmail": "bexsigmatech@gmail.com",
+      "customerName": "Test Customer",
+      "status": "VERIFIED",
+      "downloadUrl": "http://localhost:5001/api/download?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9kdWN0SWQiOiJmaW5hbmNlLXRyZW5kIiwiY3VzdG9tZXJFbWFpbCI6ImJleHNpZ21hdGVjaEBnbWFpbC5jb20iLCJjcmVhdGVkQXQiOjE3ODczMTUzNzA5NDcsImlhdCI6MTc4NzMxNTM3MCwiZXhwIjoxNzg3NDAxNzcwfQ.UjbypcPyoOpsONEvF4Xq5BJDOY_5P-8JPgG-1v0Kgr4",
+      "timestamp": "2026-08-21T12:29:30.949Z"
+    },
+    {
       "id": "bex_vision-spatial_1786721172759",
       "payment_id": 209025322930272,
       "order_id": "bex_vision-spatial_1786721172759",
@@ -29,6 +133,27 @@
   ],
   "downloads": [],
   "aiChats": [
+    {
+      "id": "chat_1787316362907",
+      "userPrompt": "User callsign: jk",
+      "aiResponse": "Command logged, jk. BEX SIGMA TECH neural grid is operating at peak capacity. All biometric signatures and quantum encryption keys verified.",
+      "modelUsed": "BEX Neural Core (Local)",
+      "timestamp": "2026-08-21T12:46:02.907Z"
+    },
+    {
+      "id": "chat_1787316246547",
+      "userPrompt": "User callsign: jk",
+      "aiResponse": "Command logged, jk. BEX SIGMA TECH neural grid is operating at peak capacity. All biometric signatures and quantum encryption keys verified.",
+      "modelUsed": "BEX Neural Core (Local)",
+      "timestamp": "2026-08-21T12:44:06.547Z"
+    },
+    {
+      "id": "chat_1787315236855",
+      "userPrompt": "User callsign: jk",
+      "aiResponse": "Command logged, jk. BEX SIGMA TECH neural grid is operating at peak capacity. All biometric signatures and quantum encryption keys verified.",
+      "modelUsed": "BEX Neural Core (Local)",
+      "timestamp": "2026-08-21T12:27:16.855Z"
+    },
     {
       "id": "chat_1786720971511",
       "userPrompt": "User callsign: jk",
