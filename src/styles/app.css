@@ -22,6 +22,16 @@
   box-sizing: border-box;
 }
 
+html, body, #root {
+  width: 100vw;
+  height: 100dvh;
+  min-height: -webkit-fill-available;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background: #000;
+}
+
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   background: #000;
@@ -33,10 +43,14 @@ body {
 
 .app-container {
   width: 100vw;
-  height: 100vh;
+  height: 100dvh;
+  min-height: -webkit-fill-available;
   position: relative;
   background: #000;
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .interactive {
@@ -5779,22 +5793,24 @@ body {
     display: flex !important;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     width: 100vw;
-    height: 100vh;
-    padding: 24px 20px 30px 20px;
+    height: 100dvh;
+    min-height: -webkit-fill-available;
+    padding: 20px 16px;
     box-sizing: border-box;
     overflow-y: auto;
-    background: radial-gradient(circle at 50% 30%, rgba(13, 27, 42, 0.9) 0%, rgba(3, 8, 18, 0.98) 100%);
+    background: radial-gradient(circle at 50% 40%, rgba(13, 27, 42, 0.95) 0%, rgba(3, 8, 18, 0.98) 100%);
   }
 
   .mobile-boot-hero {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     width: 100%;
     max-width: 440px;
-    margin: 0 auto;
+    margin: auto !important;
     gap: 16px;
   }
 
@@ -6046,24 +6062,31 @@ body {
   }
 
   .mobile-boot-loading {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    max-width: 440px !important;
+    height: 100% !important;
+    margin: auto !important;
+    gap: 20px !important;
+    text-align: center !important;
   }
 
   /* ─── Dedicated Mobile AI Core Wrapper ─── */
   .mobile-aicore-wrapper {
     display: flex !important;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     width: 100vw;
-    height: 100vh;
-    padding: 16px 16px 20px 16px;
+    height: 100dvh;
+    min-height: -webkit-fill-available;
+    padding: 16px;
     box-sizing: border-box;
     overflow-y: auto;
+    margin: auto !important;
     background: radial-gradient(circle at 50% 25%, rgba(13, 27, 42, 0.95) 0%, rgba(3, 8, 18, 0.99) 100%);
   }
 
