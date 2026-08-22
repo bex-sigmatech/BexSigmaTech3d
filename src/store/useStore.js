@@ -2,6 +2,12 @@ import { create } from 'zustand'
 import { cinemaAudio } from '../audio/CinematicAudioEngine'
 import { aiVoice, voiceEmitter } from '../audio/AIVoiceEngine'
 
+const isMobileDevice = typeof window !== 'undefined' && (
+  window.innerWidth <= 768 ||
+  /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
+  (navigator.maxTouchPoints && navigator.maxTouchPoints > 1)
+)
+
 export const useStore = create((set, get) => {
   return {
     scene: 'boot', // 'boot' | 'access_granted' | 'welcome' | 'ai_core' | 'ai_response' | 'headquarters' | 'mission_briefing' | 'dashboard' | 'webdev_store'
@@ -10,7 +16,7 @@ export const useStore = create((set, get) => {
     activeMission: null,
     scrollPosition: 0,
     audioContextUnlocked: false,
-    graphicsQuality: 'high', // 'high' | 'low' for low-end device lag prevention
+    graphicsQuality: isMobileDevice ? 'low' : 'high', // auto-detect mobile for lag prevention
     isIntroSkipped: false,
 
     setGraphicsQuality: (quality) => set({ graphicsQuality: quality }),

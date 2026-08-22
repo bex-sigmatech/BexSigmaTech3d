@@ -511,7 +511,7 @@ export default function WebDevStore() {
     let height = canvas.height = window.innerHeight
 
     const particles = []
-    const count = 75
+    const count = window.innerWidth < 768 ? 25 : 75
 
     for (let i = 0; i < count; i++) {
       particles.push({

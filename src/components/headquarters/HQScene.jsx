@@ -508,7 +508,9 @@ export default function HQScene() {
       <div className="hq-3d-canvas-wrapper">
         <Canvas
           camera={{ position: [0, 0, 20], fov: 55 }}
-          gl={{ antialias: true, alpha: true }}
+          gl={{ antialias: graphicsQuality !== 'low', alpha: true, powerPreference: 'high-performance' }}
+          dpr={graphicsQuality === 'low' ? [1, 1.25] : [1, 1.5]}
+          performance={{ min: 0.5 }}
         >
           <color attach="background" args={['#020812']} />
           <fog attach="fog" args={['#020812', 22, 55]} />

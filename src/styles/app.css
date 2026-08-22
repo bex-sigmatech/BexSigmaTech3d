@@ -5519,3 +5519,36 @@ body {
     min-height: 40px !important;
   }
 }
+
+/* ─── Mobile GPU Performance Boost ─── */
+@media (max-width: 768px) {
+  /* Disable heavy backdrop blurs on mobile GPUs to eliminate scroll lag */
+  .glass-card,
+  .hq-header,
+  .hq-bottom-dock,
+  .cyber-nav,
+  .dashboard-card,
+  .cyber-container,
+  .nolan-badge,
+  .hq-modal,
+  .briefing-card {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background-color: rgba(6, 12, 24, 0.94) !important;
+  }
+
+  /* GPU layer promotion for hardware-accelerated scrolling */
+  .glass-card,
+  .hq-bottom-dock,
+  .dept-card-wrapper {
+    will-change: transform;
+    transform: translateZ(0);
+  }
+
+  /* Disable touch highlight & prevent horizontal bounce */
+  body, html {
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    -webkit-tap-highlight-color: transparent;
+  }
+}

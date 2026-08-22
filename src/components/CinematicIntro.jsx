@@ -144,7 +144,8 @@ function ParticleField({ count = 120, active }) {
     resize()
     window.addEventListener('resize', resize)
 
-    particles = Array.from({ length: count }, () => ({
+    const actualCount = window.innerWidth < 768 ? Math.min(count, 40) : count
+    particles = Array.from({ length: actualCount }, () => ({
       x: Math.random() * canvas.width,
       y: Math.random() * canvas.height,
       vx: (Math.random() - 0.5) * 0.3,

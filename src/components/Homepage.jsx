@@ -4,6 +4,7 @@ import { Stars, Html } from '@react-three/drei'
 import { motion } from 'framer-motion'
 import * as THREE from 'three'
 import { gsap } from 'gsap'
+import { useStore } from '../store/useStore'
 import '../styles/homepage.css'
 
 /* ─── Cyber Tower Mainframe Block ─── */
@@ -512,6 +513,10 @@ function CameraRig() {
 
 /* ─── Scene ─── */
 function SceneContent() {
+  const graphicsQuality = useStore(state => state.graphicsQuality)
+  const particleCount = graphicsQuality === 'low' ? 250 : 1000
+  const starCount = graphicsQuality === 'low' ? 800 : 3000
+
   return (
     <>
       <fog attach="fog" args={['#0a0a1a', 8, 35]} />
@@ -546,18 +551,21 @@ function SceneContent() {
       <CyberTower pos={[-3, -3, -14]} height={5.5} width={1.4} color="#0d1b2a" />
       <CyberTower pos={[3, -3, -15]} height={9} width={2} color="#1b2838" />
 
-      <Particles count={1000} />
+      <Particles count={particleCount} />
       <CyberPlatform />
-      <Stars radius={100} depth={50} count={3000} factor={3} saturation={0.5} fade speed={1} />
+      <Stars radius={100} depth={50} count={starCount} factor={3} saturation={0.5} fade speed={1} />
     </>
   )
 }
 
 function Scene3D() {
+  const graphicsQuality = useStore(state => state.graphicsQuality)
   return (
     <Canvas
       camera={{ position: [0, 25, 18], fov: 60 }}
-      gl={{ antialias: true, alpha: true }}
+      gl={{ antialias: graphicsQuality !== 'low', alpha: true, powerPreference: 'high-performance' }}
+      dpr={graphicsQuality === 'low' ? [1, 1.25] : [1, 1.5]}
+      performance={{ min: 0.5 }}
       style={{ width: '100%', height: '100%' }}
       onCreated={({ gl }) => {
         gl.setClearColor(new THREE.Color('#0a0a1a'), 1)
