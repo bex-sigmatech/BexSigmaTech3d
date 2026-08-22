@@ -534,21 +534,23 @@ export default function WebDevStore() {
     const draw = () => {
       ctx.clearRect(0, 0, width, height)
 
-      // Fine holographic matrix grid lines
-      ctx.strokeStyle = 'rgba(167, 139, 250, 0.025)'
-      ctx.lineWidth = 1
-      const gridSize = 70
-      for (let x = 0; x < width; x += gridSize) {
-        ctx.beginPath()
-        ctx.moveTo(x, 0)
-        ctx.lineTo(x, height)
-        ctx.stroke()
-      }
-      for (let y = 0; y < height; y += gridSize) {
-        ctx.beginPath()
-        ctx.moveTo(0, y)
-        ctx.lineTo(width, y)
-        ctx.stroke()
+      // Fine holographic matrix grid lines (desktop only for performance)
+      if (width > 768) {
+        ctx.strokeStyle = 'rgba(167, 139, 250, 0.025)'
+        ctx.lineWidth = 1
+        const gridSize = 70
+        for (let x = 0; x < width; x += gridSize) {
+          ctx.beginPath()
+          ctx.moveTo(x, 0)
+          ctx.lineTo(x, height)
+          ctx.stroke()
+        }
+        for (let y = 0; y < height; y += gridSize) {
+          ctx.beginPath()
+          ctx.moveTo(0, y)
+          ctx.lineTo(width, y)
+          ctx.stroke()
+        }
       }
 
       particles.forEach((p, idx) => {
@@ -841,6 +843,12 @@ export default function WebDevStore() {
             const angle = idx * stepAngle
             const diff = Math.abs(activeModuloIndex - idx)
             const minDiff = Math.min(diff, PRODUCTS.length - diff)
+            const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768
+
+            // On mobile, skip distant cards to drastically boost GPU FPS
+            if (isMobile && minDiff > 1) {
+              return null
+            }
 
             // Highlight active nodes, dim others for holographic look
             let opacity = 0.12
@@ -849,11 +857,11 @@ export default function WebDevStore() {
             if (minDiff === 0) {
               opacity = 1.0
               pointerEvents = 'auto'
-              scale = 0.82
+              scale = isMobile ? 0.90 : 0.82
             } else if (minDiff === 1) {
-              opacity = 0.55
+              opacity = 0.45
               pointerEvents = 'none'
-              scale = 0.70
+              scale = isMobile ? 0.65 : 0.70
             }
 
             return (

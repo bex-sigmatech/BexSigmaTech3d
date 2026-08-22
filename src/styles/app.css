@@ -5531,16 +5531,27 @@ body {
   .cyber-container,
   .nolan-badge,
   .hq-modal,
-  .briefing-card {
+  .briefing-card,
+  .webdev-product-card {
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
     background-color: rgba(6, 12, 24, 0.94) !important;
   }
 
+  .webdev-product-card {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6) !important;
+    will-change: transform, opacity;
+  }
+
+  .webdev-slider-viewport {
+    height: 520px !important;
+  }
+
   /* GPU layer promotion for hardware-accelerated scrolling */
   .glass-card,
   .hq-bottom-dock,
-  .dept-card-wrapper {
+  .dept-card-wrapper,
+  .webdev-product-card {
     will-change: transform;
     transform: translateZ(0);
   }
