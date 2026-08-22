@@ -519,23 +519,28 @@ export default function AICore() {
   return (
     <div style={{ position: 'absolute', inset: 0, width: '100vw', height: '100vh', overflow: 'hidden', background: '#000' }}>
       {isMobileScreen ? (
-        /* ── MOBILE CYBER-LUXE AI CORE INTERFACE ── */
+        /* ── MOBILE-DEDICATED AI CORE & CREDENTIAL INTERFACE ── */
         <div className="mobile-aicore-wrapper">
 
-          {/* Ambient Background */}
+          {/* Ambient Background Effects */}
           <div className="cl-bg-mesh" />
           <div className="cl-scanlines" />
 
-          {/* ── TOP: OS Status Bar ── */}
+          {/* ── TOP: Status Bar ── */}
           <div className="cl-topbar">
             <div className="cl-topbar-left">
               <span className="cl-topbar-pipe">|</span>
-              <span className="cl-topbar-os">BEX SIGMA OS v4.0</span>
+              <span className="cl-topbar-os">NEURAL LINK ACTIVE</span>
+            </div>
+            <div className="mobile-status-pill">
+              <span className="pill-dot" /> ENCRYPTED
             </div>
           </div>
 
-          {/* ── HERO: Plasma AI Core Orb ── */}
-          <div className="cl-hero-section">
+          {/* ── CENTER: AI Core Orb + Credential Card ── */}
+          <div className="cl-hero-section" style={{ margin: '10px 0', width: '100%', maxWidth: '420px' }}>
+
+            {/* Holographic AI Neural Orb */}
             <div className="cl-orb-wrapper">
               <div className="cl-orb-aura" />
               <div className="cl-orb-ring r1" />
@@ -544,330 +549,323 @@ export default function AICore() {
                 <div className="cl-orb-plasma" />
                 <span className="cl-orb-sigil">XΣ</span>
               </div>
-              {/* Audio Wave Bars */}
-              <div className="cl-audio-waves">
-                {[...Array(7)].map((_, i) => (
-                  <div key={i} className="cl-wave-bar" style={{ '--i': i, animationDelay: `${i * 0.1}s` }} />
-                ))}
-              </div>
             </div>
             <div className="cl-signal-tag">
               <span className="cl-signal-dot" />
-              <span>{isSpeaking ? 'AI VOICE TRANSMITTING' : 'ACTIVE SIGNAL'}</span>
-            </div>
-          </div>
-
-          {/* ── CARD: Credential Verification ── */}
-          <div className="cl-card">
-            <div className="cl-card-corner tl" /><div className="cl-card-corner tr" />
-            <div className="cl-card-corner bl" /><div className="cl-card-corner br" />
-
-            {/* Card Header */}
-            <div className="cl-card-header">
-              <span className="cl-card-title">BEX SIGMA</span>
-              <span className="cl-card-subtitle">TECH · SaaS & AI Engineering</span>
-              <span className="cl-card-version">AI AGENT INTERFACE v4.01</span>
+              <span>{isSpeaking ? 'AI VOICE TRANSMITTING' : 'BIOMETRIC SCAN READY'}</span>
             </div>
 
-            {/* Fingerprint Icon */}
-            <div className="cl-fingerprint">
-              <div className="cl-fp-ring" />
-              <span className="cl-fp-icon">🔐</span>
-            </div>
+            {/* Credential Verification Card */}
+            <div className="cl-card">
+              <div className="cl-card-corner tl" />
+              <div className="cl-card-corner tr" />
+              <div className="cl-card-corner bl" />
+              <div className="cl-card-corner br" />
 
-            {/* Dialogue */}
-            <div className="id-dialogue-block cl-dialogue">
-              {scene !== 'ai_response' ? (
-                <>
-                  <p className="cl-dialogue-label">ACCESS KEY / CALLSIGN</p>
-                </>
-              ) : (
-                <>
-                  <p className="cl-dialogue-main cl-granted">
-                    "<TypewriterText text={`Welcome, ${userName}.`} speed={35} />"
-                  </p>
-                  <p className="cl-dialogue-sub">
-                    "<TypewriterText text="Operator credentials verified. Synchronizing observatory..." speed={20} />"
-                  </p>
-                </>
-              )}
-            </div>
-
-            {/* Form or Access Banner */}
-            {scene !== 'ai_response' ? (
-              <form onSubmit={handleSubmit} className="cl-form">
-                <div className="cl-input-row">
-                  <input
-                    type="text"
-                    className="cl-input interactive"
-                    placeholder="e.g. VANGUARD-7"
-                    value={inputName}
-                    onChange={(e) => setInputName(e.target.value)}
-                  />
-                  <button
-                    type="button"
-                    onClick={handleMicClick}
-                    className={`cl-mic interactive ${isListening ? 'listening' : ''}`}
-                  >
-                    🎙️
-                  </button>
-                </div>
-                <button type="submit" className="cl-sync-btn interactive">
-                  SYNC CREDENTIALS
-                </button>
-              </form>
-            ) : (
-              <div className="cl-access-banner">
-                <span className="cl-access-icon">✓</span>
-                <span className="cl-access-text">CLEARANCE VERIFIED · SYNCING HQ...</span>
-              </div>
-            )}
-          </div>
-
-          {/* ── BOTTOM: HUD Footer ── */}
-          <div className="cl-hud-footer">
-            <div className="cl-hud-cell">
-              <span className="cl-hud-icon">⚙️</span>
-              <span className="cl-hud-key">SYSTEM</span>
-              <span className="cl-hud-val green">ACTIVE</span>
-            </div>
-            <div className="cl-hud-cell">
-              <span className="cl-hud-icon">🤖</span>
-              <span className="cl-hud-key">AI CORE</span>
-              <span className="cl-hud-val cyan">ONLINE</span>
-            </div>
-            <div className="cl-hud-cell">
-              <span className="cl-hud-icon">🛡️</span>
-              <span className="cl-hud-key">NETWORK</span>
-              <span className="cl-hud-val green">SECURE</span>
-            </div>
-            <div className="cl-hud-cell">
-              <span className="cl-hud-icon">📡</span>
-              <span className="cl-hud-key">DEVICES</span>
-              <span className="cl-hud-val cyan">4</span>
-            </div>
-          </div>
-
-        </div>
-    ) : (
-      /* ── DESKTOP AI CORE INTERFACE (UNCHANGED) ── */
-      <div className="desktop-aicore-wrapper">
-        {/* ══ SHOT 0: Orbital Command Station ══ */}
-        {shotPhase === 0 && (
-          <div className="cinematic-shot-container fade-in">
-            <div
-              className="cinematic-fullbg"
-              style={{
-                backgroundImage: "url('/station.png')",
-                transform: 'perspective(1400px) translateZ(-70px) scale(1.15)',
-                filter: 'brightness(0.4) saturate(0.65) blur(3px)',
-              }}
-            />
-            <div
-              className="cinematic-fullbg shot-3d-approach"
-              style={{ backgroundImage: "url('/station.png')", filter: 'brightness(0.88) saturate(1.2)' }}
-            />
-            <div className="cinematic-depth-glow" />
-            <ParticleField3D count={graphicsQuality === 'low' ? 0 : 60} />
-            <HoloScanLines />
-            <div className="cinematic-vignette" />
-            <div className="cinematic-letterbox-top" />
-            <div className="cinematic-letterbox-bottom" />
-            <div className="cinematic-caption">
-              <div className="caption-location">ORBITAL RESEARCH HEADQUARTERS · 408 KM ALTITUDE</div>
-              <div className="caption-title">BEX SIGMA TECH COMMAND STATION</div>
-            </div>
-            <HUDCorners />
-          </div>
-        )}
-
-        {/* ══ SHOT 1: Airlock / Docking Bay ══ */}
-        {shotPhase === 1 && (
-          <div className="cinematic-shot-container fade-in">
-            <div
-              className="cinematic-fullbg"
-              style={{
-                backgroundImage: "url('/docking.png')",
-                transform: 'perspective(1200px) translateZ(-90px) scale(1.20)',
-                filter: 'brightness(0.38) saturate(0.6) blur(3.5px)',
-              }}
-            />
-            <div
-              className="cinematic-fullbg shot-3d-dolly"
-              style={{ backgroundImage: "url('/docking.png')", filter: 'brightness(0.84) saturate(1.1)' }}
-            />
-            <div
-              style={{
-                position: 'absolute', inset: 0,
-                background: 'radial-gradient(ellipse 60% 55% at 52% 48%, rgba(0,180,255,0.18) 0%, transparent 70%)',
-                pointerEvents: 'none', zIndex: 5,
-                animation: 'airlock-pulse 2.5s ease-in-out infinite',
-              }}
-            />
-            <ParticleField3D count={graphicsQuality === 'low' ? 0 : 45} />
-            <HoloScanLines />
-            <div className="cinematic-vignette" />
-            <div className="cinematic-letterbox-top" />
-            <div className="cinematic-letterbox-bottom" />
-            <div className="cinematic-caption">
-              <div className="caption-location">DOCKING BAY 04 · HYDRAULIC AIRLOCK SEQUENCE</div>
-              <div className="caption-title">AUTOMATED APPROACH ENGAGED</div>
-            </div>
-            <HUDCorners />
-          </div>
-        )}
-
-        {/* ══ SHOT 2: Welcome / ID Scan Panel ══ */}
-        {shotPhase === 2 && (
-          <div className="cinematic-shot-container fade-in">
-            <div
-              className="cinematic-fullbg"
-              style={{
-                backgroundImage: "url('/welcome_bg.png')",
-                transform: 'perspective(1600px) translateZ(-110px) scale(1.24)',
-                filter: 'brightness(0.32) saturate(0.55) blur(5px)',
-              }}
-            />
-            <div
-              className="cinematic-fullbg shot-breathe"
-              style={{
-                backgroundImage: "url('/welcome_bg.png')",
-                transform: 'perspective(1400px) translateZ(-22px) scale(1.07)',
-                filter: 'brightness(0.68) saturate(1.1)',
-              }}
-            />
-            <div className="cinematic-depth-atmosphere" />
-            <ParticleField3D count={graphicsQuality === 'low' ? 0 : 35} />
-            <HoloScanLines />
-            <div className="cinematic-vignette" />
-            <div className="cinematic-letterbox-top" />
-            <div className="cinematic-letterbox-bottom" />
-
-            {/* Futuristic Jarvis / Iron Man HUD Portal */}
-            <JarvisSuitHUD
-              active={robotVisible}
-              zoomPhase={zoomPhase}
-              isSpeaking={isSpeaking}
-              scene={scene}
-            />
-
-            {/* Mobile-only ambient background pulse (Jarvis HUD is hidden on mobile) */}
-            <div className="ai-core-mobile-ambient" />
-
-            {/* ── Holographic 3D Tilting ID Panel ── */}
-            <div
-              className={`identification-panel tilted-3d ${robotVisible ? 'panel-visible' : ''}`}
-              onMouseMove={handleMouseMove}
-              onMouseLeave={handleMouseLeave}
-              style={{
-                transform: `perspective(1000px) rotateX(${tilt.y}deg) rotateY(${tilt.x}deg) translateY(-50%)`,
-                transformStyle: 'preserve-3d',
-              }}
-            >
-              {/* Holographic scanner line overlay */}
-              <div className="panel-cyber-scanner" />
-
-              <div className="id-panel-badge-row">
-                <div className="id-badge-dot" />
-                <span className="id-badge-label">BEX SIGMA TECH · AI NODE S7 · ACCESS: PENDING</span>
+              <div className="cl-card-header">
+                <span className="cl-card-title">CREDENTIAL VERIFICATION</span>
+                <span className="cl-card-subtitle">BEX SIGMA COMMAND CENTER</span>
               </div>
 
-              {/* Zoom phase progress dots */}
-              {robotVisible && (
-                <div className="robot-scan-status">
-                  <div className={`scan-phase-dot ${zoomPhase >= 0 ? 'done' : ''}`} />
-                  <div className={`scan-phase-line ${zoomPhase >= 1 ? 'active' : ''}`} />
-                  <div className={`scan-phase-dot ${zoomPhase >= 1 ? 'done' : ''}`} />
-                  <div className={`scan-phase-line ${zoomPhase >= 2 ? 'active' : ''}`} />
-                  <div className={`scan-phase-dot ${zoomPhase >= 2 ? 'done' : ''}`} />
-                  <span className="scan-phase-label">
-                    {zoomPhase === 0 && 'INITIALIZING CORE...'}
-                    {zoomPhase === 1 && 'BIOMETRIC VERIFICATION...'}
-                    {zoomPhase === 2 && 'CREDENTIAL CHECK COMPLETE ✓'}
-                  </span>
-                </div>
-              )}
-
-              {/* AI Voice Indicator */}
-              {robotVisible && (
-                <div className="ai-voice-indicator">
-                  <div className="voice-wave-bar" style={{ '--i': 1 }} />
-                  <div className="voice-wave-bar" style={{ '--i': 2 }} />
-                  <div className="voice-wave-bar" style={{ '--i': 3 }} />
-                  <div className="voice-wave-bar" style={{ '--i': 4 }} />
-                  <div className="voice-wave-bar" style={{ '--i': 5 }} />
-                  <span className="voice-label">AI ASSISTANT TRANSMITTING</span>
-                </div>
-              )}
-
-              {/* AI Dialogue with typewriter effect */}
-              <div className="id-dialogue-block">
+              <div className="id-dialogue-block cl-dialogue">
                 {scene !== 'ai_response' ? (
                   <>
-                    <p className="id-line-main" style={{ fontSize: 'clamp(0.95rem, 1.8vw, 1.3rem)' }}>
-                      “<TypewriterText text="BEX SIGMA TECH is a premium SaaS building software company." speed={35} />”
+                    <p className="cl-dialogue-main">
+                      "<TypewriterText text="BEX SIGMA TECH is a premium SaaS building software company." speed={35} />"
                     </p>
-                    <p className="id-line-sub" style={{ fontSize: 'clamp(0.72rem, 1.3vw, 0.85rem)', color: 'rgba(0, 212, 255, 0.75)' }}>
-                      “<TypewriterText text="We provide digital marketing, run Meta Ads campaigns, create content, and offer financial systems support. Sync callsign to enter." speed={20} />”
+                    <p className="cl-dialogue-sub">
+                      "<TypewriterText text="We provide digital marketing, Meta Ads, and financial systems support. Sync callsign to enter." speed={20} />"
                     </p>
                   </>
                 ) : (
                   <>
-                    <p className="id-line-main id-granted">
-                      “<TypewriterText text={`Welcome, ${userName}.`} speed={35} />”
+                    <p className="cl-dialogue-main cl-granted">
+                      "<TypewriterText text={`Welcome, ${userName}.`} speed={35} />"
                     </p>
-                    <p className="id-line-sub" style={{ fontSize: 'clamp(0.72rem, 1.3vw, 0.85rem)' }}>
-                      “<TypewriterText text="Operator credentials verified. Synchronizing observatory database..." speed={20} />”
+                    <p className="cl-dialogue-sub">
+                      "<TypewriterText text="Operator credentials verified. Synchronizing observatory database..." speed={20} />"
                     </p>
-                    <div className="access-granted-bars">
-                      {Array.from({ length: 14 }).map((_, i) => (
-                        <div key={i} className="access-bar" style={{ animationDelay: `${i * 0.04}s` }} />
-                      ))}
-                    </div>
                   </>
                 )}
               </div>
 
-              {/* Callsign Input Form */}
-              {scene !== 'ai_response' && (
-                <form onSubmit={handleSubmit} className="id-form-block">
-                  <label className="id-form-label">
-                    ENTER CREDENTIAL CALLSIGN / VOICE COMMAND
-                    {isListening && <span style={{ color: '#00d4ff', marginLeft: '10px' }}>🎙️ LISTENING...</span>}
+              {scene !== 'ai_response' ? (
+                <form onSubmit={handleSubmit} className="cl-form">
+                  <label className="cl-dialogue-label">
+                    ENTER CALLSIGN
+                    {isListening && <span className="m-listening-tag" style={{ marginLeft: '6px', color: '#00d4ff' }}>🎙️ LISTENING</span>}
                   </label>
-                  <div className="id-form-row" style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                  <div className="cl-input-row">
                     <input
                       type="text"
-                      className="id-form-input interactive"
-                      placeholder="e.g. COMMANDER"
+                      className="cl-input interactive"
+                      placeholder="e.g. VANGUARD-7"
                       value={inputName}
                       onChange={(e) => setInputName(e.target.value)}
-                      autoFocus
-                      style={{ flex: 1 }}
                     />
                     <button
                       type="button"
                       onClick={handleMicClick}
-                      className={`id-form-btn interactive ${isListening ? 'listening-pulse' : ''}`}
-                      title="Speak credential via Microphone"
-                      style={{ background: isListening ? '#00d4ff' : 'rgba(0, 212, 255, 0.15)', color: isListening ? '#000' : '#00d4ff', width: '44px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                      className={`cl-mic interactive ${isListening ? 'listening' : ''}`}
+                      title="Speak via Microphone"
                     >
                       🎙️
                     </button>
-                    <button type="submit" className="id-form-btn interactive">SYNC</button>
                   </div>
+                  <button type="submit" className="cl-sync-btn interactive">
+                    <span className="m-sync-btn-text">SYNC CREDENTIALS</span>
+                    <span className="m-sync-btn-arrow">→</span>
+                  </button>
                 </form>
+              ) : (
+                <div className="cl-access-banner">
+                  <span className="cl-access-icon">✓</span>
+                  <span className="cl-access-text">CLEARANCE VERIFIED · SYNCING HQ...</span>
+                </div>
               )}
-
-              {/* Live Telemetry Matrix */}
-              <SystemTelemetryBox active={robotVisible} />
             </div>
-
-            <HUDCorners />
           </div>
-        )}
-      </div>
-    )}
+
+          {/* ── BOTTOM: Diagnostics Strip ── */}
+          <div className="cl-hud-footer">
+            <div className="cl-hud-cell">
+              <span className="cl-hud-key">AI SYNC</span>
+              <span className="cl-hud-val green">97.4%</span>
+            </div>
+            <div className="cl-hud-cell">
+              <span className="cl-hud-key">BIOMETRIC</span>
+              <span className="cl-hud-val green">99.8%</span>
+            </div>
+            <div className="cl-hud-cell">
+              <span className="cl-hud-key">NETWORK</span>
+              <span className="cl-hud-val cyan">82.1ms</span>
+            </div>
+            <div className="cl-hud-cell">
+              <span className="cl-hud-key">POWER</span>
+              <span className="cl-hud-val cyan">99.2%</span>
+            </div>
+          </div>
+
+        </div>
+      ) : (
+        /* ── DESKTOP AI CORE INTERFACE (UNCHANGED) ── */
+        <div className="desktop-aicore-wrapper">
+          {/* ══ SHOT 0: Orbital Command Station ══ */}
+          {shotPhase === 0 && (
+            <div className="cinematic-shot-container fade-in">
+              <div
+                className="cinematic-fullbg"
+                style={{
+                  backgroundImage: "url('/station.png')",
+                  transform: 'perspective(1400px) translateZ(-70px) scale(1.15)',
+                  filter: 'brightness(0.4) saturate(0.65) blur(3px)',
+                }}
+              />
+              <div
+                className="cinematic-fullbg shot-3d-approach"
+                style={{ backgroundImage: "url('/station.png')", filter: 'brightness(0.88) saturate(1.2)' }}
+              />
+              <div className="cinematic-depth-glow" />
+              <ParticleField3D count={graphicsQuality === 'low' ? 0 : 60} />
+              <HoloScanLines />
+              <div className="cinematic-vignette" />
+              <div className="cinematic-letterbox-top" />
+              <div className="cinematic-letterbox-bottom" />
+              <div className="cinematic-caption">
+                <div className="caption-location">ORBITAL RESEARCH HEADQUARTERS · 408 KM ALTITUDE</div>
+                <div className="caption-title">BEX SIGMA TECH COMMAND STATION</div>
+              </div>
+              <HUDCorners />
+            </div>
+          )}
+
+          {/* ══ SHOT 1: Airlock / Docking Bay ══ */}
+          {shotPhase === 1 && (
+            <div className="cinematic-shot-container fade-in">
+              <div
+                className="cinematic-fullbg"
+                style={{
+                  backgroundImage: "url('/docking.png')",
+                  transform: 'perspective(1200px) translateZ(-90px) scale(1.20)',
+                  filter: 'brightness(0.38) saturate(0.6) blur(3.5px)',
+                }}
+              />
+              <div
+                className="cinematic-fullbg shot-3d-dolly"
+                style={{ backgroundImage: "url('/docking.png')", filter: 'brightness(0.84) saturate(1.1)' }}
+              />
+              <div
+                style={{
+                  position: 'absolute', inset: 0,
+                  background: 'radial-gradient(ellipse 60% 55% at 52% 48%, rgba(0,180,255,0.18) 0%, transparent 70%)',
+                  pointerEvents: 'none', zIndex: 5,
+                  animation: 'airlock-pulse 2.5s ease-in-out infinite',
+                }}
+              />
+              <ParticleField3D count={graphicsQuality === 'low' ? 0 : 45} />
+              <HoloScanLines />
+              <div className="cinematic-vignette" />
+              <div className="cinematic-letterbox-top" />
+              <div className="cinematic-letterbox-bottom" />
+              <div className="cinematic-caption">
+                <div className="caption-location">DOCKING BAY 04 · HYDRAULIC AIRLOCK SEQUENCE</div>
+                <div className="caption-title">AUTOMATED APPROACH ENGAGED</div>
+              </div>
+              <HUDCorners />
+            </div>
+          )}
+
+          {/* ══ SHOT 2: Welcome / ID Scan Panel ══ */}
+          {shotPhase === 2 && (
+            <div className="cinematic-shot-container fade-in">
+              <div
+                className="cinematic-fullbg"
+                style={{
+                  backgroundImage: "url('/welcome_bg.png')",
+                  transform: 'perspective(1600px) translateZ(-110px) scale(1.24)',
+                  filter: 'brightness(0.32) saturate(0.55) blur(5px)',
+                }}
+              />
+              <div
+                className="cinematic-fullbg shot-breathe"
+                style={{
+                  backgroundImage: "url('/welcome_bg.png')",
+                  transform: 'perspective(1400px) translateZ(-22px) scale(1.07)',
+                  filter: 'brightness(0.68) saturate(1.1)',
+                }}
+              />
+              <div className="cinematic-depth-atmosphere" />
+              <ParticleField3D count={graphicsQuality === 'low' ? 0 : 35} />
+              <HoloScanLines />
+              <div className="cinematic-vignette" />
+              <div className="cinematic-letterbox-top" />
+              <div className="cinematic-letterbox-bottom" />
+
+              {/* Futuristic Jarvis / Iron Man HUD Portal */}
+              <JarvisSuitHUD
+                active={robotVisible}
+                zoomPhase={zoomPhase}
+                isSpeaking={isSpeaking}
+                scene={scene}
+              />
+
+              {/* Mobile-only ambient background pulse (Jarvis HUD is hidden on mobile) */}
+              <div className="ai-core-mobile-ambient" />
+
+              {/* ── Holographic 3D Tilting ID Panel ── */}
+              <div
+                className={`identification-panel tilted-3d ${robotVisible ? 'panel-visible' : ''}`}
+                onMouseMove={handleMouseMove}
+                onMouseLeave={handleMouseLeave}
+                style={{
+                  transform: `perspective(1000px) rotateX(${tilt.y}deg) rotateY(${tilt.x}deg) translateY(-50%)`,
+                  transformStyle: 'preserve-3d',
+                }}
+              >
+                {/* Holographic scanner line overlay */}
+                <div className="panel-cyber-scanner" />
+
+                <div className="id-panel-badge-row">
+                  <div className="id-badge-dot" />
+                  <span className="id-badge-label">BEX SIGMA TECH · AI NODE S7 · ACCESS: PENDING</span>
+                </div>
+
+                {/* Zoom phase progress dots */}
+                {robotVisible && (
+                  <div className="robot-scan-status">
+                    <div className={`scan-phase-dot ${zoomPhase >= 0 ? 'done' : ''}`} />
+                    <div className={`scan-phase-line ${zoomPhase >= 1 ? 'active' : ''}`} />
+                    <div className={`scan-phase-dot ${zoomPhase >= 1 ? 'done' : ''}`} />
+                    <div className={`scan-phase-line ${zoomPhase >= 2 ? 'active' : ''}`} />
+                    <div className={`scan-phase-dot ${zoomPhase >= 2 ? 'done' : ''}`} />
+                    <span className="scan-phase-label">
+                      {zoomPhase === 0 && 'INITIALIZING CORE...'}
+                      {zoomPhase === 1 && 'BIOMETRIC VERIFICATION...'}
+                      {zoomPhase === 2 && 'CREDENTIAL CHECK COMPLETE ✓'}
+                    </span>
+                  </div>
+                )}
+
+                {/* AI Voice Indicator */}
+                {robotVisible && (
+                  <div className="ai-voice-indicator">
+                    <div className="voice-wave-bar" style={{ '--i': 1 }} />
+                    <div className="voice-wave-bar" style={{ '--i': 2 }} />
+                    <div className="voice-wave-bar" style={{ '--i': 3 }} />
+                    <div className="voice-wave-bar" style={{ '--i': 4 }} />
+                    <div className="voice-wave-bar" style={{ '--i': 5 }} />
+                    <span className="voice-label">AI ASSISTANT TRANSMITTING</span>
+                  </div>
+                )}
+
+                {/* AI Dialogue with typewriter effect */}
+                <div className="id-dialogue-block">
+                  {scene !== 'ai_response' ? (
+                    <>
+                      <p className="id-line-main" style={{ fontSize: 'clamp(0.95rem, 1.8vw, 1.3rem)' }}>
+                        “<TypewriterText text="BEX SIGMA TECH is a premium SaaS building software company." speed={35} />”
+                      </p>
+                      <p className="id-line-sub" style={{ fontSize: 'clamp(0.72rem, 1.3vw, 0.85rem)', color: 'rgba(0, 212, 255, 0.75)' }}>
+                        “<TypewriterText text="We provide digital marketing, run Meta Ads campaigns, create content, and offer financial systems support. Sync callsign to enter." speed={20} />”
+                      </p>
+                    </>
+                  ) : (
+                    <>
+                      <p className="id-line-main id-granted">
+                        “<TypewriterText text={`Welcome, ${userName}.`} speed={35} />”
+                      </p>
+                      <p className="id-line-sub" style={{ fontSize: 'clamp(0.72rem, 1.3vw, 0.85rem)' }}>
+                        “<TypewriterText text="Operator credentials verified. Synchronizing observatory database..." speed={20} />”
+                      </p>
+                      <div className="access-granted-bars">
+                        {Array.from({ length: 14 }).map((_, i) => (
+                          <div key={i} className="access-bar" style={{ animationDelay: `${i * 0.04}s` }} />
+                        ))}
+                      </div>
+                    </>
+                  )}
+                </div>
+
+                {/* Callsign Input Form */}
+                {scene !== 'ai_response' && (
+                  <form onSubmit={handleSubmit} className="id-form-block">
+                    <label className="id-form-label">
+                      ENTER CREDENTIAL CALLSIGN / VOICE COMMAND
+                      {isListening && <span style={{ color: '#00d4ff', marginLeft: '10px' }}>🎙️ LISTENING...</span>}
+                    </label>
+                    <div className="id-form-row" style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                      <input
+                        type="text"
+                        className="id-form-input interactive"
+                        placeholder="e.g. COMMANDER"
+                        value={inputName}
+                        onChange={(e) => setInputName(e.target.value)}
+                        autoFocus
+                        style={{ flex: 1 }}
+                      />
+                      <button
+                        type="button"
+                        onClick={handleMicClick}
+                        className={`id-form-btn interactive ${isListening ? 'listening-pulse' : ''}`}
+                        title="Speak credential via Microphone"
+                        style={{ background: isListening ? '#00d4ff' : 'rgba(0, 212, 255, 0.15)', color: isListening ? '#000' : '#00d4ff', width: '44px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                      >
+                        🎙️
+                      </button>
+                      <button type="submit" className="id-form-btn interactive">SYNC</button>
+                    </div>
+                  </form>
+                )}
+
+                {/* Live Telemetry Matrix */}
+                <SystemTelemetryBox active={robotVisible} />
+              </div>
+
+              <HUDCorners />
+            </div>
+          )}
+        </div>
+      )}
     </div>
   )
 }
