@@ -508,11 +508,19 @@ export default function AICore() {
     setTilt({ x: 0, y: 0 })
   }
 
+  const [isMobileScreen, setIsMobileScreen] = useState(() => typeof window !== 'undefined' && window.innerWidth <= 768)
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobileScreen(window.innerWidth <= 768)
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
+
   return (
     <div style={{ position: 'absolute', inset: 0, width: '100vw', height: '100vh', overflow: 'hidden', background: '#000' }}>
-
-      {/* ── MOBILE-DEDICATED AI CORE & CREDENTIAL INTERFACE ── */}
-      <div className="mobile-aicore-wrapper">
+      {isMobileScreen ? (
+        /* ── MOBILE-DEDICATED AI CORE & CREDENTIAL INTERFACE ── */
+        <div className="mobile-aicore-wrapper">
         {/* Top Telemetry Header Card */}
         <div className="mobile-telemetry-header">
           <div className="telemetry-header-info">
@@ -621,8 +629,8 @@ export default function AICore() {
           </div>
         </div>
       </div>
-
-      {/* ── DESKTOP AI CORE INTERFACE (UNCHANGED) ── */}
+    ) : (
+      /* ── DESKTOP AI CORE INTERFACE (UNCHANGED) ── */
       <div className="desktop-aicore-wrapper">
         {/* ══ SHOT 0: Orbital Command Station ══ */}
         {shotPhase === 0 && (
@@ -839,6 +847,7 @@ export default function AICore() {
           </div>
         )}
       </div>
+    )}
     </div>
   )
 }

@@ -86,10 +86,19 @@ export default function BootScreen() {
     return () => clearInterval(interval)
   }, [started, setLoadingProgress, triggerAccessGranted])
 
+  const [isMobileScreen, setIsMobileScreen] = useState(() => typeof window !== 'undefined' && window.innerWidth <= 768)
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobileScreen(window.innerWidth <= 768)
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
+
   return (
     <div className="nolan-boot-screen">
-      {/* ── MOBILE-DEDICATED LANDING SCREEN ── */}
-      <div className="mobile-boot-wrapper">
+      {isMobileScreen ? (
+        /* ── MOBILE-DEDICATED LANDING SCREEN ── */
+        <div className="mobile-boot-wrapper">
         {!started ? (
           <div className="mobile-boot-hero">
             {/* Top Brand Bar */}
@@ -212,13 +221,12 @@ export default function BootScreen() {
               {loadingProgress >= 25 && loadingProgress < 50 && "CORE MODULES ONLINE..."}
               {loadingProgress >= 50 && loadingProgress < 75 && "AI SYSTEMS OPERATIONAL..."}
               {loadingProgress >= 75 && loadingProgress < 100 && "SECURITY VERIFICATION COMPLETE"}
-              {loadingProgress === 100 && "INITIALIZATION COMPLETE"}
             </div>
           </div>
         )}
       </div>
-
-      {/* ── DESKTOP LANDING SCREEN (UNCHANGED) ── */}
+    ) : (
+      /* ── DESKTOP LANDING SCREEN (UNCHANGED) ── */
       <div className="desktop-boot-wrapper">
         {!started ? (
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px' }}>
@@ -301,6 +309,7 @@ export default function BootScreen() {
           </div>
         )}
       </div>
+    )}
     </div>
   )
 }
