@@ -134,6 +134,41 @@
   "downloads": [],
   "aiChats": [
     {
+      "id": "chat_1787384664582",
+      "userPrompt": "User callsign: COMMANDER",
+      "aiResponse": "Command logged, COMMANDER. BEX SIGMA TECH neural grid is operating at peak capacity. All biometric signatures and quantum encryption keys verified.",
+      "modelUsed": "BEX Neural Core (Local)",
+      "timestamp": "2026-08-22T07:44:24.583Z"
+    },
+    {
+      "id": "chat_1787382271664",
+      "userPrompt": "User callsign: COMMANDER",
+      "aiResponse": "Command logged, COMMANDER. BEX SIGMA TECH neural grid is operating at peak capacity. All biometric signatures and quantum encryption keys verified.",
+      "modelUsed": "BEX Neural Core (Local)",
+      "timestamp": "2026-08-22T07:04:31.664Z"
+    },
+    {
+      "id": "chat_1787381882941",
+      "userPrompt": "User callsign: VANGUARD-7",
+      "aiResponse": "Command logged, VANGUARD-7. BEX SIGMA TECH neural grid is operating at peak capacity. All biometric signatures and quantum encryption keys verified.",
+      "modelUsed": "BEX Neural Core (Local)",
+      "timestamp": "2026-08-22T06:58:02.941Z"
+    },
+    {
+      "id": "chat_1787380888672",
+      "userPrompt": "User callsign: VANGUARD-7",
+      "aiResponse": "Command logged, VANGUARD-7. BEX SIGMA TECH neural grid is operating at peak capacity. All biometric signatures and quantum encryption keys verified.",
+      "modelUsed": "BEX Neural Core (Local)",
+      "timestamp": "2026-08-22T06:41:28.672Z"
+    },
+    {
+      "id": "chat_1787380360661",
+      "userPrompt": "User callsign: jk",
+      "aiResponse": "Command logged, jk. BEX SIGMA TECH neural grid is operating at peak capacity. All biometric signatures and quantum encryption keys verified.",
+      "modelUsed": "BEX Neural Core (Local)",
+      "timestamp": "2026-08-22T06:32:40.661Z"
+    },
+    {
       "id": "chat_1787316362907",
       "userPrompt": "User callsign: jk",
       "aiResponse": "Command logged, jk. BEX SIGMA TECH neural grid is operating at peak capacity. All biometric signatures and quantum encryption keys verified.",

@@ -537,32 +537,149 @@ export default function AICore() {
             </div>
           </div>
 
-          {/* ── CENTER: 3D AI Sentinel Robot + Holographic Core ── */}
-          <div className="cl-hero-section" style={{ margin: '6px 0', width: '100%', maxWidth: '420px' }}>
+          {/* ── CENTER: 3D Realistic AI Robot Background + Credential Card ── */}
+          <div className="cl-hero-section" style={{ margin: '0', width: '100%', maxWidth: '420px' }}>
 
-            {/* 3D AI Robot Graphic & Neural Core Orb */}
-            <div className="cl-orb-wrapper">
-              <div className="cl-orb-aura" />
+            {/* ── 3D CSS Robot Head — preserve-3d multi-face ── */}
+            <div className="cl-3d-robot-bg">
+              {/* Ambient depth glow */}
+              <div className="cl-robot-depth-far" />
 
-              {/* Holographic AI Robot Silhouette Aura */}
-              <svg className="cl-robot-wireframe" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-                {/* Robot Head Outer Contour */}
-                <path d="M 60 70 C 60 40 140 40 140 70 L 145 110 C 145 140 130 160 100 170 C 70 160 55 140 55 110 Z" stroke="rgba(0, 212, 255, 0.25)" strokeWidth="1.5" strokeDasharray="4 4" />
-                {/* Optical Eye Line */}
-                <circle cx="80" cy="85" r="10" stroke="#00d4ff" strokeWidth="1.5" />
-                <circle cx="80" cy="85" r="4" fill="#00ff88" />
-                <circle cx="120" cy="85" r="10" stroke="#00d4ff" strokeWidth="1.5" />
-                <circle cx="120" cy="85" r="4" fill="#00ff88" />
-                <line x1="70" y1="85" x2="130" y2="85" stroke="rgba(0, 212, 255, 0.4)" strokeWidth="1" />
-                {/* Cybernetic Neck & Collar Plate */}
-                <path d="M 80 165 L 80 190 M 120 165 L 120 190 M 60 190 L 140 190" stroke="rgba(0, 212, 255, 0.3)" strokeWidth="1.5" />
-              </svg>
+              {/* 3D scene container */}
+              <div className="cl-robot-scene">
+                <div className="cl-robot-head">
+                  {/* Front face — the main visage */}
+                  <div className="cl-rh-face front">
+                    {/* Forehead ridge */}
+                    <div className="cl-rh-brow-ridge" />
+                    {/* Nose ridge */}
+                    <div className="cl-rh-nose-ridge" />
+                    {/* Ear pods */}
+                    <div className="cl-rh-ear left">
+                      <div className="cl-rh-ear-inner" />
+                    </div>
+                    <div className="cl-rh-ear right">
+                      <div className="cl-rh-ear-inner" />
+                    </div>
+                    {/* Visor with eyes */}
+                    <div className="cl-rh-visor">
+                      <div className="cl-rh-eye left">
+                        <div className="cl-rh-iris" />
+                        <div className="cl-rh-pupil" />
+                        <div className="cl-rh-eye-reflection" />
+                      </div>
+                      <div className="cl-rh-eye right">
+                        <div className="cl-rh-iris" />
+                        <div className="cl-rh-pupil" />
+                        <div className="cl-rh-eye-reflection" />
+                      </div>
+                      <div className="cl-rh-visor-scan" />
+                    </div>
+                    {/* Cheek panels with seams */}
+                    <div className="cl-rh-cheek left">
+                      <div className="cl-rh-rivet" />
+                      <div className="cl-rh-rivet r2" />
+                    </div>
+                    <div className="cl-rh-cheek right">
+                      <div className="cl-rh-rivet" />
+                      <div className="cl-rh-rivet r2" />
+                    </div>
+                    {/* Mouth / jaw area */}
+                    <div className="cl-rh-jaw">
+                      <div className="cl-rh-mouth">
+                        {Array.from({length: 6}).map((_, i) => (
+                          <div key={i} className="cl-rh-tooth" style={{'--d': i}} />
+                        ))}
+                      </div>
+                    </div>
+                    <div className="cl-rh-stamp">XΣ</div>
+                    {/* Panel seam lines */}
+                    <div className="cl-rh-seam left-seam" />
+                    <div className="cl-rh-seam right-seam" />
+                    <div className="cl-rh-seam chin-seam" />
+                  </div>
+                  {/* Back face */}
+                  <div className="cl-rh-face back">
+                    <div className="cl-rh-back-plate" />
+                    <div className="cl-rh-panel-lines">
+                      {Array.from({length: 5}).map((_, i) => <div key={i} className="cl-rh-line" style={{top: `${15 + i * 16}%`}} />)}
+                    </div>
+                    <div className="cl-rh-vent">
+                      {Array.from({length: 8}).map((_, i) => <div key={i} className="cl-rh-vent-slot" />)}
+                    </div>
+                    <div className="cl-rh-back-label">MK·LXXXV</div>
+                  </div>
+                  {/* Right face */}
+                  <div className="cl-rh-face right">
+                    <div className="cl-rh-side-light" />
+                    <div className="cl-rh-side-light s2" />
+                    <div className="cl-rh-circuit">
+                      <svg viewBox="0 0 100 100" fill="none" strokeWidth="1">
+                        <path d="M10 15 L35 15 L35 40 L55 40 L55 25 L80 25" stroke="rgba(0,212,255,0.3)" />
+                        <path d="M15 45 L40 45 L40 70 L65 70 L65 85" stroke="rgba(0,212,255,0.25)" />
+                        <path d="M50 10 L50 30 L75 30 L75 55" stroke="rgba(0,255,136,0.2)" />
+                        <path d="M25 75 L25 90 L55 90" stroke="rgba(0,255,136,0.15)" />
+                        <circle cx="35" cy="15" r="2.5" fill="rgba(0,212,255,0.6)" />
+                        <circle cx="55" cy="40" r="2" fill="rgba(0,255,136,0.5)" />
+                        <circle cx="80" cy="25" r="2.5" fill="rgba(0,212,255,0.4)" />
+                        <circle cx="65" cy="70" r="2" fill="rgba(0,255,136,0.6)" />
+                        <rect x="20" y="55" width="8" height="4" rx="1" fill="rgba(0,212,255,0.2)" />
+                        <rect x="58" y="48" width="12" height="3" rx="1" fill="rgba(0,212,255,0.15)" />
+                      </svg>
+                    </div>
+                    <div className="cl-rh-side-rivets">
+                      {Array.from({length: 3}).map((_, i) => <div key={i} className="cl-rh-rivet" style={{top: `${25 + i * 25}%`}} />)}
+                    </div>
+                  </div>
+                  {/* Left face */}
+                  <div className="cl-rh-face left">
+                    <div className="cl-rh-side-light" />
+                    <div className="cl-rh-side-light s2" />
+                    <div className="cl-rh-circuit">
+                      <svg viewBox="0 0 100 100" fill="none" strokeWidth="1">
+                        <path d="M90 20 L65 20 L65 45 L45 45 L45 30 L20 30" stroke="rgba(0,212,255,0.3)" />
+                        <path d="M85 50 L60 50 L60 75 L35 75 L35 90" stroke="rgba(0,212,255,0.25)" />
+                        <path d="M50 15 L50 35 L25 35 L25 60" stroke="rgba(0,255,136,0.2)" />
+                        <circle cx="65" cy="20" r="2.5" fill="rgba(0,212,255,0.6)" />
+                        <circle cx="45" cy="45" r="2" fill="rgba(0,255,136,0.5)" />
+                        <circle cx="20" cy="30" r="2.5" fill="rgba(0,212,255,0.4)" />
+                        <rect x="40" y="60" width="10" height="3" rx="1" fill="rgba(0,212,255,0.2)" />
+                      </svg>
+                    </div>
+                    <div className="cl-rh-side-rivets">
+                      {Array.from({length: 3}).map((_, i) => <div key={i} className="cl-rh-rivet" style={{top: `${25 + i * 25}%`}} />)}
+                    </div>
+                  </div>
+                  {/* Top face */}
+                  <div className="cl-rh-face top">
+                    <div className="cl-rh-antenna">
+                      <div className="cl-rh-antenna-pole" />
+                      <div className="cl-rh-antenna-tip" />
+                    </div>
+                    <div className="cl-rh-top-ring" />
+                    <div className="cl-rh-top-seam" />
+                  </div>
+                  {/* Bottom face */}
+                  <div className="cl-rh-face bottom">
+                    <div className="cl-rh-neck">
+                      <div className="cl-rh-neck-ring" />
+                      <div className="cl-rh-neck-ring r2" />
+                      <div className="cl-rh-neck-ring r3" />
+                    </div>
+                  </div>
+                </div>
+              </div>
 
-              <div className="cl-orb-ring r1" />
-              <div className="cl-orb-ring r2" />
-              <div className={`cl-orb-core ${isSpeaking ? 'speaking' : ''}`}>
-                <div className="cl-orb-plasma" />
-                <span className="cl-orb-sigil">XΣ</span>
+              {/* Scanning beam overlay */}
+              <div className="cl-robot-scan-beam" />
+              {/* Neural core pulsing orb */}
+              <div className="cl-robot-neural-core">
+                <div className="cl-neural-pulse-ring r1" />
+                <div className="cl-neural-pulse-ring r2" />
+                <div className="cl-neural-pulse-ring r3" />
+                <div className="cl-neural-center">
+                  <span className="cl-orb-sigil">XΣ</span>
+                </div>
               </div>
             </div>
 
