@@ -519,116 +519,136 @@ export default function AICore() {
   return (
     <div style={{ position: 'absolute', inset: 0, width: '100vw', height: '100vh', overflow: 'hidden', background: '#000' }}>
       {isMobileScreen ? (
-        /* ── MOBILE-DEDICATED AI CORE & CREDENTIAL INTERFACE ── */
+        /* ── MOBILE CYBER-LUXE AI CORE INTERFACE ── */
         <div className="mobile-aicore-wrapper">
-        {/* Top Telemetry Header Card */}
-        <div className="mobile-telemetry-header">
-          <div className="telemetry-header-info">
-            <span className="telemetry-header-title">ORBITAL STATION TELEMETRY</span>
-            <span className="telemetry-header-sub">BEX SIGMA COMMAND CENTER</span>
-          </div>
-          <div className="telemetry-lock-pill">🔒 SECURE</div>
-        </div>
 
-        {/* Central Animated Holographic AI Neural Node */}
-        <div className="mobile-ai-node-container">
-          <div className="mobile-ai-node-glow" />
-          <div className={`mobile-ai-node-core ${isSpeaking ? 'speaking' : ''}`}>
-            <div className="node-ring-1" />
-            <div className="node-ring-2" />
-            <div className="node-ring-3" />
-            <div className="node-center-sig">XΣ</div>
-          </div>
-          <div className="mobile-ai-status-tag">
-            <span className="blink-dot" /> {isSpeaking ? 'AI TRANSMITTING VOICE...' : 'BIOMETRIC VERIFICATION ACTIVE'}
-          </div>
-        </div>
+          {/* Ambient Background */}
+          <div className="cl-bg-mesh" />
+          <div className="cl-scanlines" />
 
-        {/* Mobile Biometric Credential Card */}
-        <div className="mobile-credential-card">
-          <div className="mobile-card-header">
-            <span className="card-badge">BIOMETRIC CREDENTIAL VERIFICATION</span>
+          {/* ── TOP: OS Status Bar ── */}
+          <div className="cl-topbar">
+            <div className="cl-topbar-left">
+              <span className="cl-topbar-pipe">|</span>
+              <span className="cl-topbar-os">BEX SIGMA OS v4.0</span>
+            </div>
           </div>
 
-          <div className="id-dialogue-block">
+          {/* ── HERO: Plasma AI Core Orb ── */}
+          <div className="cl-hero-section">
+            <div className="cl-orb-wrapper">
+              <div className="cl-orb-aura" />
+              <div className="cl-orb-ring r1" />
+              <div className="cl-orb-ring r2" />
+              <div className={`cl-orb-core ${isSpeaking ? 'speaking' : ''}`}>
+                <div className="cl-orb-plasma" />
+                <span className="cl-orb-sigil">XΣ</span>
+              </div>
+              {/* Audio Wave Bars */}
+              <div className="cl-audio-waves">
+                {[...Array(7)].map((_, i) => (
+                  <div key={i} className="cl-wave-bar" style={{ '--i': i, animationDelay: `${i * 0.1}s` }} />
+                ))}
+              </div>
+            </div>
+            <div className="cl-signal-tag">
+              <span className="cl-signal-dot" />
+              <span>{isSpeaking ? 'AI VOICE TRANSMITTING' : 'ACTIVE SIGNAL'}</span>
+            </div>
+          </div>
+
+          {/* ── CARD: Credential Verification ── */}
+          <div className="cl-card">
+            <div className="cl-card-corner tl" /><div className="cl-card-corner tr" />
+            <div className="cl-card-corner bl" /><div className="cl-card-corner br" />
+
+            {/* Card Header */}
+            <div className="cl-card-header">
+              <span className="cl-card-title">BEX SIGMA</span>
+              <span className="cl-card-subtitle">TECH · SaaS & AI Engineering</span>
+              <span className="cl-card-version">AI AGENT INTERFACE v4.01</span>
+            </div>
+
+            {/* Fingerprint Icon */}
+            <div className="cl-fingerprint">
+              <div className="cl-fp-ring" />
+              <span className="cl-fp-icon">🔐</span>
+            </div>
+
+            {/* Dialogue */}
+            <div className="id-dialogue-block cl-dialogue">
+              {scene !== 'ai_response' ? (
+                <>
+                  <p className="cl-dialogue-label">ACCESS KEY / CALLSIGN</p>
+                </>
+              ) : (
+                <>
+                  <p className="cl-dialogue-main cl-granted">
+                    "<TypewriterText text={`Welcome, ${userName}.`} speed={35} />"
+                  </p>
+                  <p className="cl-dialogue-sub">
+                    "<TypewriterText text="Operator credentials verified. Synchronizing observatory..." speed={20} />"
+                  </p>
+                </>
+              )}
+            </div>
+
+            {/* Form or Access Banner */}
             {scene !== 'ai_response' ? (
-              <>
-                <p className="id-line-main">
-                  “<TypewriterText text="BEX SIGMA TECH is a premium SaaS building software company." speed={35} />”
-                </p>
-                <p className="id-line-sub">
-                  “<TypewriterText text="We provide digital marketing, Meta Ads, and financial systems support. Sync callsign to enter." speed={20} />”
-                </p>
-              </>
+              <form onSubmit={handleSubmit} className="cl-form">
+                <div className="cl-input-row">
+                  <input
+                    type="text"
+                    className="cl-input interactive"
+                    placeholder="e.g. VANGUARD-7"
+                    value={inputName}
+                    onChange={(e) => setInputName(e.target.value)}
+                  />
+                  <button
+                    type="button"
+                    onClick={handleMicClick}
+                    className={`cl-mic interactive ${isListening ? 'listening' : ''}`}
+                  >
+                    🎙️
+                  </button>
+                </div>
+                <button type="submit" className="cl-sync-btn interactive">
+                  SYNC CREDENTIALS
+                </button>
+              </form>
             ) : (
-              <>
-                <p className="id-line-main id-granted">
-                  “<TypewriterText text={`Welcome, ${userName}.`} speed={35} />”
-                </p>
-                <p className="id-line-sub">
-                  “<TypewriterText text="Operator credentials verified. Synchronizing observatory database..." speed={20} />”
-                </p>
-              </>
+              <div className="cl-access-banner">
+                <span className="cl-access-icon">✓</span>
+                <span className="cl-access-text">CLEARANCE VERIFIED · SYNCING HQ...</span>
+              </div>
             )}
           </div>
 
-          {scene !== 'ai_response' ? (
-            <form onSubmit={handleSubmit} className="mobile-cred-form">
-              <label className="cred-label">
-                ENTER CREDENTIAL CALLSIGN
-                {isListening && <span style={{ color: '#00d4ff', marginLeft: '6px' }}>🎙️ LISTENING...</span>}
-              </label>
-
-              <div className="cred-input-row">
-                <input
-                  type="text"
-                  className="cred-input interactive"
-                  placeholder="e.g. VANGUARD-7"
-                  value={inputName}
-                  onChange={(e) => setInputName(e.target.value)}
-                />
-                <button
-                  type="button"
-                  onClick={handleMicClick}
-                  className={`cred-mic-btn interactive ${isListening ? 'listening' : ''}`}
-                  title="Speak via Microphone"
-                >
-                  🎙️
-                </button>
-              </div>
-
-              <button type="submit" className="mobile-sync-btn interactive">
-                SYNC CREDENTIALS
-              </button>
-            </form>
-          ) : (
-            <div className="mobile-access-granted-banner">
-              <span className="granted-icon">✓</span>
-              <span className="granted-text">CLEARANCE VERIFIED · SYNCHRONIZING HQ...</span>
+          {/* ── BOTTOM: HUD Footer ── */}
+          <div className="cl-hud-footer">
+            <div className="cl-hud-cell">
+              <span className="cl-hud-icon">⚙️</span>
+              <span className="cl-hud-key">SYSTEM</span>
+              <span className="cl-hud-val green">ACTIVE</span>
             </div>
-          )}
-        </div>
+            <div className="cl-hud-cell">
+              <span className="cl-hud-icon">🤖</span>
+              <span className="cl-hud-key">AI CORE</span>
+              <span className="cl-hud-val cyan">ONLINE</span>
+            </div>
+            <div className="cl-hud-cell">
+              <span className="cl-hud-icon">🛡️</span>
+              <span className="cl-hud-key">NETWORK</span>
+              <span className="cl-hud-val green">SECURE</span>
+            </div>
+            <div className="cl-hud-cell">
+              <span className="cl-hud-icon">📡</span>
+              <span className="cl-hud-key">DEVICES</span>
+              <span className="cl-hud-val cyan">4</span>
+            </div>
+          </div>
 
-        {/* Bottom Micro-HUD Diagnostics Matrix */}
-        <div className="mobile-diag-grid">
-          <div className="diag-chip">
-            <span className="chip-label">AI SYNC</span>
-            <span className="chip-val green">97.4%</span>
-          </div>
-          <div className="diag-chip">
-            <span className="chip-label">BIOMETRIC</span>
-            <span className="chip-val green">99.8%</span>
-          </div>
-          <div className="diag-chip">
-            <span className="chip-label">NETWORK</span>
-            <span className="chip-val cyan">82.1ms</span>
-          </div>
-          <div className="diag-chip">
-            <span className="chip-label">POWER</span>
-            <span className="chip-val cyan">99.2%</span>
-          </div>
         </div>
-      </div>
     ) : (
       /* ── DESKTOP AI CORE INTERFACE (UNCHANGED) ── */
       <div className="desktop-aicore-wrapper">
