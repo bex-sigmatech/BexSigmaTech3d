@@ -8,6 +8,8 @@ const isMobileDevice = typeof window !== 'undefined' && (
   (navigator.maxTouchPoints && navigator.maxTouchPoints > 1)
 )
 
+const savedGraphics = typeof window !== 'undefined' ? localStorage.getItem('bex_graphics_quality') : null
+
 export const useStore = create((set, get) => {
   return {
     scene: 'boot', // 'boot' | 'access_granted' | 'welcome' | 'ai_core' | 'ai_response' | 'headquarters' | 'mission_briefing' | 'dashboard' | 'webdev_store'
@@ -16,11 +18,16 @@ export const useStore = create((set, get) => {
     activeMission: null,
     scrollPosition: 0,
     audioContextUnlocked: false,
-    graphicsQuality: isMobileDevice ? 'low' : 'high', // auto-detect mobile for lag prevention
+    graphicsQuality: savedGraphics || 'high', // High graphics preset as default preference
     isIntroSkipped: false,
     bootStarted: false, // true once user clicks ENTER CINEMATIC EXPERIENCE
 
-    setGraphicsQuality: (quality) => set({ graphicsQuality: quality }),
+    setGraphicsQuality: (quality) => {
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('bex_graphics_quality', quality)
+      }
+      set({ graphicsQuality: quality })
+    },
 
     unlockAudioContext: () => {
       cinemaAudio.unlock()

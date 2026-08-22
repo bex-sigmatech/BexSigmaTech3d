@@ -164,16 +164,16 @@ export default function BootScreen() {
                 <span style={{ fontSize: '0.6rem', letterSpacing: '0.15em', color: 'rgba(255,255,255,0.45)' }}>GRAPHICS PRESET:</span>
                 <div className="graphics-toggle-buttons">
                   <button
-                    className={`graphics-toggle-btn interactive ${graphicsQuality === 'low' ? 'active' : ''}`}
-                    onClick={() => setGraphicsQuality('low')}
-                  >
-                    LOW (LAG FREE)
-                  </button>
-                  <button
                     className={`graphics-toggle-btn interactive ${graphicsQuality === 'high' ? 'active' : ''}`}
                     onClick={() => setGraphicsQuality('high')}
                   >
                     HIGH (CINEMATIC)
+                  </button>
+                  <button
+                    className={`graphics-toggle-btn interactive ${graphicsQuality === 'low' ? 'active' : ''}`}
+                    onClick={() => setGraphicsQuality('low')}
+                  >
+                    LOW (LAG FREE)
                   </button>
                 </div>
               </div>
@@ -238,16 +238,16 @@ export default function BootScreen() {
                 <span style={{ fontSize: '0.65rem', letterSpacing: '0.2em', color: 'rgba(255,255,255,0.45)' }}>GRAPHICS PRESET:</span>
                 <div className="graphics-toggle-buttons">
                   <button
-                    className={`graphics-toggle-btn interactive ${graphicsQuality === 'low' ? 'active' : ''}`}
-                    onClick={() => setGraphicsQuality('low')}
-                  >
-                    LOW (LAG FREE)
-                  </button>
-                  <button
                     className={`graphics-toggle-btn interactive ${graphicsQuality === 'high' ? 'active' : ''}`}
                     onClick={() => setGraphicsQuality('high')}
                   >
                     HIGH (CINEMATIC)
+                  </button>
+                  <button
+                    className={`graphics-toggle-btn interactive ${graphicsQuality === 'low' ? 'active' : ''}`}
+                    onClick={() => setGraphicsQuality('low')}
+                  >
+                    LOW (LAG FREE)
                   </button>
                 </div>
               </div>
