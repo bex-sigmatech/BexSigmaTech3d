@@ -97,87 +97,95 @@ export default function BootScreen() {
   return (
     <div className="nolan-boot-screen">
       {isMobileScreen ? (
-        /* ── MOBILE-DEDICATED LANDING SCREEN ── */
+        /* ── MOBILE CYBER-LUXE LANDING SCREEN ── */
         <div className="mobile-boot-wrapper">
-        {!started ? (
-          <div className="mobile-boot-hero">
-            {/* Top Brand Bar */}
-            <div className="mobile-brand-bar">
-              <div className="mobile-brand-logo">
-                <span className="logo-symbol">XΣ</span>
-                <span className="logo-text">BEX SIGMA <strong>TECH</strong></span>
+          {/* Ambient Backgrounds */}
+          <div className="cl-bg-mesh" />
+          <div className="cl-scanlines" />
+
+          {!started ? (
+            <div className="mobile-boot-hero">
+              {/* Sleek Header Bar */}
+              <div className="cl-topbar">
+                <div className="cl-topbar-left">
+                  <span className="cl-topbar-pipe">|</span>
+                  <span className="cl-topbar-os">BEX SIGMA // OS v4.0</span>
+                </div>
+                <div className="mobile-status-pill">
+                  <span className="pill-dot" /> SYSTEM READY
+                </div>
               </div>
-              <div className="mobile-status-pill">
-                <span className="pill-dot" /> SYSTEM READY
+
+              {/* 3D Holographic Reticle Scanner */}
+              <div className="cl-hero-section" style={{ margin: '10px 0' }}>
+                <div className="cl-orb-wrapper">
+                  <div className="cl-orb-aura" />
+                  <div className="cl-orb-ring r1" />
+                  <div className="cl-orb-ring r2" />
+                  <div className="cl-orb-core">
+                    <div className="cl-orb-plasma" />
+                    <span className="cl-orb-sigil">XΣ</span>
+                  </div>
+                </div>
+                <div className="cl-signal-tag">
+                  <span className="cl-signal-dot" />
+                  <span>VERIFYING CORE PROTOCOLS...</span>
+                </div>
+              </div>
+
+              {/* Title & Subtitle */}
+              <div className="mobile-hero-text">
+                <h1 className="mobile-title">BEX SIGMA TECH</h1>
+                <p className="mobile-subtitle">PIONEERING AEROSPACE AI &amp; WEB DEVELOPMENT</p>
+              </div>
+
+              {/* Telemetry Grid (Cyber-Luxe style) */}
+              <div className="mobile-telemetry-grid">
+                <div className="mobile-badge-item">
+                  <span className="badge-label">AI SYSTEMS</span>
+                  <span className="badge-value green">ACTIVE (98.4%)</span>
+                </div>
+                <div className="mobile-badge-item">
+                  <span className="badge-label">NETWORKS</span>
+                  <span className="badge-value cyan">SECURE (ALPHA)</span>
+                </div>
+                <div className="mobile-badge-item">
+                  <span className="badge-label">WEB PROTOCOLS</span>
+                  <span className="badge-value cyan">OPTIMIZED</span>
+                </div>
+                <div className="mobile-badge-item">
+                  <span className="badge-label">PROJECT STATUS</span>
+                  <span className="badge-value green">LIVE</span>
+                </div>
+              </div>
+
+              {/* Main CTA Button (Cyber-Luxe Style) */}
+              <button className="cl-sync-btn interactive" onClick={handleStart} style={{ marginTop: '6px' }}>
+                <span className="m-sync-btn-text">ENTER CINEMATIC EXPERIENCE</span>
+                <span className="m-sync-btn-arrow">→</span>
+              </button>
+
+              <p className="mobile-tagline">UNLOCK THE FUTURE OF AEROSPACE. BEYOND IMAGINATION.</p>
+
+              {/* Graphics toggle buttons */}
+              <div className="cl-gfx-toggle-row">
+                <span className="cl-gfx-label">GRAPHICS PRESET:</span>
+                <div className="cl-gfx-buttons">
+                  <button
+                    className={`cl-gfx-btn interactive ${graphicsQuality === 'low' ? 'active' : ''}`}
+                    onClick={() => setGraphicsQuality('low')}
+                  >
+                    LOW
+                  </button>
+                  <button
+                    className={`cl-gfx-btn interactive ${graphicsQuality === 'high' ? 'active' : ''}`}
+                    onClick={() => setGraphicsQuality('high')}
+                  >
+                    HIGH
+                  </button>
+                </div>
               </div>
             </div>
-
-            {/* 3D Holographic Scanner Reticle */}
-            <div className="mobile-scanner-container">
-              <div className="mobile-reticle-ring ring-outer" />
-              <div className="mobile-reticle-ring ring-middle" />
-              <div className="mobile-emblem-core">
-                <div className="emblem-sig">XΣ</div>
-                <div className="emblem-glow-orbit" />
-              </div>
-              <div className="mobile-scan-readout">
-                <span className="blink-cyan">SCANNING:</span> VERIFYING PROTOCOLS...
-              </div>
-            </div>
-
-            {/* Hero Headlines */}
-            <div className="mobile-hero-text">
-              <h1 className="mobile-title">BEX SIGMA TECH</h1>
-              <p className="mobile-subtitle">PIONEERING AEROSPACE AI &amp; WEB DEVELOPMENT</p>
-            </div>
-
-            {/* Telemetry Micro-Badges */}
-            <div className="mobile-telemetry-grid">
-              <div className="mobile-badge-item">
-                <span className="badge-label">AI SYSTEMS:</span>
-                <span className="badge-value green">ACTIVE (98.4%)</span>
-              </div>
-              <div className="mobile-badge-item">
-                <span className="badge-label">NETWORKS:</span>
-                <span className="badge-value cyan">SECURE (ALPHA)</span>
-              </div>
-              <div className="mobile-badge-item">
-                <span className="badge-label">WEB PROTOCOLS:</span>
-                <span className="badge-value cyan">OPTIMIZED</span>
-              </div>
-              <div className="mobile-badge-item">
-                <span className="badge-label">PROJECT STATUS:</span>
-                <span className="badge-value green">LIVE</span>
-              </div>
-            </div>
-
-            {/* Main CTA Button */}
-            <button className="mobile-cta-btn interactive" onClick={handleStart}>
-              <span>ENTER CINEMATIC EXPERIENCE</span>
-              <span className="cta-arrow">→</span>
-            </button>
-
-            <p className="mobile-tagline">UNLOCK THE FUTURE OF AEROSPACE. BEYOND IMAGINATION.</p>
-
-            {/* Graphics Preset selector */}
-            <div className="graphics-mode-selector mobile-gfx-mode">
-              <span style={{ fontSize: '0.6rem', letterSpacing: '0.15em', color: 'rgba(255,255,255,0.45)' }}>GRAPHICS PRESET:</span>
-              <div className="graphics-toggle-buttons">
-                <button
-                  className={`graphics-toggle-btn interactive ${graphicsQuality === 'low' ? 'active' : ''}`}
-                  onClick={() => setGraphicsQuality('low')}
-                >
-                  LOW (LAG FREE)
-                </button>
-                <button
-                  className={`graphics-toggle-btn interactive ${graphicsQuality === 'high' ? 'active' : ''}`}
-                  onClick={() => setGraphicsQuality('high')}
-                >
-                  HIGH (CINEMATIC)
-                </button>
-              </div>
-            </div>
-          </div>
         ) : (
           <div className="nolan-boot-content mobile-boot-loading">
             <div className="nolan-logo">BEX SIGMA TECH</div>
