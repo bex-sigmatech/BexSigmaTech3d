@@ -6051,4 +6051,279 @@ body {
     justify-content: center;
     height: 100%;
   }
+
+  /* ─── Dedicated Mobile AI Core Wrapper ─── */
+  .mobile-aicore-wrapper {
+    display: flex !important;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    padding: 16px 16px 20px 16px;
+    box-sizing: border-box;
+    overflow-y: auto;
+    background: radial-gradient(circle at 50% 25%, rgba(13, 27, 42, 0.95) 0%, rgba(3, 8, 18, 0.99) 100%);
+  }
+
+  /* Mobile Telemetry Header */
+  .mobile-telemetry-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 440px;
+    padding: 10px 14px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(0, 212, 255, 0.2);
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+  }
+
+  .telemetry-header-info {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .telemetry-header-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.64rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: #fff;
+  }
+
+  .telemetry-header-sub {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.52rem;
+    letter-spacing: 0.1em;
+    color: rgba(0, 212, 255, 0.7);
+  }
+
+  .telemetry-lock-pill {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.55rem;
+    color: #00d4ff;
+    background: rgba(0, 212, 255, 0.1);
+    border: 1px solid rgba(0, 212, 255, 0.3);
+    padding: 4px 10px;
+    border-radius: 14px;
+  }
+
+  /* Central Animated AI Neural Node */
+  .mobile-ai-node-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 8px 0;
+  }
+
+  .mobile-ai-node-glow {
+    position: absolute;
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0, 212, 255, 0.35) 0%, rgba(124, 58, 237, 0.15) 60%, transparent 100%);
+    animation: nodePulseGlow 3s ease-in-out infinite;
+  }
+
+  @keyframes nodePulseGlow {
+    0%, 100% { transform: scale(1); opacity: 0.7; }
+    50% { transform: scale(1.15); opacity: 1; }
+  }
+
+  .mobile-ai-node-core {
+    position: relative;
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background: rgba(3, 10, 24, 0.9);
+    border: 1.5px solid #00d4ff;
+    box-shadow: 0 0 25px rgba(0, 212, 255, 0.4), inset 0 0 15px rgba(0, 212, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .node-ring-1, .node-ring-2, .node-ring-3 {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px dashed rgba(0, 212, 255, 0.4);
+    pointer-events: none;
+  }
+
+  .node-ring-1 { inset: -8px; animation: reticleRotate 10s linear infinite; }
+  .node-ring-2 { inset: -16px; border-color: rgba(167, 139, 250, 0.3); animation: reticleRotate 16s linear infinite reverse; }
+
+  .node-center-sig {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 900;
+    font-size: 1.1rem;
+    color: #fff;
+    text-shadow: 0 0 12px #00d4ff;
+  }
+
+  .mobile-ai-status-tag {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.56rem;
+    letter-spacing: 0.1em;
+    color: rgba(255, 255, 255, 0.85);
+    margin-top: 18px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  /* Mobile Credential Card */
+  .mobile-credential-card {
+    width: 100%;
+    max-width: 440px;
+    background: rgba(6, 14, 28, 0.92);
+    border: 1px solid rgba(0, 212, 255, 0.25);
+    border-radius: 16px;
+    padding: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .mobile-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .card-badge {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.55rem;
+    letter-spacing: 0.15em;
+    color: #00d4ff;
+    background: rgba(0, 212, 255, 0.08);
+    border: 1px solid rgba(0, 212, 255, 0.2);
+    padding: 4px 12px;
+    border-radius: 12px;
+  }
+
+  .mobile-cred-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 4px;
+  }
+
+  .cred-label {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.54rem;
+    letter-spacing: 0.15em;
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  .cred-input-row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .cred-input {
+    flex: 1;
+    background: rgba(0, 20, 40, 0.8) !important;
+    border: 1px solid rgba(0, 212, 255, 0.4) !important;
+    border-radius: 8px !important;
+    color: #fff !important;
+    font-family: 'Orbitron', sans-serif !important;
+    font-size: 0.85rem !important;
+    padding: 12px 14px !important;
+    min-height: 46px !important;
+    box-shadow: inset 0 0 10px rgba(0, 212, 255, 0.1) !important;
+  }
+
+  .cred-mic-btn {
+    width: 46px;
+    height: 46px;
+    border-radius: 8px;
+    background: rgba(0, 212, 255, 0.15);
+    border: 1px solid rgba(0, 212, 255, 0.4);
+    color: #00d4ff;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+
+  .cred-mic-btn.listening {
+    background: #00d4ff;
+    color: #000;
+    box-shadow: 0 0 15px #00d4ff;
+  }
+
+  .mobile-sync-btn {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, #00d4ff 0%, #7c3aed 100%);
+    border: none;
+    border-radius: 10px;
+    color: #fff;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.82rem;
+    font-weight: bold;
+    letter-spacing: 0.15em;
+    cursor: pointer;
+    box-shadow: 0 0 20px rgba(0, 212, 255, 0.4);
+    transition: transform 0.2s ease;
+  }
+
+  .mobile-sync-btn:active {
+    transform: scale(0.97);
+  }
+
+  /* Micro-HUD Diagnostics Matrix */
+  .mobile-diag-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+    width: 100%;
+    max-width: 440px;
+    margin-top: 6px;
+  }
+
+  .diag-chip {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 6px;
+    padding: 6px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+  }
+
+  .chip-label {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.48rem;
+    letter-spacing: 0.08em;
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  .chip-val {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.62rem;
+    font-weight: bold;
+  }
+
+  .chip-val.green { color: #00ff88; }
+  .chip-val.cyan { color: #00d4ff; }
+}
+
+@media (min-width: 769px) {
+  .mobile-aicore-wrapper {
+    display: none !important;
+  }
+
+  .desktop-aicore-wrapper {
+    display: block !important;
+  }
 }
