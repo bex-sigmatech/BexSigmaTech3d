@@ -578,26 +578,42 @@ export default function AICore() {
               <div className="cl-card-corner bl" />
               <div className="cl-card-corner br" />
 
-              <div className="cl-card-header">
-                <span className="cl-card-title" style={{ fontSize: '1.15rem' }}>XΣ BEX SIGMA TECH</span>
-                <span className="cl-card-subtitle">AI COMMAND CENTER</span>
+              <div className="cl-card-header" style={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid rgba(0,212,255,0.15)', paddingBottom: '8px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <span style={{ fontFamily: 'Orbitron', fontWeight: '900', fontSize: '1.2rem', color: '#00d4ff', textShadow: '0 0 10px rgba(0,212,255,0.5)' }}>XΣ</span>
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+                    <span style={{ fontFamily: 'Orbitron', fontSize: '0.62rem', fontWeight: '700', color: '#fff', letterSpacing: '0.12em' }}>BEX SIGMA TECH</span>
+                  </div>
+                </div>
+                <span className="cl-card-title" style={{ fontSize: '0.85rem', letterSpacing: '0.12em', color: '#fff', textTransform: 'uppercase' }}>AI COMMAND CENTER</span>
               </div>
 
-              {/* Biometric Fingerprint Scan Target */}
-              <div className="cl-fingerprint" style={{ margin: '4px 0' }}>
-                <div className="cl-fp-ring" />
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#00d4ff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M12 10a2 2 0 0 0-2 2c0 1.02-.1 2.51-.26 4 M14 13.12c0 2.38 0 3.38-.4 4.88 M18 11a6 6 0 0 0-11.8 1.48 C6.08 14 6 15 5.5 17 M12 6a10 10 0 0 0-9.35 6.4 M20 15c-.46 2.05-.8 3.08-1.5 4.5 M21.8 11.5a14 14 0 0 0-2.5-6" />
-                </svg>
+              <div style={{ width: '100%', marginTop: '6px' }}>
+                <div style={{ fontSize: '0.68rem', fontFamily: 'Orbitron', fontWeight: '700', letterSpacing: '0.14em', color: '#fff', textAlign: 'center', marginBottom: '8px' }}>
+                  VERIFY CREDENTIALS
+                </div>
+                {/* Fingerprint Target */}
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px', background: 'rgba(0,212,255,0.04)', border: '1px solid rgba(0,212,255,0.18)', borderRadius: '10px', padding: '8px 14px' }}>
+                  <div className="cl-fingerprint" style={{ width: '36px', height: '36px' }}>
+                    <div className="cl-fp-ring" />
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00d4ff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M12 10a2 2 0 0 0-2 2c0 1.02-.1 2.51-.26 4 M14 13.12c0 2.38 0 3.38-.4 4.88 M18 11a6 6 0 0 0-11.8 1.48 C6.08 14 6 15 5.5 17 M12 6a10 10 0 0 0-9.35 6.4 M20 15c-.46 2.05-.8 3.08-1.5 4.5 M21.8 11.5a14 14 0 0 0-2.5-6" />
+                    </svg>
+                  </div>
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+                    <span style={{ fontSize: '0.62rem', fontFamily: 'Orbitron', fontWeight: '700', color: '#fff', letterSpacing: '0.1em' }}>PLACE THUMB</span>
+                    <span style={{ fontSize: '0.52rem', fontFamily: 'Orbitron', color: '#00ff88', letterSpacing: '0.08em' }}>94% MATCH</span>
+                  </div>
+                </div>
               </div>
 
-              <div className="id-dialogue-block cl-dialogue">
+              <div className="id-dialogue-block cl-dialogue" style={{ margin: '4px 0' }}>
                 {scene !== 'ai_response' ? (
                   <>
-                    <p className="cl-dialogue-main">
+                    <p className="cl-dialogue-main" style={{ fontSize: '0.85rem' }}>
                       "<TypewriterText text="BEX SIGMA TECH is a premium SaaS building software company." speed={35} />"
                     </p>
-                    <p className="cl-dialogue-sub">
+                    <p className="cl-dialogue-sub" style={{ fontSize: '0.7rem' }}>
                       "<TypewriterText text="We provide digital marketing, Meta Ads, and financial systems support. Sync callsign to enter." speed={20} />"
                     </p>
                   </>
@@ -615,15 +631,15 @@ export default function AICore() {
 
               {scene !== 'ai_response' ? (
                 <form onSubmit={handleSubmit} className="cl-form">
-                  <label className="cl-dialogue-label">
-                    ENTER CALLSIGN
+                  <label className="cl-dialogue-label" style={{ textAlign: 'left' }}>
+                    Enter Access Key
                     {isListening && <span className="m-listening-tag" style={{ marginLeft: '6px', color: '#00d4ff' }}>🎙️ LISTENING</span>}
                   </label>
                   <div className="cl-input-row">
                     <input
                       type="text"
                       className="cl-input interactive"
-                      placeholder="e.g. VANGUARD-7"
+                      placeholder="Enter unique callsign"
                       value={inputName}
                       onChange={(e) => setInputName(e.target.value)}
                     />
