@@ -70,11 +70,12 @@ export const useStore = create((set, get) => {
       cinemaAudio.setScene('ai_response')
       set({ userName: name, scene: 'ai_response' })
 
+      const delay = isMobileDevice ? 2200 : 5000 // Faster responsive transition on mobile
       setTimeout(() => {
         cinemaAudio.setAmbientVolume(0.3, 2.5)
         cinemaAudio.setScene('headquarters')
         set({ scene: 'headquarters' })
-      }, 5000)
+      }, delay)
     },
 
     openMissionBriefing: (mission) => {

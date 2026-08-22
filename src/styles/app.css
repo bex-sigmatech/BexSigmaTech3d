@@ -6280,6 +6280,39 @@ body {
     transform: scale(0.97);
   }
 
+  .mobile-access-granted-banner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 14px 16px;
+    background: rgba(0, 255, 136, 0.12);
+    border: 1px solid rgba(0, 255, 136, 0.4);
+    border-radius: 10px;
+    margin-top: 6px;
+    box-shadow: 0 0 20px rgba(0, 255, 136, 0.2);
+    animation: grantedPulse 1.5s ease-in-out infinite;
+  }
+
+  @keyframes grantedPulse {
+    0%, 100% { box-shadow: 0 0 20px rgba(0, 255, 136, 0.2); }
+    50% { box-shadow: 0 0 35px rgba(0, 255, 136, 0.4); }
+  }
+
+  .granted-icon {
+    font-size: 1.2rem;
+    color: #00ff88;
+    font-weight: bold;
+  }
+
+  .granted-text {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.68rem;
+    font-weight: bold;
+    letter-spacing: 0.12em;
+    color: #00ff88;
+  }
+
   /* Micro-HUD Diagnostics Matrix */
   .mobile-diag-grid {
     display: grid;

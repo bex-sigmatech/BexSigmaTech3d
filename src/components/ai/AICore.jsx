@@ -564,7 +564,7 @@ export default function AICore() {
             )}
           </div>
 
-          {scene !== 'ai_response' && (
+          {scene !== 'ai_response' ? (
             <form onSubmit={handleSubmit} className="mobile-cred-form">
               <label className="cred-label">
                 ENTER CREDENTIAL CALLSIGN
@@ -593,6 +593,11 @@ export default function AICore() {
                 SYNC CREDENTIALS
               </button>
             </form>
+          ) : (
+            <div className="mobile-access-granted-banner">
+              <span className="granted-icon">✓</span>
+              <span className="granted-text">CLEARANCE VERIFIED · SYNCHRONIZING HQ...</span>
+            </div>
           )}
         </div>
 
