@@ -16,7 +16,7 @@ export const useStore = create((set, get) => {
     activeMission: null,
     scrollPosition: 0,
     audioContextUnlocked: false,
-    graphicsQuality: isMobileDevice ? 'low' : 'high', // auto-detect mobile for lag prevention
+    graphicsQuality: 'high', // Default to high graphics preference. Users can toggle to low if wanted.
     isIntroSkipped: false,
     bootStarted: false, // true once user clicks ENTER CINEMATIC EXPERIENCE
 
