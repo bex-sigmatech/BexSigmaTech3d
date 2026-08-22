@@ -519,7 +519,7 @@ export default function AICore() {
   return (
     <div style={{ position: 'absolute', inset: 0, width: '100vw', height: '100vh', overflow: 'hidden', background: '#000' }}>
       {isMobileScreen ? (
-        /* ── MOBILE-DEDICATED AI CORE & CREDENTIAL INTERFACE ── */
+        /* ── MOBILE 10/10 AI SENTINEL ROBOT CORE INTERFACE ── */
         <div className="mobile-aicore-wrapper">
 
           {/* Ambient Background Effects */}
@@ -537,12 +537,27 @@ export default function AICore() {
             </div>
           </div>
 
-          {/* ── CENTER: AI Core Orb + Credential Card ── */}
-          <div className="cl-hero-section" style={{ margin: '10px 0', width: '100%', maxWidth: '420px' }}>
+          {/* ── CENTER: 3D AI Sentinel Robot + Holographic Core ── */}
+          <div className="cl-hero-section" style={{ margin: '6px 0', width: '100%', maxWidth: '420px' }}>
 
-            {/* Holographic AI Neural Orb */}
+            {/* 3D AI Robot Graphic & Neural Core Orb */}
             <div className="cl-orb-wrapper">
               <div className="cl-orb-aura" />
+
+              {/* Holographic AI Robot Silhouette Aura */}
+              <svg className="cl-robot-wireframe" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                {/* Robot Head Outer Contour */}
+                <path d="M 60 70 C 60 40 140 40 140 70 L 145 110 C 145 140 130 160 100 170 C 70 160 55 140 55 110 Z" stroke="rgba(0, 212, 255, 0.25)" strokeWidth="1.5" strokeDasharray="4 4" />
+                {/* Optical Eye Line */}
+                <circle cx="80" cy="85" r="10" stroke="#00d4ff" strokeWidth="1.5" />
+                <circle cx="80" cy="85" r="4" fill="#00ff88" />
+                <circle cx="120" cy="85" r="10" stroke="#00d4ff" strokeWidth="1.5" />
+                <circle cx="120" cy="85" r="4" fill="#00ff88" />
+                <line x1="70" y1="85" x2="130" y2="85" stroke="rgba(0, 212, 255, 0.4)" strokeWidth="1" />
+                {/* Cybernetic Neck & Collar Plate */}
+                <path d="M 80 165 L 80 190 M 120 165 L 120 190 M 60 190 L 140 190" stroke="rgba(0, 212, 255, 0.3)" strokeWidth="1.5" />
+              </svg>
+
               <div className="cl-orb-ring r1" />
               <div className="cl-orb-ring r2" />
               <div className={`cl-orb-core ${isSpeaking ? 'speaking' : ''}`}>
@@ -550,9 +565,10 @@ export default function AICore() {
                 <span className="cl-orb-sigil">XΣ</span>
               </div>
             </div>
+
             <div className="cl-signal-tag">
               <span className="cl-signal-dot" />
-              <span>{isSpeaking ? 'AI VOICE TRANSMITTING' : 'BIOMETRIC SCAN READY'}</span>
+              <span>{isSpeaking ? 'AI VOICE TRANSMITTING' : 'AI SENTINEL ONLINE · BIOMETRIC READY'}</span>
             </div>
 
             {/* Credential Verification Card */}
@@ -563,8 +579,16 @@ export default function AICore() {
               <div className="cl-card-corner br" />
 
               <div className="cl-card-header">
-                <span className="cl-card-title">CREDENTIAL VERIFICATION</span>
-                <span className="cl-card-subtitle">BEX SIGMA COMMAND CENTER</span>
+                <span className="cl-card-title" style={{ fontSize: '1.15rem' }}>XΣ BEX SIGMA TECH</span>
+                <span className="cl-card-subtitle">AI COMMAND CENTER</span>
+              </div>
+
+              {/* Biometric Fingerprint Scan Target */}
+              <div className="cl-fingerprint" style={{ margin: '4px 0' }}>
+                <div className="cl-fp-ring" />
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#00d4ff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M12 10a2 2 0 0 0-2 2c0 1.02-.1 2.51-.26 4 M14 13.12c0 2.38 0 3.38-.4 4.88 M18 11a6 6 0 0 0-11.8 1.48 C6.08 14 6 15 5.5 17 M12 6a10 10 0 0 0-9.35 6.4 M20 15c-.46 2.05-.8 3.08-1.5 4.5 M21.8 11.5a14 14 0 0 0-2.5-6" />
+                </svg>
               </div>
 
               <div className="id-dialogue-block cl-dialogue">
