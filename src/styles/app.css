@@ -5768,9 +5768,10 @@ body {
   }
 }
 
-/* Mobile: hide desktop boot wrapper & show mobile boot wrapper */
+/* Mobile: hide desktop boot & aicore wrappers & show mobile boot wrapper */
 @media (max-width: 768px) {
-  .desktop-boot-wrapper {
+  .desktop-boot-wrapper,
+  .desktop-aicore-wrapper {
     display: none !important;
   }
 

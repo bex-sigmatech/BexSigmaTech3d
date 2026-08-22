@@ -16,15 +16,17 @@ export default function WelcomeScreen() {
       voiceEmitter.emit('WELCOME_SCREEN_VISIBLE')
     }
 
-    // 1. Start fading to black at 3.0s as zoom finishes
+    const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768
+
+    // 1. Start fading to black as zoom finishes
     const fadeTimer = setTimeout(() => {
       setBlackout(true)
-    }, 3000)
+    }, isMobile ? 1500 : 3000)
 
-    // 2. Keep the screen completely blank/black for 1.5 seconds, then transition to AI Core
+    // 2. Keep screen blank/black, then transition to AI Core
     const transitionTimer = setTimeout(() => {
       triggerAICore()
-    }, 4500)
+    }, isMobile ? 2200 : 4500)
 
     return () => {
       clearTimeout(fadeTimer)
