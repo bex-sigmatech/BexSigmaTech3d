@@ -21,6 +21,7 @@ export default function BootScreen() {
 
   const handleStart = () => {
     setStarted(true)
+    useStore.setState({ bootStarted: true })
     unlockAudioContext()
     startLoading()
     // Event-driven trigger

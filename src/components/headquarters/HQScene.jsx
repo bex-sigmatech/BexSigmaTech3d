@@ -483,6 +483,58 @@ export default function HQScene() {
     return () => window.removeEventListener('wheel', handleWheel)
   }, [])
 
+  // Touch swipe → cycle through departments on mobile
+  useEffect(() => {
+    let touchStartY = 0
+    let touchStartX = 0
+    let lastSwipe = 0
+
+    const handleTouchStart = (e) => {
+      touchStartY = e.touches[0].clientY
+      touchStartX = e.touches[0].clientX
+    }
+
+    const handleTouchEnd = (e) => {
+      const now = Date.now()
+      if (now - lastSwipe < 400) return // throttle
+
+      const touchEndY = e.changedTouches[0].clientY
+      const touchEndX = e.changedTouches[0].clientX
+      const deltaY = touchStartY - touchEndY
+      const deltaX = touchStartX - touchEndX
+
+      // Use the axis with larger movement
+      const delta = Math.abs(deltaY) > Math.abs(deltaX) ? deltaY : deltaX
+      const threshold = 45 // minimum px swipe distance
+
+      if (Math.abs(delta) > threshold) {
+        lastSwipe = now
+        if (delta > 0) {
+          // Swipe up or left → next department
+          setActiveIndex(prev => {
+            const next = Math.min(prev + 1, DEPARTMENTS.length - 1)
+            if (next !== prev) cinemaAudio.playScrollTransition()
+            return next
+          })
+        } else {
+          // Swipe down or right → previous department
+          setActiveIndex(prev => {
+            const next = Math.max(prev - 1, 0)
+            if (next !== prev) cinemaAudio.playScrollTransition()
+            return next
+          })
+        }
+      }
+    }
+
+    window.addEventListener('touchstart', handleTouchStart, { passive: true })
+    window.addEventListener('touchend', handleTouchEnd, { passive: true })
+    return () => {
+      window.removeEventListener('touchstart', handleTouchStart)
+      window.removeEventListener('touchend', handleTouchEnd)
+    }
+  }, [])
+
 
   const currentDept = DEPARTMENTS[activeIndex]
 
@@ -623,12 +675,13 @@ export default function HQScene() {
         </div>
       </div>
 
-      {/* ── SCROLL HINT ── */}
+      {/* ── SCROLL / SWIPE HINT ── */}
       <div className="jarvis-scroll-hint">
         <div className="jarvis-scroll-icon">
           <div className="jarvis-scroll-wheel" />
         </div>
-        <span>SCROLL TO NAVIGATE ORBITAL SYSTEMS</span>
+        <span className="scroll-hint-desktop">SCROLL TO NAVIGATE ORBITAL SYSTEMS</span>
+        <span className="scroll-hint-mobile">SWIPE TO NAVIGATE ORBITAL SYSTEMS</span>
       </div>
     </div>
   )

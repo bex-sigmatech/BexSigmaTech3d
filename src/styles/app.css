@@ -5562,4 +5562,197 @@ body {
     -webkit-overflow-scrolling: touch;
     -webkit-tap-highlight-color: transparent;
   }
+
+  /* ─── Skip Button — Centered & Larger on Mobile ─── */
+  .skip-intro-btn {
+    bottom: 20px !important;
+    right: auto !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    padding: 14px 32px !important;
+    font-size: 0.78rem !important;
+    min-height: 48px !important;
+    border-radius: 24px !important;
+    background: rgba(0, 20, 40, 0.8) !important;
+    border: 1.5px solid rgba(0, 212, 255, 0.5) !important;
+    box-shadow: 0 0 20px rgba(0, 212, 255, 0.2), inset 0 0 12px rgba(0, 212, 255, 0.06) !important;
+    animation: skipFadeIn 0.6s ease 0.5s both, skipPulseGlow 2.5s ease-in-out infinite 1.1s !important;
+  }
+
+  @keyframes skipPulseGlow {
+    0%, 100% { box-shadow: 0 0 20px rgba(0, 212, 255, 0.2), inset 0 0 12px rgba(0, 212, 255, 0.06); }
+    50% { box-shadow: 0 0 30px rgba(0, 212, 255, 0.4), inset 0 0 18px rgba(0, 212, 255, 0.12); }
+  }
+
+  /* ─── Touch Tap Feedback — All Interactive Elements ─── */
+  .interactive:active {
+    transform: scale(0.96) !important;
+    transition: transform 0.08s ease !important;
+  }
+
+  .nolan-start-btn:active,
+  .nolan-btn-primary:active,
+  .id-form-btn:active,
+  .skip-intro-btn:active {
+    transform: scale(0.94) translateX(-50%) !important;
+    opacity: 0.85 !important;
+  }
+
+  .skip-intro-btn:active {
+    transform: scale(0.94) translateX(-50%) !important;
+  }
+
+  /* ─── Boot Screen — Larger Button with Breathing Glow ─── */
+  .nolan-start-btn {
+    padding: 20px 34px !important;
+    font-size: 0.82rem !important;
+    min-height: 56px !important;
+    border-radius: 8px !important;
+    border: 1.5px solid rgba(255, 255, 255, 0.35) !important;
+    animation: bootButtonBreathe 3s ease-in-out infinite !important;
+  }
+
+  @keyframes bootButtonBreathe {
+    0%, 100% {
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+    50% {
+      box-shadow: 0 0 30px rgba(0, 212, 255, 0.2), 0 0 60px rgba(0, 212, 255, 0.08);
+      border-color: rgba(0, 212, 255, 0.45);
+    }
+  }
+
+  .graphics-mode-selector {
+    gap: 8px !important;
+  }
+
+  .graphics-toggle-btn {
+    padding: 10px 16px !important;
+    font-size: 0.62rem !important;
+    min-height: 42px !important;
+  }
+
+  /* ─── HQ Engage Button — Full Width Pulsing Glow ─── */
+  .nolan-btn-primary.jarvis-engage-btn {
+    width: 100% !important;
+    padding: 14px 16px !important;
+    font-size: 0.72rem !important;
+    letter-spacing: 0.18em !important;
+    border-radius: 10px !important;
+    min-height: 50px !important;
+    font-weight: 700 !important;
+    animation: engagePulse 2.5s ease-in-out infinite !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5) !important;
+  }
+
+  @keyframes engagePulse {
+    0%, 100% {
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+      filter: brightness(1);
+    }
+    50% {
+      box-shadow: 0 4px 30px rgba(0, 212, 255, 0.3), 0 0 40px rgba(0, 212, 255, 0.15);
+      filter: brightness(1.12);
+    }
+  }
+
+  /* ─── HQ Department Panel Polish ─── */
+  .jarvis-dept-panel {
+    border: 1px solid rgba(0, 212, 255, 0.2) !important;
+    border-radius: 16px !important;
+    background: rgba(4, 10, 22, 0.95) !important;
+  }
+
+  .jarvis-dept-title {
+    font-size: 1.25rem !important;
+    margin-bottom: 2px !important;
+  }
+
+  .jarvis-dept-subtitle {
+    font-size: 0.75rem !important;
+    opacity: 0.7;
+  }
+
+  .nolan-tech-tag {
+    font-size: 0.58rem !important;
+    padding: 4px 8px !important;
+  }
+
+  /* ─── Scroll/Swipe Hint — Responsive Text ─── */
+  .scroll-hint-desktop {
+    display: none !important;
+  }
+
+  .scroll-hint-mobile {
+    display: inline !important;
+  }
+
+  .jarvis-scroll-hint {
+    display: flex !important;
+    bottom: auto !important;
+    top: 12px !important;
+    z-index: 15 !important;
+    opacity: 0.5;
+  }
+
+  .jarvis-scroll-icon {
+    display: none !important;
+  }
+
+  /* ─── AI Core Mobile — Ambient Background Pulse ─── */
+  .ai-core-mobile-ambient {
+    display: block !important;
+    position: absolute;
+    inset: 0;
+    z-index: 8;
+    pointer-events: none;
+    background:
+      radial-gradient(ellipse 70% 50% at 50% 40%, rgba(0, 212, 255, 0.08) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 60% at 30% 70%, rgba(124, 58, 237, 0.06) 0%, transparent 55%),
+      radial-gradient(ellipse 45% 45% at 70% 30%, rgba(0, 255, 136, 0.04) 0%, transparent 50%);
+    animation: ambientMobilePulse 6s ease-in-out infinite;
+  }
+
+  @keyframes ambientMobilePulse {
+    0%, 100% {
+      opacity: 0.6;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.05);
+    }
+  }
+
+  /* ─── HQ Minimap — Smoother scrollbar & polish ─── */
+  .jarvis-orb-minimap {
+    border-radius: 12px !important;
+    padding: 8px 12px !important;
+  }
+
+  .jarvis-minimap-item {
+    border-radius: 8px !important;
+    padding: 6px 12px !important;
+    transition: all 0.3s ease !important;
+  }
+
+  .jarvis-minimap-item.active {
+    box-shadow: 0 0 12px rgba(0, 212, 255, 0.3) !important;
+  }
+}
+
+/* Desktop: hide mobile-only elements */
+@media (min-width: 769px) {
+  .scroll-hint-mobile {
+    display: none !important;
+  }
+
+  .scroll-hint-desktop {
+    display: inline !important;
+  }
+
+  .ai-core-mobile-ambient {
+    display: none !important;
+  }
 }

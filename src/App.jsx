@@ -11,12 +11,11 @@ import WebDevStore from './components/webdev/WebDevStore'
 import './styles/app.css'
 
 export default function App() {
-  const { scene, skipIntro, audioContextUnlocked } = useStore()
+  const { scene, skipIntro, bootStarted, isIntroSkipped } = useStore()
 
-  // Show skip button during cinematic intro scenes (not on the initial boot start button)
-  const isIntroScene = ['boot', 'access_granted', 'welcome'].includes(scene)
-    || (scene === 'ai_core')
-  const showSkip = isIntroScene && audioContextUnlocked
+  // Show skip button once boot has started (user clicked ENTER), through all intro scenes
+  const isIntroScene = ['boot', 'access_granted', 'welcome', 'ai_core'].includes(scene)
+  const showSkip = isIntroScene && bootStarted && !isIntroSkipped
 
   return (
     <div className="app-container">
@@ -48,7 +47,10 @@ export default function App() {
       {showSkip && (
         <button
           className="skip-intro-btn interactive"
-          onClick={skipIntro}
+          onClick={(e) => {
+            e.stopPropagation()
+            skipIntro()
+          }}
           title="Skip to credential input"
         >
           SKIP ▸▸

@@ -610,6 +610,9 @@ export default function AICore() {
             scene={scene}
           />
 
+          {/* Mobile-only ambient background pulse (Jarvis HUD is hidden on mobile) */}
+          <div className="ai-core-mobile-ambient" />
+
           {/* ── Holographic 3D Tilting ID Panel ── */}
           <div
             className={`identification-panel tilted-3d ${robotVisible ? 'panel-visible' : ''}`}

@@ -18,6 +18,7 @@ export const useStore = create((set, get) => {
     audioContextUnlocked: false,
     graphicsQuality: isMobileDevice ? 'low' : 'high', // auto-detect mobile for lag prevention
     isIntroSkipped: false,
+    bootStarted: false, // true once user clicks ENTER CINEMATIC EXPERIENCE
 
     setGraphicsQuality: (quality) => set({ graphicsQuality: quality }),
 
@@ -118,17 +119,30 @@ export const useStore = create((set, get) => {
     },
 
     skipIntro: () => {
+      const { isIntroSkipped } = get()
+      if (isIntroSkipped) return // guard against double-fire
+
+      // Stop any in-progress voice/audio
       aiVoice.stop()
-      cinemaAudio.unlock()
-      aiVoice.unlock()
-      cinemaAudio.startCinematicScore()
-      cinemaAudio.setAmbientVolume(0.65, 0.5)
-      cinemaAudio.setScene('ai_core')
+
+      // Ensure audio is unlocked (works because this is triggered by a user click/tap gesture)
+      try {
+        cinemaAudio.unlock()
+        aiVoice.unlock()
+        cinemaAudio.startCinematicScore()
+        cinemaAudio.setAmbientVolume(0.65, 0.5)
+        cinemaAudio.setScene('ai_core')
+      } catch (e) {
+        // Audio unlock may fail on some browsers — proceed anyway
+        console.warn('Audio unlock during skip:', e)
+      }
+
       set({
         scene: 'ai_core',
         loadingProgress: 100,
         audioContextUnlocked: true,
-        isIntroSkipped: true
+        isIntroSkipped: true,
+        bootStarted: true
       })
     },
 
