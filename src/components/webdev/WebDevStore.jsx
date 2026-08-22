@@ -472,9 +472,9 @@ export default function WebDevStore() {
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth < 640) {
-        setRadius(200)
+        setRadius(230)
       } else if (window.innerWidth < 1024) {
-        setRadius(290)
+        setRadius(300)
       } else {
         setRadius(370)
       }
@@ -854,14 +854,21 @@ export default function WebDevStore() {
             let opacity = 0.12
             let pointerEvents = 'none'
             let scale = 0.55
+            let zOffset = -40
+            let zIndex = 1
+
             if (minDiff === 0) {
               opacity = 1.0
               pointerEvents = 'auto'
-              scale = isMobile ? 0.90 : 0.82
+              scale = isMobile ? 0.88 : 0.82
+              zOffset = isMobile ? 65 : 45 // Float active card 65px forward in 3D space
+              zIndex = 100
             } else if (minDiff === 1) {
-              opacity = 0.45
+              opacity = isMobile ? 0.32 : 0.45
               pointerEvents = 'none'
-              scale = isMobile ? 0.65 : 0.70
+              scale = isMobile ? 0.56 : 0.68
+              zOffset = isMobile ? -30 : -10
+              zIndex = 10
             }
 
             return (
@@ -875,7 +882,8 @@ export default function WebDevStore() {
                   display: 'flex',
                   flexDirection: 'column',
                   justifyContent: 'space-between',
-                  transform: `rotateY(${angle}deg) translateZ(${radius}px) scale(${scale})`,
+                  transform: `rotateY(${angle}deg) translateZ(${radius + zOffset}px) scale(${scale})`,
+                  zIndex,
                   opacity,
                   pointerEvents
                 }}
