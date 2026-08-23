@@ -99,16 +99,18 @@ export default function BootScreen() {
       {isMobileScreen ? (
         /* ── MOBILE-DEDICATED LANDING SCREEN ── */
         <div className="mobile-boot-wrapper">
+          <div className="mobile-boot-bg-glow" />
           {!started ? (
             <div className="mobile-boot-hero">
               {/* Top Brand Bar */}
               <div className="mobile-brand-bar">
                 <div className="mobile-brand-logo">
                   <span className="logo-symbol">XΣ</span>
-                  <span className="logo-text">BEX SIGMA <strong>TECH</strong></span>
+                  <span className="logo-text">BEX SIGMA <strong className="logo-tech">TECH</strong></span>
                 </div>
                 <div className="mobile-status-pill">
-                  <span className="pill-dot" /> SYSTEM READY
+                  <span className="pill-dot" />
+                  <span className="pill-text">SYSTEM READY</span>
                 </div>
               </div>
 
@@ -116,36 +118,50 @@ export default function BootScreen() {
               <div className="mobile-scanner-container">
                 <div className="mobile-reticle-ring ring-outer" />
                 <div className="mobile-reticle-ring ring-middle" />
+                <div className="mobile-reticle-ring ring-inner" />
+                <div className="mobile-hud-tick tick-tl" />
+                <div className="mobile-hud-tick tick-tr" />
+                <div className="mobile-hud-tick tick-bl" />
+                <div className="mobile-hud-tick tick-br" />
                 <div className="mobile-emblem-core">
                   <div className="emblem-sig">XΣ</div>
                   <div className="emblem-glow-orbit" />
+                  <div className="laser-scan-line" />
                 </div>
                 <div className="mobile-scan-readout">
+                  <span className="readout-bracket">[</span>
                   <span className="blink-cyan">SCANNING:</span> VERIFYING PROTOCOLS...
+                  <span className="readout-bracket">]</span>
                 </div>
               </div>
 
               {/* Hero Headlines */}
               <div className="mobile-hero-text">
                 <h1 className="mobile-title">BEX SIGMA TECH</h1>
-                <p className="mobile-subtitle">PIONEERING AEROSPACE AI &amp; WEB DEVELOPMENT</p>
+                <p className="mobile-subtitle">
+                  PIONEERING AEROSPACE AI &amp; WEB DEVELOPMENT
+                </p>
               </div>
 
               {/* Telemetry Micro-Badges */}
               <div className="mobile-telemetry-grid">
                 <div className="mobile-badge-item">
+                  <div className="badge-bar green-bar" />
                   <span className="badge-label">AI SYSTEMS:</span>
                   <span className="badge-value green">ACTIVE (98.4%)</span>
                 </div>
                 <div className="mobile-badge-item">
+                  <div className="badge-bar cyan-bar" />
                   <span className="badge-label">NETWORKS:</span>
                   <span className="badge-value cyan">SECURE (ALPHA)</span>
                 </div>
                 <div className="mobile-badge-item">
+                  <div className="badge-bar cyan-bar" />
                   <span className="badge-label">WEB PROTOCOLS:</span>
                   <span className="badge-value cyan">OPTIMIZED</span>
                 </div>
                 <div className="mobile-badge-item">
+                  <div className="badge-bar green-bar" />
                   <span className="badge-label">PROJECT STATUS:</span>
                   <span className="badge-value green">LIVE</span>
                 </div>
@@ -153,15 +169,21 @@ export default function BootScreen() {
 
               {/* Main CTA Button */}
               <button className="mobile-cta-btn interactive" onClick={handleStart}>
-                <span>ENTER CINEMATIC EXPERIENCE</span>
+                <span className="cta-shimmer" />
+                <span className="cta-label">ENTER CINEMATIC EXPERIENCE</span>
                 <span className="cta-arrow">→</span>
               </button>
 
-              <p className="mobile-tagline">UNLOCK THE FUTURE OF AEROSPACE. BEYOND IMAGINATION.</p>
+              <p className="mobile-tagline">
+                UNLOCK THE FUTURE OF <span className="glow-word">AEROSPACE</span>. BEYOND IMAGINATION.
+              </p>
 
               {/* Graphics Preset selector */}
               <div className="graphics-mode-selector mobile-gfx-mode">
-                <span style={{ fontSize: '0.6rem', letterSpacing: '0.15em', color: 'rgba(255,255,255,0.45)' }}>GRAPHICS PRESET:</span>
+                <div className="gfx-header">
+                  <span className="gfx-icon">❖</span>
+                  <span className="gfx-title">GRAPHICS PRESET</span>
+                </div>
                 <div className="graphics-toggle-buttons">
                   <button
                     className={`graphics-toggle-btn interactive ${graphicsQuality === 'high' ? 'active' : ''}`}

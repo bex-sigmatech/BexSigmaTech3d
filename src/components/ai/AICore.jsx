@@ -370,7 +370,7 @@ function SystemTelemetryBox({ active }) {
 
 /* ═══════════════════════════════════════════════════════════ */
 export default function AICore() {
-  const { scene, userName, submitIdentity, graphicsQuality, isIntroSkipped } = useStore()
+  const { scene, userName, submitIdentity, graphicsQuality, isIntroSkipped, skipIntro } = useStore()
   const [shotPhase, setShotPhase] = useState(isIntroSkipped ? 2 : 0)
   const [inputName, setInputName] = useState('')
   const [robotVisible, setRobotVisible] = useState(isIntroSkipped)
@@ -378,6 +378,15 @@ export default function AICore() {
   const [isSpeaking, setIsSpeaking] = useState(false)
   const [isListening, setIsListening] = useState(false)
   const [aiCustomReply, setAiCustomReply] = useState('')
+  const [fpMatch, setFpMatch] = useState(94.2)
+
+  // Live biometric match ticker (mobile credential card)
+  useEffect(() => {
+    const t = setInterval(() => {
+      setFpMatch((p) => Math.min(Math.max(p + (Math.random() - 0.45) * 0.4, 94), 99.6))
+    }, 900)
+    return () => clearInterval(t)
+  }, [])
 
   // 3D Parallax Tilt state
   const [tilt, setTilt] = useState({ x: 0, y: 0 })
@@ -527,151 +536,40 @@ export default function AICore() {
           <div className="cl-scanlines" />
 
           {/* ── TOP: Status Bar ── */}
-          <div className="cl-topbar">
+          <header className="cl-topbar">
             <div className="cl-topbar-left">
-              <span className="cl-topbar-pipe">|</span>
+              <span className="cl-live-dot" />
               <span className="cl-topbar-os">NEURAL LINK ACTIVE</span>
             </div>
-            <div className="mobile-status-pill">
-              <span className="pill-dot" /> ENCRYPTED
-            </div>
-          </div>
+            {!isIntroSkipped && (
+              <button type="button" className="cl-skip-pill interactive" onClick={skipIntro}>
+                SKIP ▸▸
+              </button>
+            )}
+          </header>
 
           {/* ── CENTER: 3D Realistic AI Robot Background + Credential Card ── */}
           <div className="cl-hero-section" style={{ margin: '0', width: '100%', maxWidth: '420px' }}>
 
-            {/* ── 3D CSS Robot Head — preserve-3d multi-face ── */}
+            {/* ── Cinematic Robot Stage — masked photo-real AI sentinel ── */}
             <div className="cl-3d-robot-bg">
-              {/* Ambient depth glow */}
-              <div className="cl-robot-depth-far" />
+              <div className="cl-robot-glowfield" />
 
-              {/* 3D scene container */}
-              <div className="cl-robot-scene">
-                <div className="cl-robot-head">
-                  {/* Front face — the main visage */}
-                  <div className="cl-rh-face front">
-                    {/* Forehead ridge */}
-                    <div className="cl-rh-brow-ridge" />
-                    {/* Nose ridge */}
-                    <div className="cl-rh-nose-ridge" />
-                    {/* Ear pods */}
-                    <div className="cl-rh-ear left">
-                      <div className="cl-rh-ear-inner" />
-                    </div>
-                    <div className="cl-rh-ear right">
-                      <div className="cl-rh-ear-inner" />
-                    </div>
-                    {/* Visor with eyes */}
-                    <div className="cl-rh-visor">
-                      <div className="cl-rh-eye left">
-                        <div className="cl-rh-iris" />
-                        <div className="cl-rh-pupil" />
-                        <div className="cl-rh-eye-reflection" />
-                      </div>
-                      <div className="cl-rh-eye right">
-                        <div className="cl-rh-iris" />
-                        <div className="cl-rh-pupil" />
-                        <div className="cl-rh-eye-reflection" />
-                      </div>
-                      <div className="cl-rh-visor-scan" />
-                    </div>
-                    {/* Cheek panels with seams */}
-                    <div className="cl-rh-cheek left">
-                      <div className="cl-rh-rivet" />
-                      <div className="cl-rh-rivet r2" />
-                    </div>
-                    <div className="cl-rh-cheek right">
-                      <div className="cl-rh-rivet" />
-                      <div className="cl-rh-rivet r2" />
-                    </div>
-                    {/* Mouth / jaw area */}
-                    <div className="cl-rh-jaw">
-                      <div className="cl-rh-mouth">
-                        {Array.from({length: 6}).map((_, i) => (
-                          <div key={i} className="cl-rh-tooth" style={{'--d': i}} />
-                        ))}
-                      </div>
-                    </div>
-                    <div className="cl-rh-stamp">XΣ</div>
-                    {/* Panel seam lines */}
-                    <div className="cl-rh-seam left-seam" />
-                    <div className="cl-rh-seam right-seam" />
-                    <div className="cl-rh-seam chin-seam" />
-                  </div>
-                  {/* Back face */}
-                  <div className="cl-rh-face back">
-                    <div className="cl-rh-back-plate" />
-                    <div className="cl-rh-panel-lines">
-                      {Array.from({length: 5}).map((_, i) => <div key={i} className="cl-rh-line" style={{top: `${15 + i * 16}%`}} />)}
-                    </div>
-                    <div className="cl-rh-vent">
-                      {Array.from({length: 8}).map((_, i) => <div key={i} className="cl-rh-vent-slot" />)}
-                    </div>
-                    <div className="cl-rh-back-label">MK·LXXXV</div>
-                  </div>
-                  {/* Right face */}
-                  <div className="cl-rh-face right">
-                    <div className="cl-rh-side-light" />
-                    <div className="cl-rh-side-light s2" />
-                    <div className="cl-rh-circuit">
-                      <svg viewBox="0 0 100 100" fill="none" strokeWidth="1">
-                        <path d="M10 15 L35 15 L35 40 L55 40 L55 25 L80 25" stroke="rgba(0,212,255,0.3)" />
-                        <path d="M15 45 L40 45 L40 70 L65 70 L65 85" stroke="rgba(0,212,255,0.25)" />
-                        <path d="M50 10 L50 30 L75 30 L75 55" stroke="rgba(0,255,136,0.2)" />
-                        <path d="M25 75 L25 90 L55 90" stroke="rgba(0,255,136,0.15)" />
-                        <circle cx="35" cy="15" r="2.5" fill="rgba(0,212,255,0.6)" />
-                        <circle cx="55" cy="40" r="2" fill="rgba(0,255,136,0.5)" />
-                        <circle cx="80" cy="25" r="2.5" fill="rgba(0,212,255,0.4)" />
-                        <circle cx="65" cy="70" r="2" fill="rgba(0,255,136,0.6)" />
-                        <rect x="20" y="55" width="8" height="4" rx="1" fill="rgba(0,212,255,0.2)" />
-                        <rect x="58" y="48" width="12" height="3" rx="1" fill="rgba(0,212,255,0.15)" />
-                      </svg>
-                    </div>
-                    <div className="cl-rh-side-rivets">
-                      {Array.from({length: 3}).map((_, i) => <div key={i} className="cl-rh-rivet" style={{top: `${25 + i * 25}%`}} />)}
-                    </div>
-                  </div>
-                  {/* Left face */}
-                  <div className="cl-rh-face left">
-                    <div className="cl-rh-side-light" />
-                    <div className="cl-rh-side-light s2" />
-                    <div className="cl-rh-circuit">
-                      <svg viewBox="0 0 100 100" fill="none" strokeWidth="1">
-                        <path d="M90 20 L65 20 L65 45 L45 45 L45 30 L20 30" stroke="rgba(0,212,255,0.3)" />
-                        <path d="M85 50 L60 50 L60 75 L35 75 L35 90" stroke="rgba(0,212,255,0.25)" />
-                        <path d="M50 15 L50 35 L25 35 L25 60" stroke="rgba(0,255,136,0.2)" />
-                        <circle cx="65" cy="20" r="2.5" fill="rgba(0,212,255,0.6)" />
-                        <circle cx="45" cy="45" r="2" fill="rgba(0,255,136,0.5)" />
-                        <circle cx="20" cy="30" r="2.5" fill="rgba(0,212,255,0.4)" />
-                        <rect x="40" y="60" width="10" height="3" rx="1" fill="rgba(0,212,255,0.2)" />
-                      </svg>
-                    </div>
-                    <div className="cl-rh-side-rivets">
-                      {Array.from({length: 3}).map((_, i) => <div key={i} className="cl-rh-rivet" style={{top: `${25 + i * 25}%`}} />)}
-                    </div>
-                  </div>
-                  {/* Top face */}
-                  <div className="cl-rh-face top">
-                    <div className="cl-rh-antenna">
-                      <div className="cl-rh-antenna-pole" />
-                      <div className="cl-rh-antenna-tip" />
-                    </div>
-                    <div className="cl-rh-top-ring" />
-                    <div className="cl-rh-top-seam" />
-                  </div>
-                  {/* Bottom face */}
-                  <div className="cl-rh-face bottom">
-                    <div className="cl-rh-neck">
-                      <div className="cl-rh-neck-ring" />
-                      <div className="cl-rh-neck-ring r2" />
-                      <div className="cl-rh-neck-ring r3" />
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <img
+                src="/robot_face.png"
+                alt=""
+                draggable={false}
+                className="cl-robot-img"
+              />
+              <div className="cl-robot-fade" />
 
-              {/* Scanning beam overlay */}
+              {/* Orbital rings */}
+              <div className="cl-orbit r1" />
+              <div className="cl-orbit r2" />
+
+              {/* Scanning beam */}
               <div className="cl-robot-scan-beam" />
+
               {/* Neural core pulsing orb */}
               <div className="cl-robot-neural-core">
                 <div className="cl-neural-pulse-ring r1" />
@@ -681,6 +579,12 @@ export default function AICore() {
                   <span className="cl-orb-sigil">XΣ</span>
                 </div>
               </div>
+
+              {/* Floating HUD chips */}
+              <div className="cl-chip chip-tl"><b>SYS</b><span>87.4%</span></div>
+              <div className="cl-chip chip-tr"><b>NEURAL</b><span>SYNC OK</span></div>
+              <div className="cl-chip chip-bl"><b>CORE</b><span>STABLE</span></div>
+              <div className="cl-chip chip-br"><b>MATCH</b><span>{fpMatch.toFixed(1)}%</span></div>
             </div>
 
             <div className="cl-signal-tag">
@@ -695,32 +599,44 @@ export default function AICore() {
               <div className="cl-card-corner bl" />
               <div className="cl-card-corner br" />
 
-              <div className="cl-card-header" style={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid rgba(0,212,255,0.15)', paddingBottom: '8px' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <span style={{ fontFamily: 'Orbitron', fontWeight: '900', fontSize: '1.2rem', color: '#00d4ff', textShadow: '0 0 10px rgba(0,212,255,0.5)' }}>XΣ</span>
-                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-                    <span style={{ fontFamily: 'Orbitron', fontSize: '0.62rem', fontWeight: '700', color: '#fff', letterSpacing: '0.12em' }}>BEX SIGMA TECH</span>
-                  </div>
+              <div className="cl-card-header">
+                <div className="cl-logo-tile">XΣ</div>
+                <div className="cl-title-stack">
+                  <span className="cl-title-brand">BEX SIGMA TECH</span>
+                  <span className="cl-card-title">AI COMMAND CENTER</span>
                 </div>
-                <span className="cl-card-title" style={{ fontSize: '0.85rem', letterSpacing: '0.12em', color: '#fff', textTransform: 'uppercase' }}>AI COMMAND CENTER</span>
+                <span className={`cl-header-status ${scene === 'ai_response' ? 'ok' : ''}`}>
+                  {scene === 'ai_response' ? 'GRANTED' : 'PENDING'}
+                </span>
               </div>
 
-              <div style={{ width: '100%', marginTop: '6px' }}>
-                <div style={{ fontSize: '0.68rem', fontFamily: 'Orbitron', fontWeight: '700', letterSpacing: '0.14em', color: '#fff', textAlign: 'center', marginBottom: '8px' }}>
-                  VERIFY CREDENTIALS
+              <div className="cl-hairline" />
+
+              <div style={{ width: '100%', marginTop: '2px' }}>
+                <div className="cl-verify-row">
+                  <i /><span>VERIFY CREDENTIALS</span><i />
                 </div>
                 {/* Fingerprint Target */}
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px', background: 'rgba(0,212,255,0.04)', border: '1px solid rgba(0,212,255,0.18)', borderRadius: '10px', padding: '8px 14px' }}>
-                  <div className="cl-fingerprint" style={{ width: '36px', height: '36px' }}>
-                    <div className="cl-fp-ring" />
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00d4ff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                <div className="cl-fp-module">
+                  <div className="cl-fp-frame">
+                    <span className="cl-fp-c fc-tl" />
+                    <span className="cl-fp-c fc-tr" />
+                    <span className="cl-fp-c fc-bl" />
+                    <span className="cl-fp-c fc-br" />
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M12 10a2 2 0 0 0-2 2c0 1.02-.1 2.51-.26 4 M14 13.12c0 2.38 0 3.38-.4 4.88 M18 11a6 6 0 0 0-11.8 1.48 C6.08 14 6 15 5.5 17 M12 6a10 10 0 0 0-9.35 6.4 M20 15c-.46 2.05-.8 3.08-1.5 4.5 M21.8 11.5a14 14 0 0 0-2.5-6" />
                     </svg>
+                    <span className="cl-fp-scanline" />
                   </div>
-                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-                    <span style={{ fontSize: '0.62rem', fontFamily: 'Orbitron', fontWeight: '700', color: '#fff', letterSpacing: '0.1em' }}>PLACE THUMB</span>
-                    <span style={{ fontSize: '0.52rem', fontFamily: 'Orbitron', color: '#00ff88', letterSpacing: '0.08em' }}>94% MATCH</span>
+                  <div className="cl-fp-meta">
+                    <span className="cl-fp-label">PLACE THUMB</span>
+                    <span className="cl-fp-match">
+                      {scene === 'ai_response' ? 'IDENTITY LOCKED ✓' : `${fpMatch.toFixed(1)}% MATCH`}
+                    </span>
                   </div>
+                  <span className={`cl-fp-state ${scene === 'ai_response' ? 'ok' : ''}`}>
+                    {scene === 'ai_response' ? '✓' : '●'}
+                  </span>
                 </div>
               </div>
 
