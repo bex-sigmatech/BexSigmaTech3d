@@ -97,105 +97,49 @@ export default function BootScreen() {
   return (
     <div className="nolan-boot-screen">
       {isMobileScreen ? (
-        /* ── MOBILE-DEDICATED LANDING SCREEN ── */
+        /* ── MOBILE-DEDICATED LANDING SCREEN (PURE BLACK & APPLE GLASSMORPHISM) ── */
         <div className="mobile-boot-wrapper">
-          <div className="mobile-boot-bg-glow" />
+          <div className="mb-pure-black-bg" />
+          <div className="mb-ambient-core-glow" />
+
           {!started ? (
-            <div className="mobile-boot-hero">
-              {/* Top Brand Bar */}
-              <div className="mobile-brand-bar">
-                <div className="mobile-brand-logo">
-                  <span className="logo-symbol">XΣ</span>
-                  <span className="logo-text">BEX SIGMA <strong className="logo-tech">TECH</strong></span>
+            <div className="mb-minimal-hero">
+              {/* Center Hero: 3D Chrome/Cyan Monogram + Brand Typography */}
+              <div className="mb-hero-center">
+                <div className="mb-chrome-emblem-container">
+                  <div className="mb-emblem-glint" />
+                  <div className="mb-chrome-symbol">
+                    <span className="symbol-x">X</span>
+                    <span className="symbol-sigma">Σ</span>
+                  </div>
                 </div>
-                <div className="mobile-status-pill">
-                  <span className="pill-dot" />
-                  <span className="pill-text">SYSTEM READY</span>
+
+                <div className="mb-brand-typography">
+                  <h1 className="mb-brand-title">BEX SIGMA TECH</h1>
+                  <p className="mb-brand-subtitle">NEXT-GENERATION AEROSPACE &amp; AI SYSTEMS</p>
                 </div>
               </div>
 
-              {/* 3D Holographic Scanner Reticle */}
-              <div className="mobile-scanner-container">
-                <div className="mobile-reticle-ring ring-outer" />
-                <div className="mobile-reticle-ring ring-middle" />
-                <div className="mobile-reticle-ring ring-inner" />
-                <div className="mobile-hud-tick tick-tl" />
-                <div className="mobile-hud-tick tick-tr" />
-                <div className="mobile-hud-tick tick-bl" />
-                <div className="mobile-hud-tick tick-br" />
-                <div className="mobile-emblem-core">
-                  <div className="emblem-sig">XΣ</div>
-                  <div className="emblem-glow-orbit" />
-                  <div className="laser-scan-line" />
-                </div>
-                <div className="mobile-scan-readout">
-                  <span className="readout-bracket">[</span>
-                  <span className="blink-cyan">SCANNING:</span> VERIFYING PROTOCOLS...
-                  <span className="readout-bracket">]</span>
-                </div>
-              </div>
+              {/* Lower Controls: Apple VisionOS Spatial Glassmorphism */}
+              <div className="mb-controls-group">
+                <button className="mb-apple-glass-cta interactive" onClick={handleStart}>
+                  <span className="cta-glass-sheen" />
+                  <span className="cta-glass-text">ENTER CINEMATIC EXPERIENCE</span>
+                  <span className="cta-glass-arrow">→</span>
+                </button>
 
-              {/* Hero Headlines */}
-              <div className="mobile-hero-text">
-                <h1 className="mobile-title">BEX SIGMA TECH</h1>
-                <p className="mobile-subtitle">
-                  PIONEERING AEROSPACE AI &amp; WEB DEVELOPMENT
-                </p>
-              </div>
-
-              {/* Telemetry Micro-Badges */}
-              <div className="mobile-telemetry-grid">
-                <div className="mobile-badge-item">
-                  <div className="badge-bar green-bar" />
-                  <span className="badge-label">AI SYSTEMS:</span>
-                  <span className="badge-value green">ACTIVE (98.4%)</span>
-                </div>
-                <div className="mobile-badge-item">
-                  <div className="badge-bar cyan-bar" />
-                  <span className="badge-label">NETWORKS:</span>
-                  <span className="badge-value cyan">SECURE (ALPHA)</span>
-                </div>
-                <div className="mobile-badge-item">
-                  <div className="badge-bar cyan-bar" />
-                  <span className="badge-label">WEB PROTOCOLS:</span>
-                  <span className="badge-value cyan">OPTIMIZED</span>
-                </div>
-                <div className="mobile-badge-item">
-                  <div className="badge-bar green-bar" />
-                  <span className="badge-label">PROJECT STATUS:</span>
-                  <span className="badge-value green">LIVE</span>
-                </div>
-              </div>
-
-              {/* Main CTA Button */}
-              <button className="mobile-cta-btn interactive" onClick={handleStart}>
-                <span className="cta-shimmer" />
-                <span className="cta-label">ENTER CINEMATIC EXPERIENCE</span>
-                <span className="cta-arrow">→</span>
-              </button>
-
-              <p className="mobile-tagline">
-                UNLOCK THE FUTURE OF <span className="glow-word">AEROSPACE</span>. BEYOND IMAGINATION.
-              </p>
-
-              {/* Graphics Preset selector */}
-              <div className="graphics-mode-selector mobile-gfx-mode">
-                <div className="gfx-header">
-                  <span className="gfx-icon">❖</span>
-                  <span className="gfx-title">GRAPHICS PRESET</span>
-                </div>
-                <div className="graphics-toggle-buttons">
+                <div className="mb-apple-segmented-toggle">
                   <button
-                    className={`graphics-toggle-btn interactive ${graphicsQuality === 'high' ? 'active' : ''}`}
+                    className={`mb-segment-pill interactive ${graphicsQuality === 'high' ? 'active' : ''}`}
                     onClick={() => setGraphicsQuality('high')}
                   >
-                    HIGH (CINEMATIC)
+                    HIGH GRAPHICS
                   </button>
                   <button
-                    className={`graphics-toggle-btn interactive ${graphicsQuality === 'low' ? 'active' : ''}`}
+                    className={`mb-segment-pill interactive ${graphicsQuality === 'low' ? 'active' : ''}`}
                     onClick={() => setGraphicsQuality('low')}
                   >
-                    LOW (LAG FREE)
+                    LOW GRAPHICS
                   </button>
                 </div>
               </div>

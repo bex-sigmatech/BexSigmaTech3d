@@ -592,62 +592,50 @@ export default function AICore() {
               <span>{isSpeaking ? 'AI VOICE TRANSMITTING' : 'AI SENTINEL ONLINE · BIOMETRIC READY'}</span>
             </div>
 
-            {/* Credential Verification Card */}
+            {/* Credential Verification Card (Apple Spatial Glassmorphism) */}
             <div className="cl-card">
-              <div className="cl-card-corner tl" />
-              <div className="cl-card-corner tr" />
-              <div className="cl-card-corner bl" />
-              <div className="cl-card-corner br" />
+              <div className="cl-glass-sheen" />
 
               <div className="cl-card-header">
                 <div className="cl-logo-tile">XΣ</div>
                 <div className="cl-title-stack">
                   <span className="cl-title-brand">BEX SIGMA TECH</span>
-                  <span className="cl-card-title">AI COMMAND CENTER</span>
+                  <span className="cl-card-title">AI COMMAND PORTAL</span>
                 </div>
                 <span className={`cl-header-status ${scene === 'ai_response' ? 'ok' : ''}`}>
-                  {scene === 'ai_response' ? 'GRANTED' : 'PENDING'}
+                  <span className="status-dot" />
+                  {scene === 'ai_response' ? 'GRANTED' : 'READY'}
                 </span>
               </div>
 
-              <div className="cl-hairline" />
-
-              <div style={{ width: '100%', marginTop: '2px' }}>
-                <div className="cl-verify-row">
-                  <i /><span>VERIFY CREDENTIALS</span><i />
+              {/* Biometric Verification Module */}
+              <div className="cl-fp-module">
+                <div className="cl-fp-frame">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M12 10a2 2 0 0 0-2 2c0 1.02-.1 2.51-.26 4 M14 13.12c0 2.38 0 3.38-.4 4.88 M18 11a6 6 0 0 0-11.8 1.48 C6.08 14 6 15 5.5 17 M12 6a10 10 0 0 0-9.35 6.4 M20 15c-.46 2.05-.8 3.08-1.5 4.5 M21.8 11.5a14 14 0 0 0-2.5-6" />
+                  </svg>
+                  <span className="cl-fp-scanline" />
                 </div>
-                {/* Fingerprint Target */}
-                <div className="cl-fp-module">
-                  <div className="cl-fp-frame">
-                    <span className="cl-fp-c fc-tl" />
-                    <span className="cl-fp-c fc-tr" />
-                    <span className="cl-fp-c fc-bl" />
-                    <span className="cl-fp-c fc-br" />
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M12 10a2 2 0 0 0-2 2c0 1.02-.1 2.51-.26 4 M14 13.12c0 2.38 0 3.38-.4 4.88 M18 11a6 6 0 0 0-11.8 1.48 C6.08 14 6 15 5.5 17 M12 6a10 10 0 0 0-9.35 6.4 M20 15c-.46 2.05-.8 3.08-1.5 4.5 M21.8 11.5a14 14 0 0 0-2.5-6" />
-                    </svg>
-                    <span className="cl-fp-scanline" />
-                  </div>
-                  <div className="cl-fp-meta">
-                    <span className="cl-fp-label">PLACE THUMB</span>
-                    <span className="cl-fp-match">
-                      {scene === 'ai_response' ? 'IDENTITY LOCKED ✓' : `${fpMatch.toFixed(1)}% MATCH`}
-                    </span>
-                  </div>
-                  <span className={`cl-fp-state ${scene === 'ai_response' ? 'ok' : ''}`}>
-                    {scene === 'ai_response' ? '✓' : '●'}
+                <div className="cl-fp-meta">
+                  <span className="cl-fp-label">BIOMETRIC SCAN</span>
+                  <span className="cl-fp-match">
+                    {scene === 'ai_response' ? 'IDENTITY LOCKED ✓' : `${fpMatch.toFixed(1)}% MATCH`}
                   </span>
                 </div>
+                <span className={`cl-fp-state ${scene === 'ai_response' ? 'ok' : ''}`}>
+                  {scene === 'ai_response' ? '✓' : '●'}
+                </span>
               </div>
 
-              <div className="id-dialogue-block cl-dialogue" style={{ margin: '4px 0' }}>
+              {/* AI Transmission Block */}
+              <div className="id-dialogue-block cl-dialogue">
                 {scene !== 'ai_response' ? (
                   <>
-                    <p className="cl-dialogue-main" style={{ fontSize: '0.85rem' }}>
-                      "<TypewriterText text="BEX SIGMA TECH is a premium SaaS building software company." speed={35} />"
+                    <p className="cl-dialogue-main">
+                      "<TypewriterText text="BEX SIGMA TECH · AEROSPACE AI INFRASTRUCTURE" speed={35} />"
                     </p>
-                    <p className="cl-dialogue-sub" style={{ fontSize: '0.7rem' }}>
-                      "<TypewriterText text="We provide digital marketing, Meta Ads, and financial systems support. Sync callsign to enter." speed={20} />"
+                    <p className="cl-dialogue-sub">
+                      "<TypewriterText text="Operator authorization required. Synchronize unique callsign to proceed." speed={20} />"
                     </p>
                   </>
                 ) : (
@@ -662,17 +650,14 @@ export default function AICore() {
                 )}
               </div>
 
+              {/* Input Form & Action */}
               {scene !== 'ai_response' ? (
                 <form onSubmit={handleSubmit} className="cl-form">
-                  <label className="cl-dialogue-label" style={{ textAlign: 'left' }}>
-                    Enter Access Key
-                    {isListening && <span className="m-listening-tag" style={{ marginLeft: '6px', color: '#00d4ff' }}>🎙️ LISTENING</span>}
-                  </label>
                   <div className="cl-input-row">
                     <input
                       type="text"
                       className="cl-input interactive"
-                      placeholder="Enter unique callsign"
+                      placeholder="Enter operator callsign..."
                       value={inputName}
                       onChange={(e) => setInputName(e.target.value)}
                     />
@@ -693,7 +678,7 @@ export default function AICore() {
               ) : (
                 <div className="cl-access-banner">
                   <span className="cl-access-icon">✓</span>
-                  <span className="cl-access-text">CLEARANCE VERIFIED · SYNCING HQ...</span>
+                  <span className="cl-access-text">CLEARANCE VERIFIED · ACCESS GRANTED</span>
                 </div>
               )}
             </div>
