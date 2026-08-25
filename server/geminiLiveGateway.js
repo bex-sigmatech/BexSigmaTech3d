@@ -78,7 +78,22 @@ const TOOL_DECLARATIONS = [
 ]
 
 function setupGeminiLiveGateway(server) {
-  const wss = new WebSocket.Server({ server, path: '/ws/voice' })
+  const wss = new WebSocket.Server({ noServer: true })
+
+  server.on('upgrade', (request, socket, head) => {
+    try {
+      const url = new URL(request.url, `http://${request.headers.host || 'localhost'}`)
+      if (url.pathname === '/ws/voice' || url.pathname === '/ws/voice/' || url.pathname.startsWith('/ws/voice')) {
+        wss.handleUpgrade(request, socket, head, (ws) => {
+          wss.emit('connection', ws, request)
+        })
+      } else {
+        socket.destroy()
+      }
+    } catch (e) {
+      socket.destroy()
+    }
+  })
 
   console.log('📡 Gemini 2.0 Live Voice Gateway ready on ws://localhost:PORT/ws/voice')
 
