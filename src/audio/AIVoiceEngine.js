@@ -184,73 +184,9 @@ class VoicePlayer {
   }
 
   play(text, { pitch = 0.85, rate = 0.88, volume = 1.0, onStart, onEnd, onError } = {}) {
-    if (!this.isSupported || !this.synth) {
-      if (onEnd) onEnd()
-      return
-    }
-
-    const execute = () => {
-      try {
-        // Cancel stuck utterances & resume browser speech engine
-        this.synth.cancel()
-        this.synth.resume()
-
-        const voices = this.synth.getVoices()
-        if (voices.length > 0 && !this.preferredVoice) {
-          this._selectBestVoice(voices)
-        }
-
-        const utterance = new SpeechSynthesisUtterance(text)
-        utterance.pitch = pitch
-        utterance.rate = rate
-        utterance.volume = volume
-
-        if (this.preferredVoice) {
-          utterance.voice = this.preferredVoice
-        }
-
-        let hasFinished = false
-        const finish = (cb) => {
-          if (hasFinished) return
-          hasFinished = true
-          if (safetyTimer) clearTimeout(safetyTimer)
-          if (cb) cb()
-        }
-
-        // Safety fallback timer for Chrome TTS bug (guarantees queue never hangs)
-        const fallbackMs = Math.max(text.length * 80 + 1500, 2500)
-        const safetyTimer = setTimeout(() => {
-          console.warn('[VoicePlayer] Speech utterance timed out, resuming queue.')
-          finish(onEnd)
-        }, fallbackMs)
-
-        utterance.onstart = () => {
-          if (onStart) onStart()
-        }
-        utterance.onend = () => {
-          finish(onEnd)
-        }
-        utterance.onerror = (e) => {
-          finish(() => {
-            if (onError) onError(e)
-            else if (onEnd) onEnd()
-          })
-        }
-
-        this.synth.speak(utterance)
-      } catch (e) {
-        console.warn('[VoicePlayer] Speech execution failed:', e)
-        if (onEnd) onEnd()
-      }
-    }
-
-    if (this.voicesLoaded) {
-      execute()
-    } else if (this._voiceLoadPromise) {
-      this._voiceLoadPromise.then(execute)
-    } else {
-      execute()
-    }
+    // Disabled: Replaced by Real-Time Gemini 2.0 Live Voice Executive
+    if (onStart) onStart()
+    if (onEnd) onEnd()
   }
 
   stop() {

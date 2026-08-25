@@ -2,16 +2,22 @@ const path = require('path')
 const fs = require('fs')
 require('dotenv').config({ path: path.join(__dirname, '.env') })
 
+const http = require('http')
 const express = require('express')
 const cors = require('cors')
 const crypto = require('crypto')
 const { Cashfree } = require('cashfree-pg')
 const db = require('./db')
+const { setupGeminiLiveGateway } = require('./geminiLiveGateway')
 
 db.initDb()
 
 const app = express()
+const server = http.createServer(app)
 const PORT = process.env.PORT || 5001
+
+/* ── Setup Gemini 2.0 Live WebSocket Gateway ── */
+setupGeminiLiveGateway(server)
 
 /* ── Middleware ── */
 app.use(cors({
@@ -509,11 +515,12 @@ app.post('/api/ai/chat', async (req, res) => {
 })
 
 /* ── Start Server ── */
-app.listen(PORT, '0.0.0.0', () => {
-  console.log(`\n🚀 BEX Sigma Tech Payment API running on http://localhost:${PORT}`)
+server.listen(PORT, '0.0.0.0', () => {
+  console.log(`\n🚀 BEX Sigma Tech Payment & Live Voice API running on http://localhost:${PORT}`)
   console.log(`   Cashfree App ID: ${process.env.CASHFREE_APP_ID || '⚠️  NOT SET — add to .env'}`)
   console.log(`   Cashfree Environment: ${process.env.CASHFREE_ENV || 'SANDBOX'}`)
   console.log(`   Gemini API Key: ${process.env.GEMINI_API_KEY ? '✅ Configured' : 'ℹ️  Using BEX Neural Core (Local)'}`)
+  console.log(`   Live Voice WebSocket: ws://localhost:${PORT}/ws/voice`)
   console.log(`   Database: ✅ JSON/SQLite Engine Online`)
   console.log(`   Download Tokens: ✅ Enabled (24-Hour Signed Link)`)
   console.log(`   Webhook: POST /api/webhook\n`)

@@ -91,39 +91,8 @@ function playSuccessSound(audioCtx) {
 }
 
 function speakAIVoice() {
-  if (!window.speechSynthesis) return
-  const synth = window.speechSynthesis
-  // Cancel any pending speech
-  synth.cancel()
-
-  const text = 'Welcome to Bex Sigma Tech. Initializing next-generation digital experiences. Please wait while we prepare your journey.'
-  const utter = new SpeechSynthesisUtterance(text)
-  utter.rate = 0.9
-  utter.pitch = 1.1
-  utter.volume = 1
-
-  const setVoice = () => {
-    const voices = synth.getVoices()
-    const preferred = voices.find(v =>
-      v.name.includes('Samantha') ||
-      v.name.includes('Karen') ||
-      v.name.includes('Google UK English Female') ||
-      v.name.includes('Microsoft Zira') ||
-      (v.lang.startsWith('en') && v.name.toLowerCase().includes('female'))
-    ) || voices.find(v => v.lang.startsWith('en'))
-    if (preferred) utter.voice = preferred
-  }
-
-  const voices = synth.getVoices()
-  if (voices.length) {
-    setVoice()
-    synth.speak(utter)
-  } else {
-    synth.addEventListener('voiceschanged', () => {
-      setVoice()
-      synth.speak(utter)
-    }, { once: true })
-  }
+  // Disabled: Replaced by Real-Time Gemini 2.0 Live Voice Executive
+  return
 }
 
 /* ─── Particle Canvas ─── */

@@ -447,6 +447,20 @@ export default function AICore() {
     return () => { clearTimeout(t1); clearTimeout(t2) }
   }, [isIntroSkipped])
 
+  // Real-time Voice Trigger Scan listener
+  useEffect(() => {
+    const handleTriggerScan = (e) => {
+      const callsign = e.detail || 'COMMANDER'
+      setInputName(callsign)
+      setTimeout(() => {
+        voiceEmitter.emit('NAME_SUBMITTED', { userName: callsign })
+        submitIdentity(callsign)
+      }, 600)
+    }
+    window.addEventListener('TRIGGER_SCAN', handleTriggerScan)
+    return () => window.removeEventListener('TRIGGER_SCAN', handleTriggerScan)
+  }, [submitIdentity])
+
   const handleMicClick = () => {
     setIsListening(true)
     aiVoice.startSpeechRecognition(

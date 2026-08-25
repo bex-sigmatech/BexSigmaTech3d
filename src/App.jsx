@@ -8,10 +8,11 @@ import HQScene from './components/headquarters/HQScene'
 import MissionBriefing from './components/mission/MissionBriefing'
 import Dashboard from './components/dashboard/Dashboard'
 import WebDevStore from './components/webdev/WebDevStore'
+import LiveVoiceHUD from './components/ai/LiveVoiceHUD'
 import './styles/app.css'
 
 export default function App() {
-  const { scene, skipIntro, bootStarted, isIntroSkipped } = useStore()
+  const { scene, skipIntro, bootStarted, isIntroSkipped, navigateToSector, submitIdentity } = useStore()
 
   // Show skip button once boot has started (user clicked ENTER), through all intro scenes
   const isIntroScene = ['boot', 'access_granted', 'welcome', 'ai_core'].includes(scene)
@@ -19,6 +20,13 @@ export default function App() {
 
   return (
     <div className="app-container">
+      {/* ── Real-Time Gemini 2.0 Live Voice HUD ── */}
+      {bootStarted && (
+        <LiveVoiceHUD
+          onNavigateSector={(sector) => navigateToSector(sector)}
+          onTriggerScan={(callsign) => submitIdentity(callsign || 'COMMANDER')}
+        />
+      )}
       {/* Scene 1: Boot Decrypt loader */}
       {scene === 'boot' && <BootScreen />}
 

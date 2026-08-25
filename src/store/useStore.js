@@ -1,6 +1,7 @@
 import { create } from 'zustand'
 import { cinemaAudio } from '../audio/CinematicAudioEngine'
 import { aiVoice, voiceEmitter } from '../audio/AIVoiceEngine'
+import { liveVoiceClient } from '../audio/GeminiLiveClient'
 
 const isMobileDevice = typeof window !== 'undefined' && (
   window.innerWidth <= 768 ||
@@ -152,6 +153,26 @@ export const useStore = create((set, get) => {
         isIntroSkipped: true,
         bootStarted: true
       })
+
+      // Auto-connect live voice comms on skip
+      liveVoiceClient.connect().catch((e) => console.warn('Voice connect on skip:', e))
+    },
+
+    navigateToSector: (sectorId) => {
+      cinemaAudio.playSectorTransition()
+      if (sectorId === 'web_dev' || sectorId === 'store' || sectorId === 'products') {
+        cinemaAudio.setScene('webdev_store')
+        set({ scene: 'webdev_store', activeMission: { id: 'web_dev', name: 'Sector 9 Web Dev Store' } })
+      } else if (sectorId === 'dashboard' || sectorId === 'analytics' || sectorId === 'finance') {
+        cinemaAudio.setScene('dashboard')
+        set({ scene: 'dashboard' })
+      } else if (sectorId === 'ai_core') {
+        cinemaAudio.setScene('ai_core')
+        set({ scene: 'ai_core' })
+      } else {
+        cinemaAudio.setScene('headquarters')
+        set({ scene: 'headquarters' })
+      }
     },
 
     resetSession: () => {

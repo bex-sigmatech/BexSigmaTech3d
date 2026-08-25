@@ -5,6 +5,7 @@ import * as THREE from 'three'
 import { useStore } from '../../store/useStore'
 import { cinemaAudio } from '../../audio/CinematicAudioEngine'
 import { voiceEmitter } from '../../audio/AIVoiceEngine'
+import { liveVoiceClient } from '../../audio/GeminiLiveClient'
 
 /* ==========================================================================
    BEX SIGMA TECH — JARVIS ORBITAL SPHERE INTERFACE
@@ -182,18 +183,23 @@ function DepartmentOrb({ dept, index, isActive, isHovered, onHover, onLeave, onS
     if (outerRingRef.current) outerRingRef.current.rotation.z = t * (0.4 + index * 0.05)
     if (!isLow && innerRingRef.current) innerRingRef.current.rotation.z = -t * (0.7 + index * 0.03)
 
+    // Audio-reactive voice modulation
+    const freq = liveVoiceClient.getFrequencyData()
+    const voiceEnergy = (freq[index % freq.length] || 0) / 255
+
     // Sphere pulse
     if (sphereRef.current && sphereRef.current.material) {
       const pulse = isActive
-        ? 1.8 + Math.sin(t * 3) * 0.6
+        ? 1.8 + Math.sin(t * 3) * 0.6 + voiceEnergy * 1.5
         : isHovered
-          ? 1.2 + Math.sin(t * 2.5) * 0.3
-          : 0.5 + Math.sin(t * 1.5 + index) * 0.2
+          ? 1.2 + Math.sin(t * 2.5) * 0.3 + voiceEnergy * 0.8
+          : 0.5 + Math.sin(t * 1.5 + index) * 0.2 + voiceEnergy * 0.4
       sphereRef.current.material.emissiveIntensity = pulse
     }
 
-    // Scale on hover/active
-    const targetScale = isActive ? 1.35 : isHovered ? 1.15 : 1.0
+    // Scale on hover/active + voice reactivity
+    const voiceScale = isActive ? voiceEnergy * 0.25 : 0
+    const targetScale = (isActive ? 1.35 : isHovered ? 1.15 : 1.0) + voiceScale
     groupRef.current.scale.lerp(new THREE.Vector3(targetScale, targetScale, targetScale), 0.1)
   })
 
@@ -404,6 +410,23 @@ export default function HQScene() {
       }
     }, 900)
   }
+
+  // Voice Navigation listener
+  useEffect(() => {
+    const handleVoiceNav = (e) => {
+      const sectorId = e.detail
+      if (!sectorId) return
+      const idx = DEPARTMENTS.findIndex(d => d.id === sectorId || (sectorId === 'store' && d.id === 'web_dev'))
+      if (idx !== -1) {
+        setActiveIndex(idx)
+        setTimeout(() => {
+          handleEngage(DEPARTMENTS[idx])
+        }, 500)
+      }
+    }
+    window.addEventListener('NAVIGATE_SECTOR', handleVoiceNav)
+    return () => window.removeEventListener('NAVIGATE_SECTOR', handleVoiceNav)
+  }, [isZooming])
 
   // Keydown Enter listener to trigger engage
   useEffect(() => {
