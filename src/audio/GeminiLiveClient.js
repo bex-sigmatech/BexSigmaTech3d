@@ -58,12 +58,13 @@ class GeminiLiveClient {
 
     this.setState('CONNECTING')
 
-    const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:'
-    const host = window.location.hostname === 'localhost'
-      ? 'localhost:5001'
-      : (import.meta.env.VITE_BACKEND_HOST || window.location.host)
-
-    const wsUrl = `${protocol}//${host}/ws/voice`
+    let wsUrl
+    if (typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) {
+      wsUrl = 'ws://localhost:5001/ws/voice'
+    } else {
+      const backendHost = import.meta.env.VITE_BACKEND_HOST || 'bexsigmatech3d.onrender.com'
+      wsUrl = `wss://${backendHost}/ws/voice`
+    }
 
     try {
       this.ws = new WebSocket(wsUrl)
