@@ -153,9 +153,6 @@ export const useStore = create((set, get) => {
         isIntroSkipped: true,
         bootStarted: true
       })
-
-      // Auto-connect live voice comms on skip
-      liveVoiceClient.connect().catch((e) => console.warn('Voice connect on skip:', e))
     },
 
     navigateToSector: (sectorId) => {

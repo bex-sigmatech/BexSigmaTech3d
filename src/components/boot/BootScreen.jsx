@@ -27,8 +27,6 @@ export default function BootScreen() {
     startLoading()
     // Event-driven trigger
     voiceEmitter.emit('LOADING_STARTED')
-    // Automatically initialize live AI client consultant comms
-    liveVoiceClient.connect().catch((e) => console.warn('Auto voice connect pending:', e))
   }
 
   useEffect(() => {
