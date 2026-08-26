@@ -12,9 +12,11 @@ export default function BootScreen() {
     startLoading,
     triggerAccessGranted,
     graphicsQuality,
-    setGraphicsQuality
+    setGraphicsQuality,
+    bootStarted
   } = useStore()
-  const [started, setStarted] = useState(false)
+  // If arriving from Homepage CTA, bootStarted is already true — skip the enter button
+  const [started, setStarted] = useState(() => bootStarted)
   const voice25Ref = useRef(false)
   const voice50Ref = useRef(false)
   const voice75Ref = useRef(false)
@@ -25,9 +27,17 @@ export default function BootScreen() {
     useStore.setState({ bootStarted: true })
     unlockAudioContext()
     startLoading()
-    // Event-driven trigger
     voiceEmitter.emit('LOADING_STARTED')
   }
+
+  // Auto-start when arriving from Homepage CTA (bootStarted already set)
+  useEffect(() => {
+    if (bootStarted && !started) {
+      setStarted(true)
+      voiceEmitter.emit('LOADING_STARTED')
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   useEffect(() => {
     if (!started) return

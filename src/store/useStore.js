@@ -13,7 +13,7 @@ const savedGraphics = typeof window !== 'undefined' ? localStorage.getItem('bex_
 
 export const useStore = create((set, get) => {
   return {
-    scene: 'boot', // 'boot' | 'access_granted' | 'welcome' | 'ai_core' | 'ai_response' | 'headquarters' | 'mission_briefing' | 'dashboard' | 'webdev_store'
+    scene: 'homepage', // 'homepage' | 'boot' | 'access_granted' | 'welcome' | 'ai_core' | 'ai_response' | 'headquarters' | 'mission_briefing' | 'dashboard' | 'webdev_store'
     loadingProgress: 0,
     userName: '',
     activeMission: null,
@@ -45,6 +45,22 @@ export const useStore = create((set, get) => {
     setScrollPosition: (pos) => set({ scrollPosition: pos }),
 
     // Transition Functions
+
+    // Called from Homepage CTA — must happen inside a user gesture for audio unlock
+    enterCinematic: () => {
+      try {
+        cinemaAudio.unlock()
+        aiVoice.unlock()
+        cinemaAudio.startCinematicScore()
+        cinemaAudio.setAmbientVolume(0.35, 3)
+        cinemaAudio.setScene('boot')
+      } catch (e) {
+        console.warn('Audio unlock during enterCinematic:', e)
+      }
+      set({ scene: 'boot', bootStarted: true, audioContextUnlocked: true })
+      voiceEmitter.emit('LOADING_STARTED')
+    },
+
     startLoading: () => {
       cinemaAudio.unlock()
       cinemaAudio.startCinematicScore()
@@ -176,12 +192,14 @@ export const useStore = create((set, get) => {
       voiceEmitter.emit('LOGOUT')
       cinemaAudio.stopAll()
       set({
-        scene: 'boot',
+        scene: 'homepage',
         loadingProgress: 0,
         userName: '',
         activeMission: null,
         scrollPosition: 0,
-        isIntroSkipped: false
+        isIntroSkipped: false,
+        bootStarted: false,
+        audioContextUnlocked: false
       })
     }
   }

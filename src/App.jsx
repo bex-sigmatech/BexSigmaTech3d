@@ -1,4 +1,4 @@
-import React, { Suspense, lazy } from 'react'
+import React, { Suspense, lazy, useEffect } from 'react'
 import { useStore } from './store/useStore'
 import BootScreen from './components/boot/BootScreen'
 import AccessGranted from './components/boot/AccessGranted'
@@ -8,12 +8,20 @@ import HQScene from './components/headquarters/HQScene'
 import MissionBriefing from './components/mission/MissionBriefing'
 import Dashboard from './components/dashboard/Dashboard'
 import LiveVoiceHUD from './components/ai/LiveVoiceHUD'
+import Homepage from './components/Homepage'
 import './styles/app.css'
 
 const WebDevStore = lazy(() => import('./components/webdev/WebDevStore'))
 
-export default function App() {
+export default function App({ initialScene }) {
   const { scene, skipIntro, bootStarted, isIntroSkipped, navigateToSector, submitIdentity, userName } = useStore()
+
+  // Support deep-link routes: /store, /hq jump directly to that scene
+  useEffect(() => {
+    if (initialScene) {
+      useStore.setState({ scene: initialScene, bootStarted: true, isIntroSkipped: true })
+    }
+  }, [initialScene])
 
   // Expose dynamic context for Gemini Live voice (10/10 per-scene instruction)
   React.useEffect(() => {
@@ -30,6 +38,9 @@ export default function App() {
 
   return (
     <div className="app-container">
+      {/* ── Homepage Landing — shown before cinematic boot ── */}
+      {scene === 'homepage' && <Homepage />}
+
       {/* ── Real-Time Gemini 2.0 Live Voice HUD — hidden on mobile credential to avoid covering SYNC (user report) ── */}
       {bootStarted && !(typeof window !== 'undefined' && window.innerWidth <= 768 && (scene === 'ai_core' || scene === 'ai_response')) && (
         <LiveVoiceHUD

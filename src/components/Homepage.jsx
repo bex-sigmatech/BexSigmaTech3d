@@ -627,6 +627,9 @@ function Navbar() {
 
 /* ─── Hero ─── */
 function HeroSection() {
+  const { enterCinematic } = useStore()
+  const scrollTo = (id) => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
+
   return (
     <section className="hero-section" id="hero">
       <motion.div
@@ -646,15 +649,15 @@ function HeroSection() {
         </motion.h1>
 
         <motion.p className="hero-subtitle" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 1 }}>
-          We architect next-generation experiences that push the boundaries of what's possible with AI, immersive design, and cutting-edge technology.
+          We architect next-generation experiences that push the boundaries of what’s possible with AI, immersive design, and cutting-edge technology.
         </motion.p>
 
         <motion.div className="hero-actions" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 1.2 }}>
-          <button className="btn-primary" id="explore-btn">
+          <button className="btn-primary" id="explore-btn" onClick={() => scrollTo('solutions')}>
             <span>Explore Our Work</span>
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M6 10H14M14 10L10 6M14 10L10 14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
           </button>
-          <button className="btn-secondary" id="demo-btn">Watch Demo</button>
+          <button className="btn-secondary" id="demo-btn" onClick={enterCinematic}>Enter Cinematic Experience ▸▸</button>
         </motion.div>
 
         <motion.div className="hero-stats" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1, delay: 1.5 }}>
@@ -726,19 +729,50 @@ function TechSection() {
   )
 }
 
+/* ─── About Section ─── */
+function AboutSection() {
+  const values = [
+    { icon: '🛡️', title: 'Security First', desc: 'Post-quantum cryptography and zero-trust architectures built into every layer.' },
+    { icon: '🧠', title: 'AI Native', desc: 'Every product is powered by large language models and autonomous AI agents.' },
+    { icon: '🚀', title: 'Mission Driven', desc: 'We build technology that moves humanity toward a more connected, intelligent future.' },
+    { icon: '⚡', title: 'Zero Latency', desc: 'Engineered for speed — sub-10ms response times across all systems.' },
+  ]
+  return (
+    <section className="section" id="about" style={{ padding: '100px 0', background: 'linear-gradient(180deg, transparent, rgba(0,212,255,0.03) 50%, transparent)' }}>
+      <motion.div className="section-header" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} viewport={{ once: true }}>
+        <span className="section-label">WHO WE ARE</span>
+        <h2 className="section-title">About BEX Sigma Tech</h2>
+        <p className="section-desc" style={{ maxWidth: '640px' }}>
+          Founded in 2024, BEX Sigma Tech is a next-generation technology studio specialising in AI systems, immersive 3D web experiences, and enterprise-grade cloud architecture. We build products that redefine what’s possible.
+        </p>
+      </motion.div>
+      <div className="solutions-grid" style={{ marginTop: '48px' }}>
+        {values.map((v, i) => (
+          <GlassCard key={i} delay={0.1 * i}>
+            <div className="solution-icon">{v.icon}</div>
+            <h3 className="solution-title">{v.title}</h3>
+            <p className="solution-desc">{v.desc}</p>
+          </GlassCard>
+        ))}
+      </div>
+    </section>
+  )
+}
+
 /* ─── CTA ─── */
 function CTASection() {
+  const { enterCinematic } = useStore()
   return (
     <section className="section cta-section" id="contact">
       <motion.div className="cta-content" initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} viewport={{ once: true }}>
         <h2 className="cta-title">Ready to Build the<span className="cta-gradient"> Future</span>?</h2>
-        <p className="cta-desc">Let's create something extraordinary together. Our team is ready to transform your vision into reality.</p>
+        <p className="cta-desc">Let’s create something extraordinary together. Our team is ready to transform your vision into reality.</p>
         <div className="cta-actions">
-          <button className="btn-primary btn-large" id="start-project-btn">
-            <span>Start a Project</span>
+          <button className="btn-primary btn-large" id="start-project-btn" onClick={enterCinematic}>
+            <span>Enter the Experience</span>
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M6 10H14M14 10L10 6M14 10L10 14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
           </button>
-          <button className="btn-secondary btn-large" id="schedule-btn">Schedule a Call</button>
+          <a href="mailto:contact@bexsigmatech.io" className="btn-secondary btn-large" id="schedule-btn" style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center' }}>Schedule a Call</a>
         </div>
       </motion.div>
     </section>
@@ -747,6 +781,7 @@ function CTASection() {
 
 /* ─── Footer ─── */
 function Footer() {
+  const scrollTo = (id) => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
   return (
     <footer className="footer">
       <div className="footer-content">
@@ -761,17 +796,17 @@ function Footer() {
         <div className="footer-links-group">
           <div className="footer-column">
             <h4 className="footer-heading">Solutions</h4>
-            <a href="#" className="footer-link">AI &amp; ML</a>
-            <a href="#" className="footer-link">Web Experiences</a>
-            <a href="#" className="footer-link">Cloud</a>
-            <a href="#" className="footer-link">Security</a>
+            <button onClick={() => scrollTo('solutions')} className="footer-link" style={{ background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', padding: 0 }}>AI &amp; ML</button>
+            <button onClick={() => scrollTo('solutions')} className="footer-link" style={{ background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', padding: 0 }}>Web Experiences</button>
+            <button onClick={() => scrollTo('tech')} className="footer-link" style={{ background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', padding: 0 }}>Cloud</button>
+            <button onClick={() => scrollTo('tech')} className="footer-link" style={{ background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', padding: 0 }}>Security</button>
           </div>
           <div className="footer-column">
             <h4 className="footer-heading">Company</h4>
-            <a href="#" className="footer-link">About</a>
-            <a href="#" className="footer-link">Careers</a>
-            <a href="#" className="footer-link">Blog</a>
-            <a href="#" className="footer-link">Contact</a>
+            <button onClick={() => scrollTo('about')} className="footer-link" style={{ background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', padding: 0 }}>About</button>
+            <button onClick={() => scrollTo('contact')} className="footer-link" style={{ background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', padding: 0 }}>Careers</button>
+            <button onClick={() => scrollTo('contact')} className="footer-link" style={{ background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', padding: 0 }}>Blog</button>
+            <button onClick={() => scrollTo('contact')} className="footer-link" style={{ background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', padding: 0 }}>Contact</button>
           </div>
         </div>
       </div>
@@ -795,6 +830,7 @@ export default function Homepage() {
         <HeroSection />
         <SolutionsSection />
         <TechSection />
+        <AboutSection />
         <CTASection />
         <Footer />
       </div>
