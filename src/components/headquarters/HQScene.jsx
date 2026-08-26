@@ -627,18 +627,16 @@ export default function HQScene() {
               />
             ))}
 
-            {/* Sci-Fi Post-Processing Pipeline */}
-            {graphicsQuality !== 'low' && (
-              <EffectComposer disableNormalPass>
-                <Bloom
-                  luminanceThreshold={0.2}
-                  luminanceSmoothing={0.9}
-                  intensity={1.1}
-                  mipmapBlur
-                />
-                <Vignette eskil={false} offset={0.1} darkness={0.6} />
-              </EffectComposer>
-            )}
+            {/* Sci-Fi Post-Processing Pipeline — 10/10 mobile keeps soft bloom (0.35) instead of off */}
+            <EffectComposer disableNormalPass>
+              <Bloom
+                luminanceThreshold={0.2}
+                luminanceSmoothing={0.9}
+                intensity={graphicsQuality === 'low' ? 0.35 : 1.1}
+                mipmapBlur
+              />
+              <Vignette eskil={false} offset={0.1} darkness={graphicsQuality === 'low' ? 0.45 : 0.6} />
+            </EffectComposer>
           </Suspense>
         </Canvas>
       </div>

@@ -8,4 +8,16 @@ export default defineConfig({
     port: 5174,
     strictPort: false,
   },
+  build: {
+    chunkSizeWarningLimit: 800,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          react: ['react', 'react-dom', 'react-router-dom', 'zustand'],
+          three: ['three', '@react-three/fiber', '@react-three/drei', '@react-three/postprocessing'],
+          ui: ['framer-motion', 'gsap', 'react-icons'],
+        },
+      },
+    },
+  },
 })

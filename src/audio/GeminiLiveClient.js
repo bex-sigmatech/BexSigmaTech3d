@@ -1,3 +1,6 @@
+import { aiVoice } from './AIVoiceEngine'
+import { cinemaAudio } from './CinematicAudioEngine'
+
 /* ==========================================================================
    BEX SIGMA TECH — GEMINI 2.0 MULTIMODAL LIVE CLIENT (HIGH FIDELITY)
    Features:
@@ -5,6 +8,7 @@
    - Zero-gap seamless audio chunk queue with jitter-free scheduling
    - Acoustic Echo-Gating (prevents self-interruption from speaker playback)
    - Real-time AnalyserNode FFT visualizer for 3D Holographic Core
+   - 10/10 collapse: Live and pre-recorded never speak together (mutual exclusion)
    ========================================================================== */
 
 class GeminiLiveClient {
@@ -49,22 +53,51 @@ class GeminiLiveClient {
     if (this.state === newState) return
     this.state = newState
     this.emit('state', newState)
+    try { if (typeof window !== 'undefined') window.__LIVE_VOICE_STATE__ = newState } catch {}
+    // 10/10 collapse: when Live starts, stop pre-recorded immediately (no overlap)
+    if (newState === 'SPEAKING' || newState === 'LISTENING') {
+      try { aiVoice.stop(); cinemaAudio.setAmbientVolume(0.08, 0.4) } catch {}
+    }
+    if (newState === 'DISCONNECTED') {
+      try { cinemaAudio.setAmbientVolume(0.3, 0.8) } catch {}
+    }
   }
 
-  async connect() {
-    if (this.ws && (this.ws.readyState === WebSocket.OPEN || this.ws.readyState === WebSocket.CONNECTING)) {
+  async connect({ forceReconnect = false } = {}) {
+    if (!forceReconnect && this.ws && (this.ws.readyState === WebSocket.OPEN || this.ws.readyState === WebSocket.CONNECTING)) {
       return
     }
+    if (forceReconnect) this._reconnectAttempts = 0
+    this._shouldReconnect = true
 
     this.setState('CONNECTING')
+    this._reconnectAttempts = this._reconnectAttempts || 0
 
     let wsUrl
-    if (typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) {
+    // 10/10: env-driven + protocol-aware + dynamic context (userName/scene) for per-sector instruction
+    const envBackendUrl = import.meta.env.VITE_BACKEND_URL
+    const envBackendHost = import.meta.env.VITE_BACKEND_HOST
+    if (envBackendUrl && envBackendUrl.startsWith('http')) {
+      const u = new URL(envBackendUrl)
+      wsUrl = `${u.protocol === 'https:' ? 'wss:' : 'ws:'}//${u.host}/ws/voice`
+    } else if (typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) {
       wsUrl = 'ws://localhost:5001/ws/voice'
+    } else if (envBackendHost) {
+      wsUrl = `wss://${envBackendHost}/ws/voice`
+    } else if (typeof window !== 'undefined') {
+      wsUrl = `${window.location.protocol === 'https:' ? 'wss:' : 'ws:'}//${window.location.host}/ws/voice`
     } else {
-      const backendHost = import.meta.env.VITE_BACKEND_HOST || 'bexsigmatech3d.onrender.com'
-      wsUrl = `wss://${backendHost}/ws/voice`
+      wsUrl = 'wss://bexsigmatech3d.onrender.com/ws/voice'
     }
+    // Append dynamic context for server-side SYSTEM_INSTRUCTION
+    try {
+      const userName = (typeof window !== 'undefined' && (localStorage.getItem('bex_userName') || window.__BEX_USER__)) || ''
+      const scene = (typeof window !== 'undefined' && window.__BEX_SCENE__) || ''
+      const params = new URLSearchParams()
+      if (userName) params.set('userName', userName)
+      if (scene) params.set('scene', scene)
+      if (params.toString()) wsUrl += `?${params.toString()}`
+    } catch {}
 
     try {
       this.ws = new WebSocket(wsUrl)
@@ -94,6 +127,15 @@ class GeminiLiveClient {
         console.log('🔌 LiveClient WS closed')
         this.stopAudio()
         this.setState('DISCONNECTED')
+        // 10/10: exponential backoff reconnect (3 tries) for transient drops
+        if (this._reconnectAttempts < 3 && this._shouldReconnect !== false) {
+          const delay = Math.min(1000 * Math.pow(2, this._reconnectAttempts), 8000)
+          this._reconnectAttempts++
+          console.log(`↻ Reconnecting voice in ${delay}ms (attempt ${this._reconnectAttempts}/3)`)
+          setTimeout(() => this.connect(), delay)
+        } else {
+          this._reconnectAttempts = 0
+        }
       }
 
     } catch (err) {
@@ -282,6 +324,8 @@ class GeminiLiveClient {
   }
 
   disconnect() {
+    this._shouldReconnect = false
+    this._reconnectAttempts = 0
     this.stopAudio()
     if (this.ws) {
       this.ws.close()

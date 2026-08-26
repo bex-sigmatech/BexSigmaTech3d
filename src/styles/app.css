@@ -6964,6 +6964,11 @@ body {
     color: #ffffff;
     margin: 0;
     line-height: 1.4;
+    font-variant-ligatures: none;
+    font-feature-settings: "liga" 0, "clig" 0, "calt" 0;
+    overflow: visible;
+    white-space: pre-wrap;
+    word-break: break-word;
   }
 
   .cl-dialogue-sub {
@@ -6972,6 +6977,9 @@ body {
     color: rgba(148, 163, 184, 0.85);
     margin: 4px 0 0;
     line-height: 1.45;
+    font-variant-ligatures: none;
+    overflow: visible;
+    white-space: pre-wrap;
   }
 
   .cl-form {
@@ -7016,9 +7024,12 @@ body {
   }
 
   .cl-input::placeholder {
-    color: rgba(148, 163, 184, 0.45);
-    font-size: 0.72rem;
+    color: #cbd5e1;
+    opacity: 0.85;
+    font-size: 0.85rem;
   }
+  /* Hide signal tag when input focused — reduces competition (mobile credential only) */
+  .mobile-aicore-wrapper:focus-within .cl-signal-tag { opacity: 0; pointer-events: none; transition: opacity 0.2s; }
 
   .cl-mic {
     width: 48px;
@@ -7158,6 +7169,158 @@ body {
 
 }
 
+/* ═══════════ 10/10 MOBILE ONLY — clean, impressive, unique (does not touch desktop) ═══════════ */
+@media (max-width: 768px) {
+  /* Topbar: floating pill with safe-area */
+  .mobile-aicore-wrapper .cl-topbar {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    height: 56px;
+    min-height: 56px;
+    padding: calc(8px + env(safe-area-inset-top)) 14px 8px;
+    background: linear-gradient(180deg, rgba(2, 6, 14, 0.92), rgba(2, 6, 14, 0.72));
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(56, 189, 248, 0.12);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .mobile-aicore-wrapper .cl-topbar-os {
+    font-size: 0.52rem !important;
+    letter-spacing: 0.18em !important;
+  }
+  .mobile-aicore-wrapper .cl-skip-pill {
+    min-height: 44px;
+    min-width: 88px;
+    padding: 0 16px;
+    font-size: 0.72rem !important;
+    border-radius: 999px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+  }
+  /* Hero: unique diagonal mask + taller, more immersive */
+  .mobile-aicore-wrapper .cl-hero-section {
+    gap: 14px;
+    padding: 10px 14px 0;
+  }
+  .mobile-aicore-wrapper .cl-3d-robot-bg {
+    height: 42vh;
+    min-height: 260px;
+    max-height: 380px;
+    border-radius: 24px;
+    overflow: hidden;
+    border: 1px solid rgba(56, 189, 248, 0.18);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45), 0 0 30px rgba(0, 212, 255, 0.08);
+    transform: perspective(800px) rotateX(1deg);
+  }
+  .mobile-aicore-wrapper .cl-robot-img {
+    object-position: center 28% !important;
+    filter: saturate(1.08) contrast(1.05);
+  }
+  .mobile-aicore-wrapper .cl-chip {
+    padding: 6px 10px;
+    font-size: 0.5rem;
+    border-radius: 999px;
+    backdrop-filter: blur(12px);
+  }
+  /* Card: clean, larger tap targets, 16px prevents iOS zoom */
+  .mobile-aicore-wrapper {
+    padding-bottom: calc(96px + env(safe-area-inset-bottom));
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .mobile-aicore-wrapper .cl-card {
+    max-width: 92vw;
+    padding: 18px 16px 16px;
+    gap: 14px;
+    border-radius: 28px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.28);
+    margin-bottom: 16px;
+  }
+  .mobile-aicore-wrapper .cl-input {
+    font-size: 16px !important; /* prevents iOS zoom */
+    min-height: 52px !important;
+    border-radius: 16px !important;
+  }
+  .mobile-aicore-wrapper .cl-mic {
+    min-height: 52px;
+    width: 52px;
+    border-radius: 16px;
+  }
+  .mobile-aicore-wrapper .cl-sync-btn {
+    height: 54px;
+    border-radius: 16px;
+    font-size: 0.82rem;
+    letter-spacing: 0.16em;
+  }
+  /* Footer: no longer fixed overlay — flows below SYNC so never hides it */
+  .mobile-aicore-wrapper .cl-hud-footer {
+    position: relative;
+    bottom: auto;
+    left: auto;
+    transform: none;
+    width: 100%;
+    max-width: 420px;
+    gap: 8px;
+    padding: 6px;
+    margin: 4px auto 0;
+    background: rgba(2, 6, 14, 0.78);
+    border: 1px solid rgba(56, 189, 248, 0.18);
+    border-radius: 16px;
+    backdrop-filter: blur(16px);
+  }
+  .mobile-aicore-wrapper .cl-hud-cell {
+    padding: 8px 2px;
+    border-radius: 12px;
+  }
+  .mobile-aicore-wrapper .cl-hud-key { font-size: 0.42rem !important; }
+  .mobile-aicore-wrapper .cl-hud-val { font-size: 0.58rem !important; }
+  /* HQ mobile dock: horizontal pill, thumb-zone */
+  .hq-bottom-dock {
+    position: fixed !important;
+    bottom: calc(12px + env(safe-area-inset-bottom)) !important;
+    left: 12px !important;
+    right: 12px !important;
+    top: auto !important;
+    transform: none !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 10px !important;
+    z-index: 25 !important;
+  }
+  .jarvis-orb-minimap {
+    flex-direction: row !important;
+    overflow-x: auto;
+    scrollbar-width: none;
+    gap: 8px !important;
+    padding: 10px 12px !important;
+    border-radius: 999px !important;
+  }
+  .jarvis-orb-minimap::-webkit-scrollbar { display: none; }
+  .jarvis-minimap-item { flex-shrink: 0; }
+  .jarvis-dept-panel {
+    border-radius: 20px !important;
+    padding: 16px !important;
+  }
+  /* Store mobile: thumb-friendly */
+  .webdev-slider-viewport { height: 440px !important; }
+  .webdev-slider-controls-row h2 { font-size: 0.68rem !important; }
+  .webdev-slider-btn {
+    min-height: 44px !important;
+    min-width: 44px !important;
+    padding: 0 16px !important;
+    border-radius: 999px !important;
+  }
+  .webdev-store-header {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 12px !important;
+    padding: 12px 14px calc(12px + env(safe-area-inset-top)) !important;
+  }
+  .webdev-trust-row { padding-bottom: env(safe-area-inset-bottom); }
+}
+
 @media (min-width: 769px) {
   .mobile-aicore-wrapper {
     display: none !important;
@@ -7166,4 +7329,123 @@ body {
   .desktop-aicore-wrapper {
     display: block !important;
   }
+}
+
+/* IDEA A — Mobile Bottom Sheet + Biometric Arc (mobile-only, unique) */
+@media (max-width: 768px) {
+  .cl-idea-a-hero { position: relative; }
+  .cl-arc-scanner {
+    position: absolute;
+    left: 6%;
+    right: 6%;
+    top: 34%;
+    height: 42px;
+    z-index: 7;
+    pointer-events: none;
+    opacity: 0.95;
+  }
+  .cl-arc-path {
+    animation: cl-arc-sweep 2.8s ease-in-out infinite;
+    filter: drop-shadow(0 0 8px rgba(34,211,238,0.9));
+  }
+  @keyframes cl-arc-sweep {
+    0% { stroke-dasharray: 0 300; opacity: 0; }
+    20% { opacity: 1; }
+    50% { stroke-dasharray: 180 300; }
+    80% { opacity: 1; }
+    100% { stroke-dasharray: 280 300; opacity: 0; }
+  }
+  .cl-arc-glow {
+    position: absolute;
+    left: 10%;
+    right: 10%;
+    top: 36%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(34,211,238,0.18), transparent);
+    filter: blur(6px);
+    animation: cl-arc-glow 2.8s ease-in-out infinite;
+    pointer-events: none;
+  }
+  @keyframes cl-arc-glow { 0%,100%{opacity:0} 50%{opacity:1} }
+  .cl-bottom-sheet {
+    margin-top: -18px;
+    border-top: 1px solid rgba(255,255,255,0.14);
+    box-shadow: 0 -12px 40px rgba(0,0,0,0.45), 0 20px 50px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.28);
+  }
+  .cl-sheet-handle {
+    width: 36px;
+    height: 4px;
+    border-radius: 999px;
+    background: rgba(148,163,184,0.45);
+    margin: 0 auto 6px;
+  }
+  .cl-stepper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    width: 100%;
+    padding: 6px 0 2px;
+  }
+  .cl-step {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    opacity: 0.45;
+    transition: opacity 0.3s, transform 0.3s;
+  }
+  .cl-step.active { opacity: 1; transform: scale(1.02); }
+  .cl-step.done { opacity: 1; }
+  .cl-step.done span { background: #22d3ee; color: #020617; border-color: #22d3ee; box-shadow: 0 0 10px rgba(34,211,238,0.5); }
+  .cl-step span {
+    width: 22px; height: 22px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Orbitron', sans-serif; font-size: 0.52rem; font-weight: 800;
+    border: 1px solid rgba(148,163,184,0.35); color: #94a3b8; background: rgba(15,23,42,0.6);
+  }
+  .cl-step b { font-family: 'Orbitron', sans-serif; font-size: 0.42rem; letter-spacing: 0.14em; color: #94a3b8; }
+  .cl-step.active b { color: #e0f7ff; }
+  .cl-step-line { width: 18px; height: 1px; background: rgba(148,163,184,0.25); }
+  .cl-idea-a-input-row { position: relative; }
+  .cl-mic-inside {
+    position: absolute !important;
+    right: 6px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px !important;
+    min-height: 40px !important;
+    height: 40px;
+    border-radius: 12px !important;
+    z-index: 2;
+  }
+  .cl-idea-a-input-row .cl-input { padding-right: 52px !important; }
+  .cl-mic-inside.listening {
+    background: rgba(34,211,153,0.18) !important;
+    border-color: #22d3ee !important;
+    box-shadow: 0 0 14px rgba(34,211,238,0.4) !important;
+  }
+  .cl-sync-spinner {
+    width: 16px; height: 16px;
+    border: 2px solid rgba(2,6,23,0.25);
+    border-top-color: #020617;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    flex-shrink: 0;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+}
+
+/* 10/10 a11y + perf: respect reduced motion, image lazy, focus visible */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .ht-product-img, .webdev-slider-track, .cinematic-fullbg { transition: none !important; animation: none !important; }
+}
+.ht-product-img { content-visibility: auto; }
+.webdev-product-card:focus-visible, .interactive:focus-visible, .skip-intro-btn:focus-visible {
+  outline: 2px solid #00d4ff;
+  outline-offset: 2px;
 }

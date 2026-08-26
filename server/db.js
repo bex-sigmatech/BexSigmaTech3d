@@ -57,6 +57,12 @@ module.exports = {
 
   saveOrder(order) {
     const db = readDb()
+    // Idempotency: prevent duplicate order_id (webhook + verify race)
+    if (order.order_id && db.orders.some((o) => o.order_id === order.order_id)) {
+      const existing = db.orders.find((o) => o.order_id === order.order_id)
+      console.log(`♻️ DB duplicate guard — order ${order.order_id} already exists`)
+      return existing
+    }
     const record = {
       id: order.order_id || `ord_${Date.now()}`,
       payment_id: order.payment_id,
@@ -68,11 +74,13 @@ module.exports = {
       customerName: order.customerName || 'Operator',
       status: 'VERIFIED',
       downloadUrl: order.downloadUrl,
+      cartItems: order.cartItems || undefined,
+      product: order.product || undefined,
       timestamp: new Date().toISOString()
     }
     db.orders.unshift(record)
     writeDb(db)
-    console.log(`💾 Saved verified order to DB: ${record.payment_id}`)
+    console.log(`💾 Saved verified order to DB: ${record.payment_id} (${record.productId})`)
     return record
   },
 
@@ -83,16 +91,30 @@ module.exports = {
 
   logDownload(productId, customerEmail, token) {
     const db = readDb()
+    let jti = null
+    try { const decoded = require('jsonwebtoken').decode(token); jti = decoded?.jti || null } catch {}
     const log = {
       id: `dl_${Date.now()}`,
       productId,
       customerEmail,
       token,
+      jti,
       timestamp: new Date().toISOString()
     }
     db.downloads.unshift(log)
     writeDb(db)
     return log
+  },
+
+  isDownloadTokenUsed(jti) {
+    if (!jti) return false
+    const db = readDb()
+    return db.downloads.some((d) => d.jti === jti)
+  },
+
+  getDownloads() {
+    const db = readDb()
+    return db.downloads
   },
 
   saveAIChat(userPrompt, aiResponse, modelUsed = 'Gemini 2.5 Flash') {

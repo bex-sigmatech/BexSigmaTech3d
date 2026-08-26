@@ -40,6 +40,19 @@ export default function LiveVoiceHUD({ onNavigateSector, onTriggerScan }) {
         setStatusNotice('🔒 Initiating Biometric Scan Sequence...')
         if (onTriggerScan) onTriggerScan(args?.callsign)
         window.dispatchEvent(new CustomEvent('TRIGGER_SCAN', { detail: args?.callsign }))
+      } else if (name === 'showProductDetails' && args?.productId) {
+        setStatusNotice(`📊 Showing ${args.productId}`)
+        window.dispatchEvent(new CustomEvent('SHOW_PRODUCT', { detail: args.productId }))
+      } else if (name === 'addToCart' && args?.productId) {
+        setStatusNotice(`🛒 Adding ${args.productId} to cart`)
+        window.dispatchEvent(new CustomEvent('ADD_TO_CART', { detail: { productId: args.productId, quantity: args.quantity || 1 } }))
+      } else if (name === 'openCheckout' && args?.productId) {
+        setStatusNotice(`🔐 Opening checkout for ${args.productId}`)
+        window.dispatchEvent(new CustomEvent('OPEN_CHECKOUT', { detail: args.productId }))
+      } else if (name === 'showPricing') {
+        setStatusNotice('💰 Pricing overview requested')
+        window.dispatchEvent(new CustomEvent('SHOW_PRICING'))
+        if (onNavigateSector) onNavigateSector('web_dev')
       }
     }
 
@@ -130,6 +143,8 @@ export default function LiveVoiceHUD({ onNavigateSector, onTriggerScan }) {
         }}
       >
         <button
+          aria-label={voiceState !== 'DISCONNECTED' ? 'Close Sigma voice panel, live comms active' : 'Open and connect to Sigma voice assistant'}
+          aria-pressed={isOpen}
           onClick={() => {
             setIsOpen(!isOpen)
             if (!isOpen && voiceState === 'DISCONNECTED') {
@@ -162,6 +177,7 @@ export default function LiveVoiceHUD({ onNavigateSector, onTriggerScan }) {
           }}
         >
           <span
+            aria-hidden="true"
             style={{
               width: '10px',
               height: '10px',
@@ -171,7 +187,7 @@ export default function LiveVoiceHUD({ onNavigateSector, onTriggerScan }) {
               animation: voiceState !== 'DISCONNECTED' ? 'pulse 1.5s infinite' : 'none',
             }}
           />
-          <FaBroadcastTower style={{ fontSize: '15px' }} />
+          <FaBroadcastTower aria-hidden="true" style={{ fontSize: '15px' }} />
           <span>{voiceState !== 'DISCONNECTED' ? 'LIVE COMS ACTIVE' : 'TALK TO SIGMA'}</span>
         </button>
       </div>
@@ -212,6 +228,7 @@ export default function LiveVoiceHUD({ onNavigateSector, onTriggerScan }) {
               </span>
             </div>
             <button
+              aria-label="Close voice panel"
               onClick={() => setIsOpen(false)}
               style={{
                 background: 'transparent',
@@ -222,7 +239,7 @@ export default function LiveVoiceHUD({ onNavigateSector, onTriggerScan }) {
                 padding: '4px',
               }}
             >
-              <FaTimes />
+              <FaTimes aria-hidden="true" />
             </button>
           </div>
 
@@ -253,9 +270,12 @@ export default function LiveVoiceHUD({ onNavigateSector, onTriggerScan }) {
             </span>
           </div>
 
-          {/* Live Transcript / Subtitles */}
+          {/* Live Transcript / Subtitles — aria-live for 10/10 a11y */}
           {transcript && (
             <div
+              role="status"
+              aria-live="polite"
+              aria-atomic="false"
               style={{
                 background: 'rgba(0, 212, 255, 0.05)',
                 border: '1px dashed rgba(0, 212, 255, 0.25)',
@@ -280,8 +300,10 @@ export default function LiveVoiceHUD({ onNavigateSector, onTriggerScan }) {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
               {[
                 'Navigate to Web Development Store',
+                'Show me Marketing dashboard pricing',
+                'Add Sales Dashboard to cart',
                 'Initiate biometric scan for Commander Alex',
-                'Status report on Sigma systems'
+                'Open checkout for HR KPI Dashboard'
               ].map((cmd, idx) => (
                 <button
                   key={idx}
@@ -319,6 +341,7 @@ export default function LiveVoiceHUD({ onNavigateSector, onTriggerScan }) {
           {/* Main Action Connect Button */}
           <div style={{ display: 'flex', gap: '10px' }}>
             <button
+              aria-label={voiceState !== 'DISCONNECTED' ? 'Disconnect Sigma voice' : 'Initialize Sigma voice link'}
               onClick={toggleConnection}
               style={{
                 flex: 1,
@@ -342,6 +365,7 @@ export default function LiveVoiceHUD({ onNavigateSector, onTriggerScan }) {
               {voiceState !== 'DISCONNECTED' ? 'DISCONNECT COMMS' : 'INITIALIZE LINK'}
             </button>
           </div>
+          <p style={{fontSize:'10px',color:'#475569',marginTop:'10px',textAlign:'center'}} aria-hidden="true">Secure link is single-use • Voice is local when offline</p>
         </div>
       )}
     </>

@@ -10,13 +10,17 @@ const https = require('https')
 const GEMINI_LIVE_HOST = 'generativelanguage.googleapis.com'
 const GEMINI_LIVE_PATH = '/ws/google.ai.generativelanguage.v1beta.GenerativeService.BidiGenerateContent'
 
-const SYSTEM_INSTRUCTION = `
+function buildSystemInstruction({ userName, scene, cartCount } = {}) {
+  const namePart = userName ? `Current operator: ${userName}. Address them by name.` : 'Operator not yet identified — ask their name.'
+  const scenePart = scene ? `Current sector: ${scene}. Tailor your guidance to this sector.` : 'At orbital entry.'
+  return `
 You are SIGMA, the senior AI executive and client consultant for BEX SIGMA TECH (Year 2070).
 Your goal is to conduct real-time, interactive, professional client consultations and guide visitors through the company's capabilities and 3D orbital command station.
+Context: ${namePart} ${scenePart} Cart items: ${cartCount || 0}.
 
 About BEX Sigma Tech:
 - We build Next-Generation 3D Web Experiences, Autonomous AI Agent workflows, Quantum Cloud Systems, Cybersecurity Grids, and Executive Analytics Dashboard Blueprints.
-- Products & Blueprints in Store: Marketing Performance Dashboard (₹299), Business Executive Analytics Dashboard (₹349), Financial Trend Dashboard (₹319), HR KPI Suite (₹295), and the master One Dashboard BI Suite (₹256).
+- Products & Blueprints in Store: Marketing Performance Dashboard (₹299), Business Executive Analytics Dashboard (₹349), Financial Trend Dashboard (₹319), HR KPI Suite (₹295), KPI Dashboard (₹295), One Dashboard BI Suite (₹256), plus SaaS: OmniCoder AI, QuantumShield, SpaceMesh, VisionSpatial, BioSync (₹289-359).
 
 Client Conversation Protocol:
 1. Greet the client warmly, ask their name, and inquire how you can assist their business or project.
@@ -29,8 +33,12 @@ Client Conversation Protocol:
      - Mission Control & Core AI: navigateSector('mission_control')
      - Biometric Clearance: triggerBiometricScan(callsign)
 4. Keep spoken responses natural, engaging, and concise (2-3 sentences per turn) so the conversation flows seamlessly without long monologues.
-5. If the client asks about pricing or software blueprints, explain the products and offer to open checkout.
-`
+5. If the client asks about pricing, blueprints, or wants to buy:
+   - Use showProductDetails(productId) to surface pricing, then addToCart(productId) or openCheckout(productId) as requested.
+   - For cart status, use showPricing to list all products.
+`.trim()
+}
+const SYSTEM_INSTRUCTION = buildSystemInstruction()
 
 const TOOL_DECLARATIONS = [
   {
@@ -69,11 +77,39 @@ const TOOL_DECLARATIONS = [
       properties: {
         productId: {
           type: 'STRING',
-          description: 'Product identifier: marketing-dashboard, business-dashboard, finance-trend, sales-dashboard, hr-kpi, dashboard-suite, omnicoder-ai'
+          description: 'Product identifier: marketing-dashboard, business-dashboard, finance-trend, sales-dashboard, hr-kpi, kpi-dashboard, dashboard-suite, omnicoder-ai, quantum-shield, spacemesh-iot, vision-spatial, biosync-health'
         }
       },
       required: ['productId']
     }
+  },
+  {
+    name: 'addToCart',
+    description: 'Adds a product to the observatory cart (single-file ZIP, single-use).',
+    parameters: {
+      type: 'OBJECT',
+      properties: {
+        productId: { type: 'STRING', description: 'Product id to add, e.g. sales-dashboard' },
+        quantity: { type: 'INTEGER', description: 'Quantity, default 1' }
+      },
+      required: ['productId']
+    }
+  },
+  {
+    name: 'openCheckout',
+    description: 'Opens secure checkout for a product (collects name/email then Cashfree).',
+    parameters: {
+      type: 'OBJECT',
+      properties: {
+        productId: { type: 'STRING', description: 'Product id to checkout' }
+      },
+      required: ['productId']
+    }
+  },
+  {
+    name: 'showPricing',
+    description: 'Lists all products with pricing and secure single-use delivery info.',
+    parameters: { type: 'OBJECT', properties: {}, required: [] }
   }
 ]
 
@@ -99,6 +135,12 @@ function setupGeminiLiveGateway(server) {
 
   wss.on('connection', (clientWs, req) => {
     console.log(`🔌 Client connected to Live Voice Gateway from ${req.socket.remoteAddress}`)
+    // Parse dynamic context from query (?userName=...&scene=...&cartCount=...)
+    let clientContext = {}
+    try {
+      const u = new URL(req.url, `http://${req.headers.host || 'localhost'}`)
+      clientContext = { userName: u.searchParams.get('userName'), scene: u.searchParams.get('scene'), cartCount: u.searchParams.get('cartCount') }
+    } catch {}
 
     const apiKey = process.env.GEMINI_API_KEY
     const isLiveKeyAvailable = !!(apiKey && apiKey.trim() && apiKey !== 'your_gemini_api_key_here')
@@ -116,7 +158,8 @@ function setupGeminiLiveGateway(server) {
           console.log('✅ Connected to Gemini Live Upstream')
           isUpstreamOpen = true
 
-          // Send Initial Setup Handshake
+          // Send Initial Setup Handshake — dynamic instruction per operator/scene
+          const dynamicInstruction = buildSystemInstruction(clientContext)
           const setupMessage = {
             setup: {
               model: 'models/gemini-2.5-flash-native-audio-latest',
@@ -131,7 +174,7 @@ function setupGeminiLiveGateway(server) {
                 }
               },
               systemInstruction: {
-                parts: [{ text: SYSTEM_INSTRUCTION }]
+                parts: [{ text: dynamicInstruction }]
               },
               tools: [{ functionDeclarations: TOOL_DECLARATIONS }]
             }

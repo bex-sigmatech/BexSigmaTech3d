@@ -184,9 +184,26 @@ class VoicePlayer {
   }
 
   play(text, { pitch = 0.85, rate = 0.88, volume = 1.0, onStart, onEnd, onError } = {}) {
-    // Disabled: Replaced by Real-Time Gemini 2.0 Live Voice Executive
-    if (onStart) onStart()
-    if (onEnd) onEnd()
+    if (!this.isSupported || !this.synth) {
+      if (onStart) onStart()
+      if (onEnd) onEnd()
+      return
+    }
+    try {
+      if (this.synth.speaking) this.synth.cancel()
+      const utter = new SpeechSynthesisUtterance(text)
+      utter.pitch = pitch
+      utter.rate = rate
+      utter.volume = volume
+      if (this.preferredVoice) utter.voice = this.preferredVoice
+      utter.onstart = () => { if (onStart) onStart() }
+      utter.onend = () => { if (onEnd) onEnd() }
+      utter.onerror = (e) => { if (onError) onError(e); else if (onEnd) onEnd() }
+      this.synth.speak(utter)
+    } catch (e) {
+      if (onError) onError(e)
+      else if (onEnd) onEnd()
+    }
   }
 
   stop() {
@@ -225,6 +242,16 @@ class AudioQueue {
 
   add(eventKey, config, resolvedText) {
     const now = Date.now()
+
+    // 10/10 collapse: never play pre-recorded while Live is speaking/listening (avoid two voices at once)
+    try {
+      const liveState = typeof window !== 'undefined' ? window.__LIVE_VOICE_STATE__ : null
+      if (liveState === 'SPEAKING' || liveState === 'LISTENING') {
+        // Queue but don't play now — will be cleared when Live stops
+        console.log(`🔇 AIVoice suppressed (Live ${liveState}): ${eventKey}`)
+        return
+      }
+    } catch {}
 
     // 1. Prevent duplicate playback (ignore if already playing)
     if (this.currentPlaying && this.currentPlaying.eventKey === eventKey) {

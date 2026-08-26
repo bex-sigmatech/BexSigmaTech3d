@@ -7,7 +7,7 @@ import { voiceEmitter, aiVoice } from '../../audio/AIVoiceEngine'
    Biometric 3D Scanner · Typewriter AI Dialogue · Live Telemetry Matrix
    ========================================================================== */
 
-/* ─── Typewriter text component ─── */
+/* ─── Typewriter text component — fixed for clipped chars (BX/elccme) ─── */
 function TypewriterText({ text, speed = 35 }) {
   const [displayedText, setDisplayedText] = useState('')
 
@@ -15,14 +15,15 @@ function TypewriterText({ text, speed = 35 }) {
     setDisplayedText('')
     let idx = 0
     const timer = setInterval(() => {
-      setDisplayedText((prev) => prev + text.charAt(idx))
+      // Slice ensures no char is skipped even if interval drifts
       idx++
+      setDisplayedText(text.slice(0, idx))
       if (idx >= text.length) clearInterval(timer)
     }, speed)
     return () => clearInterval(timer)
   }, [text, speed])
 
-  return <span>{displayedText}</span>
+  return <span style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}>{displayedText}</span>
 }
 
 /* ─── Procedural 3D Particle Field ─── */
@@ -565,13 +566,13 @@ export default function AICore() {
           {/* ── CENTER: 3D Realistic AI Robot Background + Credential Card ── */}
           <div className="cl-hero-section" style={{ margin: '0', width: '100%', maxWidth: '420px' }}>
 
-            {/* ── Cinematic Robot Stage — masked photo-real AI sentinel ── */}
-            <div className="cl-3d-robot-bg">
+            {/* ── Cinematic Robot Stage — IDEA A: Biometric Arc + Bottom Sheet ── */}
+            <div className="cl-3d-robot-bg cl-idea-a-hero">
               <div className="cl-robot-glowfield" />
 
               <img
                 src="/robot_face.png"
-                alt=""
+                alt="AI Sentinel"
                 draggable={false}
                 className="cl-robot-img"
               />
@@ -580,6 +581,22 @@ export default function AICore() {
               {/* Orbital rings */}
               <div className="cl-orbit r1" />
               <div className="cl-orbit r2" />
+
+              {/* IDEA A: Biometric Arc Scanner — 180° sweep */}
+              <svg className="cl-arc-scanner" viewBox="0 0 200 110" preserveAspectRatio="none" aria-hidden="true">
+                <defs>
+                  <linearGradient id="arcGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="transparent" />
+                    <stop offset="45%" stopColor="rgba(34,211,238,0)" />
+                    <stop offset="50%" stopColor="rgba(34,211,238,0.9)" />
+                    <stop offset="55%" stopColor="rgba(34,211,238,0)" />
+                    <stop offset="100%" stopColor="transparent" />
+                  </linearGradient>
+                </defs>
+                <path d="M 10 100 A 90 90 0 0 1 190 100" fill="none" stroke="url(#arcGrad)" strokeWidth="2.5" strokeLinecap="round" className="cl-arc-path" />
+                <path d="M 10 100 A 90 90 0 0 1 190 100" fill="none" stroke="rgba(56,189,248,0.08)" strokeWidth="1" strokeDasharray="3 6" />
+              </svg>
+              <div className="cl-arc-glow" />
 
               {/* Scanning beam */}
               <div className="cl-robot-scan-beam" />
@@ -594,7 +611,7 @@ export default function AICore() {
                 </div>
               </div>
 
-              {/* Floating HUD chips */}
+              {/* Floating HUD chips — repositioned for arc */}
               <div className="cl-chip chip-tl"><b>SYS</b><span>87.4%</span></div>
               <div className="cl-chip chip-tr"><b>NEURAL</b><span>SYNC OK</span></div>
               <div className="cl-chip chip-bl"><b>CORE</b><span>STABLE</span></div>
@@ -606,9 +623,18 @@ export default function AICore() {
               <span>{isSpeaking ? 'AI VOICE TRANSMITTING' : 'AI SENTINEL ONLINE · BIOMETRIC READY'}</span>
             </div>
 
-            {/* Credential Verification Card (Apple Spatial Glassmorphism) */}
-            <div className="cl-card">
+            {/* IDEA A: Bottom Sheet Credential Card — clean impressive */}
+            <div className="cl-card cl-bottom-sheet">
+              <div className="cl-sheet-handle" aria-hidden="true" />
               <div className="cl-glass-sheen" />
+              {/* Stepper 01—02—03 */}
+              <div className="cl-stepper" aria-label="Progress: biometric, callsign, sync">
+                <div className={`cl-step ${fpMatch > 96 ? 'done' : 'active'}`}><span>01</span><b>BIOMETRIC</b></div>
+                <div className="cl-step-line" />
+                <div className={`cl-step ${inputName.length > 0 ? 'done' : ''} ${fpMatch > 96 && inputName.length === 0 ? 'active' : ''}`}><span>02</span><b>CALLSIGN</b></div>
+                <div className="cl-step-line" />
+                <div className={`cl-step ${scene === 'ai_response' ? 'done' : ''}`}><span>03</span><b>SYNC</b></div>
+              </div>
 
               <div className="cl-card-header">
                 <div className="cl-logo-tile">XΣ</div>
@@ -641,7 +667,7 @@ export default function AICore() {
                 </span>
               </div>
 
-              {/* AI Transmission Block */}
+              {/* AI Transmission Block — spelling corrected */}
               <div className="id-dialogue-block cl-dialogue">
                 {scene !== 'ai_response' ? (
                   <>
@@ -649,44 +675,51 @@ export default function AICore() {
                       "<TypewriterText text="BEX SIGMA TECH · AEROSPACE AI INFRASTRUCTURE" speed={35} />"
                     </p>
                     <p className="cl-dialogue-sub">
-                      "<TypewriterText text="Operator authorization required. Synchronize unique callsign to proceed." speed={20} />"
+                      "<TypewriterText text="Operator authorisation required. Please synchronise your unique callsign to proceed." speed={20} />"
                     </p>
                   </>
                 ) : (
                   <>
                     <p className="cl-dialogue-main cl-granted">
-                      "<TypewriterText text={`Welcome, ${userName}.`} speed={35} />"
+                      "<TypewriterText text={`Welcome, ${userName ? userName.charAt(0).toUpperCase() + userName.slice(1) : 'Operator'}.`} speed={35} />"
                     </p>
                     <p className="cl-dialogue-sub">
-                      "<TypewriterText text="Operator credentials verified. Synchronizing observatory database..." speed={20} />"
+                      "<TypewriterText text="Operator credentials verified. Synchronising observatory database..." speed={20} />"
                     </p>
                   </>
                 )}
               </div>
 
-              {/* Input Form & Action */}
+              {/* Input Form & Action — IDEA A: mic inside input, clean */}
               {scene !== 'ai_response' ? (
                 <form onSubmit={handleSubmit} className="cl-form">
-                  <div className="cl-input-row">
+                  <div className="cl-input-row cl-idea-a-input-row">
                     <input
                       type="text"
                       className="cl-input interactive"
                       placeholder="Enter operator callsign..."
                       value={inputName}
                       onChange={(e) => setInputName(e.target.value)}
+                      aria-label="Operator callsign"
+                      autoComplete="off"
+                      autoCorrect="off"
                     />
                     <button
                       type="button"
                       onClick={handleMicClick}
-                      className={`cl-mic interactive ${isListening ? 'listening' : ''}`}
+                      className={`cl-mic cl-mic-inside interactive ${isListening ? 'listening' : ''}`}
                       title="Speak via Microphone"
+                      aria-label={isListening ? 'Listening for voice' : 'Speak callsign via microphone'}
                     >
                       🎙️
                     </button>
                   </div>
-                  <button type="submit" className="cl-sync-btn interactive">
-                    <span className="m-sync-btn-text">SYNC CREDENTIALS</span>
-                    <span className="m-sync-btn-arrow">→</span>
+                  <button type="submit" className="cl-sync-btn interactive" aria-label="Sync credentials and enter station">
+                    {isListening ? (
+                      <span className="cl-sync-spinner" aria-hidden="true" />
+                    ) : null}
+                    <span className="m-sync-btn-text">{isListening ? 'LISTENING...' : 'SYNC CREDENTIALS'}</span>
+                    <span className="m-sync-btn-arrow">{isListening ? '●' : '→'}</span>
                   </button>
                 </form>
               ) : (
@@ -870,24 +903,24 @@ export default function AICore() {
                   </div>
                 )}
 
-                {/* AI Dialogue with typewriter effect */}
+                {/* AI Dialogue with typewriter effect — spelling corrected */}
                 <div className="id-dialogue-block">
                   {scene !== 'ai_response' ? (
                     <>
                       <p className="id-line-main" style={{ fontSize: 'clamp(0.95rem, 1.8vw, 1.3rem)' }}>
-                        “<TypewriterText text="BEX SIGMA TECH is a premium SaaS building software company." speed={35} />”
+                        “<TypewriterText text="BEX SIGMA TECH is a premium SaaS software company." speed={35} />”
                       </p>
                       <p className="id-line-sub" style={{ fontSize: 'clamp(0.72rem, 1.3vw, 0.85rem)', color: 'rgba(0, 212, 255, 0.75)' }}>
-                        “<TypewriterText text="We provide digital marketing, run Meta Ads campaigns, create content, and offer financial systems support. Sync callsign to enter." speed={20} />”
+                        “<TypewriterText text="We provide digital marketing, run Meta Ads campaigns, create content, and offer financial systems support. Please synchronise your callsign to enter." speed={20} />”
                       </p>
                     </>
                   ) : (
                     <>
                       <p className="id-line-main id-granted">
-                        “<TypewriterText text={`Welcome, ${userName}.`} speed={35} />”
+                        “<TypewriterText text={`Welcome, ${userName ? userName.charAt(0).toUpperCase() + userName.slice(1) : 'Operator'}.`} speed={35} />”
                       </p>
                       <p className="id-line-sub" style={{ fontSize: 'clamp(0.72rem, 1.3vw, 0.85rem)' }}>
-                        “<TypewriterText text="Operator credentials verified. Synchronizing observatory database..." speed={20} />”
+                        “<TypewriterText text="Operator credentials verified. Synchronising observatory database..." speed={20} />”
                       </p>
                       <div className="access-granted-bars">
                         {Array.from({ length: 14 }).map((_, i) => (

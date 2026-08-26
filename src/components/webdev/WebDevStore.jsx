@@ -298,6 +298,32 @@ const PRODUCTS = [
     deliveryDays: 0,
     popular: true,
   },
+  {
+    id: 'kpi-dashboard',
+    badge: '📈 KPI EXCEL NODE',
+    name: 'KPI Performance Excel Dashboard',
+    tagline: 'Dedicated KPI Metrics & Performance Analytics Sheet',
+    price: 295,
+    priceDisplay: '₹295',
+    originalPrice: '₹590',
+    currency: 'INR',
+    color: '#0ea5e9',
+    glowColor: 'rgba(14, 165, 233, 0.25)',
+    image: '/hr_kpi.jpg',
+    imageFit: 'cover',
+    imagePosition: 'center',
+    features: [
+      'Dedicated KPI Tracking & Benchmark Sheets',
+      'Automated Performance Scoring & Heatmaps',
+      'Interactive Drill-down & Trend Analytics',
+      'Instant Email Delivery with Google Drive Link',
+      'Fully Editable Excel (.xlsx) Format',
+      'Real-Time KPI Health Metrics',
+    ],
+    tech: ['Excel .xlsx', 'Google Drive', 'KPI Metrics'],
+    deliveryDays: 0,
+    popular: false,
+  },
 ]
 
 const WORKS = [
@@ -354,14 +380,18 @@ const CLIENTS = [
   }
 ]
 
-/* ── Cashfree Single-item Payment Handler ── */
+/* ── Cashfree Payment Handler — supports single product OR cart bundle ── */
 async function initiateCashfreePayment(product, customerName, customerEmail, customerPhone, onSuccess, onError) {
   try {
     voiceEmitter.emit('PAYMENT_PAGE_VISIBLE')
+    const isCartBundle = Array.isArray(product.cartItems) && product.cartItems.length > 0
+    const orderPayload = isCartBundle
+      ? { cartItems: product.cartItems, userName: customerName, customerEmail, customerPhone }
+      : { productId: product.id, userName: customerName, customerEmail, customerPhone }
     const res = await fetch(`${BACKEND_URL}/api/create-order`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ productId: product.id, userName: customerName, customerEmail, customerPhone }),
+      body: JSON.stringify(orderPayload),
     })
     const data = await res.json()
     if (!data.success) throw new Error(data.error || 'Order creation failed')
@@ -369,15 +399,13 @@ async function initiateCashfreePayment(product, customerName, customerEmail, cus
 
     const runVerification = async () => {
       try {
+        const verifyPayload = isCartBundle
+          ? { order_id: order_id, cartItems: product.cartItems, customerEmail: customerEmail, customerName: customerName || 'Operator' }
+          : { order_id: order_id, productId: product.id, customerEmail: customerEmail, customerName: customerName || 'Operator' }
         const verifyRes = await fetch(`${BACKEND_URL}/api/verify-payment`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            order_id: order_id,
-            productId: product.id,
-            customerEmail: customerEmail,
-            customerName: customerName || 'Operator',
-          }),
+          body: JSON.stringify(verifyPayload),
         })
         const verifyData = await verifyRes.json()
         if (verifyData.success) {
@@ -391,12 +419,17 @@ async function initiateCashfreePayment(product, customerName, customerEmail, cus
     }
 
     if (data.simulated) {
+      if (data._cashfreeError) console.warn('Order was simulated due to Cashfree error:', data._cashfreeError)
       await runVerification()
       return
     }
+    if (data._cashfreeError) {
+      console.warn('Cashfree order warning (proceeding):', data._cashfreeError)
+    }
 
-    // Initialize Cashfree JS SDK
-    const cashfree = window.Cashfree({ mode: 'sandbox' }) // Change to 'production' for live
+    // Initialize Cashfree JS SDK — env-driven (VITE_CASHFREE_ENV=PRODUCTION for live)
+    const cfMode = (import.meta.env.VITE_CASHFREE_ENV || 'SANDBOX') === 'PRODUCTION' ? 'production' : 'sandbox'
+    const cashfree = window.Cashfree({ mode: cfMode })
 
     const checkoutOptions = {
       paymentSessionId: payment_session_id,
@@ -406,18 +439,29 @@ async function initiateCashfreePayment(product, customerName, customerEmail, cus
     const result = await cashfree.checkout(checkoutOptions)
 
     if (result.error) {
-      // If Cashfree SDK returns payment_session_id_invalid in Sandbox test mode, fall back to completing test verification
+      console.error('Cashfree checkout error:', result.error)
+      // Common sandbox fallbacks: simulated session or expired session
       if (result.error.code === 'payment_session_id_invalid' || result.error.message?.includes('payment_session_id')) {
-        console.warn('⚠️ Cashfree SDK Sandbox session notice, proceeding with test order completion:', result.error)
+        console.warn('⚠️ Cashfree Sandbox session invalid — completing as test order:', result.error)
         await runVerification()
         return
       }
-      onError(result.error.message || 'Payment failed')
+      // Cashfree sandbox shows "temporary issue" when using real cards — guide user to test cards
+      const msg = result.error.message || ''
+      if (msg.toLowerCase().includes('temporary') || msg.toLowerCase().includes('try again') || msg.toLowerCase().includes('bank')) {
+        onError(`${msg} — Note: You are in SANDBOX (TEST) mode. Use Cashfree test card 4111 1111 1111 1111, expiry 12/30, CVV 123. Real cards only work in PRODUCTION (VITE_CASHFREE_ENV=PRODUCTION + live keys).`)
+        return
+      }
+      onError(result.error.message || 'Payment failed. If this is Sandbox, use test card 4111 1111 1111 1111.')
       return
     }
 
     if (result.paymentDetails) {
       await runVerification()
+    } else if (!result.error) {
+      // No error but no paymentDetails — could be user closed modal
+      console.warn('Cashfree checkout closed without paymentDetails', result)
+      onError('Payment not completed — checkout closed. For Sandbox testing, it will auto-verify on next retry.')
     }
   } catch (err) {
     onError(err.message)
@@ -448,6 +492,9 @@ export default function WebDevStore() {
   const [custName, setCustName] = useState(userName || '')
   const [custEmail, setCustEmail] = useState('')
   const [custPhone, setCustPhone] = useState('')
+  const [isPaying, setIsPaying] = useState(false)
+  const [toast, setToast] = useState(null) // {msg, type} for 10/10 no-alert UI
+  const showToast = (msg, type='error') => { setToast({msg, type}); setTimeout(()=>setToast(null), 4000) }
 
   // 3D Cylinder Carousel States
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -457,16 +504,16 @@ export default function WebDevStore() {
   // Track the active modulo index
   const activeModuloIndex = ((currentIndex % PRODUCTS.length) + PRODUCTS.length) % PRODUCTS.length
 
-  // 3D Auto-slide trigger
+  // 3D Auto-slide trigger (paused during modal or payment)
   useEffect(() => {
-    if (isPaused) return
+    if (isPaused || isCustomerModalOpen || isPaying || checkoutMode !== null) return
 
     const interval = setInterval(() => {
       setCurrentIndex((prev) => prev + 1)
     }, 4500) // Spin every 4.5s
 
     return () => clearInterval(interval)
-  }, [isPaused])
+  }, [isPaused, isCustomerModalOpen, isPaying, checkoutMode])
 
   // Responsive 3D radius adjustment
   useEffect(() => {
@@ -494,14 +541,45 @@ export default function WebDevStore() {
     setCurrentIndex(prev => prev - 1)
   }
 
-
-
   useEffect(() => {
     voiceEmitter.emit('PRICING_VISIBLE')
   }, [userName])
 
-  // 10/10 Canvas Particle Animation Loop
+  // 10/10 voice commerce: handle Sigma tool calls addToCart / openCheckout / showProductDetails
   useEffect(() => {
+    const onAdd = (e) => {
+      const { productId, quantity } = e.detail || {}
+      const p = PRODUCTS.find((x) => x.id === productId)
+      if (p) {
+        for (let i = 0; i < (quantity || 1); i++) addToCart(p)
+        setCurrentIndex(PRODUCTS.findIndex((x) => x.id === productId))
+      }
+    }
+    const onOpen = (e) => {
+      const pid = typeof e.detail === 'string' ? e.detail : e.detail?.productId
+      const p = PRODUCTS.find((x) => x.id === pid)
+      if (p) handleOpenCheckoutModal(p)
+    }
+    const onShow = (e) => {
+      const pid = e.detail
+      const idx = PRODUCTS.findIndex((x) => x.id === pid)
+      if (idx >= 0) setCurrentIndex(idx)
+    }
+    window.addEventListener('ADD_TO_CART', onAdd)
+    window.addEventListener('OPEN_CHECKOUT', onOpen)
+    window.addEventListener('SHOW_PRODUCT', onShow)
+    window.addEventListener('SHOW_PRICING', () => window.scrollTo({ top: 0, behavior: 'smooth' }))
+    return () => {
+      window.removeEventListener('ADD_TO_CART', onAdd)
+      window.removeEventListener('OPEN_CHECKOUT', onOpen)
+      window.removeEventListener('SHOW_PRODUCT', onShow)
+    }
+  }, [])
+
+  // 10/10 Canvas Particle Animation Loop — automatically pauses during checkout/payment to eliminate lag
+  useEffect(() => {
+    if (isCustomerModalOpen || isPaying || checkoutMode !== null) return
+
     const canvas = document.getElementById('store-particle-canvas')
     if (!canvas) return
     const ctx = canvas.getContext('2d')
@@ -511,7 +589,7 @@ export default function WebDevStore() {
     let height = canvas.height = window.innerHeight
 
     const particles = []
-    const count = window.innerWidth < 768 ? 25 : 75
+    const count = window.innerWidth < 768 ? 20 : 50
 
     for (let i = 0; i < count; i++) {
       particles.push({
@@ -534,11 +612,11 @@ export default function WebDevStore() {
     const draw = () => {
       ctx.clearRect(0, 0, width, height)
 
-      // Fine holographic matrix grid lines (desktop only for performance)
+      // Fine holographic matrix grid lines
       if (width > 768) {
-        ctx.strokeStyle = 'rgba(167, 139, 250, 0.025)'
+        ctx.strokeStyle = 'rgba(167, 139, 250, 0.02)'
         ctx.lineWidth = 1
-        const gridSize = 70
+        const gridSize = 80
         for (let x = 0; x < width; x += gridSize) {
           ctx.beginPath()
           ctx.moveTo(x, 0)
@@ -565,8 +643,8 @@ export default function WebDevStore() {
           const dx = mouse.x - p.x
           const dy = mouse.y - p.y
           const dist = Math.sqrt(dx * dx + dy * dy)
-          if (dist < 140) {
-            const force = (140 - dist) / 140
+          if (dist < 120) {
+            const force = (120 - dist) / 120
             p.x -= dx * force * 0.03
             p.y -= dy * force * 0.03
           }
@@ -583,8 +661,8 @@ export default function WebDevStore() {
           const dx = p.x - p2.x
           const dy = p.y - p2.y
           const dist = Math.sqrt(dx * dx + dy * dy)
-          if (dist < 110) {
-            ctx.strokeStyle = `rgba(124, 58, 237, ${(1 - dist / 110) * 0.1})`
+          if (dist < 90) {
+            ctx.strokeStyle = `rgba(124, 58, 237, ${(1 - dist / 90) * 0.08})`
             ctx.lineWidth = 0.5
             ctx.beginPath()
             ctx.moveTo(p.x, p.y)
@@ -610,7 +688,7 @@ export default function WebDevStore() {
       window.removeEventListener('mousemove', handleMouseMove)
       window.removeEventListener('resize', handleResize)
     }
-  }, [])
+  }, [isCustomerModalOpen, isPaying, checkoutMode])
 
 
   const addToCart = (product) => {
@@ -684,19 +762,17 @@ export default function WebDevStore() {
   const handleStartPayment = (e) => {
     e.preventDefault()
     if (!custEmail || !custEmail.includes('@')) {
-      alert('Please enter a valid email address so we can send your Excel Dashboard Google Drive access link!')
+      showToast('Please enter a valid email — your selected folder ZIP will be sent there (single-use link).')
       return
     }
     if (!custName) {
-      alert('Please enter your name.')
+      showToast('Please enter your name.')
       return
     }
 
     setIsCustomerModalOpen(false)
-    setCheckoutMode('cashfree')
+    setIsPaying(true)
     setCheckoutProduct(targetProduct)
-    setSandboxStep(1)
-    setSandboxMsg('Connecting with Secure Cashfree Gateway...')
 
     initiateCashfreePayment(
       targetProduct,
@@ -704,6 +780,8 @@ export default function WebDevStore() {
       custEmail,
       custPhone,
       (data) => {
+        setIsPaying(false)
+        setCheckoutMode('cashfree')
         setSandboxStep(3)
         setSandboxMsg(`🎉 Payment Verified! Your Excel Dashboard access link has been sent to ${custEmail}`)
         cinemaAudio.playAccessGrantedChime()
@@ -711,8 +789,9 @@ export default function WebDevStore() {
         if (cart.length > 0) setCart([])
       },
       (err) => {
+        setIsPaying(false)
         setCheckoutMode(null)
-        alert(`Payment error: ${err}`)
+        showToast(`Payment error: ${err} — In Sandbox use test card 4111 1111 1111 1111`, 'error')
       }
     )
   }
@@ -744,10 +823,12 @@ export default function WebDevStore() {
         </div>
 
         <div className="webdev-header-right" style={{ display: 'flex', gap: '15px', alignItems: 'center', flexWrap: 'wrap' }}>
-          {/* Currency Switcher */}
+          {/* Currency Switcher — 10/10: shows USD estimate but charges INR via Cashfree */}
           <button
+            aria-label={`Switch currency, currently ${currency}`}
             className="interactive"
             onClick={() => setCurrency(currency === 'INR' ? 'USD' : 'INR')}
+            title={currency === 'INR' ? 'Show USD estimate (charge is still INR via Cashfree)' : 'Show INR (actual charge)'}
             style={{
               background: 'rgba(0, 212, 255, 0.12)',
               border: '1px solid rgba(0, 212, 255, 0.4)',
@@ -760,13 +841,13 @@ export default function WebDevStore() {
               fontWeight: 'bold'
             }}
           >
-            💱 CURRENCY: {currency === 'INR' ? '₹ INR' : '$ USD'}
+            💱 CURRENCY: {currency === 'INR' ? '₹ INR (charged)' : '$ USD (est.)'} 
           </button>
 
           {/* Cart trigger button */}
-          <div className="webdev-cart-trigger interactive" onClick={() => setIsCartOpen(true)}>
+          <div role="button" tabIndex={0} aria-label={`Open cart, ${cart.reduce((s,i)=>s+i.quantity,0)} items`} className="webdev-cart-trigger interactive" onClick={() => setIsCartOpen(true)} onKeyDown={(e)=> e.key==='Enter' && setIsCartOpen(true)}>
             <span>🛒 OBSERVATORY CART</span>
-            {cart.length > 0 && <span className="webdev-cart-badge">{cart.reduce((sum, item) => sum + item.quantity, 0)}</span>}
+            {cart.length > 0 && <span className="webdev-cart-badge" aria-live="polite">{cart.reduce((sum, item) => sum + item.quantity, 0)}</span>}
           </div>
 
           <div className="webdev-secure-badge">
@@ -925,6 +1006,9 @@ export default function WebDevStore() {
                       className="ht-product-img"
                       src={product.image}
                       alt={product.name}
+                      loading="lazy"
+                      decoding="async"
+                      fetchPriority={idx === activeModuloIndex ? "high" : "low"}
                       style={{
                         position: 'absolute',
                         inset: 0,
@@ -1082,7 +1166,7 @@ export default function WebDevStore() {
                             e.target.style.transform = 'scale(1)'
                             e.target.style.boxShadow = `0 4px 15px ${product.color}44`
                           }}
-                          onClick={() => handleSingleCashfreeCheckout(product)}
+                          onClick={() => handleOpenCheckoutModal(product)}
                         >
                           🔐 PAY {currency === 'USD' ? `$${(product.price / 85).toFixed(2)}` : `₹${product.price}`}
                         </button>
@@ -1373,12 +1457,16 @@ export default function WebDevStore() {
             <button
               className="webdev-cart-checkout-btn primary interactive"
               onClick={() => {
-                const cartProduct = {
-                  id: cart[0]?.product?.id || 'dashboard-suite',
-                  name: cart.length === 1 ? cart[0].product.name : `Cart Bundle (${cart.length} Excel Dashboards)`,
-                  price: getCartTotal() * 100,
-                  priceDisplay: `₹${getCartTotal().toLocaleString('en-IN')}`,
-                }
+                const cartItems = cart.map((item) => ({ productId: item.product.id, quantity: item.quantity }))
+                const cartProduct = cart.length === 1
+                  ? cart[0].product
+                  : {
+                      cartItems,
+                      name: `Cart Bundle (${cart.length} Excel Dashboards)`,
+                      price: getCartTotal(), // rupees for display, server calculates paise
+                      priceDisplay: `₹${getCartTotal().toLocaleString('en-IN')}`,
+                      id: `bundle_${Date.now()}`,
+                    }
                 setIsCartOpen(false)
                 handleOpenCheckoutModal(cartProduct)
               }}
@@ -1393,7 +1481,7 @@ export default function WebDevStore() {
       {isCustomerModalOpen && targetProduct && (
         <div className="webdev-modal-overlay open" style={{ zIndex: 10000 }}>
           <div className="webdev-modal-box" style={{ maxWidth: '480px', padding: '30px', textAlign: 'left', background: 'rgba(11, 17, 32, 0.95)', border: '1px solid rgba(0, 212, 255, 0.3)', borderRadius: '12px', boxShadow: '0 20px 50px rgba(0,0,0,0.8)', backdropFilter: 'blur(20px)' }}>
-            
+
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px' }}>
               <h2 style={{ fontFamily: 'Orbitron, sans-serif', fontSize: '1.1rem', color: '#00d4ff', margin: 0 }}>
                 🔐 Customer Checkout & Delivery
@@ -1579,6 +1667,13 @@ export default function WebDevStore() {
       <div className="webdev-api-note">
         Backend API: <code>{BACKEND_URL}</code> · Preloaded with 5 secure SaaS routes
       </div>
+
+      {/* 10/10 Toast — replaces alert(), respects single-product ZIP */}
+      {toast && (
+        <div role="alert" aria-live="assertive" style={{position:'fixed',bottom:'24px',left:'50%',transform:'translateX(-50%)',background: toast.type==='error' ? 'linear-gradient(135deg,#ef4444,#b91c1c)' : 'linear-gradient(135deg,#10b981,#059669)',color:'#fff',padding:'14px 22px',borderRadius:'8px',boxShadow:'0 8px 30px rgba(0,0,0,0.4)',zIndex:10001,fontSize:'13px',fontWeight:600,maxWidth:'90vw',textAlign:'center'}}>
+          {toast.msg}
+        </div>
+      )}
     </div>
   )
 }
