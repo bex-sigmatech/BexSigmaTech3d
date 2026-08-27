@@ -5,7 +5,7 @@ import AccessGranted from './components/boot/AccessGranted'
 import WelcomeScreen from './components/boot/WelcomeScreen'
 import AICore from './components/ai/AICore'
 import HQScene from './components/headquarters/HQScene'
-import MissionBriefing from './components/mission/MissionBriefing'
+import MissionControl from './components/mission/MissionControl'
 import Dashboard from './components/dashboard/Dashboard'
 import LiveVoiceHUD from './components/ai/LiveVoiceHUD'
 import './styles/app.css'
@@ -53,7 +53,7 @@ export default function App() {
       {(scene === 'headquarters' || scene === 'mission_briefing' || scene === 'dashboard') && (
         <>
           <HQScene />
-          {scene === 'mission_briefing' && <MissionBriefing />}
+          {scene === 'mission_briefing' && <MissionControl />}
           {scene === 'dashboard' && <Dashboard />}
         </>
       )}

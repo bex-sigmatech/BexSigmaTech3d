@@ -17,9 +17,9 @@ const DEPARTMENTS = [
   {
     id: 'mission_control',
     title: 'Mission Control',
-    subtitle: 'Global Orbital Command & Telemetry Hub',
-    desc: 'Real-time synchronization of planetary AI clusters, orbital satellites, and deep space exploration assets.',
-    tech: ['Orbital Telemetry', 'Planetary Mesh', 'NASA Deep Space Net'],
+    subtitle: 'BEX Sigma Tech — Core Command & Company Hub',
+    desc: 'Central hub of BEX Sigma Tech — we build software, websites, 3D websites, applications, digital marketing, content creation, AI automation and custom generated notes. Your idea, our end-to-end execution.',
+    tech: ['Software', 'Websites', '3D Web', 'AI Automation', 'Digital Marketing', 'Content'],
     color: '#00d4ff', emissive: '#0088cc', pos: [0, 0, 0]
   },
   {
@@ -403,9 +403,13 @@ export default function HQScene() {
     cinemaAudio.playOrbSelect()
     voiceEmitter.emit('SERVICE_CLICK', { sectorId: dept.id })
     setTimeout(() => {
-      // All sectors now show article briefing first (web_dev included)
-      // Article CTA will route to store/dashboard via store.startMission()
-      openMissionBriefing(dept)
+      if (dept.id === 'web_dev') {
+        cinemaAudio.setScene('webdev_store')
+        setIsZooming(false)
+        useStore.setState({ scene: 'webdev_store', activeMission: { id: 'web_dev', title: 'Web Development' } })
+      } else {
+        openMissionBriefing(dept)
+      }
     }, 900)
   }
 
