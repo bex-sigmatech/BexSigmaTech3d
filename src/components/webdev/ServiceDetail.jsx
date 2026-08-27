@@ -56,14 +56,31 @@ export default function ServiceDetail({ serviceId, onClose }) {
           service: detail.title
         })
       })
-      const data = await res.json()
-      if (!res.ok || !data.success) throw new Error(data.error || 'Failed to send')
+      const ct = res.headers.get('content-type') || ''
+      let data = null
+      let text = ''
+      if (ct.includes('application/json')) {
+        data = await res.json()
+      } else {
+        text = await res.text()
+        // Live server not yet deployed → returns HTML <!DOCTYPE
+        if (text.trim().startsWith('<!DOCTYPE') || text.includes('Cannot POST')) {
+          throw new Error(`Live server not updated yet — please email directly to bexsigmatech@gmail.com or try again after deployment. (Details: ${res.status} ${res.statusText})`)
+        }
+        try { data = JSON.parse(text) } catch { data = { success: res.ok, error: text.slice(0, 200) } }
+      }
+      if (!res.ok || !data?.success) throw new Error(data?.error || text?.slice(0, 200) || 'Failed to send')
       setContactSent(true)
       setContactMessage('')
       setContactPhone('')
       setTimeout(() => setContactSent(false), 6000)
     } catch (err) {
-      setContactError(err.message || 'Failed to send — please try again or email directly to bexsigmatech@gmail.com')
+      const msg = err.message || ''
+      if (msg.includes('Unexpected token') || msg.includes('<!DOCTYPE') || msg.includes('is not valid JSON')) {
+        setContactError('Live server not updated yet — the new contact API is not deployed on render. Please email directly to bexsigmatech@gmail.com or contact us after deployment.')
+      } else {
+        setContactError(msg || 'Failed to send — please try again or email directly to bexsigmatech@gmail.com')
+      }
     } finally {
       setContactSending(false)
     }
@@ -87,13 +104,29 @@ export default function ServiceDetail({ serviceId, onClose }) {
           service: detail.title
         })
       })
-      const data = await res.json()
-      if (!res.ok || !data.success) throw new Error(data.error || 'Failed to send')
+      const ct = res.headers.get('content-type') || ''
+      let data = null
+      let text = ''
+      if (ct.includes('application/json')) {
+        data = await res.json()
+      } else {
+        text = await res.text()
+        if (text.trim().startsWith('<!DOCTYPE') || text.includes('Cannot POST')) {
+          throw new Error(`Live server not updated yet — please email directly to bexsigmatech@gmail.com or try again after deployment. (Details: ${res.status} ${res.statusText})`)
+        }
+        try { data = JSON.parse(text) } catch { data = { success: res.ok, error: text.slice(0, 200) } }
+      }
+      if (!res.ok || !data?.success) throw new Error(data?.error || text?.slice(0, 200) || 'Failed to send')
       setCustomSent(true)
       setCustomIdea('')
       setTimeout(() => setCustomSent(false), 6000)
     } catch (err) {
-      setCustomError(err.message || 'Failed to send — please try again or email directly to bexsigmatech@gmail.com')
+      const msg = err.message || ''
+      if (msg.includes('Unexpected token') || msg.includes('<!DOCTYPE') || msg.includes('is not valid JSON')) {
+        setCustomError('Live server not updated yet — the new contact API is not deployed on render. Please email directly to bexsigmatech@gmail.com or contact us after deployment.')
+      } else {
+        setCustomError(msg || 'Failed to send — please try again or email directly to bexsigmatech@gmail.com')
+      }
     } finally {
       setIsSending(false)
     }
