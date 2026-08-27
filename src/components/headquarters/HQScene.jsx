@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState, Suspense, useMemo } from 'react'
+import React, { useRef, useEffect, useState, Suspense, useMemo, useCallback } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { EffectComposer, Bloom, ChromaticAberration, Vignette } from '@react-three/postprocessing'
 import * as THREE from 'three'
@@ -210,12 +210,24 @@ function DepartmentOrb({ dept, index, isActive, isHovered, onHover, onLeave, onS
       ref={groupRef}
       position={[dept.pos[0], dept.pos[1], dept.pos[2]]}
       onClick={(e) => { e.stopPropagation(); onSelect() }}
-      onPointerOver={() => {
+      onPointerDown={(e) => { e.stopPropagation() }}
+      onPointerOver={(e) => {
+        e.stopPropagation()
+        document.body.style.cursor = 'pointer'
         onHover(index)
-        cinemaAudio.playOrbHover() // sound effect on hover
+        try { cinemaAudio.playOrbHover() } catch {}
       }}
-      onPointerOut={() => onLeave()}
+      onPointerOut={() => {
+        document.body.style.cursor = ''
+        onLeave()
+      }}
+      onPointerMissed={() => onLeave()}
     >
+      {/* Invisible larger hit sphere — makes orb click reliable even while floating/camera lerps */}
+      <mesh>
+        <sphereGeometry args={[sphereSize * 1.9, 12, 12]} />
+        <meshBasicMaterial transparent opacity={0} depthWrite={false} depthTest={false} />
+      </mesh>
       {/* Outer glow aura — disable on low-end */}
       {!isLow && (
         <mesh>
@@ -396,32 +408,57 @@ export default function HQScene() {
   const [entryPhase, setEntryPhase] = useState(0)
   const [isZooming, setIsZooming] = useState(false)
   const hqVoiceSpokenRef = useRef(false)
+  // Ref mirror to avoid stale closure in listeners (fixes "sometimes not working")
+  const isZoomingRef = useRef(false)
+  const activeIndexRef = useRef(0)
+  useEffect(() => { isZoomingRef.current = isZooming }, [isZooming])
+  useEffect(() => { activeIndexRef.current = activeIndex }, [activeIndex])
 
-  const handleEngage = (dept) => {
-    if (isZooming) return
+  const handleEngage = useCallback((dept) => {
+    if (!dept) return
+    if (isZoomingRef.current) {
+      console.debug('[HQScene] engage blocked — still zooming', dept.id)
+      return
+    }
+    isZoomingRef.current = true
     setIsZooming(true)
-    cinemaAudio.playOrbSelect()
-    voiceEmitter.emit('SERVICE_CLICK', { sectorId: dept.id })
+    try { cinemaAudio.playOrbSelect() } catch (e) { console.warn('playOrbSelect failed', e) }
+    try { voiceEmitter.emit('SERVICE_CLICK', { sectorId: dept.id }) } catch {}
+    const delay = 700 // reduced from 900 for snappier feel
     setTimeout(() => {
-      if (dept.id === 'web_dev') {
-        cinemaAudio.setScene('webdev_store')
-        setIsZooming(false)
-        useStore.setState({ scene: 'webdev_store', activeMission: { id: 'web_dev', title: 'Web Development' } })
-      } else {
-        openMissionBriefing(dept)
+      try {
+        if (dept.id === 'web_dev') {
+          cinemaAudio.setScene('webdev_store')
+          useStore.setState({ scene: 'webdev_store', activeMission: { id: 'web_dev', title: 'Web Development' } })
+        } else {
+          openMissionBriefing(dept)
+        }
+      } finally {
+        // keep zoom lock until transition finishes, but release ref after scene settles
+        setTimeout(() => {
+          isZoomingRef.current = false
+          setIsZooming(false)
+        }, 400)
       }
-    }, 900)
-  }
+    }, delay)
+  }, [openMissionBriefing])
 
   // Reset zoom when returning to headquarters from briefing/dashboard
   useEffect(() => {
     if (scene === 'headquarters') {
-      const t = setTimeout(() => setIsZooming(false), 600)
+      const t = setTimeout(() => {
+        isZoomingRef.current = false
+        setIsZooming(false)
+      }, 300)
       return () => clearTimeout(t)
+    } else {
+      // when leaving HQ (e.g. mission_briefing) immediately release lock so reopen is not blocked
+      isZoomingRef.current = false
+      setIsZooming(false)
     }
   }, [scene])
 
-  // Voice Navigation listener
+  // Voice Navigation listener — stable, no stale isZooming
   useEffect(() => {
     const handleVoiceNav = (e) => {
       const sectorId = e.detail
@@ -431,25 +468,25 @@ export default function HQScene() {
         setActiveIndex(idx)
         setTimeout(() => {
           handleEngage(DEPARTMENTS[idx])
-        }, 500)
+        }, 450)
       }
     }
     window.addEventListener('NAVIGATE_SECTOR', handleVoiceNav)
     return () => window.removeEventListener('NAVIGATE_SECTOR', handleVoiceNav)
-  }, [isZooming])
+  }, [handleEngage])
 
-  // Keydown Enter listener to trigger engage
+  // Keydown Enter listener to trigger engage — use ref to avoid re-registering
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === 'Enter') {
         e.preventDefault()
-        const dept = DEPARTMENTS[activeIndex]
+        const dept = DEPARTMENTS[activeIndexRef.current]
         handleEngage(dept)
       }
     }
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [activeIndex, isZooming])
+  }, [handleEngage])
 
 
   // Cinematic entry — camera flies in from far
@@ -489,24 +526,29 @@ export default function HQScene() {
     return () => clearTimeout(timer)
   }, [activeIndex])
 
-  // Scroll → cycle through departments
+  // Scroll → cycle through departments — ignore when hovering interactive panel/canvas button
   useEffect(() => {
     let lastScroll = 0
     const handleWheel = (e) => {
+      // Don't hijack scroll when user is interacting with panel/minimap/modal
+      const target = e.target
+      if (target && target.closest && target.closest('.jarvis-dept-panel, .jarvis-orb-minimap, .mc-page-overlay, .webdev-store-container')) return
+      // Don't cycle while zooming into a sector
+      if (isZoomingRef.current) return
       const now = Date.now()
-      if (now - lastScroll < 350) return // throttle
+      if (now - lastScroll < 320) return // throttle slightly reduced
       lastScroll = now
-      if (Math.abs(e.deltaY) > 15) {
+      if (Math.abs(e.deltaY) > 12) {
         if (e.deltaY > 0) {
           setActiveIndex(prev => {
             const next = Math.min(prev + 1, DEPARTMENTS.length - 1)
-            if (next !== prev) cinemaAudio.playScrollTransition()
+            if (next !== prev) try { cinemaAudio.playScrollTransition() } catch {}
             return next
           })
         } else {
           setActiveIndex(prev => {
             const next = Math.max(prev - 1, 0)
-            if (next !== prev) cinemaAudio.playScrollTransition()
+            if (next !== prev) try { cinemaAudio.playScrollTransition() } catch {}
             return next
           })
         }
@@ -516,18 +558,27 @@ export default function HQScene() {
     return () => window.removeEventListener('wheel', handleWheel)
   }, [])
 
-  // Touch swipe → cycle through departments on mobile
+  // Touch swipe → cycle through departments on mobile — ignore touches that start on interactive panel
   useEffect(() => {
     let touchStartY = 0
     let touchStartX = 0
     let lastSwipe = 0
+    let ignoreSwipe = false
 
     const handleTouchStart = (e) => {
+      const target = e.target
+      if (target && target.closest && target.closest('.jarvis-dept-panel, .jarvis-orb-minimap, .mc-page-overlay, .webdev-store-container, .jarvis-engage-btn')) {
+        ignoreSwipe = true
+        return
+      }
+      ignoreSwipe = false
       touchStartY = e.touches[0].clientY
       touchStartX = e.touches[0].clientX
     }
 
     const handleTouchEnd = (e) => {
+      if (ignoreSwipe) return
+      if (isZoomingRef.current) return
       const now = Date.now()
       if (now - lastSwipe < 400) return // throttle
 
@@ -538,7 +589,7 @@ export default function HQScene() {
 
       // Use the axis with larger movement
       const delta = Math.abs(deltaY) > Math.abs(deltaX) ? deltaY : deltaX
-      const threshold = 45 // minimum px swipe distance
+      const threshold = 42 // minimum px swipe distance
 
       if (Math.abs(delta) > threshold) {
         lastSwipe = now
@@ -546,14 +597,14 @@ export default function HQScene() {
           // Swipe up or left → next department
           setActiveIndex(prev => {
             const next = Math.min(prev + 1, DEPARTMENTS.length - 1)
-            if (next !== prev) cinemaAudio.playScrollTransition()
+            if (next !== prev) try { cinemaAudio.playScrollTransition() } catch {}
             return next
           })
         } else {
           // Swipe down or right → previous department
           setActiveIndex(prev => {
             const next = Math.max(prev - 1, 0)
-            if (next !== prev) cinemaAudio.playScrollTransition()
+            if (next !== prev) try { cinemaAudio.playScrollTransition() } catch {}
             return next
           })
         }
@@ -620,7 +671,7 @@ export default function HQScene() {
             {/* Central decorative rings around mission control orb */}
             <JarvisCentralCore />
 
-            {/* All department orbs */}
+            {/* All department orbs — click selects then engages; debounce prevents double fire */}
             {DEPARTMENTS.map((dept, idx) => (
               <DepartmentOrb
                 key={dept.id}
@@ -631,8 +682,13 @@ export default function HQScene() {
                 onHover={setHoveredIndex}
                 onLeave={() => setHoveredIndex(null)}
                 onSelect={() => {
-                  setActiveIndex(idx)
-                  handleEngage(dept)
+                  // if already active, engage immediately; otherwise select then engage after camera settles
+                  if (idx === activeIndexRef.current) {
+                    handleEngage(dept)
+                  } else {
+                    setActiveIndex(idx)
+                    setTimeout(() => handleEngage(dept), 220)
+                  }
                 }}
               />
             ))}
@@ -677,7 +733,7 @@ export default function HQScene() {
         </div>
 
         {/* ── DEPARTMENT INFO PANEL — bottom left (desktop) / bottom card (responsive) ── */}
-        <div className="jarvis-dept-panel" key={currentDept.id}>
+        <div className="jarvis-dept-panel" key={currentDept.id} style={{ pointerEvents: 'auto', touchAction: 'manipulation', position: 'absolute' }}>
           <div className="jarvis-dept-orb-dot" style={{ background: currentDept.color, boxShadow: `0 0 18px ${currentDept.color}` }} />
           <div className="jarvis-dept-content">
             <div className="jarvis-dept-index">
@@ -694,12 +750,28 @@ export default function HQScene() {
             <div className="nolan-dept-actions">
               <button
                 className="nolan-btn-primary interactive jarvis-engage-btn"
-                style={{ background: currentDept.color, color: '#000' }}
-                onClick={() => {
+                style={{
+                  background: currentDept.color,
+                  color: isZooming ? 'rgba(0,0,0,0.45)' : '#000',
+                  opacity: isZooming ? 0.55 : 1,
+                  cursor: isZooming ? 'wait' : 'pointer',
+                  pointerEvents: isZooming ? 'none' : 'auto',
+                  touchAction: 'manipulation',
+                  WebkitTapHighlightColor: 'transparent',
+                  position: 'relative',
+                  zIndex: 2,
+                }}
+                onClick={(e) => {
+                  e.preventDefault()
+                  e.stopPropagation()
                   handleEngage(currentDept)
                 }}
+                onPointerDown={(e) => e.stopPropagation()}
+                disabled={isZooming}
+                aria-busy={isZooming}
+                title={isZooming ? 'Engaging — please wait' : `Enter ${currentDept.title}`}
               >
-                ENGAGE DEPARTMENT TERMINAL
+                {isZooming ? 'ENGAGING…' : 'ENGAGE DEPARTMENT TERMINAL'}
               </button>
             </div>
           </div>

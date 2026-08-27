@@ -1,55 +1,46 @@
-import React, { useEffect, useRef, useState, useMemo } from 'react'
+import React, { useEffect, useState, useMemo, useRef } from 'react'
 import { useStore } from '../../store/useStore'
 import { voiceEmitter, aiVoice } from '../../audio/AIVoiceEngine'
 import { cinemaAudio } from '../../audio/CinematicAudioEngine'
 import { SECTOR_ARTICLES } from '../../data/sectorArticles'
+import MissionHoloModel from './MissionHoloModel'
+import '../../styles/missionControl.css'
 
 /* ==========================================================================
-   BEX SIGMA TECH — ULTRA MISSION CONTROL & COMMAND HUB (V2)
-   Features:
-   - 4 Dynamic Template Styles: SPATIAL MATRIX, 3D CYLINDER, CYBER TELEMETRY, EXECUTIVE ROADMAP
-   - Global Sector Switcher (10 Orbital Divisions)
-   - Interactive Capability Detail Drawer
-   - Real-time Velocity & Timeline Estimator
-   - Audio Feedback & AI Briefing Narrator
+   BEX SIGMA TECH — IRON MAN MISSION CONTROL & JARVIS COMMAND HUB
    ========================================================================== */
 
-const TEMPLATE_MODES = [
-  { id: 'matrix', label: 'SPATIAL MATRIX', icon: '⬡', desc: 'Interactive Bento & Holographic Canvas' },
-  { id: 'cylinder', label: '3D CYLINDER', icon: '🌀', desc: '3D Orbital Perspective Carousel' },
-  { id: 'telemetry', label: 'CYBER TELEMETRY', icon: '💻', desc: 'Live Diagnostics & Command Terminal' },
-  { id: 'roadmap', label: 'BLUEPRINT ROADMAP', icon: '📊', desc: 'Milestone Execution & ROI Estimator' },
-]
-
 const ALL_SECTORS = [
-  { id: 'mission_control', name: 'Mission Control', icon: '⚡', badge: 'CORE HUB' },
-  { id: 'web_dev', name: 'Web Development', icon: '🌐', badge: 'WEB 3D' },
-  { id: 'ai_auto', name: 'AI Automation', icon: '🤖', badge: 'AGENTS' },
-  { id: 'cloud', name: 'Cloud Systems', icon: '☁️', badge: 'ORBITAL' },
-  { id: 'cyber', name: 'Cyber Security', icon: '🛡️', badge: 'QUANTUM' },
-  { id: 'analytics', name: 'Analytics & BI', icon: '📈', badge: '8K DATA' },
-  { id: 'ui_ux', name: 'UI / UX Spatial', icon: '🎨', badge: 'HOLO DESIGN' },
-  { id: 'marketing', name: 'Digital Growth', icon: '🎯', badge: 'NEURAL ADS' },
-  { id: 'finance', name: 'Finance Matrix', icon: '💳', badge: 'LEDGER' },
-  { id: 'innovation', name: 'Innovation Lab', icon: '🔬', badge: 'R&D LAB' },
+  { id: 'mission_control', name: 'Mission Control', icon: '⚡', badge: 'STARK CORE', theme: 'classic' },
+  { id: 'web_dev', name: 'Web Development', icon: '🌐', badge: 'JARVIS 3D', theme: 'jarvis' },
+  { id: 'ai_auto', name: 'AI Automation', icon: '🤖', badge: 'NANO AGENTS', theme: 'emerald' },
+  { id: 'cloud', name: 'Cloud Systems', icon: '☁️', badge: 'ORBITAL MESH', theme: 'jarvis' },
+  { id: 'cyber', name: 'Cyber Security', icon: '🛡️', badge: 'MARK SHIELD', theme: 'stealth' },
+  { id: 'analytics', name: 'Analytics & BI', icon: '📈', badge: 'STARK HUD', theme: 'classic' },
+  { id: 'ui_ux', name: 'UI / UX Spatial', icon: '🎨', badge: 'HOLO VISION', theme: 'quantum' },
+  { id: 'marketing', name: 'Digital Growth', icon: '🎯', badge: 'NEURAL ADS', theme: 'emerald' },
+  { id: 'finance', name: 'Finance Matrix', icon: '💳', badge: 'STARK LEDGER', theme: 'classic' },
+  { id: 'innovation', name: 'Innovation Lab', icon: '🔬', badge: 'R&D ARMORY', theme: 'quantum' },
 ]
 
-const SERVICE_ICONS = ['⬡', '◈', '⬢', '✦', '🛰️', '⚡', '🛡️', '⚙️']
+const SERVICE_ICONS = ['⬡', '◈', '⬢', '✦', '⚡', '🦾', '🛡️', '⚙️']
 
 const ACCENT_PALETTES = [
-  { color: '#00d4ff', glow: 'rgba(0,212,255,0.25)', border: 'rgba(0,212,255,0.35)' },
-  { color: '#a78bfa', glow: 'rgba(167,139,250,0.25)', border: 'rgba(167,139,250,0.35)' },
-  { color: '#34d399', glow: 'rgba(52,211,153,0.25)', border: 'rgba(52,211,153,0.35)' },
-  { color: '#f59e0b', glow: 'rgba(245,158,11,0.25)', border: 'rgba(245,158,11,0.35)' },
-  { color: '#f43f5e', glow: 'rgba(244,63,94,0.25)', border: 'rgba(244,63,94,0.35)' },
-  { color: '#38bdf8', glow: 'rgba(56,189,248,0.25)', border: 'rgba(56,189,248,0.35)' },
+  { color: '#00d4ff', glow: 'rgba(0,212,255,0.25)', border: 'rgba(0,212,255,0.45)' },
+  { color: '#f59e0b', glow: 'rgba(245,158,11,0.25)', border: 'rgba(245,158,11,0.45)' },
+  { color: '#ef4444', glow: 'rgba(239,68,68,0.25)', border: 'rgba(239,68,68,0.45)' },
+  { color: '#34d399', glow: 'rgba(52,211,153,0.25)', border: 'rgba(52,211,153,0.45)' },
+  { color: '#a78bfa', glow: 'rgba(167,139,250,0.25)', border: 'rgba(167,139,250,0.45)' },
 ]
 
-function AnimatedCounter({ value, duration = 1600 }) {
+function AnimatedCounter({ value, duration = 1400 }) {
   const [display, setDisplay] = useState('0')
   useEffect(() => {
     const numMatch = value.match(/[\d.]+/)
-    if (!numMatch) { setDisplay(value); return }
+    if (!numMatch) {
+      setDisplay(value)
+      return
+    }
     const end = parseFloat(numMatch[0])
     const prefix = value.slice(0, value.indexOf(numMatch[0]))
     const suffix = value.slice(value.indexOf(numMatch[0]) + numMatch[0].length)
@@ -68,127 +59,69 @@ function AnimatedCounter({ value, duration = 1600 }) {
 
 export default function MissionControl() {
   const { activeMission, setActiveMission, closeMissionBriefing, startMission, userName, navigateToSector } = useStore()
-  const canvasRef = useRef(null)
   const [mounted, setMounted] = useState(false)
-  const [templateMode, setTemplateMode] = useState('matrix') // 'matrix' | 'cylinder' | 'telemetry' | 'roadmap'
   const [selectedServiceDetail, setSelectedServiceDetail] = useState(null)
   const [isNarrating, setIsNarrating] = useState(false)
+  const [currentTime, setCurrentTime] = useState('')
 
-  // 3D Cylinder Slider state
-  const [cylinderIndex, setCylinderIndex] = useState(0)
-  const [isCylinderPaused, setIsCylinderPaused] = useState(false)
+  // 3D Iron Man Viewport Interactive States
+  const [modelType, setModelType] = useState('helmet') // 'helmet' | 'reactor' | 'armor'
+  const [colorTheme, setColorTheme] = useState('classic') // 'classic' | 'jarvis' | 'stealth' | 'quantum' | 'emerald'
+  const [wireframe, setWireframe] = useState(false)
+  const [exploded, setExploded] = useState(false)
+  const [scanTrigger, setScanTrigger] = useState(false)
+  const [autoRotate, setAutoRotate] = useState(true)
 
-  // Telemetry Terminal State
+  // Estimator Slider State
+  const [projectScale, setProjectScale] = useState(3) // 1 to 5 scale
+
+  // Terminal Console State
   const [terminalLogs, setTerminalLogs] = useState([
-    'BEX SIGMA OS v2.070 [ORBITAL SHELL INIT]',
-    'SECTOR MATRIX: ALL 10 ORBITAL NODES ONLINE',
-    'SECURITY LEVEL: POST-QUANTUM ZERO-TRUST',
-    'AI ASSISTANT: SIGMA AGENT READY ON FREQ 142.8MHz',
-    'READY FOR OPERATOR COMMAND...'
+    'JARVIS PROTOCOL v8.5 [MARK LXXXV ONLINE]',
+    'ARC REACTOR OUTPUT: 100% NOMINAL · 3 GJ/s',
+    'NANOTECH ARMOR INTEGRITY: OPTIMAL ZERO-DEFECT',
+    'HUD DIAGNOSTICS: STARK SATELLITE LINK SYNCED',
+    'READY FOR COMMANDER DIRECTIVES...',
   ])
   const [terminalInput, setTerminalInput] = useState('')
   const [diagnosticRunning, setDiagnosticRunning] = useState(false)
-
-  // Estimator slider state
-  const [projectScale, setProjectScale] = useState(3) // 1 to 5 scale
+  const termBodyRef = useRef(null)
 
   // Current active sector article
   const currentSectorId = activeMission?.id || 'mission_control'
   const article = SECTOR_ARTICLES[currentSectorId] || SECTOR_ARTICLES['mission_control']
 
+  // Sync color theme with current sector
+  useEffect(() => {
+    const matched = ALL_SECTORS.find((s) => s.id === currentSectorId)
+    if (matched) {
+      setColorTheme(matched.theme)
+    }
+  }, [currentSectorId])
+
   useEffect(() => {
     voiceEmitter.emit('MISSION_BRIEF_VISIBLE')
-    const t = setTimeout(() => setMounted(true), 50)
+    const t = setTimeout(() => setMounted(true), 40)
     return () => clearTimeout(t)
   }, [currentSectorId])
 
-  // Sound and audio particle canvas setup
+  // Real-time UTC Timecode Clock
   useEffect(() => {
-    const canvas = canvasRef.current
-    if (!canvas) return
-    const ctx = canvas.getContext('2d')
-    let animationFrameId
-    let width = (canvas.width = window.innerWidth)
-    let height = (canvas.height = window.innerHeight)
-    const particles = []
-    const count = window.innerWidth < 768 ? 25 : 60
-
-    for (let i = 0; i < count; i++) {
-      particles.push({
-        x: Math.random() * width,
-        y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.35,
-        vy: (Math.random() - 0.5) * 0.35,
-        size: Math.random() * 1.8 + 0.4,
-        alpha: Math.random() * 0.45 + 0.15,
-        hue: Math.random() > 0.6 ? 275 : 195, // purple & cyan
-      })
+    const updateTime = () => {
+      const now = new Date()
+      setCurrentTime(now.toUTCString().slice(17, 25) + ' UTC')
     }
-
-    let mouse = { x: null, y: null }
-    const onMouseMove = (e) => { mouse.x = e.clientX; mouse.y = e.clientY }
-    window.addEventListener('mousemove', onMouseMove)
-
-    const draw = () => {
-      ctx.clearRect(0, 0, width, height)
-      if (width > 768) {
-        ctx.strokeStyle = 'rgba(0, 212, 255, 0.015)'
-        ctx.lineWidth = 1
-        const gs = 80
-        for (let x = 0; x < width; x += gs) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, height); ctx.stroke() }
-        for (let y = 0; y < height; y += gs) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(width, y); ctx.stroke() }
-      }
-
-      particles.forEach((p, idx) => {
-        p.x += p.vx; p.y += p.vy
-        if (p.x < 0 || p.x > width) p.vx *= -1
-        if (p.y < 0 || p.y > height) p.vy *= -1
-
-        if (mouse.x !== null) {
-          const dx = mouse.x - p.x, dy = mouse.y - p.y
-          const dist = Math.sqrt(dx * dx + dy * dy)
-          if (dist < 120) {
-            const f = (120 - dist) / 120
-            p.x -= dx * f * 0.03
-            p.y -= dy * f * 0.03
-          }
-        }
-
-        ctx.fillStyle = `hsla(${p.hue}, 85%, 72%, ${p.alpha})`
-        ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2); ctx.fill()
-
-        for (let j = idx + 1; j < particles.length; j++) {
-          const p2 = particles[j]
-          const dx = p.x - p2.x, dy = p.y - p2.y
-          const dist = Math.sqrt(dx * dx + dy * dy)
-          if (dist < 90) {
-            ctx.strokeStyle = `rgba(0, 212, 255, ${(1 - dist / 90) * 0.07})`
-            ctx.lineWidth = 0.5
-            ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p2.x, p2.y); ctx.stroke()
-          }
-        }
-      })
-      animationFrameId = requestAnimationFrame(draw)
-    }
-    draw()
-
-    const onResize = () => { width = canvas.width = window.innerWidth; height = canvas.height = window.innerHeight }
-    window.addEventListener('resize', onResize)
-    return () => {
-      cancelAnimationFrame(animationFrameId)
-      window.removeEventListener('mousemove', onMouseMove)
-      window.removeEventListener('resize', onResize)
-    }
+    updateTime()
+    const timer = setInterval(updateTime, 1000)
+    return () => clearInterval(timer)
   }, [])
 
-  // Auto rotation for cylinder mode
+  // Auto-scroll terminal on new output
   useEffect(() => {
-    if (templateMode !== 'cylinder' || isCylinderPaused || selectedServiceDetail) return
-    const interval = setInterval(() => {
-      setCylinderIndex((prev) => prev + 1)
-    }, 4000)
-    return () => clearInterval(interval)
-  }, [templateMode, isCylinderPaused, selectedServiceDetail])
+    if (termBodyRef.current) {
+      termBodyRef.current.scrollTop = termBodyRef.current.scrollHeight
+    }
+  }, [terminalLogs])
 
   // Sector Switching
   const handleSelectSector = (secId) => {
@@ -200,23 +133,24 @@ export default function MissionControl() {
     if (SECTOR_ARTICLES[secId]) {
       setActiveMission({ id: secId, title: SECTOR_ARTICLES[secId].title })
     }
-    // Log in telemetry
     setTerminalLogs((prev) => [
-      ...prev.slice(-15),
-      `[TRANSITION] SWAPPED ACTIVE SECTOR MATRIX TO -> ${secId.toUpperCase()}`
+      ...prev.slice(-16),
+      `[JARVIS] RE-CONFIGURING PROTOCOLS FOR SECTOR -> ${secId.toUpperCase()}`,
     ])
   }
 
-  // Template Mode Change
-  const handleSwitchTemplate = (modeId) => {
-    cinemaAudio.playOrbSelect()
-    setTemplateMode(modeId)
+  // Trigger Unibeam / Repulsor Pulse
+  const handleUnibeamPulse = () => {
+    cinemaAudio.playAccessGrantedChime()
+    setScanTrigger(true)
+    setTimeout(() => setScanTrigger(false), 2400)
     setTerminalLogs((prev) => [
-      ...prev.slice(-15),
-      `[TEMPLATE] SWITCHED VIEWPORT MODE -> ${modeId.toUpperCase()}`
+      ...prev.slice(-16),
+      `[REPULSOR] UNIBEAM PLASMA DISCHARGE EXECUTED · TARGETING CALIBRATED`,
     ])
   }
 
+  // Start Mission / Launch
   const handleStartMission = () => {
     cinemaAudio.playAccessGrantedChime()
     voiceEmitter.emit('MISSION_STARTED')
@@ -241,25 +175,61 @@ export default function MissionControl() {
     }
   }
 
+  // Diagnostic Audit
+  const runDiagnostics = () => {
+    setDiagnosticRunning(true)
+    cinemaAudio.playBootBeep()
+    setTerminalLogs((prev) => [...prev, '⚡ RUNNING JARVIS MARK LXXXV SUIT & SECTOR AUDIT...'])
+
+    setTimeout(() => {
+      setTerminalLogs((prev) => [...prev, '✓ SYNCHRONIZING 10 GLOBAL STARK NODES: 0.4ms'])
+      cinemaAudio.playScrollTransition()
+    }, 500)
+
+    setTimeout(() => {
+      setTerminalLogs((prev) => [...prev, '✓ ARC REACTOR UNIBEAM CONFINEMENT: 100% STABLE'])
+      cinemaAudio.playScrollTransition()
+    }, 1100)
+
+    setTimeout(() => {
+      setTerminalLogs((prev) => [...prev, '✓ AUDIT COMPLETE: SUIT LOCKED & ARMED. ZERO ANOMALIES.'])
+      cinemaAudio.playAccessGrantedChime()
+      setDiagnosticRunning(false)
+    }, 1800)
+  }
+
   // Terminal command executor
   const handleTerminalSubmit = (e) => {
     e.preventDefault()
     if (!terminalInput.trim()) return
     const cmd = terminalInput.trim().toLowerCase()
     const log = `> ${terminalInput}`
-    let resp = `Command unrecognized: "${cmd}". Try: help, status, deploy, test, sectors, clear`
-    if (cmd === 'help') resp = 'AVAILABLE: status | deploy | test | sectors | clear | webdev | ai | cyber'
-    else if (cmd === 'status') resp = 'ALL SYSTEMS NOMINAL. Quantum core latency < 0.4ms. Encryption 100% active.'
-    else if (cmd === 'test') {
+    let resp = `Command unrecognized: "${cmd}". Try: help, status, unibeam, test, helmet, clear`
+
+    if (cmd === 'help') resp = 'JARVIS COMMANDS: status | ceo | unibeam | test | helmet | reactor | armor | deploy | clear'
+    else if (cmd === 'status') resp = 'STATUS: MARK 85 NANOTECH ONLINE. LATENCY: 0.4ms. POWER: 100%'
+    else if (cmd === 'ceo' || cmd === 'founder' || cmd === 'hariharan' || cmd === 'contact') {
+      resp = 'BEX SIGMA TECH FOUNDER & CEO: Hariharan.D · Email: bexsigmatech@gmail.com · DIRECT LINE CONNECTED.'
+    } else if (cmd === 'unibeam' || cmd === 'fire' || cmd === 'scan') {
+      handleUnibeamPulse()
+      resp = 'FIRING CHEST UNIBEAM REPULSOR EMITTER...'
+    } else if (cmd === 'helmet') {
+      setModelType('helmet')
+      resp = 'SWITCHED 3D VIEWPORT TO MARK LXXXV HELMET'
+    } else if (cmd === 'reactor') {
+      setModelType('reactor')
+      resp = 'SWITCHED 3D VIEWPORT TO ARC REACTOR CORE'
+    } else if (cmd === 'armor') {
+      setModelType('armor')
+      resp = 'SWITCHED 3D VIEWPORT TO FULL NANOTECH ARMOR'
+    } else if (cmd === 'test' || cmd === 'audit') {
       runDiagnostics()
-      resp = 'INITIATING COMPREHENSIVE ORBITAL DIAGNOSTICS...'
-    }
-    else if (cmd === 'sectors') resp = ALL_SECTORS.map(s => s.id).join(' | ')
+      resp = 'LAUNCHING JARVIS SYSTEM AUDIT...'
+    } else if (cmd === 'sectors') resp = ALL_SECTORS.map((s) => s.id).join(' | ')
     else if (cmd === 'deploy' || cmd === 'launch') {
       handleStartMission()
-      resp = 'MAINFRAME INITIALIZATION TRIGGERED!'
-    }
-    else if (cmd === 'clear') {
+      resp = 'INITIALIZING DEPLOYMENT MAINFRAME!'
+    } else if (cmd === 'clear') {
       setTerminalLogs([])
       setTerminalInput('')
       return
@@ -268,60 +238,71 @@ export default function MissionControl() {
       resp = `ROUTING TO ${cmd.toUpperCase()} SECTOR...`
     }
 
-    setTerminalLogs(prev => [...prev.slice(-14), log, `[SYS] ${resp}`])
+    setTerminalLogs((prev) => [...prev.slice(-16), log, `[JARVIS] ${resp}`])
     setTerminalInput('')
-  }
-
-  const runDiagnostics = () => {
-    setDiagnosticRunning(true)
-    cinemaAudio.playBootBeep()
-    setTimeout(() => {
-      setTerminalLogs(prev => [...prev, '✓ SYNCHRONIZING GLOBAL HIGH-SPEED NODES... 100%'])
-      cinemaAudio.playScrollTransition()
-    }, 600)
-    setTimeout(() => {
-      setTerminalLogs(prev => [...prev, '✓ VERIFYING NEURAL PIPELINES & DATA RESILIENCE... OK'])
-      cinemaAudio.playScrollTransition()
-    }, 1200)
-    setTimeout(() => {
-      setTerminalLogs(prev => [...prev, '✓ AUDIT COMPLETE: 0 ANOMALIES. ALL PROTOCOLS VERIFIED.'])
-      cinemaAudio.playAccessGrantedChime()
-      setDiagnosticRunning(false)
-    }, 1900)
   }
 
   // Estimator Calculations
   const estimateData = useMemo(() => {
     const scaleMap = [
-      { name: 'Sprint Pilot (MVP)', weeks: 1.5, speedBoost: '4x', support: '1 Month Free Support', deliverables: 'Full Source Code + Live Web Deployment + Responsive Mobile QA' },
-      { name: 'Standard Business Core', weeks: 3, speedBoost: '6x', support: '3 Months Priority SLA', deliverables: 'Custom Software + Interactive 3D Canvas + SEO Engine + Database Sync' },
-      { name: 'Advanced Scale Architecture', weeks: 5, speedBoost: '8x', support: '6 Months Architecture SLA', deliverables: 'Autonomous Multi-Agent AI + High-Availability Cloud + Quantum Encryption' },
-      { name: 'Enterprise Planetary Matrix', weeks: 8, speedBoost: '12x', support: '12 Months Dedicated Pod', deliverables: 'Full Digital Ecosystem: Web + App + AI Hub + 24/7 Security Sentinels' },
-      { name: 'Custom Frontier Blueprint', weeks: 12, speedBoost: '15x+', support: 'Lifetime Partnership SLA', deliverables: 'Ground-up Experimental R&D + Dedicated Engineering Pod + Custom Proprietary LLMs' },
+      {
+        name: 'Sprint Pilot (Mark I MVP)',
+        weeks: 1.5,
+        speedBoost: '4x',
+        support: '1 Month Free SLA',
+        deliverables: 'Full Source Code + Live High-Speed Web Deployment + Mobile QA',
+      },
+      {
+        name: 'Standard Business Core (Mark VII)',
+        weeks: 3,
+        speedBoost: '6x',
+        support: '3 Months Priority SLA',
+        deliverables: 'Custom Software + Interactive 3D Canvas + SEO Engine + Database Sync',
+      },
+      {
+        name: 'Advanced Architecture (Mark 50 Nano)',
+        weeks: 5,
+        speedBoost: '8x',
+        support: '6 Months Architecture SLA',
+        deliverables: 'Autonomous AI Agents + High-Availability Cloud + Quantum Encryption',
+      },
+      {
+        name: 'Enterprise Matrix (Mark 85 Titanium)',
+        weeks: 8,
+        speedBoost: '12x',
+        support: '12 Months Dedicated Pod',
+        deliverables: 'Full Digital Ecosystem: Web + Mobile App + AI Hub + 24/7 Security Sentinels',
+      },
+      {
+        name: 'Custom Frontier Blueprint (Stark Lab)',
+        weeks: 12,
+        speedBoost: '15x+',
+        support: 'Lifetime Partnership SLA',
+        deliverables: 'Ground-up Experimental R&D + Dedicated Engineering Pod + Custom Proprietary LLMs',
+      },
     ]
     return scaleMap[projectScale - 1] || scaleMap[2]
   }, [projectScale])
 
-  const numServices = article.services?.length || 4
-  const activeModuloIndex = ((cylinderIndex % numServices) + numServices) % numServices
-
   return (
     <div className={`mc-page-overlay ${mounted ? 'mc-mounted' : ''}`}>
-      <canvas ref={canvasRef} style={{ position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 0 }} />
-      <div className="mc-bg" />
+      <div className="mc-ambient-bg" />
+      <div className="mc-grid-pattern" />
 
       <div className="mc-page-scroll">
-        {/* ── Top Header ── */}
+        {/* ── Top Header Navigation Bar ── */}
         <header className="mc-header">
           <div className="mc-header-left">
-            <button className="mc-back-btn interactive" onClick={handleClose}>
-              ← BACK TO HQ
+            <button className="mc-back-btn interactive" onClick={handleClose} title="Return to 3D Observatory">
+              <span className="mc-back-btn-arrow">←</span>
+              <span className="mc-back-btn-text">HQ OBSERVATORY</span>
             </button>
+
             <div className="mc-header-titles">
               <div className="mc-dept-label">
                 <span className="mc-badge-pill">{article.badge}</span>
                 <span>CODE: {article.id.toUpperCase()}</span>
-                <span className="mc-user-tag">OPERATOR: {userName || 'COMMANDER'}</span>
+                <span className="mc-user-tag">OPERATOR: {userName || 'STARK'}</span>
               </div>
               <h1 className="mc-page-title">{article.title}</h1>
               <p className="mc-page-subtitle">{article.subtitle}</p>
@@ -332,24 +313,26 @@ export default function MissionControl() {
             <button
               className={`mc-audio-btn interactive ${isNarrating ? 'narrating' : ''}`}
               onClick={toggleNarration}
-              title="Narrate Department Brief with AI Voice"
+              title="Narrate Department Briefing with AI Voice"
             >
-              <span>{isNarrating ? '🔊 NARRATING...' : '🎙️ AUDIO BRIEF'}</span>
+              <div className="mc-audio-wave">
+                <span className="mc-audio-bar" />
+                <span className="mc-audio-bar" />
+                <span className="mc-audio-bar" />
+              </div>
+              <span>{isNarrating ? 'NARRATING...' : 'JARVIS VOICE BRIEF'}</span>
             </button>
 
-            <div className="mc-secure-badge">
-              <span>🛡️</span>
-              <div>
-                <div style={{ fontWeight: 700, fontSize: '0.76rem' }}>ORBITAL SECURE</div>
-                <div style={{ fontSize: '0.6rem', opacity: 0.65 }}>Zero-Trust Telemetry</div>
-              </div>
+            <div className="mc-clock-badge">
+              <span className="mc-clock-time">{currentTime || '12:00:00 UTC'}</span>
+              <span className="mc-clock-zone">JARVIS SYNC ACTIVE</span>
             </div>
           </div>
         </header>
 
-        {/* ── 10 Orbital Sector Switcher ── */}
-        <nav className="mc-sector-nav" aria-label="Orbital Sector Selection">
-          <div className="mc-sector-nav-label">ORBITAL SECTOR DIRECTORY:</div>
+        {/* ── 10 Orbital Sector Directory Switcher ── */}
+        <nav className="mc-sector-nav" aria-label="Orbital Sector Directory">
+          <div className="mc-sector-nav-label">STARK PROTOCOL DIRECTORY:</div>
           <div className="mc-sector-nav-track">
             {ALL_SECTORS.map((sec) => {
               const isActive = sec.id === currentSectorId
@@ -361,393 +344,280 @@ export default function MissionControl() {
                 >
                   <span className="mc-chip-icon">{sec.icon}</span>
                   <span className="mc-chip-name">{sec.name}</span>
-                  {isActive && <span className="mc-chip-indicator" />}
                 </button>
               )
             })}
           </div>
         </nav>
 
-        {/* ── Template Viewport Switcher Toolbar ── */}
-        <div className="mc-template-bar">
-          <div className="mc-template-bar-left">
-            <span className="mc-template-label">SELECT INTERACTION TEMPLATE:</span>
-          </div>
-          <div className="mc-template-options">
-            {TEMPLATE_MODES.map((tmpl) => {
-              const isSelected = templateMode === tmpl.id
-              return (
-                <button
-                  key={tmpl.id}
-                  className={`mc-template-btn interactive ${isSelected ? 'selected' : ''}`}
-                  onClick={() => handleSwitchTemplate(tmpl.id)}
-                  title={tmpl.desc}
-                >
-                  <span className="mc-tmpl-icon">{tmpl.icon}</span>
-                  <span className="mc-tmpl-title">{tmpl.label}</span>
-                </button>
-              )
-            })}
-          </div>
-        </div>
+        {/* ── Main Command Body Grid ── */}
+        <main className="mc-body-grid">
+          {/* ════════════════════════════════════════════════════════════════════
+              LEFT COLUMN: 3D Iron Man Stage + Capabilities Grid
+             ════════════════════════════════════════════════════════════════════ */}
+          <div className="mc-left-col">
+            {/* 3D Iron Man Viewport Card */}
+            <div className="mc-hero-3d-card">
+              <div className="mc-card-header-bar">
+                <div className="mc-card-title-group">
+                  <span className="mc-live-dot" />
+                  <h2 className="mc-card-heading">3D IRON MAN HOLOGRAPHIC SUIT ENGINE</h2>
+                </div>
+                <div className="mc-holo-meta">MARK LXXXV · ARC REACTOR ACTIVE</div>
+              </div>
 
-        {/* ── Key Performance Stats Row ── */}
-        {article.stats && (
-          <section className="mc-stats-section">
-            {article.stats.map((s, i) => {
-              const palette = ACCENT_PALETTES[i % ACCENT_PALETTES.length]
-              return (
-                <div
-                  key={i}
-                  className="mc-stat-card interactive"
-                  style={{ '--card-accent': palette.color, '--card-glow': palette.glow }}
-                >
-                  <div className="mc-stat-value" style={{ color: palette.color }}>
-                    <AnimatedCounter value={s.value} duration={1400 + i * 200} />
+              {/* 3D Canvas Stage */}
+              <div className="mc-holo-stage">
+                <MissionHoloModel
+                  modelType={modelType}
+                  colorTheme={colorTheme}
+                  wireframe={wireframe}
+                  exploded={exploded}
+                  scanTrigger={scanTrigger}
+                  autoRotate={autoRotate}
+                />
+
+                {/* Cyber HUD Overlays on 3D Stage */}
+                <div className="mc-stage-overlay-hud">
+                  <div className="mc-hud-top-data">
+                    <span>JARVIS_HUD: 142.8MHz</span>
+                    <span>SUIT: MARK_LXXXV</span>
+                    <span>BEARING: 042° // 18'</span>
                   </div>
-                  <div className="mc-stat-label">{s.label}</div>
-                  <div className="mc-stat-glow" style={{ background: palette.glow }} />
-                </div>
-              )
-            })}
-          </section>
-        )}
 
-        {/* ── Dynamic Template Viewports ── */}
+                  <div className="mc-hud-reticle-center" />
 
-        {/* ================================================================
-            VIEWPORT 1: SPATIAL MATRIX (Interactive Bento Layout)
-           ================================================================ */}
-        {templateMode === 'matrix' && (
-          <div className="mc-viewport-view mc-view-matrix">
-            {/* Overview Bento Card */}
-            <div className="mc-bento-hero">
-              <div className="mc-bento-hero-left">
-                <div className="mc-section-eyebrow">
-                  <span className="mc-eyebrow-dot" />MISSION SYNTHESIS & OBJECTIVE
-                </div>
-                <p className="mc-overview-text">{article.overview}</p>
-                <div className="mc-hero-action-row">
-                  <button className="mc-btn-primary interactive" onClick={handleStartMission}>
-                    {article.id === 'web_dev' ? '🚀 LAUNCH WEB STORE' : '⚡ INITIALIZE SECTOR MAINFRAME'}
-                  </button>
-                  <button className="mc-btn-secondary interactive" onClick={runDiagnostics}>
-                    🔍 RUN SYSTEM HEALTH AUDIT
-                  </button>
+                  <div className="mc-hud-bottom-hint">
+                    DRAG TO ORBIT · SCROLL TO ZOOM · CLICK CONTROLS BELOW
+                  </div>
                 </div>
               </div>
-              <div className="mc-bento-hero-right">
-                <div className="mc-radar-visual">
-                  <div className="mc-radar-circle mc-radar-c1" />
-                  <div className="mc-radar-circle mc-radar-c2" />
-                  <div className="mc-radar-circle mc-radar-c3" />
-                  <div className="mc-radar-sweep" />
-                  <div className="mc-radar-point p1" />
-                  <div className="mc-radar-point p2" />
-                  <div className="mc-radar-point p3" />
-                  <div className="mc-radar-label">{article.title} NODE ACTIVE</div>
+
+              {/* 3D Model Controls Toolbar */}
+              <div className="mc-model-toolbar">
+                {/* Model Selector */}
+                <div className="mc-toolbar-section">
+                  <span className="mc-tool-label">IRON MAN ARMOR:</span>
+                  <div className="mc-pill-btn-group">
+                    <button
+                      className={`mc-pill-btn interactive ${modelType === 'helmet' ? 'active' : ''}`}
+                      onClick={() => {
+                        cinemaAudio.playOrbSelect()
+                        setModelType('helmet')
+                      }}
+                    >
+                      HELMET HUD
+                    </button>
+                    <button
+                      className={`mc-pill-btn interactive ${modelType === 'reactor' ? 'active' : ''}`}
+                      onClick={() => {
+                        cinemaAudio.playOrbSelect()
+                        setModelType('reactor')
+                      }}
+                    >
+                      ARC REACTOR
+                    </button>
+                    <button
+                      className={`mc-pill-btn interactive ${modelType === 'armor' ? 'active' : ''}`}
+                      onClick={() => {
+                        cinemaAudio.playOrbSelect()
+                        setModelType('armor')
+                      }}
+                    >
+                      NANOTECH SUIT
+                    </button>
+                  </div>
+                </div>
+
+                {/* Shading & Action Controls */}
+                <div className="mc-toolbar-section">
+                  <button
+                    className={`mc-action-icon-btn interactive ${wireframe ? 'toggled' : ''}`}
+                    onClick={() => {
+                      cinemaAudio.playScrollTransition()
+                      setWireframe(!wireframe)
+                    }}
+                    title="Toggle Stark Wireframe Diagnostic Shading"
+                  >
+                    <span>🕸️</span>
+                    <span>{wireframe ? 'SOLID' : 'WIREFRAME'}</span>
+                  </button>
+
+                  <button
+                    className={`mc-action-icon-btn interactive ${exploded ? 'toggled' : ''}`}
+                    onClick={() => {
+                      cinemaAudio.playScrollTransition()
+                      setExploded(!exploded)
+                    }}
+                    title="Deploy / Open Faceplate & Nanotech"
+                  >
+                    <span>🦾</span>
+                    <span>{exploded ? 'CLOSE VISOR' : 'OPEN VISOR'}</span>
+                  </button>
+
+                  <button
+                    className="mc-action-icon-btn interactive"
+                    onClick={handleUnibeamPulse}
+                    title="Fire Chest Unibeam Laser Blast"
+                  >
+                    <span>🔥</span>
+                    <span>UNIBEAM</span>
+                  </button>
+
+                  <button
+                    className={`mc-action-icon-btn interactive ${!autoRotate ? 'toggled' : ''}`}
+                    onClick={() => {
+                      cinemaAudio.playScrollTransition()
+                      setAutoRotate(!autoRotate)
+                    }}
+                    title="Toggle Auto Rotation"
+                  >
+                    <span>{autoRotate ? '⏸ PAUSE' : '▶ ROTATE'}</span>
+                  </button>
                 </div>
               </div>
             </div>
 
-            {/* Core Capabilities Interactive Grid */}
-            <div className="mc-services-container">
-              <div className="mc-section-eyebrow">
-                <span className="mc-eyebrow-dot" />WHAT WE ENGINEER & DELIVER
+            {/* Department Overview Bento Box */}
+            <div className="mc-overview-box">
+              <div className="mc-section-eyebrow" style={{ marginBottom: 10 }}>
+                <span className="mc-eyebrow-dot" />
+                MISSION SYNTHESIS & OBJECTIVE
               </div>
-              <h2 className="mc-section-title">Core Specialized Capabilities</h2>
-              <div className="mc-services-grid">
+              <p className="mc-overview-text">{article.overview}</p>
+              <div className="mc-overview-actions">
+                <button className="mc-btn-primary interactive" onClick={handleStartMission}>
+                  {article.id === 'web_dev' ? '🚀 LAUNCH WEB STORE' : '⚡ INITIALIZE SECTOR MAINFRAME'}
+                </button>
+                <button className="mc-btn-secondary interactive" onClick={runDiagnostics}>
+                  🔍 RUN JARVIS AUDIT
+                </button>
+              </div>
+            </div>
+
+            {/* Core Specialized Capabilities Grid */}
+            <section className="mc-capabilities-section">
+              <div className="mc-section-header-row">
+                <div className="mc-section-title-wrap">
+                  <div className="mc-section-eyebrow">
+                    <span className="mc-eyebrow-dot" />
+                    STARK DELIVERABLES
+                  </div>
+                  <h3 className="mc-section-title">Specialized Capabilities</h3>
+                </div>
+              </div>
+
+              <div className="mc-capabilities-grid">
                 {article.services.map((svc, idx) => {
                   const palette = ACCENT_PALETTES[idx % ACCENT_PALETTES.length]
                   return (
                     <div
                       key={idx}
-                      className="mc-service-card interactive"
+                      className="mc-cap-card interactive"
                       style={{
-                        '--mc-accent': palette.color,
-                        '--mc-glow': palette.glow,
-                        '--mc-border': palette.border,
+                        '--card-accent': palette.color,
+                        '--card-glow': palette.glow,
                       }}
                       onClick={() => {
                         cinemaAudio.playOrbSelect()
                         setSelectedServiceDetail({ ...svc, index: idx, palette })
                       }}
                     >
-                      <div className="mc-card-top-row">
-                        <div className="mc-service-icon" style={{ color: palette.color, borderColor: palette.border, background: palette.glow }}>
+                      <div className="mc-cap-top-row">
+                        <div className="mc-cap-icon-box">
                           {SERVICE_ICONS[idx % SERVICE_ICONS.length]}
                         </div>
-                        <span className="mc-card-num">0{idx + 1}</span>
+                        <span className="mc-cap-num">0{idx + 1}</span>
                       </div>
-                      <h3 className="mc-service-title">{svc.title}</h3>
-                      <p className="mc-service-desc">{svc.desc}</p>
-                      <div className="mc-service-glow" style={{ background: palette.glow }} />
-                      <div className="mc-service-shine" />
-                      <div className="mc-service-cta" style={{ color: palette.color }}>
-                        <span>Inspect Architecture Blueprint</span>
-                        <span className="mc-cta-arrow">→</span>
+
+                      <div>
+                        <h4 className="mc-cap-title">{svc.title}</h4>
+                        <p className="mc-cap-desc">{svc.desc}</p>
+                      </div>
+
+                      <div className="mc-cap-footer">
+                        <span>Inspect Stark Blueprint</span>
+                        <span>→</span>
                       </div>
                     </div>
                   )
                 })}
               </div>
-            </div>
+            </section>
           </div>
-        )}
 
-        {/* ================================================================
-            VIEWPORT 2: 3D CYLINDER CAROUSEL (Cylindrical 3D Slider)
-           ================================================================ */}
-        {templateMode === 'cylinder' && (
-          <div
-            className="mc-viewport-view mc-view-cylinder"
-            onMouseEnter={() => setIsCylinderPaused(true)}
-            onMouseLeave={() => setIsCylinderPaused(false)}
-          >
-            <div className="mc-cylinder-controls-row">
-              <div className="mc-cylinder-hint">
-                <span>3D PERSPECTIVE SLIDER — ACTIVE LAYER: {activeModuloIndex + 1} / {numServices}</span>
-              </div>
-              <div className="mc-cylinder-nav-btns">
-                <button
-                  className="mc-btn-cyl-prev interactive"
-                  onClick={() => {
-                    cinemaAudio.playScrollTransition()
-                    setCylinderIndex(prev => prev - 1)
-                  }}
-                >
-                  ◀ PREV LAYER
-                </button>
-                <button
-                  className="mc-btn-cyl-next interactive"
-                  onClick={() => {
-                    cinemaAudio.playScrollTransition()
-                    setCylinderIndex(prev => prev + 1)
-                  }}
-                >
-                  NEXT LAYER ▶
-                </button>
-              </div>
-            </div>
-
-            <div className="mc-cylinder-viewport">
-              <div
-                className="mc-cylinder-track"
-                style={{
-                  transform: `rotateY(${-cylinderIndex * (360 / numServices)}deg)`
-                }}
-              >
-                {article.services.map((svc, idx) => {
-                  const stepAngle = 360 / numServices
-                  const angle = idx * stepAngle
-                  const diff = Math.abs(activeModuloIndex - idx)
-                  const minDiff = Math.min(diff, numServices - diff)
-                  const palette = ACCENT_PALETTES[idx % ACCENT_PALETTES.length]
-
-                  let opacity = 0.2
-                  let pointerEvents = 'none'
-                  let scale = 0.72
-                  let zOffset = -40
-
-                  if (minDiff === 0) {
-                    opacity = 1.0
-                    pointerEvents = 'auto'
-                    scale = 1.0
-                    zOffset = 50
-                  } else if (minDiff === 1) {
-                    opacity = 0.5
-                    pointerEvents = 'none'
-                    scale = 0.8
-                    zOffset = -10
-                  }
-
-                  const radius = typeof window !== 'undefined' && window.innerWidth < 768 ? 220 : 340
-
-                  return (
-                    <div
-                      key={idx}
-                      className="mc-cylinder-card interactive"
-                      style={{
-                        '--mc-accent': palette.color,
-                        '--mc-glow': palette.glow,
-                        transform: `rotateY(${angle}deg) translateZ(${radius + zOffset}px) scale(${scale})`,
-                        opacity,
-                        pointerEvents,
-                        borderColor: minDiff === 0 ? palette.color : 'rgba(255,255,255,0.1)',
-                      }}
-                      onClick={() => {
-                        cinemaAudio.playOrbSelect()
-                        setSelectedServiceDetail({ ...svc, index: idx, palette })
-                      }}
-                    >
-                      <div className="mc-cyl-header">
-                        <span className="mc-cyl-badge" style={{ color: palette.color, borderColor: palette.border }}>
-                          SERVICE NODE 0{idx + 1}
-                        </span>
-                        <div className="mc-cyl-icon" style={{ color: palette.color }}>{SERVICE_ICONS[idx % SERVICE_ICONS.length]}</div>
-                      </div>
-
-                      <h3 className="mc-cyl-title">{svc.title}</h3>
-                      <p className="mc-cyl-desc">{svc.desc}</p>
-
-                      <div className="mc-cyl-features">
-                        <div className="mc-cyl-feat-item">✓ Zero-Latency Architecture</div>
-                        <div className="mc-cyl-feat-item">✓ 100% Tailored Build</div>
-                        <div className="mc-cyl-feat-item">✓ 24/7 SLA Observability</div>
-                      </div>
-
-                      <button className="mc-cyl-inspect-btn interactive" style={{ background: palette.color }}>
-                        VIEW ARCHITECTURE SPEC
-                      </button>
+          {/* ════════════════════════════════════════════════════════════════════
+              RIGHT COLUMN: Telemetry Stats, Terminal, ROI Estimator & Tech
+             ════════════════════════════════════════════════════════════════════ */}
+          <div className="mc-right-col">
+            {/* Key Stats Row */}
+            {article.stats && (
+              <div className="mc-stats-grid">
+                {article.stats.map((s, i) => (
+                  <div key={i} className="mc-stat-item">
+                    <div className="mc-stat-item-val">
+                      <AnimatedCounter value={s.value} duration={1200 + i * 200} />
                     </div>
-                  )
-                })}
-              </div>
-            </div>
-
-            {/* Cylinder Dots */}
-            <div className="mc-cylinder-dots">
-              {article.services.map((_, i) => (
-                <div
-                  key={i}
-                  className={`mc-cyl-dot interactive ${i === activeModuloIndex ? 'active' : ''}`}
-                  onClick={() => {
-                    cinemaAudio.playScrollTransition()
-                    let diff = i - activeModuloIndex
-                    const halfLen = Math.floor(numServices / 2)
-                    if (diff > halfLen) diff -= numServices
-                    if (diff < -halfLen) diff += numServices
-                    setCylinderIndex(prev => prev + diff)
-                  }}
-                />
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* ================================================================
-            VIEWPORT 3: CYBER TELEMETRY & COMMAND TERMINAL
-           ================================================================ */}
-        {templateMode === 'telemetry' && (
-          <div className="mc-viewport-view mc-view-telemetry">
-            <div className="mc-telemetry-grid">
-              {/* Left: Terminal Console */}
-              <div className="mc-terminal-box">
-                <div className="mc-terminal-header">
-                  <div className="mc-term-dots">
-                    <span className="mc-dot red" />
-                    <span className="mc-dot yellow" />
-                    <span className="mc-dot green" />
+                    <div className="mc-stat-item-lbl">{s.label}</div>
                   </div>
-                  <span className="mc-term-title">BEX-SIGMA://ORBITAL_MAINFRAME_CONSOLE</span>
-                  <button className="mc-term-action interactive" onClick={runDiagnostics} disabled={diagnosticRunning}>
-                    {diagnosticRunning ? 'DIAGNOSTICS RUNNING...' : '⚡ RUN DIAGNOSTIC AUDIT'}
-                  </button>
-                </div>
+                ))}
+              </div>
+            )}
 
-                <div className="mc-terminal-body">
-                  {terminalLogs.map((line, idx) => (
-                    <div key={idx} className="mc-term-line">
-                      <span className="mc-term-time">[{new Date().toLocaleTimeString()}]</span> {line}
-                    </div>
-                  ))}
-                  {diagnosticRunning && (
-                    <div className="mc-term-loader">
-                      <span className="mc-pulse-dot" /> EXECUTING REAL-TIME SPECTRAL AUDIT...
-                    </div>
-                  )}
+            {/* Live Terminal Console Card */}
+            <div className="mc-terminal-card">
+              <div className="mc-terminal-top-bar">
+                <div className="mc-term-dots">
+                  <span className="mc-dot red" />
+                  <span className="mc-dot yellow" />
+                  <span className="mc-dot green" />
                 </div>
-
-                <form onSubmit={handleTerminalSubmit} className="mc-terminal-input-row">
-                  <span className="mc-term-prompt">operator@{article.id}:~$</span>
-                  <input
-                    type="text"
-                    value={terminalInput}
-                    onChange={(e) => setTerminalInput(e.target.value)}
-                    placeholder="type 'help', 'status', 'test', 'deploy' or any sector name..."
-                    className="mc-term-input"
-                  />
-                  <button type="submit" className="mc-term-send-btn interactive">SEND</button>
-                </form>
+                <span className="mc-term-title">JARVIS://STARK_MAINFRAME</span>
+                <button
+                  className="mc-term-audit-btn interactive"
+                  onClick={runDiagnostics}
+                  disabled={diagnosticRunning}
+                >
+                  {diagnosticRunning ? 'AUDITING...' : '⚡ RUN AUDIT'}
+                </button>
               </div>
 
-              {/* Right: Live Telemetry Gauges */}
-              <div className="mc-telemetry-metrics">
-                <div className="mc-telemetry-metric-card">
-                  <div className="mc-metric-title">GLOBAL LATENCY</div>
-                  <div className="mc-metric-val">1.2ms <span className="mc-metric-sub">P99 SLA</span></div>
-                  <div className="mc-metric-bar"><div className="mc-bar-fill" style={{ width: '92%', background: '#00d4ff' }} /></div>
-                </div>
-
-                <div className="mc-telemetry-metric-card">
-                  <div className="mc-metric-title">COMPLIANCE & ENCRYPTION</div>
-                  <div className="mc-metric-val">100% <span className="mc-metric-sub">Kyber/Dilithium</span></div>
-                  <div className="mc-metric-bar"><div className="mc-bar-fill" style={{ width: '100%', background: '#34d399' }} /></div>
-                </div>
-
-                <div className="mc-telemetry-metric-card">
-                  <div className="mc-metric-title">UPTIME RELIABILITY</div>
-                  <div className="mc-metric-val">99.99% <span className="mc-metric-sub">Zero-Downtime</span></div>
-                  <div className="mc-metric-bar"><div className="mc-bar-fill" style={{ width: '99%', background: '#a78bfa' }} /></div>
-                </div>
-
-                <div className="mc-telemetry-metric-card">
-                  <div className="mc-metric-title">PROVISIONING VELOCITY</div>
-                  <div className="mc-metric-val">&lt; 24h <span className="mc-metric-sub">Deployment</span></div>
-                  <div className="mc-metric-bar"><div className="mc-bar-fill" style={{ width: '88%', background: '#f59e0b' }} /></div>
-                </div>
+              <div className="mc-term-body" ref={termBodyRef}>
+                {terminalLogs.map((line, idx) => (
+                  <div key={idx} className="mc-term-line">
+                    <span className="mc-term-time">[{currentTime || 'UTC'}]</span> {line}
+                  </div>
+                ))}
               </div>
-            </div>
-          </div>
-        )}
 
-        {/* ================================================================
-            VIEWPORT 4: BLUEPRINT ROADMAP & ESTIMATOR
-           ================================================================ */}
-        {templateMode === 'roadmap' && (
-          <div className="mc-viewport-view mc-view-roadmap">
-            {/* 4-Phase Delivery Roadmap */}
-            <div className="mc-roadmap-container">
-              <div className="mc-section-eyebrow">
-                <span className="mc-eyebrow-dot" />STANDARDIZED RAPID DELIVERY LIFECYCLE
-              </div>
-              <h2 className="mc-section-title">End-to-End Execution Protocol</h2>
-
-              <div className="mc-roadmap-steps">
-                {article.process.map((step, idx) => {
-                  const palette = ACCENT_PALETTES[idx % ACCENT_PALETTES.length]
-                  return (
-                    <div key={idx} className="mc-roadmap-card interactive" style={{ '--card-accent': palette.color }}>
-                      <div className="mc-roadmap-phase" style={{ color: palette.color, borderColor: palette.border }}>
-                        PHASE 0{idx + 1}
-                      </div>
-                      <div className="mc-roadmap-circle" style={{ background: palette.color }}>{idx + 1}</div>
-                      <h4 className="mc-roadmap-step-title">{step.replace(/^\d+\.\s*/, '')}</h4>
-                      <p className="mc-roadmap-step-desc">
-                        {idx === 0 && 'Requirement mapping, architecture blueprinting & SLA definition.'}
-                        {idx === 1 && 'Precision UI/UX design, wireframes and interactive client preview.'}
-                        {idx === 2 && 'Iterative agile sprints with real-time test guards and clean modular code.'}
-                        {idx === 3 && 'Zero-downtime production deployment, SEO indexation and ongoing 24/7 care.'}
-                      </p>
-                    </div>
-                  )
-                })}
-              </div>
+              <form onSubmit={handleTerminalSubmit} className="mc-term-input-row">
+                <span className="mc-term-prompt">jarvis@{article.id}:~$</span>
+                <input
+                  type="text"
+                  value={terminalInput}
+                  onChange={(e) => setTerminalInput(e.target.value)}
+                  placeholder="type 'unibeam', 'helmet', 'status', 'test'..."
+                  className="mc-term-input"
+                />
+                <button type="submit" className="mc-term-send interactive">
+                  SEND
+                </button>
+              </form>
             </div>
 
-            {/* Interactive Timeline & Velocity Estimator */}
-            <div className="mc-estimator-box">
-              <div className="mc-section-eyebrow">
+            {/* Interactive Timeline & Velocity Blueprint Estimator */}
+            <div className="mc-estimator-card">
+              <div className="mc-section-eyebrow" style={{ color: '#f59e0b' }}>
                 <span className="mc-eyebrow-dot" style={{ background: '#f59e0b' }} />
                 INTERACTIVE PROJECT ESTIMATOR
               </div>
-              <h3 className="mc-estimator-title">Configure Scope Scale & Calculate Delivery Velocity</h3>
+              <h3 className="mc-estimator-title">Configure Scope Scale & Delivery Velocity</h3>
 
-              <div className="mc-slider-control">
-                <div className="mc-slider-labels">
-                  <span>SCALE 1: MVP SPRINT</span>
-                  <span>SCALE 3: ADVANCED</span>
-                  <span>SCALE 5: FRONTIER LAB</span>
+              <div className="mc-range-wrap">
+                <div className="mc-range-labels">
+                  <span>SCALE 1: MARK I MVP</span>
+                  <span>SCALE 3: MARK 50 NANO</span>
+                  <span>SCALE 5: STARK LAB</span>
                 </div>
                 <input
                   type="range"
@@ -758,164 +628,200 @@ export default function MissionControl() {
                     cinemaAudio.playScrollTransition()
                     setProjectScale(parseInt(e.target.value))
                   }}
-                  className="mc-range-input"
+                  className="mc-range-slider"
                 />
               </div>
 
-              <div className="mc-estimator-results">
-                <div className="mc-est-card">
-                  <span className="mc-est-label">TARGET ARCHITECTURE</span>
-                  <span className="mc-est-value highlight">{estimateData.name}</span>
+              <div className="mc-est-grid">
+                <div className="mc-est-mini-box">
+                  <div className="mc-est-mini-label">TARGET ARCHITECTURE</div>
+                  <div className="mc-est-mini-val">{estimateData.name}</div>
                 </div>
-                <div className="mc-est-card">
-                  <span className="mc-est-label">DELIVERY SPEED</span>
-                  <span className="mc-est-value">⏱ ~{estimateData.weeks} WEEKS</span>
+                <div className="mc-est-mini-box">
+                  <div className="mc-est-mini-label">DELIVERY SPEED</div>
+                  <div className="mc-est-mini-val">⏱ ~{estimateData.weeks} WEEKS</div>
                 </div>
-                <div className="mc-est-card">
-                  <span className="mc-est-label">VELOCITY MULTIPLIER</span>
-                  <span className="mc-est-value green">⚡ {estimateData.speedBoost} FASTER</span>
+                <div className="mc-est-mini-box">
+                  <div className="mc-est-mini-label">VELOCITY MULTIPLIER</div>
+                  <div className="mc-est-mini-val" style={{ color: '#00ff88' }}>
+                    ⚡ {estimateData.speedBoost} FASTER
+                  </div>
                 </div>
-                <div className="mc-est-card">
-                  <span className="mc-est-label">WARRANTY & SUPPORT</span>
-                  <span className="mc-est-value">{estimateData.support}</span>
+                <div className="mc-est-mini-box">
+                  <div className="mc-est-mini-label">SUPPORT SLA</div>
+                  <div className="mc-est-mini-val">{estimateData.support}</div>
                 </div>
               </div>
 
-              <div className="mc-est-deliverables">
-                <strong>INCLUDED BLUEPRINT DELIVERABLES:</strong> {estimateData.deliverables}
+              <div className="mc-est-deliverable-tag">
+                <strong>INCLUDED:</strong> {estimateData.deliverables}
+              </div>
+            </div>
+
+            {/* Proven Advantages & Benefits */}
+            <div className="mc-benefits-card">
+              <div className="mc-section-eyebrow" style={{ color: '#34d399' }}>
+                <span className="mc-eyebrow-dot" style={{ background: '#34d399' }} />
+                KEY SECTOR ADVANTAGES
+              </div>
+              <ul className="mc-benefits-list">
+                {article.benefits.map((b, i) => (
+                  <li key={i} className="mc-benefit-item">
+                    <span className="mc-benefit-check">✓</span>
+                    <span>{b}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Aerospace Technology Stack Arsenal */}
+            <div className="mc-tech-card">
+              <div className="mc-section-eyebrow">
+                <span className="mc-eyebrow-dot" />
+                STARK TECHNOLOGY ARSENAL
+              </div>
+              <div className="mc-tech-tags-cloud">
+                {(article.tech || activeMission.tech || []).map((t, idx) => (
+                  <span key={idx} className="mc-tech-pill interactive">
+                    {t}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* ── CEO / Founder Profile Card ── */}
+            <div className="mc-ceo-card">
+              <div className="mc-ceo-glow-ring" />
+              <div className="mc-ceo-content">
+                <div className="mc-ceo-avatar-wrap">
+                  <img
+                    src="/ceo_hariharan.jpg"
+                    alt="Hariharan.D — Founder & CEO of Bex Sigma Tech"
+                    className="mc-ceo-avatar"
+                  />
+                  <div className="mc-ceo-avatar-ring" />
+                  <div className="mc-ceo-status-dot" title="Online" />
+                </div>
+                <div className="mc-ceo-info">
+                  <div className="mc-ceo-badge">FOUNDER & CEO</div>
+                  <h3 className="mc-ceo-name">Hariharan.D</h3>
+                  <p className="mc-ceo-tagline">Visionary Architect · Bex Sigma Tech</p>
+                  <a
+                    href="mailto:bexsigmatech@gmail.com"
+                    className="mc-ceo-email interactive"
+                  >
+                    <span className="mc-ceo-email-icon">✉</span>
+                    <span>bexsigmatech@gmail.com</span>
+                  </a>
+                </div>
+              </div>
+              <div className="mc-ceo-quote">
+                "We don't just build software — we architect digital experiences that redefine what's possible."
               </div>
             </div>
           </div>
-        )}
+        </main>
 
-        {/* ── Two Column (Benefits & Why Choose) ── */}
-        <section className="mc-two-col-section">
-          <div className="mc-two-col-card mc-benefits-card">
-            <div className="mc-section-eyebrow">
-              <span className="mc-eyebrow-dot" style={{ background: '#34d399' }} />
-              PROVEN ADVANTAGES & KEY BENEFITS
-              <span className="mc-eyebrow-line" style={{ background: 'rgba(52,211,153,0.3)' }} />
-            </div>
-            <ul className="mc-list">
-              {article.benefits.map((b, i) => (
-                <li key={i} className="mc-list-item">
-                  <span className="mc-list-bullet" style={{ color: '#34d399' }}>✓</span>
-                  <span>{b}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="mc-two-col-card mc-why-card">
-            <div className="mc-section-eyebrow">
-              <span className="mc-eyebrow-dot" style={{ background: '#f59e0b' }} />
-              WHY CHOOSE BEX SIGMA TECH
-              <span className="mc-eyebrow-line" style={{ background: 'rgba(245,158,11,0.3)' }} />
-            </div>
-            <p className="mc-why-text">{article.whyChoose}</p>
-          </div>
-        </section>
-
-        {/* ── Technology Stack Tags ── */}
-        <section className="mc-tech-section">
-          <div className="mc-section-eyebrow">
-            <span className="mc-eyebrow-dot" />ORBITAL AEROSPACE TECHNOLOGY STACK
-            <span className="mc-eyebrow-line" />
-          </div>
-          <div className="mc-tech-row">
-            {(article.tech || activeMission.tech || []).map((t, idx) => (
-              <span
-                key={idx}
-                className="mc-tech-tag interactive"
-                style={{
-                  '--tag-color': ACCENT_PALETTES[idx % ACCENT_PALETTES.length].color,
-                  animationDelay: `${idx * 0.05}s`
-                }}
-              >
-                {t}
-              </span>
-            ))}
-          </div>
-        </section>
-
-        {/* ── Bottom Call To Action ── */}
-        <section className="mc-cta-section">
-          <div className="mc-cta-glow-orb mc-cta-glow-orb--left" />
-          <div className="mc-cta-glow-orb mc-cta-glow-orb--right" />
-          <h2 className="mc-cta-heading">
+        {/* ── High-Impact Bottom Call to Action ── */}
+        <section className="mc-bottom-cta">
+          <h2 className="mc-bottom-cta-title">
             {article.id === 'mission_control'
               ? 'Ready to Launch Your Digital Future with BEX Sigma Tech?'
-              : `Ready to Initialize the ${article.title} Department?`}
+              : `Ready to Initialize the ${article.title} Sector?`}
           </h2>
-          <p className="mc-cta-sub">
+          <p className="mc-bottom-cta-desc">
             {article.id === 'mission_control'
               ? 'Step into our command mainframe and access software, websites, AI automation and custom tools.'
               : `Connect with our engineering pod to architect and scale your ${article.title} solution.`}
           </p>
-          <div className="mc-actions">
+
+          <div className="mc-bottom-cta-actions">
             <button className="mc-btn-primary interactive" onClick={handleStartMission}>
               {article.id === 'web_dev' ? '🚀 ENTER WEB STORE' : '⚡ INITIATE DEPARTMENT MAINFRAME'}
             </button>
+            <a
+              href="mailto:bexsigmatech@gmail.com?subject=Project%20Inquiry%20-%20Bex%20Sigma%20Tech"
+              className="mc-btn-ceo-contact interactive"
+            >
+              ✉ CONTACT CEO HARIHARAN.D
+            </a>
             <button className="mc-btn-secondary interactive" onClick={handleClose}>
-              ← RETURN TO OBSERVATORY WALK
+              ← RETURN TO HQ OBSERVATORY
             </button>
           </div>
+
+          <div className="mc-trust-badges-row">
+            <span>🔒 Post-Quantum Encryption</span>
+            <span>⚡ Zero-Downtime SLA</span>
+            <span>🛡️ SOC2 / GDPR Ready</span>
+            <span>🌐 24/7 Dedicated Pod</span>
+          </div>
         </section>
-
-        {/* ── Trust Row & Footer ── */}
-        <div className="mc-trust-row">
-          {['🔒 End-to-End Quantum Encryption', '⚡ High-Throughput Delivery', '🛡️ Enterprise SLA Standards', '✅ 100% Custom Tailored', '🌐 24/7 Priority Assistance'].map((b, i) => (
-            <span key={i} className="mc-trust-badge">{b}</span>
-          ))}
-        </div>
-
-        <div className="mc-footer-code">
-          ORBITAL CLEARANCE GRANTED · DEPT ID: {article.id.toUpperCase()} · BEX SIGMA TECH 2070 PROPRIETARY
-        </div>
       </div>
 
-      {/* ── Interactive Capability Detail Modal / Drawer ── */}
+      {/* ── Interactive Capability Detail Blueprint Modal ── */}
       {selectedServiceDetail && (
-        <div className="mc-modal-overlay" onClick={() => setSelectedServiceDetail(null)}>
-          <div className="mc-modal-box interactive" onClick={(e) => e.stopPropagation()}>
-            <div className="mc-modal-header">
-              <div className="mc-modal-badge" style={{ color: selectedServiceDetail.palette?.color }}>
-                {article.badge} · SPECIFICATION
-              </div>
-              <button className="mc-modal-close" onClick={() => setSelectedServiceDetail(null)}>×</button>
+        <div className="mc-blueprint-overlay" onClick={() => setSelectedServiceDetail(null)}>
+          <div
+            className="mc-blueprint-box interactive"
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              '--modal-border': selectedServiceDetail.palette?.border,
+              '--modal-glow': selectedServiceDetail.palette?.glow,
+            }}
+          >
+            <div className="mc-blueprint-header">
+              <span
+                className="mc-blueprint-badge"
+                style={{ color: selectedServiceDetail.palette?.color }}
+              >
+                {article.badge} · TECHNICAL BLUEPRINT
+              </span>
+              <button
+                className="mc-blueprint-close interactive"
+                onClick={() => setSelectedServiceDetail(null)}
+              >
+                ×
+              </button>
             </div>
 
-            <div className="mc-modal-body">
-              <div className="mc-modal-icon-wrap" style={{ color: selectedServiceDetail.palette?.color, borderColor: selectedServiceDetail.palette?.border, background: selectedServiceDetail.palette?.glow }}>
-                {SERVICE_ICONS[selectedServiceDetail.index % SERVICE_ICONS.length]}
-              </div>
-              <h2 className="mc-modal-title">{selectedServiceDetail.title}</h2>
-              <p className="mc-modal-desc">{selectedServiceDetail.desc}</p>
+            <div className="mc-blueprint-body">
+              <h3 className="mc-blueprint-title">{selectedServiceDetail.title}</h3>
+              <p className="mc-blueprint-desc">{selectedServiceDetail.desc}</p>
 
-              <div className="mc-modal-spec-grid">
-                <div className="mc-modal-spec-item">
-                  <div className="mc-spec-label">DEPLOYMENT LATENCY</div>
-                  <div className="mc-spec-val">&lt; 48 Hours Rapid Setup</div>
+              <div className="mc-blueprint-specs-grid">
+                <div className="mc-blueprint-spec-item">
+                  <div className="mc-spec-lbl">PROVISIONING LATENCY</div>
+                  <div className="mc-spec-val">&lt; 48h Sprint Ready</div>
                 </div>
-                <div className="mc-modal-spec-item">
-                  <div className="mc-spec-label">CODE INTEGRITY</div>
-                  <div className="mc-spec-val">100% Tested + Automated CI/CD</div>
+                <div className="mc-blueprint-spec-item">
+                  <div className="mc-spec-lbl">CODE INTEGRITY</div>
+                  <div className="mc-spec-val">100% Automated CI/CD + QA</div>
                 </div>
-                <div className="mc-modal-spec-item">
-                  <div className="mc-spec-label">SECURITY POSTURE</div>
-                  <div className="mc-spec-val">SOC2 / GDPR / Post-Quantum Ready</div>
+                <div className="mc-blueprint-spec-item">
+                  <div className="mc-spec-lbl">SECURITY POSTURE</div>
+                  <div className="mc-spec-val">Post-Quantum Cryptography</div>
                 </div>
-                <div className="mc-modal-spec-item">
-                  <div className="mc-spec-label">SUPPORT SLA</div>
-                  <div className="mc-spec-val">Continuous Node Monitoring</div>
+                <div className="mc-blueprint-spec-item">
+                  <div className="mc-spec-lbl">MAINTENANCE SLA</div>
+                  <div className="mc-spec-val">24/7 Continuous Monitoring</div>
                 </div>
               </div>
 
-              <div className="mc-modal-actions">
-                <button className="mc-btn-primary interactive" onClick={() => { setSelectedServiceDetail(null); handleStartMission() }}>
+              <div className="mc-blueprint-actions">
+                <button
+                  className="mc-btn-primary interactive"
+                  onClick={() => {
+                    setSelectedServiceDetail(null)
+                    handleStartMission()
+                  }}
+                >
                   PROVISION THIS SERVICE NOW
                 </button>
-                <button className="mc-btn-secondary interactive" onClick={() => setSelectedServiceDetail(null)}>
+                <button
+                  className="mc-btn-secondary interactive"
+                  onClick={() => setSelectedServiceDetail(null)}
+                >
                   CLOSE BLUEPRINT
                 </button>
               </div>
