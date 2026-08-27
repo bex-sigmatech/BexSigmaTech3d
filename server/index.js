@@ -336,6 +336,10 @@ const EFFECTIVE_DOWNLOAD_SECRET = DOWNLOAD_TOKEN_SECRET || `bex_sigma_fallback_$
 /* ── Email Transporter Setup ── */
 const transporter = nodemailer.createTransport({
   service: 'gmail',
+  host: 'smtp.gmail.com',
+  port: 587,
+  secure: false,
+  family: 4, // force IPv4 — Render has no IPv6 route to Gmail (ENETUNREACH 2607:f8b0::)
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
