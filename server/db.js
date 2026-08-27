@@ -14,7 +14,8 @@ const initialSchema = {
   orders: [],
   downloads: [],
   aiChats: [],
-  systemLogs: []
+  systemLogs: [],
+  contacts: []
 }
 
 // Ensure data directory and file exist
@@ -130,5 +131,30 @@ module.exports = {
     if (db.aiChats.length > 50) db.aiChats = db.aiChats.slice(0, 50)
     writeDb(db)
     return chat
+  },
+
+  saveContact({ name, email, phone, message, subject, service }) {
+    const db = readDb()
+    if (!db.contacts) db.contacts = []
+    const record = {
+      id: `contact_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`,
+      name: name || 'Anonymous',
+      email,
+      phone: phone || '',
+      message,
+      subject: subject || 'Contact',
+      service: service || 'General',
+      timestamp: new Date().toISOString()
+    }
+    db.contacts.unshift(record)
+    if (db.contacts.length > 200) db.contacts = db.contacts.slice(0, 200)
+    writeDb(db)
+    console.log(`💾 Saved contact to DB: ${record.id} from ${email} (${service})`)
+    return record
+  },
+
+  getContacts() {
+    const db = readDb()
+    return db.contacts || []
   }
 }
