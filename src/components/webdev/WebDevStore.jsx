@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useStore } from '../../store/useStore'
 import { cinemaAudio } from '../../audio/CinematicAudioEngine'
 import { voiceEmitter } from '../../audio/AIVoiceEngine'
+import ServiceDetail from './ServiceDetail'
 
 /* ==========================================================================
    BEX SIGMA TECH — WEB DEVELOPMENT PRODUCTS STORE
@@ -25,8 +26,7 @@ const PRODUCTS = [
     currency: 'INR',
     color: '#7c3aed',
     glowColor: 'rgba(124, 58, 237, 0.25)',
-    image: '/omnicoder_ai.jpg',
-    imageFit: 'cover',
+    image: '/habit_tracker.png',
     features: [
       'Multi-Agent Collaborative Coding',
       'Automated Test & Build Integrity Guard',
@@ -50,8 +50,9 @@ const PRODUCTS = [
     currency: 'INR',
     color: '#f43f5e',
     glowColor: 'rgba(244, 63, 94, 0.25)',
-    image: '/quantum_shield.jpg',
-    imageFit: 'cover',
+    image: '/campaign_pro.jpg',
+    imageFit: 'contain',
+    imageBg: '#ffffff',
     features: [
       'NIST-Approved Post-Quantum Cryptography',
       'End-to-End Encrypted Telemetry',
@@ -75,8 +76,9 @@ const PRODUCTS = [
     currency: 'INR',
     color: '#38bdf8',
     glowColor: 'rgba(56, 189, 248, 0.25)',
-    image: '/spacemesh_iot.jpg',
+    image: '/net_worth_dashboard.jpg',
     imageFit: 'cover',
+    imagePosition: 'center',
     features: [
       'Zero-Latency Planetary Sync',
       'High-Throughput Timescale Database',
@@ -100,8 +102,9 @@ const PRODUCTS = [
     currency: 'INR',
     color: '#e879f9',
     glowColor: 'rgba(232, 121, 249, 0.25)',
-    image: '/vision_spatial.jpg',
-    imageFit: 'cover',
+    image: '/project_scorecard.jpg',
+    imageFit: 'contain',
+    imageBg: '#ffffff',
     features: [
       'Interactive WebXR Sandbox Creator',
       'Depth-Based UI Layout Engines',
@@ -125,8 +128,9 @@ const PRODUCTS = [
     currency: 'INR',
     color: '#34d399',
     glowColor: 'rgba(52, 211, 153, 0.25)',
-    image: '/biosync_health.jpg',
-    imageFit: 'cover',
+    image: '/hr_roi.jpg',
+    imageFit: 'contain',
+    imageBg: '#ffffff',
     features: [
       'HIPAA Compliant Patient Telemetry',
       'Distributed Node Consultation Logs',
@@ -325,28 +329,48 @@ const PRODUCTS = [
 
 const WORKS = [
   {
-    title: 'Solaris DEX Portal',
-    meta: 'WEB3 / TRADING',
-    desc: 'High-frequency decentralized liquidity exchange built on React, custom WebGL shader orbits, and full ledger synchronization.',
-    tags: ['WebGL', 'Solidity', 'Tailwind', 'ChartJS']
+    id: 'normal',
+    title: 'Normal Business Website',
+    meta: 'WEBSITE / ESSENTIAL',
+    desc: 'Clean, fast and mobile-ready websites for businesses and personal brands. SEO-optimized, easy to manage and built to convert — landing pages, portfolios and corporate sites that load in under a second.',
+    tags: ['Corporate', 'Landing Page', 'Portfolio', 'Next.js'],
+    accent: '#38bdf8',
+    glow: 'rgba(56,189,248,0.35)',
+    icon: '◈',
+    num: '01'
   },
   {
-    title: 'AeroSpace Telemetry Core',
-    meta: 'AEROSPACE / DASHBOARD',
-    desc: 'Real-time rocket launch tracking telemetry platform using Next.js server components and scalable high-performance WebSockets.',
-    tags: ['Next.js', 'WebSockets', 'd3.js', 'Node.js']
+    id: 'threed',
+    title: '3D Interactive Website',
+    meta: '3D / SPATIAL WEB',
+    desc: 'Immersive 3D websites with Three.js, WebGL and cinematic scroll. Premium spatial storytelling — product showcases and Apple Vision-style interfaces that make your brand unforgettable.',
+    tags: ['Three.js', 'WebGL', 'R3F', 'Motion'],
+    accent: '#a78bfa',
+    glow: 'rgba(167,139,250,0.35)',
+    icon: '⬢',
+    num: '02'
   },
   {
-    title: 'Nidus Spatial LMS',
-    meta: 'VR EDUCATION',
-    desc: 'Immersive spatial classroom dashboard rendering responsive HTML widgets directly inside WebXR Apple Vision structures.',
-    tags: ['React Three Fiber', 'WebXR', 'Zustand']
+    id: 'software',
+    title: 'Custom Software Application',
+    meta: 'SOFTWARE / WEB APP',
+    desc: 'Tailored web apps, dashboards, admin panels and SaaS tools. From idea to deployment — secure, scalable and built for your exact workflow, not a template.',
+    tags: ['Web App', 'Dashboard', 'SaaS', 'MERN'],
+    accent: '#34d399',
+    glow: 'rgba(52,211,153,0.35)',
+    icon: '⬣',
+    num: '03'
   },
   {
-    title: 'Veloce Headless Commerce',
-    meta: 'E-COMMERCE',
-    desc: 'Ultra-low latency storefront delivering zero-layout shifts and instant cart operations powered by GraphQL and edge nodes.',
-    tags: ['Vite', 'GraphQL', 'Shopify Storefront']
+    id: 'custom',
+    title: 'Your Unique Idea — We Build It',
+    meta: 'CREATIVE / CUSTOM',
+    desc: 'Have a wild idea? Share your vision and we architect it into reality. Experimental builds, first-of-its-kind products — you imagine, we engineer the impossible.',
+    tags: ['Custom Build', 'Prototype', 'Creative', 'End-to-End'],
+    accent: '#f59e0b',
+    glow: 'rgba(245,158,11,0.35)',
+    icon: '✦',
+    num: '04'
   }
 ]
 
@@ -468,6 +492,9 @@ async function initiateCashfreePayment(product, customerName, customerEmail, cus
 export default function WebDevStore() {
   const { userName, exitWebDevStore } = useStore()
 
+  // Service detail modal
+  const [selectedService, setSelectedService] = useState(null)
+
   // Cart & Sidebar States
   const [cart, setCart] = useState([])
   const [isCartOpen, setIsCartOpen] = useState(false)
@@ -491,7 +518,7 @@ export default function WebDevStore() {
   const [custPhone, setCustPhone] = useState('')
   const [isPaying, setIsPaying] = useState(false)
   const [toast, setToast] = useState(null) // {msg, type} for 10/10 no-alert UI
-  const showToast = (msg, type='error') => { setToast({msg, type}); setTimeout(()=>setToast(null), 4000) }
+  const showToast = (msg, type = 'error') => { setToast({ msg, type }); setTimeout(() => setToast(null), 4000) }
 
   // 3D Cylinder Carousel States
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -838,11 +865,11 @@ export default function WebDevStore() {
               fontWeight: 'bold'
             }}
           >
-            💱 CURRENCY: {currency === 'INR' ? '₹ INR (charged)' : '$ USD (est.)'} 
+            💱 CURRENCY: {currency === 'INR' ? '₹ INR (charged)' : '$ USD (est.)'}
           </button>
 
           {/* Cart trigger button */}
-          <div role="button" tabIndex={0} aria-label={`Open cart, ${cart.reduce((s,i)=>s+i.quantity,0)} items`} className="webdev-cart-trigger interactive" onClick={() => setIsCartOpen(true)} onKeyDown={(e)=> e.key==='Enter' && setIsCartOpen(true)}>
+          <div role="button" tabIndex={0} aria-label={`Open cart, ${cart.reduce((s, i) => s + i.quantity, 0)} items`} className="webdev-cart-trigger interactive" onClick={() => setIsCartOpen(true)} onKeyDown={(e) => e.key === 'Enter' && setIsCartOpen(true)}>
             <span>🛒 OBSERVATORY CART</span>
             {cart.length > 0 && <span className="webdev-cart-badge" aria-live="polite">{cart.reduce((sum, item) => sum + item.quantity, 0)}</span>}
           </div>
@@ -1356,54 +1383,38 @@ export default function WebDevStore() {
         </div>
       </section>
 
-      {/* ── Works & Clients split section ── */}
-      <section className="webdev-portfolio-section">
-        {/* Column 1: Our Works */}
-        <div>
-          <h2 className="webdev-portfolio-col-title">
-            <span className="webdev-portfolio-title-dot" style={{ background: '#00d4ff', boxShadow: '0 0 10px #00d4ff' }} />
-            OUR WORKS (PORTFOLIO blueprints)
-          </h2>
-          <div className="webdev-portfolio-list">
-            {WORKS.map((work, idx) => (
-              <div key={idx} className="webdev-portfolio-card work">
-                <div className="webdev-portfolio-card-header">
-                  <h3 className="webdev-portfolio-card-title">{work.title}</h3>
-                  <span className="webdev-portfolio-card-meta">{work.meta}</span>
-                </div>
-                <p className="webdev-portfolio-card-desc">{work.desc}</p>
-                <div className="webdev-portfolio-tags">
-                  {work.tags.map((t, i) => (
-                    <span key={i} className="webdev-portfolio-tag">{t}</span>
-                  ))}
-                </div>
-              </div>
-            ))}
+      {/* ── What We Build — Unique Bento ── */}
+      <section className="webdev-bento-section">
+        <div className="webdev-bento-header">
+          <div className="webdev-bento-eyebrow">
+            <span className="bento-eyebrow-dot" />
+            WHAT WE BUILD
+            <span className="bento-eyebrow-line" />
           </div>
+          <h2 className="webdev-bento-title">Four ways we bring your idea to life</h2>
+          <p className="webdev-bento-sub">From simple to spatial to fully custom — plus your own unique vision, engineered without limits.</p>
         </div>
-
-        {/* Column 2: Our Clients */}
-        <div>
-          <h2 className="webdev-portfolio-col-title">
-            <span className="webdev-portfolio-title-dot" style={{ background: '#34d399', boxShadow: '0 0 10px #34d399' }} />
-            OUR CLIENT CONSOLE (ACTIVE SYSTEM MAINTENANCE)
-          </h2>
-          <div className="webdev-portfolio-list">
-            {CLIENTS.map((client, idx) => (
-              <div key={idx} className="webdev-portfolio-card client">
-                <div className="webdev-portfolio-card-header">
-                  <h3 className="webdev-portfolio-card-title">{client.title}</h3>
-                  <span className="webdev-portfolio-card-meta" style={{ color: '#34d399' }}>{client.meta}</span>
-                </div>
-                <p className="webdev-portfolio-card-desc">{client.desc}</p>
-                <div className="webdev-portfolio-tags">
-                  {client.tags.map((t, i) => (
-                    <span key={i} className="webdev-portfolio-tag">{t}</span>
-                  ))}
-                </div>
+        <div className="webdev-bento-grid">
+          {WORKS.map((work, idx) => (
+            <div key={idx} className="webdev-bento-card interactive" style={{ '--accent': work.accent, '--glow': work.glow, cursor: 'pointer' }} onClick={() => { cinemaAudio.playOrbSelect(); setSelectedService(work.id) }}>
+              <div className="bento-accent-bar" style={{ background: work.accent }} />
+              <div className="bento-num">{work.num}</div>
+              <div className="bento-icon-ring" style={{ borderColor: work.accent + '45', boxShadow: `0 0 22px ${work.glow}` }}>
+                <span className="bento-icon" style={{ color: work.accent }}>{work.icon}</span>
               </div>
-            ))}
-          </div>
+              <div className="bento-meta" style={{ borderColor: work.accent + '40', color: work.accent }}>{work.meta}</div>
+              <h3 className="bento-title">{work.title}</h3>
+              <p className="bento-desc">{work.desc}</p>
+              <div className="bento-tags">
+                {work.tags.map((t, i) => (
+                  <span key={i} className="bento-tag" style={{ borderColor: work.accent + '28', color: 'rgba(255,255,255,0.82)' }}>{t}</span>
+                ))}
+              </div>
+              <div className="bento-cta-hint" style={{ color: work.accent }}>Explore details →</div>
+              <div className="bento-shine" />
+              <div className="bento-glow-orb" style={{ background: work.glow }} />
+            </div>
+          ))}
         </div>
       </section>
 
@@ -1458,12 +1469,12 @@ export default function WebDevStore() {
                 const cartProduct = cart.length === 1
                   ? cart[0].product
                   : {
-                      cartItems,
-                      name: `Cart Bundle (${cart.length} Excel Dashboards)`,
-                      price: getCartTotal(), // rupees for display, server calculates paise
-                      priceDisplay: `₹${getCartTotal().toLocaleString('en-IN')}`,
-                      id: `bundle_${Date.now()}`,
-                    }
+                    cartItems,
+                    name: `Cart Bundle (${cart.length} Excel Dashboards)`,
+                    price: getCartTotal(), // rupees for display, server calculates paise
+                    priceDisplay: `₹${getCartTotal().toLocaleString('en-IN')}`,
+                    id: `bundle_${Date.now()}`,
+                  }
                 setIsCartOpen(false)
                 handleOpenCheckoutModal(cartProduct)
               }}
@@ -1667,9 +1678,14 @@ export default function WebDevStore() {
 
       {/* 10/10 Toast — replaces alert(), respects single-product ZIP */}
       {toast && (
-        <div role="alert" aria-live="assertive" style={{position:'fixed',bottom:'24px',left:'50%',transform:'translateX(-50%)',background: toast.type==='error' ? 'linear-gradient(135deg,#ef4444,#b91c1c)' : 'linear-gradient(135deg,#10b981,#059669)',color:'#fff',padding:'14px 22px',borderRadius:'8px',boxShadow:'0 8px 30px rgba(0,0,0,0.4)',zIndex:10001,fontSize:'13px',fontWeight:600,maxWidth:'90vw',textAlign:'center'}}>
+        <div role="alert" aria-live="assertive" style={{ position: 'fixed', bottom: '24px', left: '50%', transform: 'translateX(-50%)', background: toast.type === 'error' ? 'linear-gradient(135deg,#ef4444,#b91c1c)' : 'linear-gradient(135deg,#10b981,#059669)', color: '#fff', padding: '14px 22px', borderRadius: '8px', boxShadow: '0 8px 30px rgba(0,0,0,0.4)', zIndex: 10001, fontSize: '13px', fontWeight: 600, maxWidth: '90vw', textAlign: 'center' }}>
           {toast.msg}
         </div>
+      )}
+
+      {/* Service Detail Article Modal */}
+      {selectedService && (
+        <ServiceDetail serviceId={selectedService} onClose={() => setSelectedService(null)} />
       )}
     </div>
   )

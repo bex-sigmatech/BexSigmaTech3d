@@ -812,6 +812,78 @@ app.post('/api/webhook', (req, res) => {
   }
 })
 
+/* ── POST: Contact / Submit Idea — forwards to bexsigmatech@gmail.com ── */
+const contactLimiter = rateLimit({
+  windowMs: 60 * 1000,
+  max: 10,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { success: false, error: 'Too many contact requests, please try again later.' }
+})
+
+app.post('/api/contact', contactLimiter, async (req, res) => {
+  try {
+    const { name, email, message, subject, service } = req.body
+    if (!email || !email.includes('@')) {
+      return res.status(400).json({ success: false, error: 'Valid email is required' })
+    }
+    if (!message || !message.trim() || message.trim().length < 10) {
+      return res.status(400).json({ success: false, error: 'Message must be at least 10 characters' })
+    }
+    const safeName = (name && name.trim()) ? name.trim().slice(0, 80) : 'Anonymous'
+    const safeSubject = (subject && subject.trim()) ? subject.trim().slice(0, 120) : `New inquiry via BEX Sigma Tech`
+    const safeService = service ? ` [${String(service).slice(0, 40)}]` : ''
+    const toEmail = process.env.EMAIL_USER || 'bexsigmatech@gmail.com'
+
+    // If transporter not configured, log and simulate success (dev mode)
+    if (!process.env.EMAIL_USER || process.env.EMAIL_USER === 'your_email@gmail.com' || !process.env.EMAIL_PASS) {
+      console.log(`\n[CONTACT SIMULATION] To: ${toEmail}\nFrom: ${safeName} <${email}>\nSubject: ${safeSubject}${safeService}\nMessage: ${message.slice(0, 300)}\n`)
+      return res.json({ success: true, simulated: true, message: 'Contact received (simulation — email not configured)' })
+    }
+
+    const html = `
+      <div style="font-family: Arial, sans-serif; background: #060b13; color: #fff; padding: 24px; border-radius: 10px; max-width: 640px; margin: auto; border: 1px solid rgba(0,212,255,0.15);">
+        <h2 style="color: #00d4ff; margin: 0 0 8px 0;">New Contact / Idea Submission${safeService}</h2>
+        <p style="color: #8899a6; font-size: 13px; margin: 0 0 16px 0;">Received via BEX Sigma Tech website at ${new Date().toISOString()}</p>
+        <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+          <tr><td style="padding: 8px; color: #8899a6; width: 90px;">Name</td><td style="padding: 8px; color: #fff; font-weight: 600;">${safeName}</td></tr>
+          <tr><td style="padding: 8px; color: #8899a6;">Email</td><td style="padding: 8px; color: #38bdf8;"><a href="mailto:${email}" style="color:#38bdf8;">${email}</a></td></tr>
+          <tr><td style="padding: 8px; color: #8899a6;">Service</td><td style="padding: 8px; color: #fff;">${service || 'General'}</td></tr>
+          <tr><td style="padding: 8px; color: #8899a6;">Subject</td><td style="padding: 8px; color: #fff;">${safeSubject}</td></tr>
+        </table>
+        <div style="margin-top: 16px; padding: 16px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px;">
+          <div style="font-size: 12px; letter-spacing: 0.12em; color: rgba(255,255,255,0.5); margin-bottom: 8px; font-weight: 700;">MESSAGE</div>
+          <p style="white-space: pre-wrap; color: #e8eaff; line-height: 1.6; margin: 0;">${message.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</p>
+        </div>
+        <p style="font-size: 12px; color: #64748b; margin-top: 16px;">Reply directly to this email to respond to ${safeName} &lt;${email}&gt;.</p>
+      </div>
+    `
+
+    await transporter.sendMail({
+      from: `"BEX Sigma Tech Website" <${process.env.EMAIL_USER}>`,
+      to: toEmail,
+      replyTo: `"${safeName}" <${email}>`,
+      subject: `${safeSubject}${safeService} — from ${safeName}`,
+      html,
+      text: `Name: ${safeName}\nEmail: ${email}\nService: ${service || 'General'}\nSubject: ${safeSubject}\n\nMessage:\n${message}\n\n---\nReceived via BEX Sigma Tech at ${new Date().toISOString()}`
+    })
+
+    // Optional: confirmation to sender (fire-and-forget, don't fail if it errors)
+    transporter.sendMail({
+      from: `"BEX Sigma Tech" <${process.env.EMAIL_USER}>`,
+      to: email,
+      subject: `We received your idea — BEX Sigma Tech`,
+      html: `<div style="font-family: Arial, sans-serif; background: #060b13; color: #fff; padding: 24px; border-radius: 10px; max-width: 600px; margin: auto;"><h2 style="color: #00d4ff;">Thanks, ${safeName}!</h2><p style="color: #e8eaff; line-height: 1.6;">We received your message for <strong>${service || 'BEX Sigma Tech'}</strong>. Our team will review and reply within 24 hours at <strong>${email}</strong>.</p><div style="margin-top: 16px; padding: 12px; background: rgba(255,255,255,0.04); border-radius: 8px; border: 1px solid rgba(255,255,255,0.08);"><p style="margin: 0; color: #8899a6; font-size: 13px;">Your message:</p><p style="white-space: pre-wrap; color: #fff; margin: 8px 0 0 0;">${message.slice(0, 800).replace(/</g, '&lt;').replace(/>/g, '&gt;')}</p></div><p style="font-size: 12px; color: #64748b; margin-top: 16px;">— BEX Sigma Tech Team<br/>${process.env.EMAIL_USER}</p></div>`
+    }).catch(() => {})
+
+    console.log(`✉️  Contact email sent to ${toEmail} from ${email} (${safeName})`)
+    res.json({ success: true, message: 'Message sent successfully to BEX Sigma Tech' })
+  } catch (err) {
+    console.error('❌ Contact email error:', err.message)
+    res.status(500).json({ success: false, error: 'Failed to send message, please try again later' })
+  }
+})
+
 /* ── Middleware: Admin auth for /api/admin/* ── */
 function requireAdminAuth(req, res, next) {
   const adminKey = process.env.ADMIN_API_KEY

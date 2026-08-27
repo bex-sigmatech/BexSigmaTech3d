@@ -390,7 +390,7 @@ function JarvisCentralCore() {
    MAIN HQ SCENE EXPORT
    ═══════════════════════════════════════════════════════════════ */
 export default function HQScene() {
-  const { userName, openMissionBriefing, graphicsQuality } = useStore()
+  const { userName, openMissionBriefing, graphicsQuality, scene } = useStore()
   const [activeIndex, setActiveIndex] = useState(0)
   const [hoveredIndex, setHoveredIndex] = useState(null)
   const [entryPhase, setEntryPhase] = useState(0)
@@ -403,13 +403,19 @@ export default function HQScene() {
     cinemaAudio.playOrbSelect()
     voiceEmitter.emit('SERVICE_CLICK', { sectorId: dept.id })
     setTimeout(() => {
-      if (dept.id === 'web_dev') {
-        useStore.setState({ scene: 'webdev_store', activeMission: dept })
-      } else {
-        openMissionBriefing(dept)
-      }
+      // All sectors now show article briefing first (web_dev included)
+      // Article CTA will route to store/dashboard via store.startMission()
+      openMissionBriefing(dept)
     }, 900)
   }
+
+  // Reset zoom when returning to headquarters from briefing/dashboard
+  useEffect(() => {
+    if (scene === 'headquarters') {
+      const t = setTimeout(() => setIsZooming(false), 600)
+      return () => clearTimeout(t)
+    }
+  }, [scene])
 
   // Voice Navigation listener
   useEffect(() => {

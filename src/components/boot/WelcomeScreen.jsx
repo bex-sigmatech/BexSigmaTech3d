@@ -10,6 +10,9 @@ export default function WelcomeScreen() {
   const welcomeTriggered = React.useRef(false)
 
   useEffect(() => {
+    // If skipped, jump directly to credential — do not auto-advance
+    if (useStore.getState().isIntroSkipped) return
+
     // Event-driven dispatch
     if (!welcomeTriggered.current) {
       welcomeTriggered.current = true
@@ -20,11 +23,13 @@ export default function WelcomeScreen() {
 
     // 1. Start fading to black as zoom finishes
     const fadeTimer = setTimeout(() => {
+      if (useStore.getState().isIntroSkipped) return
       setBlackout(true)
     }, isMobile ? 1500 : 3000)
 
     // 2. Keep screen blank/black, then transition to AI Core
     const transitionTimer = setTimeout(() => {
+      if (useStore.getState().isIntroSkipped) return
       triggerAICore()
     }, isMobile ? 2200 : 4500)
 

@@ -1,4 +1,4 @@
-import React, { Suspense, lazy, useEffect } from 'react'
+import React, { Suspense, lazy } from 'react'
 import { useStore } from './store/useStore'
 import BootScreen from './components/boot/BootScreen'
 import AccessGranted from './components/boot/AccessGranted'
@@ -8,27 +8,19 @@ import HQScene from './components/headquarters/HQScene'
 import MissionBriefing from './components/mission/MissionBriefing'
 import Dashboard from './components/dashboard/Dashboard'
 import LiveVoiceHUD from './components/ai/LiveVoiceHUD'
-import Homepage from './components/Homepage'
 import './styles/app.css'
 
 const WebDevStore = lazy(() => import('./components/webdev/WebDevStore'))
 
-export default function App({ initialScene }) {
+export default function App() {
   const { scene, skipIntro, bootStarted, isIntroSkipped, navigateToSector, submitIdentity, userName } = useStore()
-
-  // Support deep-link routes: /store, /hq jump directly to that scene
-  useEffect(() => {
-    if (initialScene) {
-      useStore.setState({ scene: initialScene, bootStarted: true, isIntroSkipped: true })
-    }
-  }, [initialScene])
 
   // Expose dynamic context for Gemini Live voice (10/10 per-scene instruction)
   React.useEffect(() => {
     if (typeof window !== 'undefined') {
       window.__BEX_SCENE__ = scene
       window.__BEX_USER__ = userName || ''
-      try { localStorage.setItem('bex_userName', userName || ''); localStorage.setItem('bex_scene', scene) } catch {}
+      try { localStorage.setItem('bex_userName', userName || ''); localStorage.setItem('bex_scene', scene) } catch { }
     }
   }, [scene, userName])
 
@@ -38,9 +30,6 @@ export default function App({ initialScene }) {
 
   return (
     <div className="app-container">
-      {/* ── Homepage Landing — shown before cinematic boot ── */}
-      {scene === 'homepage' && <Homepage />}
-
       {/* ── Real-Time Gemini 2.0 Live Voice HUD — hidden on mobile credential to avoid covering SYNC (user report) ── */}
       {bootStarted && !(typeof window !== 'undefined' && window.innerWidth <= 768 && (scene === 'ai_core' || scene === 'ai_response')) && (
         <LiveVoiceHUD
@@ -71,7 +60,7 @@ export default function App({ initialScene }) {
 
       {/* Scene 9: Web Development Products Store with Cashfree — lazy for 10/10 perf */}
       {scene === 'webdev_store' && (
-        <Suspense fallback={<div style={{color:'#8899a6',fontFamily:'Orbitron',letterSpacing:'0.2em',fontSize:'0.8rem'}}>LOADING SECURE MATRIX...</div>}>
+        <Suspense fallback={<div style={{ color: '#8899a6', fontFamily: 'Orbitron', letterSpacing: '0.2em', fontSize: '0.8rem' }}>LOADING SECURE MATRIX...</div>}>
           <WebDevStore />
         </Suspense>
       )}

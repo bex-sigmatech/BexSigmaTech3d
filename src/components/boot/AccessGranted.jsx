@@ -13,6 +13,12 @@ export default function AccessGranted() {
   const [shuttersOpen, setShuttersOpen] = useState(false)
 
   useEffect(() => {
+    // If already skipped, do not run intro sequence at all
+    const skipCheck = () => {
+      try { return useStore.getState().isIntroSkipped } catch { return false }
+    }
+    if (skipCheck()) return
+
     // Dispatch event-driven ACCESS_GRANTED voice track
     voiceEmitter.emit('ACCESS_GRANTED', { userName })
 
@@ -50,11 +56,13 @@ export default function AccessGranted() {
 
     // Trigger door shutters sliding open at 2.2s
     const shutterTimer = setTimeout(() => {
+      if (skipCheck()) return
       setShuttersOpen(true)
     }, 2200)
 
     // Transition to Welcome screen at 2.8s
     const transitionTimer = setTimeout(() => {
+      if (skipCheck()) return
       triggerWelcome()
     }, 2800)
 

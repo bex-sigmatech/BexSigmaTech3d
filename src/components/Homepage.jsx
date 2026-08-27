@@ -63,7 +63,7 @@ function AgentCore() {
 
   useFrame(({ clock }) => {
     const elapsed = clock.getElapsedTime()
-    
+
     if (coreRef.current) {
       coreRef.current.rotation.y = elapsed * 0.4
       coreRef.current.rotation.x = elapsed * 0.2
@@ -112,10 +112,10 @@ function AgentCore() {
       {/* Geodesic holographic brain/core */}
       <mesh ref={coreRef}>
         <sphereGeometry args={[0.32, 16, 16]} />
-        <meshStandardMaterial 
-          color="#00d4ff" 
-          emissive="#00d4ff" 
-          emissiveIntensity={1.5} 
+        <meshStandardMaterial
+          color="#00d4ff"
+          emissive="#00d4ff"
+          emissiveIntensity={1.5}
           wireframe
         />
       </mesh>
@@ -129,15 +129,15 @@ function AgentCore() {
       {/* Neural Link Particles */}
       <points ref={particleCoreRef}>
         <bufferGeometry>
-          <bufferAttribute 
-            attach="attributes-position" 
-            args={[points, 3]} 
+          <bufferAttribute
+            attach="attributes-position"
+            args={[points, 3]}
           />
         </bufferGeometry>
-        <pointsMaterial 
-          size={0.035} 
-          color="#a855f7" 
-          transparent 
+        <pointsMaterial
+          size={0.035}
+          color="#a855f7"
+          transparent
           opacity={0.8}
         />
       </points>
@@ -145,40 +145,40 @@ function AgentCore() {
       {/* Rotating Ring 1 */}
       <mesh ref={ring1Ref}>
         <torusGeometry args={[0.7, 0.016, 8, 48]} />
-        <meshStandardMaterial 
-          color="#00d4ff" 
-          emissive="#00d4ff" 
-          emissiveIntensity={1.3} 
+        <meshStandardMaterial
+          color="#00d4ff"
+          emissive="#00d4ff"
+          emissiveIntensity={1.3}
         />
       </mesh>
 
       {/* Rotating Ring 2 */}
       <mesh ref={ring2Ref}>
         <torusGeometry args={[0.85, 0.012, 6, 40]} />
-        <meshStandardMaterial 
-          color="#a855f7" 
-          emissive="#a855f7" 
-          emissiveIntensity={1.1} 
+        <meshStandardMaterial
+          color="#a855f7"
+          emissive="#a855f7"
+          emissiveIntensity={1.1}
         />
       </mesh>
 
       {/* Rotating Ring 3 */}
       <mesh ref={ring3Ref}>
         <torusGeometry args={[1.0, 0.009, 4, 32]} />
-        <meshStandardMaterial 
-          color="#ec4899" 
-          emissive="#ec4899" 
-          emissiveIntensity={0.9} 
+        <meshStandardMaterial
+          color="#ec4899"
+          emissive="#ec4899"
+          emissiveIntensity={0.9}
         />
       </mesh>
 
       {/* Core Base Cylinder Grid */}
       <mesh position={[0, -0.65, 0]}>
         <cylinderGeometry args={[0.55, 0.85, 0.22, 32, 1, true]} />
-        <meshStandardMaterial 
-          color="#00d4ff" 
-          emissive="#00d4ff" 
-          emissiveIntensity={0.6} 
+        <meshStandardMaterial
+          color="#00d4ff"
+          emissive="#00d4ff"
+          emissiveIntensity={0.6}
           wireframe
           transparent
           opacity={0.4}
@@ -191,7 +191,7 @@ function AgentCore() {
 /* ─── Jarvis Blue laser links ─── */
 function JarvisRays() {
   const ref = useRef()
-  
+
   useFrame(({ clock }) => {
     if (ref.current) {
       ref.current.rotation.y = clock.getElapsedTime() * 0.4
@@ -202,7 +202,7 @@ function JarvisRays() {
   const points = useMemo(() => {
     const pts = []
     const corePos = new THREE.Vector3(0, 0.5, 0)
-    
+
     // Core anchors to Left/Right HUD screens
     pts.push(corePos, new THREE.Vector3(-2.8, 0.7, 2))
     pts.push(corePos, new THREE.Vector3(2.8, 0.7, 2))
@@ -226,16 +226,16 @@ function JarvisRays() {
     <group ref={ref}>
       <lineSegments>
         <bufferGeometry>
-          <bufferAttribute 
-            attach="attributes-position" 
-            args={[new Float32Array(points.flatMap(p => [p.x, p.y, p.z])), 3]} 
+          <bufferAttribute
+            attach="attributes-position"
+            args={[new Float32Array(points.flatMap(p => [p.x, p.y, p.z])), 3]}
           />
         </bufferGeometry>
-        <lineBasicMaterial 
-          color="#00d4ff" 
-          transparent 
-          opacity={0.25} 
-          blending={THREE.AdditiveBlending} 
+        <lineBasicMaterial
+          color="#00d4ff"
+          transparent
+          opacity={0.25}
+          blending={THREE.AdditiveBlending}
         />
       </lineSegments>
     </group>
@@ -251,7 +251,7 @@ function HologramScreen({ position, rotation, children }) {
         <edgesGeometry args={[new THREE.PlaneGeometry(3.2, 2.2)]} />
         <lineBasicMaterial color="#00d4ff" transparent opacity={0.4} />
       </lineSegments>
-      
+
       {/* HUD background panel */}
       <mesh>
         <planeGeometry args={[3.2, 2.2]} />
@@ -369,10 +369,10 @@ function RightHUD() {
       </div>
       <div className="hud-menu-list">
         {services.map((service, idx) => (
-          <div 
-            key={idx} 
-            className="hud-menu-item" 
-            style={{ 
+          <div
+            key={idx}
+            className="hud-menu-item"
+            style={{
               borderColor: activeIdx === idx ? 'rgba(0, 212, 255, 0.8)' : 'rgba(0, 212, 255, 0.1)',
               background: activeIdx === idx ? 'rgba(0, 212, 255, 0.15)' : 'rgba(0, 212, 255, 0.04)',
               color: activeIdx === idx ? '#fff' : '#00d4ff'
@@ -524,9 +524,9 @@ function SceneContent() {
       <pointLight position={[5, 5, 5]} color="#00d4ff" intensity={2} distance={20} />
       <pointLight position={[-5, 3, -5]} color="#a855f7" intensity={1.5} distance={15} />
       <pointLight position={[0, -2, 3]} color="#ec4899" intensity={1.2} distance={10} />
-      
+
       <CameraRig />
-      
+
       {/* Central Holographic Agent */}
       <AgentCore />
       <JarvisRays />
@@ -627,9 +627,6 @@ function Navbar() {
 
 /* ─── Hero ─── */
 function HeroSection() {
-  const { enterCinematic } = useStore()
-  const scrollTo = (id) => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
-
   return (
     <section className="hero-section" id="hero">
       <motion.div
@@ -649,15 +646,15 @@ function HeroSection() {
         </motion.h1>
 
         <motion.p className="hero-subtitle" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 1 }}>
-          We architect next-generation experiences that push the boundaries of what’s possible with AI, immersive design, and cutting-edge technology.
+          We architect next-generation experiences that push the boundaries of what's possible with AI, immersive design, and cutting-edge technology.
         </motion.p>
 
         <motion.div className="hero-actions" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 1.2 }}>
-          <button className="btn-primary" id="explore-btn" onClick={() => scrollTo('solutions')}>
+          <button className="btn-primary" id="explore-btn">
             <span>Explore Our Work</span>
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M6 10H14M14 10L10 6M14 10L10 14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M6 10H14M14 10L10 6M14 10L10 14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
           </button>
-          <button className="btn-secondary" id="demo-btn" onClick={enterCinematic}>Enter Cinematic Experience ▸▸</button>
+          <button className="btn-secondary" id="demo-btn">Watch Demo</button>
         </motion.div>
 
         <motion.div className="hero-stats" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1, delay: 1.5 }}>
@@ -698,7 +695,7 @@ function SolutionsSection() {
             <p className="solution-desc">{s.desc}</p>
             <div className="solution-link">
               Learn more
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 8H12M12 8L8 4M12 8L8 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 8H12M12 8L8 4M12 8L8 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
             </div>
           </GlassCard>
         ))}
@@ -729,50 +726,19 @@ function TechSection() {
   )
 }
 
-/* ─── About Section ─── */
-function AboutSection() {
-  const values = [
-    { icon: '🛡️', title: 'Security First', desc: 'Post-quantum cryptography and zero-trust architectures built into every layer.' },
-    { icon: '🧠', title: 'AI Native', desc: 'Every product is powered by large language models and autonomous AI agents.' },
-    { icon: '🚀', title: 'Mission Driven', desc: 'We build technology that moves humanity toward a more connected, intelligent future.' },
-    { icon: '⚡', title: 'Zero Latency', desc: 'Engineered for speed — sub-10ms response times across all systems.' },
-  ]
-  return (
-    <section className="section" id="about" style={{ padding: '100px 0', background: 'linear-gradient(180deg, transparent, rgba(0,212,255,0.03) 50%, transparent)' }}>
-      <motion.div className="section-header" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} viewport={{ once: true }}>
-        <span className="section-label">WHO WE ARE</span>
-        <h2 className="section-title">About BEX Sigma Tech</h2>
-        <p className="section-desc" style={{ maxWidth: '640px' }}>
-          Founded in 2024, BEX Sigma Tech is a next-generation technology studio specialising in AI systems, immersive 3D web experiences, and enterprise-grade cloud architecture. We build products that redefine what’s possible.
-        </p>
-      </motion.div>
-      <div className="solutions-grid" style={{ marginTop: '48px' }}>
-        {values.map((v, i) => (
-          <GlassCard key={i} delay={0.1 * i}>
-            <div className="solution-icon">{v.icon}</div>
-            <h3 className="solution-title">{v.title}</h3>
-            <p className="solution-desc">{v.desc}</p>
-          </GlassCard>
-        ))}
-      </div>
-    </section>
-  )
-}
-
 /* ─── CTA ─── */
 function CTASection() {
-  const { enterCinematic } = useStore()
   return (
     <section className="section cta-section" id="contact">
       <motion.div className="cta-content" initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} viewport={{ once: true }}>
         <h2 className="cta-title">Ready to Build the<span className="cta-gradient"> Future</span>?</h2>
-        <p className="cta-desc">Let’s create something extraordinary together. Our team is ready to transform your vision into reality.</p>
+        <p className="cta-desc">Let's create something extraordinary together. Our team is ready to transform your vision into reality.</p>
         <div className="cta-actions">
-          <button className="btn-primary btn-large" id="start-project-btn" onClick={enterCinematic}>
-            <span>Enter the Experience</span>
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M6 10H14M14 10L10 6M14 10L10 14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+          <button className="btn-primary btn-large" id="start-project-btn">
+            <span>Start a Project</span>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M6 10H14M14 10L10 6M14 10L10 14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
           </button>
-          <a href="mailto:contact@bexsigmatech.io" className="btn-secondary btn-large" id="schedule-btn" style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center' }}>Schedule a Call</a>
+          <button className="btn-secondary btn-large" id="schedule-btn">Schedule a Call</button>
         </div>
       </motion.div>
     </section>
@@ -781,7 +747,6 @@ function CTASection() {
 
 /* ─── Footer ─── */
 function Footer() {
-  const scrollTo = (id) => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
   return (
     <footer className="footer">
       <div className="footer-content">
@@ -796,17 +761,17 @@ function Footer() {
         <div className="footer-links-group">
           <div className="footer-column">
             <h4 className="footer-heading">Solutions</h4>
-            <button onClick={() => scrollTo('solutions')} className="footer-link" style={{ background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', padding: 0 }}>AI &amp; ML</button>
-            <button onClick={() => scrollTo('solutions')} className="footer-link" style={{ background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', padding: 0 }}>Web Experiences</button>
-            <button onClick={() => scrollTo('tech')} className="footer-link" style={{ background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', padding: 0 }}>Cloud</button>
-            <button onClick={() => scrollTo('tech')} className="footer-link" style={{ background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', padding: 0 }}>Security</button>
+            <a href="#" className="footer-link">AI &amp; ML</a>
+            <a href="#" className="footer-link">Web Experiences</a>
+            <a href="#" className="footer-link">Cloud</a>
+            <a href="#" className="footer-link">Security</a>
           </div>
           <div className="footer-column">
             <h4 className="footer-heading">Company</h4>
-            <button onClick={() => scrollTo('about')} className="footer-link" style={{ background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', padding: 0 }}>About</button>
-            <button onClick={() => scrollTo('contact')} className="footer-link" style={{ background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', padding: 0 }}>Careers</button>
-            <button onClick={() => scrollTo('contact')} className="footer-link" style={{ background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', padding: 0 }}>Blog</button>
-            <button onClick={() => scrollTo('contact')} className="footer-link" style={{ background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', padding: 0 }}>Contact</button>
+            <a href="#" className="footer-link">About</a>
+            <a href="#" className="footer-link">Careers</a>
+            <a href="#" className="footer-link">Blog</a>
+            <a href="#" className="footer-link">Contact</a>
           </div>
         </div>
       </div>
@@ -830,7 +795,6 @@ export default function Homepage() {
         <HeroSection />
         <SolutionsSection />
         <TechSection />
-        <AboutSection />
         <CTASection />
         <Footer />
       </div>

@@ -376,6 +376,15 @@ export default function AICore() {
   const [inputName, setInputName] = useState('')
   const [robotVisible, setRobotVisible] = useState(isIntroSkipped)
   const [zoomPhase, setZoomPhase] = useState(isIntroSkipped ? 2 : 0)
+
+  // ── Fix SKIP: sync local cinematic state when skip is triggered while AICore is already mounted ──
+  useEffect(() => {
+    if (isIntroSkipped) {
+      setShotPhase(2)
+      setRobotVisible(true)
+      setZoomPhase(2)
+    }
+  }, [isIntroSkipped])
   const [isSpeaking, setIsSpeaking] = useState(false)
   const [isListening, setIsListening] = useState(false)
   const [aiCustomReply, setAiCustomReply] = useState('')

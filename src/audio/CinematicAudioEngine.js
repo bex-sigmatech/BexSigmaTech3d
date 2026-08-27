@@ -20,6 +20,36 @@ class CinematicAudioEngine {
     this._binaryLoopTimer = null
     this._binaryIntensity = 'low'   // 'off' | 'low' | 'medium' | 'high'
     this._currentScene = 'boot'
+    // ── Heat / battery optimization ──
+    this._isMuted = typeof window !== 'undefined' ? localStorage.getItem('bex_audio_muted') === 'true' : false
+    this._isSuspendedByVisibility = false
+    this._visibilityHandlerAttached = false
+    // lighter on mobile / low-power
+    this._isLowPower = typeof window !== 'undefined' && (
+      window.innerWidth <= 768 ||
+      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
+      (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4)
+    )
+  }
+
+  _attachVisibilityHandler() {
+    if (this._visibilityHandlerAttached || typeof document === 'undefined') return
+    this._visibilityHandlerAttached = true
+    document.addEventListener('visibilitychange', () => {
+      if (!this.ctx) return
+      if (document.hidden) {
+        if (this.ctx.state === 'running') {
+          this.ctx.suspend().then(() => { this._isSuspendedByVisibility = true }).catch(() => {})
+        }
+      } else if (this._isSuspendedByVisibility && this.isPlayingScore && !this._isMuted) {
+        this.ctx.resume().catch(() => {})
+        this._isSuspendedByVisibility = false
+      }
+    })
+    // also suspend when page is backgrounded via pagehide
+    window.addEventListener('pagehide', () => {
+      try { this.suspend() } catch {}
+    })
   }
 
   init() {
@@ -28,21 +58,51 @@ class CinematicAudioEngine {
     this.ctx = new AudioCtx()
 
     this.masterGain = this.ctx.createGain()
-    this.masterGain.gain.setValueAtTime(0.5, this.ctx.currentTime)
+    // lower default on low-power to reduce amp heat
+    const defaultGain = this._isMuted ? 0 : (this._isLowPower ? 0.22 : 0.32)
+    this.masterGain.gain.setValueAtTime(defaultGain, this.ctx.currentTime)
     this.masterGain.connect(this.ctx.destination)
+    this._attachVisibilityHandler()
   }
 
   unlock() {
+    if (this._isMuted) return
     this.init()
-    if (this.ctx && this.ctx.state === 'suspended') {
+    if (this.ctx && this.ctx.state === 'suspended' && !document.hidden) {
       this.ctx.resume()
+    }
+  }
+
+  // Public: toggle mute (persists)
+  setMuted(muted) {
+    this._isMuted = !!muted
+    try { localStorage.setItem('bex_audio_muted', String(this._isMuted)) } catch {}
+    if (this._isMuted) {
+      this.suspend()
+    } else {
+      this.init()
+      if (this.ctx && this.ctx.state === 'suspended') this.ctx.resume()
+      if (this.isPlayingScore) this.setAmbientVolume(this._isLowPower ? 0.22 : 0.3, 0.6)
+    }
+    return this._isMuted
+  }
+
+  toggleMute() { return this.setMuted(!this._isMuted) }
+  get isMuted() { return this._isMuted }
+
+  suspend() {
+    this._stopBinaryDataStream()
+    if (this.ctx && this.ctx.state === 'running') {
+      try { this.ctx.suspend() } catch {}
     }
   }
 
   /* ═══════════════════════════════════════════════════════════
      LAYER 1: Deep Sub-Bass Drone — always-on foundation
+     On low-power (mobile) skip this layer — biggest heat saver
      ═══════════════════════════════════════════════════════════ */
   _startSubBass() {
+    if (this._isLowPower) return // skip heavy sub-bass on mobile to reduce heat/CPU
     const now = this.ctx.currentTime
 
     // Very low frequency sine wave (C2 = 65.4Hz)
@@ -57,7 +117,7 @@ class CinematicAudioEngine {
     filter.frequency.setValueAtTime(80, now)
 
     gain.gain.setValueAtTime(0, now)
-    gain.gain.linearRampToValueAtTime(0.18, now + 5)
+    gain.gain.linearRampToValueAtTime(0.10, now + 5) // lowered from 0.18
 
     osc.connect(filter)
     filter.connect(gain)
@@ -73,26 +133,35 @@ class CinematicAudioEngine {
 
   _getBinaryConfig() {
     // Returns timing and density config per intensity level
+    // Low-power doubles interval + halves volume to cut CPU/amp heat
+    const lp = this._isLowPower
     switch (this._binaryIntensity) {
       case 'off':
         return null
       case 'low':
-        return { interval: 2200, burstMin: 1, burstMax: 2, volume: 0.006 }
+        return { interval: lp ? 3800 : 2200, burstMin: 1, burstMax: lp ? 1 : 2, volume: lp ? 0.003 : 0.006 }
       case 'medium':
-        return { interval: 1200, burstMin: 2, burstMax: 4, volume: 0.010 }
+        return { interval: lp ? 2400 : 1200, burstMin: 1, burstMax: lp ? 2 : 4, volume: lp ? 0.005 : 0.010 }
       case 'high':
-        return { interval: 600, burstMin: 3, burstMax: 6, volume: 0.015 }
+        return { interval: lp ? 1400 : 600, burstMin: 2, burstMax: lp ? 3 : 6, volume: lp ? 0.007 : 0.015 }
       default:
-        return { interval: 2200, burstMin: 1, burstMax: 2, volume: 0.006 }
+        return { interval: lp ? 3800 : 2200, burstMin: 1, burstMax: 1, volume: lp ? 0.003 : 0.006 }
     }
   }
 
   _startBinaryDataStream() {
     this._stopBinaryDataStream()
+    if (this._isMuted) return
 
     const loop = () => {
       const config = this._getBinaryConfig()
       if (!config || !this.isPlayingScore || !this.ctx) return
+      if (this._isMuted || document.hidden || this.ctx.state !== 'running') {
+        // reschedule without playing while hidden/muted
+        const retryDelay = 1200
+        this._binaryLoopTimer = setTimeout(loop, retryDelay)
+        return
+      }
 
       // Random burst of binary ticks
       const count = config.burstMin + Math.floor(Math.random() * (config.burstMax - config.burstMin + 1))
@@ -128,7 +197,7 @@ class CinematicAudioEngine {
 
   // Short high-frequency tick (the core "binary" sound)
   _playDataTick(vol = 0.008) {
-    if (!this.ctx) return
+    if (!this.ctx || this._isMuted || document.hidden || this.ctx.state !== 'running') return
     const now = this.ctx.currentTime
 
     const osc = this.ctx.createOscillator()
@@ -154,7 +223,7 @@ class CinematicAudioEngine {
 
   // Ascending frequency chirp (data processing sound)
   _playDataChirp(vol = 0.012) {
-    if (!this.ctx) return
+    if (!this.ctx || this._isMuted || document.hidden || this.ctx.state !== 'running') return
     const now = this.ctx.currentTime
 
     const osc = this.ctx.createOscillator()
@@ -176,7 +245,7 @@ class CinematicAudioEngine {
 
   // Low modem-like processing tone
   _playModemTone(vol = 0.006) {
-    if (!this.ctx) return
+    if (!this.ctx || this._isMuted || document.hidden || this.ctx.state !== 'running') return
     const now = this.ctx.currentTime
 
     const osc = this.ctx.createOscillator()
@@ -202,11 +271,31 @@ class CinematicAudioEngine {
 
   /* ═══════════════════════════════════════════════════════════
      LAYER 3: Atmospheric Pad — thin dark texture
+     Low-power: use single osc, no LFO modulation (LFOs keep Audio thread awake)
      ═══════════════════════════════════════════════════════════ */
   _startAtmosphericPad() {
     const now = this.ctx.currentTime
 
-    // Thin filtered pad using 2 detuned triangle oscillators
+    if (this._isLowPower) {
+      // Lightweight single pad, no LFO
+      const osc = this.ctx.createOscillator()
+      const filter = this.ctx.createBiquadFilter()
+      const gain = this.ctx.createGain()
+      osc.type = 'triangle'
+      osc.frequency.setValueAtTime(110, now)
+      filter.type = 'lowpass'
+      filter.frequency.setValueAtTime(180, now)
+      gain.gain.setValueAtTime(0, now)
+      gain.gain.linearRampToValueAtTime(0.018, now + 6)
+      osc.connect(filter)
+      filter.connect(gain)
+      gain.connect(this.masterGain)
+      osc.start()
+      this.ambientNodes.push({ osc, gain })
+      return
+    }
+
+    // Desktop: thin filtered pad using 2 detuned triangle oscillators
     const freqs = [110, 165] // A2, E3 — dark fifth
     freqs.forEach((freq, idx) => {
       const osc = this.ctx.createOscillator()
@@ -246,8 +335,10 @@ class CinematicAudioEngine {
      ═══════════════════════════════════════════════════════════ */
 
   startCinematicScore() {
+    if (this._isMuted) return
     this.unlock()
     if (!this.ctx || this.isPlayingScore) return
+    if (document.hidden) return // don't start while tab hidden — saves heat
     this.isPlayingScore = true
 
     this._startSubBass()
@@ -280,8 +371,12 @@ class CinematicAudioEngine {
   }
 
   setAmbientVolume(level, duration = 1.5) {
+    if (this._isMuted) level = 0
+    // cap volume on low-power to reduce amp heat
+    if (this._isLowPower && level > 0.35) level = 0.35
     this.unlock()
     if (!this.ctx || !this.masterGain) return
+    if (this.ctx.state === 'suspended') return
     const now = this.ctx.currentTime
     this.masterGain.gain.cancelScheduledValues(now)
     this.masterGain.gain.setValueAtTime(this.masterGain.gain.value, now)
@@ -294,15 +389,19 @@ class CinematicAudioEngine {
     this.ambientNodes.forEach(item => {
       try {
         if (item.gain) {
-          item.gain.gain.linearRampToValueAtTime(0, now + 1)
-          setTimeout(() => item.osc.stop(), 1100)
+          item.gain.gain.linearRampToValueAtTime(0, now + 0.6)
+          setTimeout(() => { try { item.osc.stop() } catch {} }, 700)
         } else {
-          item.osc.stop()
+          try { item.osc.stop() } catch {}
         }
       } catch (e) {}
     })
     this.ambientNodes = []
     this.isPlayingScore = false
+    // suspend context to release hardware / stop CPU wakeups (main heat fix)
+    if (this.ctx && this.ctx.state === 'running') {
+      try { this.ctx.suspend() } catch {}
+    }
   }
 
   /* ═══════════════════════════════════════════════════════════

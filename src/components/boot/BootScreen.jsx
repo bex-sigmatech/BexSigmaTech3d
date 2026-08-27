@@ -12,11 +12,9 @@ export default function BootScreen() {
     startLoading,
     triggerAccessGranted,
     graphicsQuality,
-    setGraphicsQuality,
-    bootStarted
+    setGraphicsQuality
   } = useStore()
-  // If arriving from Homepage CTA, bootStarted is already true — skip the enter button
-  const [started, setStarted] = useState(() => bootStarted)
+  const [started, setStarted] = useState(false)
   const voice25Ref = useRef(false)
   const voice50Ref = useRef(false)
   const voice75Ref = useRef(false)
@@ -27,17 +25,9 @@ export default function BootScreen() {
     useStore.setState({ bootStarted: true })
     unlockAudioContext()
     startLoading()
+    // Event-driven trigger
     voiceEmitter.emit('LOADING_STARTED')
   }
-
-  // Auto-start when arriving from Homepage CTA (bootStarted already set)
-  useEffect(() => {
-    if (bootStarted && !started) {
-      setStarted(true)
-      voiceEmitter.emit('LOADING_STARTED')
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
 
   useEffect(() => {
     if (!started) return
@@ -45,7 +35,15 @@ export default function BootScreen() {
     let current = 0
     let milestone25 = false
     let milestone75 = false
+    let accessTimeout = null
     const interval = setInterval(() => {
+      // If user hit SKIP, abort boot sequencing immediately
+      if (useStore.getState().isIntroSkipped) {
+        clearInterval(interval)
+        if (accessTimeout) clearTimeout(accessTimeout)
+        return
+      }
+
       let increment = 1 + Math.random() * 2.2
       if (current >= 35 && current < 38) increment = 0.4
       if (current >= 75 && current < 78) increment = 0.3
@@ -87,14 +85,18 @@ export default function BootScreen() {
           voice100Ref.current = true
           voiceEmitter.emit('LOADING_COMPLETE')
         }
-        setTimeout(() => {
+        accessTimeout = setTimeout(() => {
+          if (useStore.getState().isIntroSkipped) return
           triggerAccessGranted()
         }, 2500) // 2.5s timeout so the complete voice line plays fully before transition
       }
       setLoadingProgress(Math.min(Math.floor(current), 100))
     }, 45)
 
-    return () => clearInterval(interval)
+    return () => {
+      clearInterval(interval)
+      if (accessTimeout) clearTimeout(accessTimeout)
+    }
   }, [started, setLoadingProgress, triggerAccessGranted])
 
   const [isMobileScreen, setIsMobileScreen] = useState(() => typeof window !== 'undefined' && window.innerWidth <= 768)
