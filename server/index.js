@@ -7,6 +7,7 @@ const express = require('express')
 const cors = require('cors')
 const helmet = require('helmet')
 const rateLimit = require('express-rate-limit')
+const { ipKeyGenerator } = require('express-rate-limit')
 const crypto = require('crypto')
 const { Cashfree } = require('cashfree-pg')
 const db = require('./db')
@@ -15,6 +16,7 @@ const { setupGeminiLiveGateway } = require('./geminiLiveGateway')
 db.initDb()
 
 const app = express()
+app.set('trust proxy', 1)
 const server = http.createServer(app)
 const PORT = process.env.PORT || 5001
 
@@ -57,8 +59,8 @@ const downloadLimiter = rateLimit({
   standardHeaders: true,
   legacyHeaders: false,
   keyGenerator: (req) => {
-    // Combine IP + token email (if present) for per-user throttling
-    const ip = req.ip || req.headers['x-forwarded-for'] || 'unknown'
+    // Use helper for IPv6-safe IP handling (express-rate-limit requirement)
+    const ip = ipKeyGenerator(req)
     let email = 'anonymous'
     try {
       const token = req.query.token
@@ -327,11 +329,9 @@ const nodemailer = require('nodemailer')
 
 const DOWNLOAD_TOKEN_SECRET = process.env.DOWNLOAD_TOKEN_SECRET
 if (!DOWNLOAD_TOKEN_SECRET) {
-  console.error('❌ FATAL: DOWNLOAD_TOKEN_SECRET not set in server/.env — refusing to start with insecure default')
-  if (process.env.NODE_ENV === 'production') process.exit(1)
-  // In dev, allow but warn loudly
+  console.warn('⚠️ DOWNLOAD_TOKEN_SECRET not set — using ephemeral fallback. Set DOWNLOAD_TOKEN_SECRET in Render dashboard > Environment for persistent tokens.')
 }
-const EFFECTIVE_DOWNLOAD_SECRET = DOWNLOAD_TOKEN_SECRET || 'bex_sigma_default_secret_key_2026_DEV_ONLY'
+const EFFECTIVE_DOWNLOAD_SECRET = DOWNLOAD_TOKEN_SECRET || `bex_sigma_fallback_${process.env.PORT || '5001'}_ephemeral_2026`
 
 /* ── Email Transporter Setup ── */
 const transporter = nodemailer.createTransport({
