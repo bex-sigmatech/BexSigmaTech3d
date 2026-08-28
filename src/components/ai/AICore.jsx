@@ -506,7 +506,7 @@ export default function AICore() {
           : 'https://bexsigmatech3d.onrender.com')
 
       const controller = new AbortController()
-      const timeoutId = setTimeout(() => controller.abort(), 3000)
+      const timeoutId = setTimeout(() => controller.abort(), 12000)
 
       const res = await fetch(`${backendUrl}/api/ai/chat`, {
         method: 'POST',

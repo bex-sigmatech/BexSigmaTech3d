@@ -963,26 +963,41 @@ app.post('/api/ai/chat', async (req, res) => {
     let modelUsed = 'Gemini 2.5 Flash'
 
     if (apiKey && apiKey !== 'your_gemini_api_key_here') {
-      try {
-        const response = await fetch(
-          `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`,
-          {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              contents: [{
-                parts: [{
-                  text: `You are the BEX SIGMA TECH AI Core, a futuristic, ultra-intelligent sci-fi AI assistant for a high-tech software and analytics firm. Respond concisely (2-3 sentences max) with a high-tech, futuristic tone to user ${operator}: "${prompt || 'System status check'}"`
+      // Try primary model first, fallback to secondary if deprecated/unavailable (10/10 resilience)
+      const GEMINI_MODELS = ['gemini-3-flash-preview', 'gemini-3.6-flash', 'gemini-3.1-flash-lite']
+      for (const model of GEMINI_MODELS) {
+        try {
+          const response = await fetch(
+            `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`,
+            {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                contents: [{
+                  parts: [{
+                    text: `You are the BEX SIGMA TECH AI Core, a futuristic, ultra-intelligent sci-fi AI assistant for a high-tech software and analytics firm. Respond concisely (2-3 sentences max) with a high-tech, futuristic tone to user ${operator}: "${prompt || 'System status check'}"`
+                  }]
                 }]
-              }]
-            })
+              })
+            }
+          )
+          const data = await response.json()
+          if (data?.candidates?.[0]?.content?.parts?.[0]?.text) {
+            replyText = data.candidates[0].content.parts[0].text
+            modelUsed = `${model} (Gemini)`
+            break
+          } else if (data?.error) {
+            console.warn(`⚠️ Gemini ${model} error ${data.error.code}: ${data.error.message} — trying next fallback`)
+            // 404 deprecated → try next model, 5xx → try next, otherwise break to fallback logic
+            if (data.error.code === 404 || data.error.code === 503) continue
+            else break
           }
-        )
-        const data = await response.json()
-        replyText = data?.candidates?.[0]?.content?.parts?.[0]?.text
-      } catch (geminiErr) {
-        console.warn('⚠️ Gemini API call failed, using intelligent fallback:', geminiErr.message)
+        } catch (geminiErr) {
+          console.warn(`⚠️ Gemini ${model} call failed:`, geminiErr.message)
+          continue
+        }
       }
+      if (!replyText) console.warn('⚠️ All Gemini models failed, using intelligent fallback')
     }
 
     // Contextual fallback when API key is missing or call fails — 10/10 coverage (services, pricing, navigation, what do)
