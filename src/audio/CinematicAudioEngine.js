@@ -98,94 +98,24 @@ class CinematicAudioEngine {
   }
 
   /* ═══════════════════════════════════════════════════════════
-     LAYER 1: Deep Sub-Bass Drone — always-on foundation
-     On low-power (mobile) skip this layer — biggest heat saver
+     LAYER 1: Sub-Bass Drone (Disabled per user request)
      ═══════════════════════════════════════════════════════════ */
   _startSubBass() {
-    if (this._isLowPower) return // skip heavy sub-bass on mobile to reduce heat/CPU
-    const now = this.ctx.currentTime
-
-    // Very low frequency sine wave (C2 = 65.4Hz)
-    const osc = this.ctx.createOscillator()
-    const filter = this.ctx.createBiquadFilter()
-    const gain = this.ctx.createGain()
-
-    osc.type = 'sine'
-    osc.frequency.setValueAtTime(55, now)
-
-    filter.type = 'lowpass'
-    filter.frequency.setValueAtTime(80, now)
-
-    gain.gain.setValueAtTime(0, now)
-    gain.gain.linearRampToValueAtTime(0.10, now + 5) // lowered from 0.18
-
-    osc.connect(filter)
-    filter.connect(gain)
-    gain.connect(this.masterGain)
-    osc.start()
-    this.ambientNodes.push({ osc, gain })
+    // Disabled: background vacuum/drone sound removed
+    return
   }
 
   /* ═══════════════════════════════════════════════════════════
-     LAYER 2: Binary Data Stream — sci-fi beeps, ticks, chirps
-     Intensity changes per scene for contextual audio.
+     LAYER 2: Binary Data Stream (Disabled per user request)
      ═══════════════════════════════════════════════════════════ */
-
   _getBinaryConfig() {
-    // Returns timing and density config per intensity level
-    // Low-power doubles interval + halves volume to cut CPU/amp heat
-    const lp = this._isLowPower
-    switch (this._binaryIntensity) {
-      case 'off':
-        return null
-      case 'low':
-        return { interval: lp ? 3800 : 2200, burstMin: 1, burstMax: lp ? 1 : 2, volume: lp ? 0.003 : 0.006 }
-      case 'medium':
-        return { interval: lp ? 2400 : 1200, burstMin: 1, burstMax: lp ? 2 : 4, volume: lp ? 0.005 : 0.010 }
-      case 'high':
-        return { interval: lp ? 1400 : 600, burstMin: 2, burstMax: lp ? 3 : 6, volume: lp ? 0.007 : 0.015 }
-      default:
-        return { interval: lp ? 3800 : 2200, burstMin: 1, burstMax: 1, volume: lp ? 0.003 : 0.006 }
-    }
+    return null
   }
 
   _startBinaryDataStream() {
+    // Disabled: background droplet/chirp sounds removed
     this._stopBinaryDataStream()
-    if (this._isMuted) return
-
-    const loop = () => {
-      const config = this._getBinaryConfig()
-      if (!config || !this.isPlayingScore || !this.ctx) return
-      if (this._isMuted || document.hidden || this.ctx.state !== 'running') {
-        // reschedule without playing while hidden/muted
-        const retryDelay = 1200
-        this._binaryLoopTimer = setTimeout(loop, retryDelay)
-        return
-      }
-
-      // Random burst of binary ticks
-      const count = config.burstMin + Math.floor(Math.random() * (config.burstMax - config.burstMin + 1))
-      for (let i = 0; i < count; i++) {
-        setTimeout(() => this._playDataTick(config.volume), i * (40 + Math.random() * 60))
-      }
-
-      // Occasional data chirp (ascending beep)
-      if (Math.random() > 0.65) {
-        setTimeout(() => this._playDataChirp(config.volume * 1.5), count * 80 + Math.random() * 200)
-      }
-
-      // Occasional low modem-like tone
-      if (Math.random() > 0.82) {
-        setTimeout(() => this._playModemTone(config.volume * 0.8), Math.random() * 400)
-      }
-
-      // Schedule next burst
-      const jitter = config.interval * 0.3
-      const nextDelay = config.interval + (Math.random() * jitter * 2 - jitter)
-      this._binaryLoopTimer = setTimeout(loop, nextDelay)
-    }
-
-    this._binaryLoopTimer = setTimeout(loop, 800)
+    return
   }
 
   _stopBinaryDataStream() {
@@ -195,139 +125,27 @@ class CinematicAudioEngine {
     }
   }
 
-  // Short high-frequency tick (the core "binary" sound)
+  // Short high-frequency tick (used for discrete user feedback)
   _playDataTick(vol = 0.008) {
-    if (!this.ctx || this._isMuted || document.hidden || this.ctx.state !== 'running') return
-    const now = this.ctx.currentTime
-
-    const osc = this.ctx.createOscillator()
-    const filter = this.ctx.createBiquadFilter()
-    const gain = this.ctx.createGain()
-
-    osc.type = 'square'
-    const baseFreq = 2400 + Math.random() * 2000
-    osc.frequency.setValueAtTime(baseFreq, now)
-
-    filter.type = 'highpass'
-    filter.frequency.setValueAtTime(3500, now)
-
-    gain.gain.setValueAtTime(vol, now)
-    gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.018)
-
-    osc.connect(filter)
-    filter.connect(gain)
-    gain.connect(this.masterGain)
-    osc.start()
-    osc.stop(now + 0.025)
+    return
   }
 
-  // Ascending frequency chirp (data processing sound)
+  // Ascending frequency chirp (droplet sound disabled)
   _playDataChirp(vol = 0.012) {
-    if (!this.ctx || this._isMuted || document.hidden || this.ctx.state !== 'running') return
-    const now = this.ctx.currentTime
-
-    const osc = this.ctx.createOscillator()
-    const gain = this.ctx.createGain()
-
-    osc.type = 'sine'
-    const startFreq = 800 + Math.random() * 600
-    osc.frequency.setValueAtTime(startFreq, now)
-    osc.frequency.exponentialRampToValueAtTime(startFreq * (1.8 + Math.random()), now + 0.06)
-
-    gain.gain.setValueAtTime(vol, now)
-    gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.08)
-
-    osc.connect(gain)
-    gain.connect(this.masterGain)
-    osc.start()
-    osc.stop(now + 0.1)
+    return
   }
 
-  // Low modem-like processing tone
+  // Low modem-like processing tone (disabled)
   _playModemTone(vol = 0.006) {
-    if (!this.ctx || this._isMuted || document.hidden || this.ctx.state !== 'running') return
-    const now = this.ctx.currentTime
-
-    const osc = this.ctx.createOscillator()
-    const filter = this.ctx.createBiquadFilter()
-    const gain = this.ctx.createGain()
-
-    osc.type = 'sawtooth'
-    osc.frequency.setValueAtTime(180 + Math.random() * 120, now)
-
-    filter.type = 'bandpass'
-    filter.frequency.setValueAtTime(400, now)
-    filter.Q.setValueAtTime(6, now)
-
-    gain.gain.setValueAtTime(vol, now)
-    gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.15)
-
-    osc.connect(filter)
-    filter.connect(gain)
-    gain.connect(this.masterGain)
-    osc.start()
-    osc.stop(now + 0.18)
+    return
   }
 
   /* ═══════════════════════════════════════════════════════════
-     LAYER 3: Atmospheric Pad — thin dark texture
-     Low-power: use single osc, no LFO modulation (LFOs keep Audio thread awake)
+     LAYER 3: Atmospheric Pad (Disabled per user request)
      ═══════════════════════════════════════════════════════════ */
   _startAtmosphericPad() {
-    const now = this.ctx.currentTime
-
-    if (this._isLowPower) {
-      // Lightweight single pad, no LFO
-      const osc = this.ctx.createOscillator()
-      const filter = this.ctx.createBiquadFilter()
-      const gain = this.ctx.createGain()
-      osc.type = 'triangle'
-      osc.frequency.setValueAtTime(110, now)
-      filter.type = 'lowpass'
-      filter.frequency.setValueAtTime(180, now)
-      gain.gain.setValueAtTime(0, now)
-      gain.gain.linearRampToValueAtTime(0.018, now + 6)
-      osc.connect(filter)
-      filter.connect(gain)
-      gain.connect(this.masterGain)
-      osc.start()
-      this.ambientNodes.push({ osc, gain })
-      return
-    }
-
-    // Desktop: thin filtered pad using 2 detuned triangle oscillators
-    const freqs = [110, 165] // A2, E3 — dark fifth
-    freqs.forEach((freq, idx) => {
-      const osc = this.ctx.createOscillator()
-      const filter = this.ctx.createBiquadFilter()
-      const gain = this.ctx.createGain()
-
-      osc.type = 'triangle'
-      osc.frequency.setValueAtTime(freq, now)
-      osc.detune.setValueAtTime(idx * 3, now)
-
-      filter.type = 'lowpass'
-      filter.frequency.setValueAtTime(200, now)
-
-      // Slow breathing LFO
-      const lfo = this.ctx.createOscillator()
-      const lfoGain = this.ctx.createGain()
-      lfo.frequency.value = 0.08 + idx * 0.04
-      lfoGain.gain.value = 60
-      lfo.connect(lfoGain)
-      lfoGain.connect(filter.frequency)
-      lfo.start()
-      this.ambientNodes.push({ osc: lfo })
-
-      gain.gain.setValueAtTime(0, now)
-      gain.gain.linearRampToValueAtTime(0.035, now + 6 + idx * 2)
-
-      osc.connect(filter)
-      filter.connect(gain)
-      gain.connect(this.masterGain)
-      osc.start()
-      this.ambientNodes.push({ osc, gain })
-    })
+    // Disabled: background vacuum/pad sound removed
+    return
   }
 
   /* ═══════════════════════════════════════════════════════════
@@ -338,12 +156,8 @@ class CinematicAudioEngine {
     if (this._isMuted) return
     this.unlock()
     if (!this.ctx || this.isPlayingScore) return
-    if (document.hidden) return // don't start while tab hidden — saves heat
+    if (document.hidden) return
     this.isPlayingScore = true
-
-    this._startSubBass()
-    this._startAtmosphericPad()
-    this._startBinaryDataStream()
   }
 
   // Change binary data intensity based on what's happening on screen
@@ -540,152 +354,22 @@ class CinematicAudioEngine {
      (plays while AI voice is speaking)
      ═══════════════════════════════════════════════════════════ */
   startRadioTransmissionHum() {
-    this.unlock()
-    if (!this.ctx) return
-    if (this.radioGainNode) return
-
-    const now = this.ctx.currentTime
-    this.radioGainNode = this.ctx.createGain()
-    this.radioGainNode.gain.setValueAtTime(0, now)
-    this.radioGainNode.gain.linearRampToValueAtTime(0.032, now + 0.04)
-    this.radioGainNode.connect(this.masterGain)
-
-    // Dual carrier oscillations for metallic modular hum
-    this.radioOsc1 = this.ctx.createOscillator()
-    this.radioOsc1.type = 'sine'
-    this.radioOsc1.frequency.setValueAtTime(90, now)
-
-    this.radioOsc2 = this.ctx.createOscillator()
-    this.radioOsc2.type = 'triangle'
-    this.radioOsc2.frequency.setValueAtTime(320, now)
-
-    const filter = this.ctx.createBiquadFilter()
-    filter.type = 'bandpass'
-    filter.frequency.setValueAtTime(380, now)
-    filter.Q.setValueAtTime(3, now)
-
-    this.radioOsc1.connect(filter)
-    this.radioOsc2.connect(filter)
-    filter.connect(this.radioGainNode)
-
-    this.radioOsc1.start()
-    this.radioOsc2.start()
+    // Disabled: carrier hum removed
+    return
   }
 
   stopRadioTransmissionHum() {
-    if (!this.ctx || !this.radioGainNode) return
-    const now = this.ctx.currentTime
-    try {
-      this.radioGainNode.gain.cancelScheduledValues(now)
-      this.radioGainNode.gain.setValueAtTime(this.radioGainNode.gain.value, now)
-      this.radioGainNode.gain.exponentialRampToValueAtTime(0.0001, now + 0.12)
-      
-      const osc1 = this.radioOsc1
-      const osc2 = this.radioOsc2
-      setTimeout(() => {
-        try {
-          osc1.stop()
-          osc2.stop()
-        } catch (e) {}
-      }, 150)
-    } catch (e) {}
-
-    this.radioGainNode = null
-    this.radioOsc1 = null
-    this.radioOsc2 = null
+    return
   }
 
-  // Real-time synthesized walkie-talkie / radio squelch-in chime
+  // Real-time synthesized walkie-talkie / radio squelch-in chime (disabled)
   playRadioSquelchIn() {
-    this.unlock()
-    if (!this.ctx) return
-    const now = this.ctx.currentTime
-
-    // 80ms bandpass filtered white noise burst
-    const bufferSize = this.ctx.sampleRate * 0.08
-    const buffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate)
-    const data = buffer.getChannelData(0)
-    for (let i = 0; i < bufferSize; i++) {
-      data[i] = Math.random() * 2 - 1
-    }
-
-    const noise = this.ctx.createBufferSource()
-    noise.buffer = buffer
-
-    const noiseFilter = this.ctx.createBiquadFilter()
-    noiseFilter.type = 'bandpass'
-    noiseFilter.frequency.setValueAtTime(1000, now)
-    noiseFilter.Q.setValueAtTime(4, now)
-
-    const noiseGain = this.ctx.createGain()
-    noiseGain.gain.setValueAtTime(0.05, now)
-    noiseGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.075)
-
-    noise.connect(noiseFilter)
-    noiseFilter.connect(noiseGain)
-    noiseGain.connect(this.masterGain)
-    noise.start()
-
-    // Radio pop sweep (low frequency chime click)
-    const osc = this.ctx.createOscillator()
-    const oscGain = this.ctx.createGain()
-    osc.type = 'sine'
-    osc.frequency.setValueAtTime(1200, now)
-    osc.frequency.exponentialRampToValueAtTime(400, now + 0.04)
-
-    oscGain.gain.setValueAtTime(0.03, now)
-    oscGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.045)
-
-    osc.connect(oscGain)
-    oscGain.connect(this.masterGain)
-    osc.start()
-    osc.stop(now + 0.05)
+    return
   }
 
-  // Real-time synthesized radio click-out chime
+  // Real-time synthesized radio click-out chime (disabled)
   playRadioSquelchOut() {
-    this.unlock()
-    if (!this.ctx) return
-    const now = this.ctx.currentTime
-
-    // 50ms triangle pop sweep up
-    const osc = this.ctx.createOscillator()
-    const oscGain = this.ctx.createGain()
-    osc.type = 'triangle'
-    osc.frequency.setValueAtTime(300, now)
-    osc.frequency.exponentialRampToValueAtTime(900, now + 0.05)
-
-    oscGain.gain.setValueAtTime(0.02, now)
-    oscGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.055)
-
-    osc.connect(oscGain)
-    oscGain.connect(this.masterGain)
-    osc.start()
-    osc.stop(now + 0.06)
-
-    // Short static discharge (40ms)
-    const bufferSize = this.ctx.sampleRate * 0.04
-    const buffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate)
-    const data = buffer.getChannelData(0)
-    for (let i = 0; i < bufferSize; i++) {
-      data[i] = Math.random() * 2 - 1
-    }
-
-    const noise = this.ctx.createBufferSource()
-    noise.buffer = buffer
-
-    const noiseFilter = this.ctx.createBiquadFilter()
-    noiseFilter.type = 'highpass'
-    noiseFilter.frequency.setValueAtTime(2200, now)
-
-    const noiseGain = this.ctx.createGain()
-    noiseGain.gain.setValueAtTime(0.03, now)
-    noiseGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.038)
-
-    noise.connect(noiseFilter)
-    noiseFilter.connect(noiseGain)
-    noiseGain.connect(this.masterGain)
-    noise.start()
+    return
   }
 }
 

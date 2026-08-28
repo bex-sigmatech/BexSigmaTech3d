@@ -1,7 +1,7 @@
 /* ==========================================================================
    BEX SIGMA TECH — SECTOR ARTICLES
    Basic general article details for each orbital department / sector.
-   Used by MissionBriefing to render full detail view before MAINFRAME.
+   Used by MissionControl and MissionBriefing.
    ========================================================================== */
 
 export const SECTOR_ARTICLES = {
@@ -43,6 +43,44 @@ export const SECTOR_ARTICLES = {
     tech: ['Spatial Web', 'Zero-Latency Core', 'React Advanced'],
   },
 
+  cloud: {
+    id: 'cloud',
+    title: 'Autonomous Applications',
+    subtitle: 'Autonomous Application Matrix · Mobile & Desktop Software',
+    badge: 'APP MATRIX',
+    overview: `Autonomous Applications at BEX Sigma Tech engineers native mobile apps, cross-platform mobile apps (iOS & Android), progressive web applications, and enterprise software. Explore our production-ready products Future Path and Track Me, or architect custom software in our engineering lab.`,
+    services: [
+      { title: 'iOS & Android Mobile Apps', desc: 'Native and cross-platform mobile applications built with React Native and Flutter for high performance.' },
+      { title: 'Custom SaaS & Web Apps', desc: 'Scalable subscription software, administrative dashboards, and internal business tools.' },
+      { title: 'Desktop & Progressive Web Apps', desc: 'High-speed desktop and offline-capable PWAs that run smoothly on every operating system.' },
+      { title: 'API Integration & Backend Scale', desc: 'Secure REST/GraphQL backends, real-time sync, and scalable cloud database architectures.' },
+    ],
+    benefits: ['Smooth 60 FPS Native Performance', 'Cross-Platform Code Reusability', 'Secure Offline & Real-Time Sync', 'App Store & Play Store Deployment Ready'],
+    process: ['1. Architecture & UX Wireframes', '2. UI Design & Interactive Prototype', '3. Development & API Integration', '4. Store Submission & Support'],
+    stats: [{ value: '60fps', label: 'Performance' }, { value: 'iOS/Android', label: 'Cross-Platform' }, { value: '99.9%', label: 'Stability' }],
+    whyChoose: 'We build applications that users love and businesses rely on. From early-stage MVP apps to enterprise multi-tenant software, our engineering guarantees speed, stability, and scale.',
+    tech: ['React Native', 'Flutter', 'iOS & Android', 'SaaS Architecture', 'Cloud APIs', 'Real-Time Sync'],
+  },
+
+  client_projects: {
+    id: 'client_projects',
+    title: 'Our Client Projects',
+    subtitle: 'Proven Case Studies, Enterprise Deployments & Client Success',
+    badge: 'CLIENT SUCCESS',
+    overview: `Explore real-world client success stories architected and deployed by BEX Sigma Tech. From custom enterprise web platforms and high-conversion e-commerce systems to AI agent workflow automations and cloud infrastructure migrations, our client projects demonstrate our commitment to delivering tangible business value, rapid turnarounds, and exceptional digital experiences.`,
+    services: [
+      { title: 'Enterprise Web & 3D Platforms', desc: 'Custom high-performance web applications and immersive 3D spatial showcases delivered for global clients.' },
+      { title: 'AI Automation & Workflow Systems', desc: 'Autonomous AI agents, automated summary generators, and intelligent CRM integrations that save client teams 20+ hours weekly.' },
+      { title: 'E-Commerce & High-Volume Portals', desc: 'Scalable e-commerce stores and customer portals featuring seamless payment gateways, live inventory, and multi-currency billing.' },
+      { title: 'Cloud Modernization & Security', desc: 'Zero-downtime cloud migrations and post-quantum security hardening engineered for mission-critical client infrastructure.' },
+    ],
+    benefits: ['100% On-Time Delivery Track Record', 'Transparent Milestones & Live Staging Previews', 'Post-Launch Support, Maintenance & Optimization', 'Scalable Codebases Engineered for Long-Term Growth'],
+    process: ['1. Discovery & Goal Alignment', '2. Rapid Prototyping & Architecture', '3. Agile Development & Testing', '4. Live Deployment & Support'],
+    stats: [{ value: '50+', label: 'Delivered' }, { value: '99.8%', label: 'Satisfaction' }, { value: 'Zero', label: 'Downtime' }],
+    whyChoose: 'Every project we build is measured by business impact. We partner closely with founders and enterprise leaders to transform complex challenges into elegant, reliable, and high-ROI digital solutions.',
+    tech: ['Full-Stack Web', '3D WebGL', 'AI Agents', 'Cloud Systems', 'Custom APIs', 'Payment Gateways'],
+  },
+
   ai_auto: {
     id: 'ai_auto',
     title: 'AI Automation',
@@ -61,139 +99,7 @@ export const SECTOR_ARTICLES = {
     whyChoose: 'We build practical AI — not hype. Every agent is tied to a measurable outcome: hours saved, tickets closed, or revenue recovered, with human oversight always in control.',
     tech: ['Agentic Cognitive AI', 'Neural Synthesis', 'LLM Automation'],
   },
-
-  cloud: {
-    id: 'cloud',
-    title: 'Cloud Systems',
-    subtitle: 'Orbital Distributed Quantum Cloud',
-    badge: 'CLOUD DIVISION',
-    overview: `Cloud Systems provides reliable hosting, storage and infrastructure for your applications and data. We migrate you to the cloud, keep systems online with high availability, and ensure backups and scaling are automatic. Whether you are starting fresh or modernizing legacy servers, you get a secure, cost-efficient foundation that grows with your business.`,
-    services: [
-      { title: 'Cloud Migration', desc: 'Move servers, databases and apps to AWS, Azure or GCP with zero-downtime planning.' },
-      { title: 'Managed Hosting', desc: 'Fully managed environments with monitoring, patches and backups handled for you.' },
-      { title: 'Auto-Scaling & Backups', desc: 'Resources scale with traffic and data is backed up continuously.' },
-      { title: 'DevOps & CI/CD', desc: 'Faster, safer deployments with automated testing and release pipelines.' },
-    ],
-    benefits: ['Pay only for what you use', 'Automatic scaling and backup', 'High uptime with distributed architecture', 'Enterprise-grade security by default'],
-    process: ['1. Audit current infrastructure', '2. Plan migration & architecture', '3. Migrate & validate', '4. Optimize cost and performance'],
-    stats: [{ value: '99.95%', label: 'Uptime SLA' }, { value: '50%', label: 'Cost Saving' }, { value: 'Auto', label: 'Scaling' }],
-    whyChoose: 'We design cloud that just works — secure, affordable and invisible when it should be. Your team ships faster, your customers experience no downtime, and you keep control of costs.',
-    tech: ['Orbital Cloud Mesh', 'Quantum Compute', 'Zero-Downtime Edge'],
-  },
-
-  cyber: {
-    id: 'cyber',
-    title: 'Cyber Security',
-    subtitle: 'Post-Quantum Cryptographic Defense Grid',
-    badge: 'SECURITY DIVISION',
-    overview: `Cyber Security protects your data, customers and reputation. We audit your systems, fix vulnerabilities, and put continuous protection in place — from firewalls and encryption to employee awareness. In a world where a single breach can cost everything, we make security simple, proactive and always on.`,
-    services: [
-      { title: 'Security Audits', desc: 'Comprehensive assessment of apps, networks and processes to find gaps before attackers do.' },
-      { title: 'Threat Monitoring', desc: '24/7 detection and response for intrusions, malware and data leaks.' },
-      { title: 'Data Protection', desc: 'Encryption, access controls and backups so sensitive data stays private and recoverable.' },
-      { title: 'Compliance Support', desc: 'Help meeting GDPR, SOC2, ISO and industry-specific requirements.' },
-    ],
-    benefits: ['Reduced breach risk and downtime', 'Customer trust through proven protection', 'Compliance readiness for audits', 'Rapid incident response when needed'],
-    process: ['1. Scan & assess threats', '2. Patch & harden systems', '3. Deploy monitoring', '4. Train team & run drills'],
-    stats: [{ value: '24/7', label: 'Threat Watch' }, { value: 'Zero', label: 'Trust Shortcuts' }, { value: '100%', label: 'Encrypted' }],
-    whyChoose: 'Security is not a product — it is a practice. We make it practical: clear reports, prioritized fixes and ongoing vigilance without slowing your business down.',
-    tech: ['Post-Quantum Armor', 'Zero-Trust Matrix', 'AI Intrusion Sentinel'],
-  },
-
-  analytics: {
-    id: 'analytics',
-    title: 'Analytics',
-    subtitle: 'Planetary Intelligence & Real-Time Data Engine',
-    badge: 'DATA DIVISION',
-    overview: `Analytics turns scattered data into clear decisions. We connect your sources — sales, marketing, finance, operations — and present them in live dashboards and predictive models. Leaders see what is happening, why it is happening, and what is likely to happen next, all without wrestling spreadsheets.`,
-    services: [
-      { title: 'Business Intelligence Dashboards', desc: 'Live, interactive dashboards for KPI, revenue, funnel and operational metrics.' },
-      { title: 'Data Integration', desc: 'Unify data from CRM, ERP, ads and sheets into one reliable layer.' },
-      { title: 'Predictive Modeling', desc: 'Forecast sales, demand and churn with explainable models.' },
-      { title: 'Automated Reporting', desc: 'Scheduled reports that send themselves — no manual compilation.' },
-    ],
-    benefits: ['Decisions based on facts, not guesses', 'Hours saved on manual reporting', 'Early warnings on trends and anomalies', 'Clear ROI on every campaign and product'],
-    process: ['1. Connect data sources', '2. Clean & model data', '3. Build dashboards', '4. Train team & automate alerts'],
-    stats: [{ value: '10x', label: 'Faster Insights' }, { value: '50+', label: 'Connectors' }, { value: 'Live', label: 'Dashboards' }],
-    whyChoose: 'We make data usable for everyone — not just analysts. Clean visuals, plain-English insights and automation mean you spend time acting on data, not preparing it.',
-    tech: ['Real-Time Telemetry', 'Predictive Synthesis', '8K Spatial Data'],
-  },
-
-  ui_ux: {
-    id: 'ui_ux',
-    title: 'UI / UX Design',
-    subtitle: 'Spatial Industrial Design & Holographic UX',
-    badge: 'DESIGN DIVISION',
-    overview: `Great design is good business. Our UI/UX team crafts interfaces that are beautiful, intuitive and accessible. We research how people actually use your product, prototype quickly, and deliver designs that developers love to build and users love to use — on web, mobile and spatial platforms.`,
-    services: [
-      { title: 'User Research & Flows', desc: 'Understand real user needs through interviews, journeys and usability testing.' },
-      { title: 'Interface Design', desc: 'High-fidelity screens that balance aesthetics, performance and accessibility.' },
-      { title: 'Prototyping & Testing', desc: 'Clickable prototypes validated with users before a line of code is written.' },
-      { title: 'Design Systems', desc: 'Reusable components and guidelines that keep your product consistent as you scale.' },
-    ],
-    benefits: ['Higher conversion and retention', 'Reduced development rework', 'Inclusive, accessible experiences', 'Strong, memorable brand impression'],
-    process: ['1. Discover & research', '2. Sketch & prototype', '3. Test & refine', '4. Handoff & scale'],
-    stats: [{ value: '2x', label: 'Conversion Lift' }, { value: '30%', label: 'Less Rework' }, { value: 'A11y', label: 'Inclusive' }],
-    whyChoose: 'We design for humans first. Every pixel has a purpose — to make the next step obvious and effortless for your user.',
-    tech: ['Spatial Holography', 'Apple Design System', 'Ergonomic Optics'],
-  },
-
-  marketing: {
-    id: 'marketing',
-    title: 'Digital Marketing',
-    subtitle: 'Global Neural Outreach & Brand Ascension',
-    badge: 'GROWTH DIVISION',
-    overview: `Digital Marketing helps you be found, remembered and chosen. We run data-driven campaigns across search, social, content and email — tracking every rupee to pipeline. From brand awareness to lead generation, we focus on measurable growth and clear reporting, not vanity metrics.`,
-    services: [
-      { title: 'Search & Performance Ads', desc: 'Google, LinkedIn and Meta campaigns optimized for ROI, not just clicks.' },
-      { title: 'Social & Content', desc: 'Stories, posts and videos that build authority and community around your brand.' },
-      { title: 'SEO & Website Growth', desc: 'Technical SEO and content that brings consistent organic traffic.' },
-      { title: 'Marketing Automation', desc: 'Email flows, lead scoring and CRM nurture that turn interest into revenue.' },
-    ],
-    benefits: ['More qualified leads and sales', 'Lower cost per acquisition', 'Clear attribution from spend to revenue', 'Consistent brand presence across channels'],
-    process: ['1. Audit & strategy', '2. Campaign setup & content', '3. Launch & optimize', '4. Report & scale winners'],
-    stats: [{ value: '3.5x', label: 'Avg ROI' }, { value: '-42%', label: 'Lower CPA' }, { value: 'Daily', label: 'Reporting' }],
-    whyChoose: 'We treat marketing as a system. Every channel is measured, every creative is tested, and every decision is tied to revenue.',
-    tech: ['Planetary Outreach', 'Cinematic Media', 'Neural Targeting'],
-  },
-
-  finance: {
-    id: 'finance',
-    title: 'Finance Engineering',
-    subtitle: 'Algorithmic Asset Matrix & Orbital Economics',
-    badge: 'FINANCE DIVISION',
-    overview: `Finance Engineering automates money movements so nothing is missed and everything is auditable. From invoices and collections to payouts and reporting, we build secure payment flows, subscription billing and financial dashboards that give you real-time control over cash, costs and compliance.`,
-    services: [
-      { title: 'Billing & Invoicing', desc: 'Automated invoices, reminders and reconciliation that work while you sleep.' },
-      { title: 'Payment Integration', desc: 'Secure gateways for UPI, cards, wallets and global methods with Cashfree, Stripe and more.' },
-      { title: 'Subscription Management', desc: 'Plans, proration, renewals and dunning handled without manual work.' },
-      { title: 'Financial Reporting', desc: 'Live P&L, cashflow and tax-ready reports at your fingertips.' },
-    ],
-    benefits: ['Faster payments and fewer dues', 'Zero manual billing errors', 'Full audit trail for every transaction', 'Real-time view of revenue and costs'],
-    process: ['1. Map money flows', '2. Design secure architecture', '3. Integrate & test', '4. Go live with monitoring'],
-    stats: [{ value: '99.9%', label: 'Payment Success' }, { value: 'Auto', label: 'Reconciliation' }, { value: 'Secure', label: 'PCI-Ready' }],
-    whyChoose: 'Money deserves precision. We engineer finance systems that are reliable, compliant and pleasant for both your team and your customers.',
-    tech: ['Orbital Ledger', 'Algorithmic Capital', 'Real-Time Governance'],
-  },
-
-  innovation: {
-    id: 'innovation',
-    title: 'Innovation Lab',
-    subtitle: 'Advanced Aerospace & Experimental AI R&D',
-    badge: 'R&D LAB',
-    overview: `Innovation Lab is where future products are born. We experiment with emerging tech — AI, spatial computing, robotics, new materials — and turn promising ideas into working prototypes. Businesses bring us hard problems; we bring research, rapid builds and honest answers about what is possible, practical and worth scaling.`,
-    services: [
-      { title: 'Research & Discovery', desc: 'Deep dives into new technologies with clear feasibility and business impact assessments.' },
-      { title: 'Rapid Prototyping', desc: 'Functional prototypes in weeks, not months, to test with real users.' },
-      { title: 'Proof of Concepts', desc: 'Small, focused builds that de-risk big investments before full production.' },
-      { title: 'Tech Transfer', desc: 'Handover of proven solutions to production teams with documentation and training.' },
-    ],
-    benefits: ['De-risk innovation before major spend', 'Faster learning cycles with real prototypes', 'Access to frontier expertise without hiring it', 'Clear go / no-go decisions based on evidence'],
-    process: ['1. Define the challenge', '2. Research options', '3. Build prototype', '4. Validate & decide to scale'],
-    stats: [{ value: '6–8w', label: 'Prototype' }, { value: 'Lab', label: 'Grade Rigor' }, { value: 'Future', label: 'Ready' }],
-    whyChoose: 'We explore boldly but build practically. You get innovation that is not just exciting — it is viable, tested and ready to become your next advantage.',
-    tech: ['AGI Research', 'Advanced Materials', 'Deep Space R&D'],
-  },
 }
 
 export default SECTOR_ARTICLES
+

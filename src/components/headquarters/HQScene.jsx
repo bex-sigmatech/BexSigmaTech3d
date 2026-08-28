@@ -31,69 +31,29 @@ const DEPARTMENTS = [
     color: '#7c3aed', emissive: '#4c1d95', pos: [5.5, 1.2, -3]
   },
   {
+    id: 'cloud',
+    title: 'Autonomous Applications',
+    subtitle: 'Autonomous Application Matrix · Mobile & Desktop Software',
+    desc: 'Flagship consumer & enterprise mobile apps engineered for speed, privacy, and seamless cross-platform performance.',
+    tech: ['React Native', 'Flutter', 'Future Path AI', 'Track Me ESBI'],
+    color: '#38bdf8', emissive: '#0369a1', pos: [4.0, -2.5, -6]
+  },
+  {
+    id: 'client_projects',
+    title: 'Our Client Projects',
+    subtitle: 'Proven Case Studies, Enterprise Deployments & Client Success',
+    desc: 'Explore real-world client platforms, AI workflow deployments, and high-impact digital solutions architected by BEX Sigma Tech.',
+    tech: ['Enterprise Web', '3D WebGL', 'AI Agents', 'Cloud Systems'],
+    color: '#f59e0b', emissive: '#b45309', pos: [-5.2, 2.0, -4]
+  },
+  {
     id: 'ai_auto',
     title: 'AI Automation',
     subtitle: 'Autonomous Multimodal Agent Matrix',
     desc: 'Self-evolving cognitive systems automating planetary infrastructure and mission synthesis.',
     tech: ['Agentic Cognitive AI', 'Neural Synthesis', 'LLM Automation'],
-    color: '#00ff88', emissive: '#00aa55', pos: [-5.2, 2.0, -4]
+    color: '#00ff88', emissive: '#00aa55', pos: [-4.2, -1.8, -7]
   },
-  {
-    id: 'cloud',
-    title: 'Cloud Systems',
-    subtitle: 'Orbital Distributed Quantum Cloud',
-    desc: 'High-availability quantum cluster networks anchored across low Earth orbit server nodes.',
-    tech: ['Orbital Cloud Mesh', 'Quantum Compute', 'Zero-Downtime Edge'],
-    color: '#38bdf8', emissive: '#0369a1', pos: [4.0, -2.5, -6]
-  },
-  {
-    id: 'cyber',
-    title: 'Cyber Security',
-    subtitle: 'Post-Quantum Cryptographic Defense Grid',
-    desc: 'Impenetrable cryptographic shields securing interplanetary telemetry and mission-critical AI kernels.',
-    tech: ['Post-Quantum Armor', 'Zero-Trust Matrix', 'AI Intrusion Sentinel'],
-    color: '#f43f5e', emissive: '#9f1239', pos: [-4.5, -1.5, -7]
-  },
-  {
-    id: 'analytics',
-    title: 'Analytics',
-    subtitle: 'Planetary Intelligence & Real-Time Data Engine',
-    desc: 'Billions of orbital sensors aggregated into predictive climate, economic, and aerospace simulations.',
-    tech: ['Real-Time Telemetry', 'Predictive Synthesis', '8K Spatial Data'],
-    color: '#f59e0b', emissive: '#b45309', pos: [7.0, 0.5, -9]
-  },
-  {
-    id: 'ui_ux',
-    title: 'UI / UX Design',
-    subtitle: 'Spatial Industrial Design & Holographic UX',
-    desc: 'Human-machine interfaces designed with Apple Park elegance and cinematic clarity.',
-    tech: ['Spatial Holography', 'Apple Design System', 'Ergonomic Optics'],
-    color: '#e879f9', emissive: '#a21caf', pos: [-6.5, 2.5, -10]
-  },
-  {
-    id: 'marketing',
-    title: 'Digital Marketing',
-    subtitle: 'Global Neural Outreach & Brand Ascension',
-    desc: 'High-precision communication frameworks connecting humanity with the next frontier.',
-    tech: ['Planetary Outreach', 'Cinematic Media', 'Neural Targeting'],
-    color: '#34d399', emissive: '#065f46', pos: [2.5, -3.5, -11]
-  },
-  {
-    id: 'finance',
-    title: 'Finance Engineering',
-    subtitle: 'Algorithmic Asset Matrix & Orbital Economics',
-    desc: 'Automated treasury and orbital resource allocation governed by deterministic financial protocols.',
-    tech: ['Orbital Ledger', 'Algorithmic Capital', 'Real-Time Governance'],
-    color: '#fbbf24', emissive: '#92400e', pos: [-3.0, -2.8, -13]
-  },
-  {
-    id: 'innovation',
-    title: 'Innovation Lab',
-    subtitle: 'Advanced Aerospace & Experimental AI R&D',
-    desc: 'Pioneering propulsion systems, synthetic materials, and artificial general intelligence laboratories.',
-    tech: ['AGI Research', 'Advanced Materials', 'Deep Space R&D'],
-    color: '#a78bfa', emissive: '#6d28d9', pos: [5.5, 3.0, -15]
-  }
 ]
 
 /* ─── Floating Particle Stars ─── */
@@ -430,6 +390,12 @@ export default function HQScene() {
         if (dept.id === 'web_dev') {
           cinemaAudio.setScene('webdev_store')
           useStore.setState({ scene: 'webdev_store', activeMission: { id: 'web_dev', title: 'Web Development' } })
+        } else if (dept.id === 'cloud' || dept.id === 'apps') {
+          cinemaAudio.setScene('apps_store')
+          useStore.setState({ scene: 'apps_store', activeMission: { id: 'cloud', title: 'Autonomous Applications' } })
+        } else if (dept.id === 'client_projects') {
+          cinemaAudio.setScene('headquarters')
+          useStore.setState({ scene: 'client_projects_showcase', activeMission: { id: 'client_projects', title: 'Our Client Projects' } })
         } else {
           openMissionBriefing(dept)
         }

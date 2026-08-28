@@ -107,6 +107,12 @@ export const useStore = create((set, get) => {
       if (activeMission && activeMission.id === 'web_dev') {
         cinemaAudio.setScene('webdev_store')
         set({ scene: 'webdev_store' })
+      } else if (activeMission && (activeMission.id === 'cloud' || activeMission.id === 'apps')) {
+        cinemaAudio.setScene('headquarters')
+        set({ scene: 'apps_store' })
+      } else if (activeMission && activeMission.id === 'client_projects') {
+        cinemaAudio.setScene('headquarters')
+        set({ scene: 'client_projects_showcase' })
       } else {
         cinemaAudio.setScene('dashboard')
         set({ scene: 'dashboard' })
@@ -121,6 +127,20 @@ export const useStore = create((set, get) => {
     },
 
     exitWebDevStore: () => {
+      cinemaAudio.playSectorTransition()
+      cinemaAudio.setAmbientVolume(0.3, 1.5)
+      cinemaAudio.setScene('headquarters')
+      set({ scene: 'headquarters', activeMission: null })
+    },
+
+    exitAppsStore: () => {
+      cinemaAudio.playSectorTransition()
+      cinemaAudio.setAmbientVolume(0.3, 1.5)
+      cinemaAudio.setScene('headquarters')
+      set({ scene: 'headquarters', activeMission: null })
+    },
+
+    exitClientProjects: () => {
       cinemaAudio.playSectorTransition()
       cinemaAudio.setAmbientVolume(0.3, 1.5)
       cinemaAudio.setScene('headquarters')
@@ -160,6 +180,12 @@ export const useStore = create((set, get) => {
       if (sectorId === 'web_dev' || sectorId === 'store' || sectorId === 'products') {
         cinemaAudio.setScene('webdev_store')
         set({ scene: 'webdev_store', activeMission: { id: 'web_dev', name: 'Sector 9 Web Dev Store' } })
+      } else if (sectorId === 'cloud' || sectorId === 'apps' || sectorId === 'apps_store') {
+        cinemaAudio.setScene('headquarters')
+        set({ scene: 'apps_store', activeMission: { id: 'cloud', name: 'Apps Division' } })
+      } else if (sectorId === 'client_projects' || sectorId === 'clients') {
+        cinemaAudio.setScene('headquarters')
+        set({ scene: 'client_projects_showcase', activeMission: { id: 'client_projects', name: 'Our Client Projects' } })
       } else if (sectorId === 'dashboard' || sectorId === 'analytics' || sectorId === 'finance') {
         cinemaAudio.setScene('dashboard')
         set({ scene: 'dashboard' })

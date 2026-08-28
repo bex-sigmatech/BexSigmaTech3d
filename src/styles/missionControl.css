@@ -454,6 +454,100 @@
   letter-spacing: 0.12em;
 }
 
+/* ── HQ Headquarters Hero Stage (lightweight image-based replacement) ── */
+.mc-hq-hero-stage {
+  position: relative;
+  height: 420px;
+  overflow: hidden;
+  background: #020812;
+}
+
+.mc-hq-bg-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 40%;
+  opacity: 0.55;
+  filter: brightness(0.7) saturate(1.3);
+  z-index: 1;
+  animation: mcHqBgKen 25s ease-in-out infinite alternate;
+}
+
+@keyframes mcHqBgKen {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.06); }
+}
+
+.mc-hq-hero-stage::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background:
+    linear-gradient(180deg, rgba(2, 8, 18, 0.7) 0%, transparent 30%, transparent 65%, rgba(2, 8, 18, 0.85) 100%),
+    linear-gradient(90deg, rgba(2, 8, 18, 0.6) 0%, transparent 40%, transparent 60%, rgba(2, 8, 18, 0.6) 100%);
+  pointer-events: none;
+}
+
+.mc-hq-hero-stage::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  background:
+    radial-gradient(ellipse 60% 50% at 50% 50%, rgba(0, 212, 255, 0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.mc-hq-robot-img {
+  position: absolute;
+  bottom: 0;
+  right: 5%;
+  height: 92%;
+  max-height: 400px;
+  object-fit: contain;
+  z-index: 4;
+  opacity: 0.45;
+  mix-blend-mode: luminosity;
+  filter: brightness(0.8) saturate(0.6) contrast(1.1) drop-shadow(0 0 60px rgba(0, 212, 255, 0.15));
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.4) 10%, rgba(0,0,0,0.85) 35%, rgba(0,0,0,0.85) 60%, rgba(0,0,0,0.3) 85%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.4) 10%, rgba(0,0,0,0.85) 35%, rgba(0,0,0,0.85) 60%, rgba(0,0,0,0.3) 85%, transparent 100%);
+  animation: mcRobotFloat 6s ease-in-out infinite;
+  transform-origin: bottom center;
+  pointer-events: none;
+}
+
+@keyframes mcRobotFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.mc-hq-hero-stage .mc-stage-overlay-hud {
+  z-index: 5;
+}
+
+.mc-hq-scanline {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.5), transparent);
+  z-index: 6;
+  animation: mcScanSweep 4s ease-in-out infinite;
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+@keyframes mcScanSweep {
+  0% { top: 0; opacity: 0; }
+  10% { opacity: 0.7; }
+  90% { opacity: 0.7; }
+  100% { top: 100%; opacity: 0; }
+}
+
 /* 3D Model Control Toolbar */
 .mc-model-toolbar {
   display: flex;
@@ -1416,6 +1510,85 @@
   opacity: 0.9;
 }
 
+/* ── Fullwidth Linear Flow Layout ── */
+.mc-body-grid.mc-linear-flow {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 24px 36px 40px;
+}
+
+.mc-ceo-card-fullwidth {
+  margin-top: 0;
+  padding: 28px 32px;
+  background: linear-gradient(135deg, rgba(14, 26, 48, 0.8) 0%, rgba(6, 12, 24, 0.9) 100%);
+  border: 1px solid rgba(0, 212, 255, 0.35);
+  box-shadow: 0 16px 48px -12px rgba(0, 0, 0, 0.7), 0 0 30px rgba(0, 212, 255, 0.08);
+}
+
+.mc-ceo-top-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.mc-live-status-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Orbitron', monospace;
+  font-size: 0.62rem;
+  color: #00ff88;
+  letter-spacing: 0.08em;
+  background: rgba(0, 255, 136, 0.08);
+  border: 1px solid rgba(0, 255, 136, 0.25);
+  padding: 4px 12px;
+  border-radius: 999px;
+}
+
+.mc-ceo-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-left: auto;
+  min-width: 320px;
+}
+
+.mc-mission-title {
+  font-family: 'Orbitron', monospace;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #00d4ff;
+  margin: 0 0 12px 0;
+  letter-spacing: 0.02em;
+}
+
+.mc-tech-heading {
+  font-family: 'Orbitron', monospace;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 6px 0 12px 0;
+}
+
+@media (max-width: 900px) {
+  .mc-ceo-content {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .mc-ceo-stats {
+    width: 100%;
+    min-width: 0;
+    margin-left: 0;
+    margin-top: 14px;
+  }
+}
+
 /* ==========================================================================
    COMPREHENSIVE RESPONSIVE DESIGN SYSTEM
    ========================================================================== */
@@ -1556,6 +1729,15 @@
 
   .mc-holo-stage {
     height: 290px;
+  }
+
+  .mc-hq-hero-stage {
+    height: 290px;
+  }
+
+  .mc-hq-robot-img {
+    height: 80%;
+    right: 2%;
   }
 
   .mc-hud-reticle-center {
@@ -1819,6 +2001,15 @@
 
   .mc-holo-stage {
     height: 240px;
+  }
+
+  .mc-hq-hero-stage {
+    height: 240px;
+  }
+
+  .mc-hq-robot-img {
+    height: 70%;
+    right: 0;
   }
 
   .mc-hud-reticle-center {

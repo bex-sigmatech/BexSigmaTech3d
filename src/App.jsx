@@ -11,6 +11,8 @@ import LiveVoiceHUD from './components/ai/LiveVoiceHUD'
 import './styles/app.css'
 
 const WebDevStore = lazy(() => import('./components/webdev/WebDevStore'))
+const AppsStore = lazy(() => import('./components/apps/AppsStore'))
+const ClientProjectsShowcase = lazy(() => import('./components/clients/ClientProjectsShowcase'))
 
 export default function App() {
   const { scene, skipIntro, bootStarted, isIntroSkipped, navigateToSector, submitIdentity, userName } = useStore()
@@ -62,6 +64,20 @@ export default function App() {
       {scene === 'webdev_store' && (
         <Suspense fallback={<div style={{ color: '#8899a6', fontFamily: 'Orbitron', letterSpacing: '0.2em', fontSize: '0.8rem' }}>LOADING SECURE MATRIX...</div>}>
           <WebDevStore />
+        </Suspense>
+      )}
+
+      {/* Scene 10: Apps Products Matrix (Future Path & Track Me + Custom App Build) */}
+      {scene === 'apps_store' && (
+        <Suspense fallback={<div style={{ color: '#00d4ff', fontFamily: 'Orbitron', letterSpacing: '0.2em', fontSize: '0.8rem' }}>INITIALIZING APPS MATRIX...</div>}>
+          <AppsStore />
+        </Suspense>
+      )}
+
+      {/* Scene 11: Our Client Projects Showcase (FinexHub & Enterprise Partnerships) */}
+      {scene === 'client_projects_showcase' && (
+        <Suspense fallback={<div style={{ color: '#f59e0b', fontFamily: 'Orbitron', letterSpacing: '0.2em', fontSize: '0.8rem' }}>LAUNCHING CLIENT SHOWCASE...</div>}>
+          <ClientProjectsShowcase />
         </Suspense>
       )}
 

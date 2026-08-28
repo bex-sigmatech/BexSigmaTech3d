@@ -74,14 +74,9 @@ export const VoiceLibrary = {
       const names = {
         'mission_control': 'Mission Control.',
         'web_dev': 'Web Development Division.',
-        'ai_auto': 'AI Automation Division.',
-        'cloud': 'Cloud Systems Division.',
-        'cyber': 'Cyber Security Division.',
-        'analytics': 'Analytics Division.',
-        'ui_ux': 'Design Division.',
-        'marketing': 'Digital Marketing Division.',
-        'finance': 'Finance Division.',
-        'innovation': 'Innovation Lab.'
+        'cloud': 'Autonomous Application Matrix.',
+        'client_projects': 'Our Client Projects Showcase.',
+        'ai_auto': 'AI Automation Division.'
       }
       return names[data.sectorId] || ''
     },
@@ -93,14 +88,9 @@ export const VoiceLibrary = {
       const entries = {
         'mission_control': 'Entering Mission Control. Central command for all operations and project coordination.',
         'web_dev': 'Entering Web Development Division. We build premium websites, web applications, and e-commerce platforms.',
-        'ai_auto': 'Entering AI Automation Division. We deploy intelligent agents and workflow automation systems.',
-        'cloud': 'Entering Cloud Systems Division. We provide cloud hosting, server management, and infrastructure solutions.',
-        'cyber': 'Entering Cyber Security Division. We offer security audits, data protection, and threat monitoring.',
-        'analytics': 'Entering Analytics Division. We deliver data analytics, business intelligence, and performance reporting.',
-        'ui_ux': 'Entering Design Division. We craft user interfaces, brand identities, and product design systems.',
-        'marketing': 'Entering Digital Marketing Division. We manage ad campaigns, social media, and content strategy.',
-        'finance': 'Entering Finance Division. We provide billing systems, payment integration, and financial automation.',
-        'innovation': 'Entering Innovation Lab. We research emerging technologies and prototype next-generation solutions.'
+        'cloud': 'Entering Autonomous Application Matrix. Explore production-ready mobile apps and custom application engineering.',
+        'client_projects': 'Entering Our Client Projects. Explore real-world deployments and enterprise client success stories.',
+        'ai_auto': 'Entering AI Automation Division. We deploy intelligent agents and workflow automation systems.'
       }
       return entries[data.sectorId] || ''
     },
