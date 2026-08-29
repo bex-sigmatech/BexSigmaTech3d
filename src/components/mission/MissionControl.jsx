@@ -59,8 +59,7 @@ export default function MissionControl() {
   const [isNarrating, setIsNarrating] = useState(false)
   const [currentTime, setCurrentTime] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('all')
-
-
+  const [mobileTab, setMobileTab] = useState('all')
 
   // Current active sector article
   const currentSectorId = activeMission?.id || 'mission_control'
@@ -82,8 +81,6 @@ export default function MissionControl() {
     const timer = setInterval(updateTime, 1000)
     return () => clearInterval(timer)
   }, [])
-
-
 
   // Sector Switching
   const handleSelectSector = (secId) => {
@@ -137,8 +134,6 @@ export default function MissionControl() {
       aiVoice.speak(textToSpeak, () => setIsNarrating(false))
     }
   }
-
-
 
   return (
     <div className={`mc-page-overlay ${mounted ? 'mc-mounted' : ''}`}>
@@ -206,37 +201,57 @@ export default function MissionControl() {
           </div>
         </nav>
 
+        {/* ── Mobile Tactical View Switcher (Mobile Only) ── */}
+        <div className="mc-mobile-tab-bar" role="tablist">
+          {[
+            { id: 'all', label: '✦ ALL INTEL' },
+            { id: 'capabilities', label: '⚡ 8 PILLARS' },
+            { id: 'leadership', label: '🎖️ LEADERSHIP' },
+            { id: 'vision', label: '🌐 VISION & TECH' },
+          ].map((tab) => (
+            <button
+              key={tab.id}
+              className={`mc-mobile-tab-btn interactive ${mobileTab === tab.id ? 'active' : ''}`}
+              onClick={() => {
+                cinemaAudio.playOrbSelect()
+                setMobileTab(tab.id)
+              }}
+              role="tab"
+              aria-selected={mobileTab === tab.id}
+            >
+              <span>{tab.label}</span>
+            </button>
+          ))}
+        </div>
+
         {/* ── Main Command Body ── */}
         {article.id === 'ai_auto' ? (
           <main className="mc-ai-solo-loading-wrap">
             <div className="mc-ai-solo-card">
-              {/* Glowing High-Tech Loading Spinner / Gyro */}
-              <div className="mc-ai-solo-spinner-box">
-                <div className="mc-ai-solo-ring ring-outer" />
-                <div className="mc-ai-solo-ring ring-mid" />
-                <div className="mc-ai-solo-ring ring-inner" />
-                <div className="mc-ai-solo-core">
-                  <span className="mc-ai-solo-icon">🤖</span>
-                  <div className="mc-ai-solo-glow-orb" />
-                </div>
-              </div>
-
-              {/* Status Badge */}
+              {/* Pulsing Emerald Live Status Badge */}
               <div className="mc-ai-solo-badge">
-                <span className="mc-ai-solo-pulse-dot" />
+                <span className="mc-ai-solo-dot" />
                 <span>AI AUTOMATION DIVISION</span>
               </div>
 
-              {/* Title & Subtitle */}
+              {/* 3-Ring Futuristic Gyro Loading Spinner */}
+              <div className="mc-ai-solo-spinner-box">
+                <div className="mc-ai-solo-ring r1" />
+                <div className="mc-ai-solo-ring r2" />
+                <div className="mc-ai-solo-ring r3" />
+                <div className="mc-ai-solo-core">⚡</div>
+              </div>
+
+              {/* Minimalist Project Headline */}
               <h2 className="mc-ai-solo-title">Working on Projects...</h2>
               <p className="mc-ai-solo-subtitle">
-                Our AI engineering pod is currently building and calibrating custom autonomous agent pipelines.
+                Autonomous AI agents, neural pipelines, and workflow automation suites are currently under active synthesis.
               </p>
 
-              {/* Animated Loading Bar */}
+              {/* Animated Neural Pulse Progress Indicator */}
               <div className="mc-ai-solo-progress-box">
-                <div className="mc-ai-solo-progress-track">
-                  <div className="mc-ai-solo-progress-bar" />
+                <div className="mc-ai-solo-progress-bar">
+                  <div className="mc-ai-solo-progress-fill" />
                 </div>
                 <div className="mc-ai-solo-progress-info">
                   <span>Neural Pipeline Calibration</span>
@@ -244,8 +259,8 @@ export default function MissionControl() {
                 </div>
               </div>
 
-              {/* Simple Back button */}
-              <div className="mc-ai-solo-actions">
+              {/* Direct Action */}
+              <div className="mc-ai-solo-action">
                 <button
                   className="mc-ai-solo-back-btn interactive"
                   onClick={() => handleSelectSector('mission_control')}
@@ -258,203 +273,210 @@ export default function MissionControl() {
         ) : (
           <main className="mc-body-grid mc-linear-flow">
             {/* 1. FOUNDER & CEO PROFILE CONTAINER */}
-            <section className="mc-ceo-card mc-ceo-card-fullwidth">
-              <div className="mc-ceo-glow-ring" />
-              
-              {/* Top HUD Security & Protocol Header */}
-              <div className="mc-ceo-top-header">
-                <div className="mc-section-eyebrow">
-                  <span className="mc-eyebrow-dot" />
-                  <span className="mc-eyebrow-tag">LVL-9 ARCHITECT</span>
-                  <span>FOUNDER & LEADERSHIP</span>
-                </div>
-                <div className="mc-live-status-pill">
-                  <span className="mc-live-dot" />
-                  <span>DIRECT LINE ACTIVE</span>
-                </div>
-              </div>
-
-              <div className="mc-ceo-content">
-                {/* Holographic Cyber Avatar Chamber */}
-                <div className="mc-ceo-avatar-wrap">
-                  <div className="mc-avatar-chamber-frame">
-                    <img
-                      src="/ceo_hariharan.jpg"
-                      alt="Hariharan.D — Founder & CEO of Bex Sigma Tech"
-                      className="mc-ceo-avatar"
-                    />
-                    <div className="mc-avatar-scanline" />
-                    <div className="mc-avatar-crosshair tl" />
-                    <div className="mc-avatar-crosshair tr" />
-                    <div className="mc-avatar-crosshair bl" />
-                    <div className="mc-avatar-crosshair br" />
-                  </div>
-                  <div className="mc-ceo-avatar-ring" />
-                  <div className="mc-ceo-status-dot" title="Online" />
-                  <div className="mc-ceo-verified-badge">
-                    <span className="mc-verified-icon">✓</span>
-                    <span>VERIFIED</span>
-                  </div>
-                </div>
-
-                {/* Identity & Cyber Bio */}
-                <div className="mc-ceo-info">
-                  <div className="mc-ceo-badge-row">
-                    <span className="mc-ceo-badge">FOUNDER & CEO</span>
-                    <span className="mc-ceo-sub-badge">CHIEF ARCHITECT</span>
-                  </div>
-                  <h2 className="mc-ceo-name">Hariharan.D</h2>
-                  <p className="mc-ceo-tagline">Visionary Architect & Full-Stack Pioneer · BEX Sigma Tech</p>
-
-                  {/* Specialization Pills */}
-                  <div className="mc-ceo-skills-row">
-                    <span className="mc-ceo-skill-pill">⚡ 3D Spatial Engines</span>
-                    <span className="mc-ceo-skill-pill">🧠 Autonomous AI</span>
-                    <span className="mc-ceo-skill-pill">🛡️ Core Architecture</span>
-                  </div>
-
-                  {/* Direct Contact Action Button */}
-                  <div className="mc-ceo-action-row">
-                    <a
-                      href="mailto:bexsigmatech@gmail.com"
-                      className="mc-ceo-email interactive"
-                      title="Direct Line to Founder & CEO"
-                    >
-                      <span className="mc-ceo-email-icon">✉</span>
-                      <span>bexsigmatech@gmail.com</span>
-                      <span className="mc-ceo-email-arrow">⚡</span>
-                    </a>
-                  </div>
-                </div>
-
-                {/* 3-Segment KPI Metrics */}
-                {article.stats && (
-                  <div className="mc-stats-grid mc-ceo-stats">
-                    {article.stats.map((s, i) => (
-                      <div key={i} className="mc-stat-item">
-                        <div className="mc-stat-item-bar" />
-                        <div className="mc-stat-item-val">
-                          <AnimatedCounter value={s.value} duration={1200 + i * 200} />
-                        </div>
-                        <div className="mc-stat-item-lbl">{s.label}</div>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-
-              {/* Holographic Manifesto Transmission */}
-              <div className="mc-ceo-quote">
-                <div className="mc-quote-header">
-                  <span className="mc-quote-prefix">// ARCHITECT TRANSMISSION #001</span>
-                  <span className="mc-quote-wave">
-                    <span />
-                    <span />
-                    <span />
-                  </span>
-                </div>
-                <div className="mc-quote-body">
-                  "We don't just build software — we architect digital experiences that redefine what's possible."
-                </div>
-              </div>
-            </section>
-
-            {/* 2. OUR MISSION & VISION CONTAINER */}
-            <section className="mc-overview-box">
-              <div className="mc-section-eyebrow" style={{ marginBottom: 10 }}>
-                <span className="mc-eyebrow-dot" />
-                OUR MISSION & VISION
-              </div>
-              <h3 className="mc-mission-title">{article.title} — {article.subtitle}</h3>
-              <p className="mc-overview-text">{article.overview}</p>
-            </section>
-
-            {/* 3. SIGMA TECHNOLOGY ESSENTIALS / ARSENAL */}
-            <section className="mc-tech-card">
-              <div className="mc-section-eyebrow">
-                <span className="mc-eyebrow-dot" />
-                SIGMA TECHNOLOGY ESSENTIALS
-              </div>
-              <h3 className="mc-tech-heading">Advanced Engineering Stack & Core Frameworks</h3>
-              <div className="mc-tech-tags-cloud">
-                {(article.tech || activeMission.tech || []).map((t, idx) => (
-                  <span key={idx} className="mc-tech-pill interactive">
-                    {t}
-                  </span>
-                ))}
-              </div>
-            </section>
-
-            {/* 4. SPECIALIZED CAPABILITIES */}
-            <section className="mc-capabilities-section">
-              <div className="mc-section-header-row">
-                <div className="mc-section-title-wrap">
+            {(mobileTab === 'all' || mobileTab === 'leadership') && (
+              <section className="mc-ceo-card mc-ceo-card-fullwidth">
+                <div className="mc-ceo-glow-ring" />
+                
+                {/* Top HUD Security & Protocol Header */}
+                <div className="mc-ceo-top-header">
                   <div className="mc-section-eyebrow">
                     <span className="mc-eyebrow-dot" />
-                    SIGMA DELIVERABLES & CORE DISCIPLINES
+                    <span className="mc-eyebrow-tag">LVL-9 ARCHITECT</span>
+                    <span>FOUNDER & LEADERSHIP</span>
                   </div>
-                  <h3 className="mc-section-title">Specialized Capabilities ({article.services.length} Pillars)</h3>
+                  <div className="mc-live-status-pill">
+                    <span className="mc-live-dot" />
+                    <span>DIRECT LINE ACTIVE</span>
+                  </div>
                 </div>
-              </div>
 
-              {/* Smooth Pillar Category Filter Chips */}
-              <div className="mc-pillar-filter-bar" role="tablist">
-                {[
-                  { id: 'all', label: 'All 8 Pillars', icon: '✦' },
-                  { id: 'engineering', label: 'Software & Apps', icon: '⚡' },
-                  { id: 'web', label: 'Web & 3D Spatial', icon: '🌐' },
-                  { id: 'growth', label: 'Marketing & Content', icon: '🚀' },
-                  { id: 'ai', label: 'AI & Knowledge', icon: '🤖' },
-                ].map((filter) => {
-                  const isActive = (selectedCategory || 'all') === filter.id
-                  return (
-                    <button
-                      key={filter.id}
-                      className={`mc-pillar-chip interactive ${isActive ? 'active' : ''}`}
-                      onClick={() => {
-                        cinemaAudio.playOrbSelect()
-                        setSelectedCategory(filter.id)
-                      }}
-                      role="tab"
-                      aria-selected={isActive}
-                    >
-                      <span className="mc-chip-filter-icon">{filter.icon}</span>
-                      <span>{filter.label}</span>
-                      {filter.id === 'all' && <span className="mc-chip-count">8</span>}
-                    </button>
-                  )
-                })}
-              </div>
+                <div className="mc-ceo-content">
+                  {/* Holographic Cyber Avatar Chamber */}
+                  <div className="mc-ceo-avatar-wrap">
+                    <div className="mc-avatar-chamber-frame">
+                      <img
+                        src="/ceo_hariharan.jpg"
+                        alt="Hariharan.D — Founder & CEO of Bex Sigma Tech"
+                        className="mc-ceo-avatar"
+                      />
+                      <div className="mc-avatar-scanline" />
+                      <div className="mc-avatar-crosshair tl" />
+                      <div className="mc-avatar-crosshair tr" />
+                      <div className="mc-avatar-crosshair bl" />
+                      <div className="mc-avatar-crosshair br" />
+                    </div>
+                    <div className="mc-ceo-avatar-ring" />
+                    <div className="mc-ceo-status-dot" title="Online" />
+                    <div className="mc-ceo-verified-badge">
+                      <span className="mc-verified-icon">✓</span>
+                      <span>VERIFIED</span>
+                    </div>
+                  </div>
 
-              {/* Smooth Horizontal Bento Capabilities Grid */}
-              <div className="mc-smooth-grid">
-                {article.services
-                  .filter((svc) => {
-                    const cat = selectedCategory || 'all'
-                    if (cat === 'all') return true
-                    if (cat === 'engineering') return svc.title === 'Software' || svc.title === 'Application'
-                    if (cat === 'web') return svc.title === 'Website' || svc.title === '3D Website'
-                    if (cat === 'growth') return svc.title === 'Digital Marketing' || svc.title === 'Content'
-                    if (cat === 'ai') return svc.title === 'AI Automation' || svc.title === 'Generate Notes'
-                    return true
-                  })
-                  .map((svc, idx) => {
-                    const originalIndex = article.services.findIndex((s) => s.title === svc.title)
-                    const palette = ACCENT_PALETTES[originalIndex % ACCENT_PALETTES.length]
+                  {/* Identity & Cyber Bio */}
+                  <div className="mc-ceo-info">
+                    <div className="mc-ceo-badge-row">
+                      <span className="mc-ceo-badge">FOUNDER & CEO</span>
+                      <span className="mc-ceo-sub-badge">CHIEF ARCHITECT</span>
+                    </div>
+                    <h2 className="mc-ceo-name">Hariharan.D</h2>
+                    <p className="mc-ceo-tagline">Visionary Architect & Full-Stack Pioneer · BEX Sigma Tech</p>
+
+                    {/* Specialization Pills */}
+                    <div className="mc-ceo-skills-row">
+                      <span className="mc-ceo-skill-pill">⚡ 3D Spatial Engines</span>
+                      <span className="mc-ceo-skill-pill">🧠 Autonomous AI</span>
+                      <span className="mc-ceo-skill-pill">🛡️ Core Architecture</span>
+                    </div>
+
+                    {/* Direct Contact Action Button */}
+                    <div className="mc-ceo-action-row">
+                      <a
+                        href="mailto:bexsigmatech@gmail.com"
+                        className="mc-ceo-email interactive"
+                        title="Direct Line to Founder & CEO"
+                      >
+                        <span className="mc-ceo-email-icon">✉</span>
+                        <span>bexsigmatech@gmail.com</span>
+                        <span className="mc-ceo-email-arrow">⚡</span>
+                      </a>
+                    </div>
+                  </div>
+
+                  {/* 3-Segment KPI Metrics */}
+                  {article.stats && (
+                    <div className="mc-stats-grid mc-ceo-stats">
+                      {article.stats.map((s, i) => (
+                        <div key={i} className="mc-stat-item">
+                          <div className="mc-stat-item-bar" />
+                          <div className="mc-stat-item-val">
+                            <AnimatedCounter value={s.value} duration={1200 + i * 200} />
+                          </div>
+                          <div className="mc-stat-item-lbl">{s.label}</div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                {/* Holographic Manifesto Transmission */}
+                <div className="mc-ceo-quote">
+                  <div className="mc-quote-header">
+                    <span className="mc-quote-prefix">// ARCHITECT TRANSMISSION #001</span>
+                    <span className="mc-quote-wave">
+                      <span />
+                      <span />
+                      <span />
+                    </span>
+                  </div>
+                  <div className="mc-quote-body">
+                    "We don't just build software — we architect digital experiences that redefine what's possible."
+                  </div>
+                </div>
+              </section>
+            )}
+
+            {/* 2. OUR MISSION & VISION CONTAINER */}
+            {(mobileTab === 'all' || mobileTab === 'vision') && (
+              <section className="mc-overview-box">
+                <div className="mc-section-eyebrow" style={{ marginBottom: 10 }}>
+                  <span className="mc-eyebrow-dot" />
+                  OUR MISSION & VISION
+                </div>
+                <h3 className="mc-mission-title">{article.title} — {article.subtitle}</h3>
+                <p className="mc-overview-text">{article.overview}</p>
+              </section>
+            )}
+
+            {/* 3. SIGMA TECHNOLOGY ESSENTIALS / ARSENAL */}
+            {(mobileTab === 'all' || mobileTab === 'vision') && (
+              <section className="mc-tech-card">
+                <div className="mc-section-eyebrow">
+                  <span className="mc-eyebrow-dot" />
+                  SIGMA TECHNOLOGY ESSENTIALS
+                </div>
+                <h3 className="mc-tech-heading">Advanced Engineering Stack & Core Frameworks</h3>
+                <div className="mc-tech-tags-cloud">
+                  {(article.tech || activeMission.tech || []).map((t, idx) => (
+                    <span key={idx} className="mc-tech-pill interactive">
+                      {t}
+                    </span>
+                  ))}
+                </div>
+              </section>
+            )}
+
+            {/* 4. SPECIALIZED CAPABILITIES */}
+            {(mobileTab === 'all' || mobileTab === 'capabilities') && (
+              <section className="mc-capabilities-section">
+                <div className="mc-section-header-row">
+                  <div className="mc-section-title-wrap">
+                    <div className="mc-section-eyebrow">
+                      <span className="mc-eyebrow-dot" />
+                      SIGMA DELIVERABLES & CORE DISCIPLINES
+                    </div>
+                    <h3 className="mc-section-title">Specialized Capabilities ({article.services.length} Pillars)</h3>
+                  </div>
+                </div>
+
+                {/* Smooth Pillar Category Filter Chips */}
+                <div className="mc-pillar-filter-bar" role="tablist">
+                  {[
+                    { id: 'all', label: 'All 8 Pillars', icon: '✦' },
+                    { id: 'engineering', label: 'Software & Apps', icon: '⚡' },
+                    { id: 'web', label: 'Web & 3D Spatial', icon: '🌐' },
+                    { id: 'growth', label: 'Marketing & Content', icon: '🚀' },
+                    { id: 'ai', label: 'AI & Knowledge', icon: '🤖' },
+                  ].map((filter) => {
+                    const isActive = (selectedCategory || 'all') === filter.id
                     return (
-                      <div
-                        key={svc.title}
-                        className="mc-smooth-card interactive"
-                        style={{
-                          '--card-accent': palette.color,
-                          '--card-glow': palette.glow,
-                          '--card-border': palette.border,
-                        }}
+                      <button
+                        key={filter.id}
+                        className={`mc-pillar-chip interactive ${isActive ? 'active' : ''}`}
                         onClick={() => {
                           cinemaAudio.playOrbSelect()
-                          setSelectedServiceDetail({ ...svc, index: originalIndex, palette })
+                          setSelectedCategory(filter.id)
                         }}
+                        role="tab"
+                        aria-selected={isActive}
                       >
+                        <span className="mc-chip-filter-icon">{filter.icon}</span>
+                        <span>{filter.label}</span>
+                        {filter.id === 'all' && <span className="mc-chip-count">8</span>}
+                      </button>
+                    )
+                  })}
+                </div>
+
+                {/* Smooth Horizontal Bento Capabilities Grid */}
+                <div className="mc-smooth-grid">
+                  {article.services
+                    .filter((svc) => {
+                      const cat = selectedCategory || 'all'
+                      if (cat === 'all') return true
+                      if (cat === 'engineering') return svc.title === 'Software' || svc.title === 'Application'
+                      if (cat === 'web') return svc.title === 'Website' || svc.title === '3D Website'
+                      if (cat === 'growth') return svc.title === 'Digital Marketing' || svc.title === 'Content'
+                      if (cat === 'ai') return svc.title === 'AI Automation' || svc.title === 'Generate Notes'
+                      return true
+                    })
+                    .map((svc, idx) => {
+                      const originalIndex = article.services.findIndex((s) => s.title === svc.title)
+                      const palette = ACCENT_PALETTES[originalIndex % ACCENT_PALETTES.length]
+                      return (
+                        <div
+                          key={svc.title}
+                          className="mc-smooth-card interactive"
+                          style={{
+                            '--card-accent': palette.color,
+                            '--card-glow': palette.glow,
+                            '--card-border': palette.border,
+                          }}
+                          onClick={() => {
+                            cinemaAudio.playOrbSelect()
+                            setSelectedServiceDetail({ ...svc, index: originalIndex, palette })
+                          }}
+                        >
                         {/* Left Side: Sleek Holographic Thumbnail */}
                         <div className="mc-smooth-img-wrap">
                           {svc.image ? (
@@ -525,6 +547,7 @@ export default function MissionControl() {
                   })}
               </div>
             </section>
+          )}
 
             {/* 5. READY TO CONTACT US */}
             <section className="mc-bottom-cta">

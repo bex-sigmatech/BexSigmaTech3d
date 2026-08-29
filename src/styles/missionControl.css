@@ -209,6 +209,11 @@
   box-shadow: 0 0 20px rgba(0, 212, 255, 0.4);
 }
 
+/* ── Mobile Tab Switcher (Hidden on desktop) ── */
+.mc-mobile-tab-bar {
+  display: none;
+}
+
 .mc-audio-wave {
   display: inline-flex;
   align-items: flex-end;
@@ -3019,6 +3024,44 @@
     border-color: #00d4ff !important;
     color: #fff !important;
     box-shadow: 0 0 10px rgba(0, 212, 255, 0.35) !important;
+  }
+
+  /* ── Mobile Tactical View Switcher Ribbon ── */
+  .mc-mobile-tab-bar {
+    display: flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+    padding: 6px 10px !important;
+    background: rgba(3, 8, 18, 0.6) !important;
+    border-bottom: 1px solid rgba(0, 212, 255, 0.1) !important;
+    overflow-x: auto !important;
+    scrollbar-width: none !important;
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
+  }
+  .mc-mobile-tab-bar::-webkit-scrollbar {
+    display: none !important;
+  }
+  .mc-mobile-tab-btn {
+    flex-shrink: 0 !important;
+    font-family: 'Orbitron', monospace !important;
+    font-size: 0.52rem !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.06em !important;
+    padding: 5px 10px !important;
+    border-radius: 999px !important;
+    background: rgba(255, 255, 255, 0.03) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    color: rgba(255, 255, 255, 0.65) !important;
+    cursor: pointer !important;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  }
+  .mc-mobile-tab-btn.active {
+    background: linear-gradient(135deg, rgba(0, 212, 255, 0.25), rgba(168, 85, 247, 0.25)) !important;
+    border-color: #00d4ff !important;
+    color: #fff !important;
+    box-shadow: 0 0 12px rgba(0, 212, 255, 0.35) !important;
+    transform: scale(1.02) !important;
   }
   .mc-body-grid.mc-linear-flow {
     padding: 8px 10px 24px !important;
