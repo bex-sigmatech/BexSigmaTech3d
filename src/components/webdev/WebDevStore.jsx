@@ -331,9 +331,14 @@ const WORKS = [
   {
     id: 'normal',
     title: 'Normal Business Website',
-    meta: 'WEBSITE / ESSENTIAL',
-    desc: 'Clean, fast and mobile-ready websites for businesses and personal brands. SEO-optimized, easy to manage and built to convert — landing pages, portfolios and corporate sites that load in under a second.',
-    tags: ['Corporate', 'Landing Page', 'Portfolio', 'Next.js'],
+    subtitle: 'High-Performance Corporate & Conversion Portals',
+    meta: '01 / 04 · ESSENTIAL WEB',
+    desc: 'Clean, fast, and mobile-ready websites for businesses and personal brands. SEO-optimized, easy to manage, and engineered to convert — landing pages, portfolios, and corporate hubs that load in under a second.',
+    image: '/sector_website.jpg',
+    models: 'Frontend Static vs Full Stack Dynamic CMS',
+    timeline: '3-5 Days Delivery',
+    specs: ['< 1.2s Page Load', '100% Mobile & Tablet Responsive', 'SEO Core Integrated', 'Custom CMS & Lead Capture'],
+    tags: ['Corporate', 'Landing Page', 'Portfolio', 'Next.js', 'Tailwind'],
     accent: '#38bdf8',
     glow: 'rgba(56,189,248,0.35)',
     icon: '◈',
@@ -342,9 +347,14 @@ const WORKS = [
   {
     id: 'threed',
     title: '3D Interactive Website',
-    meta: '3D / SPATIAL WEB',
-    desc: 'Immersive 3D websites with Three.js, WebGL and cinematic scroll. Premium spatial storytelling — product showcases and Apple Vision-style interfaces that make your brand unforgettable.',
-    tags: ['Three.js', 'WebGL', 'R3F', 'Motion'],
+    subtitle: 'Spatial WebGL & Cinematic Storytelling',
+    meta: '02 / 04 · 3D SPATIAL WEB',
+    desc: 'Immersive 3D spatial web experiences with Three.js, WebGL, and cinematic scroll. Premium interactive visual journeys — 3D product visualizers and Apple Vision-style interfaces that make your brand unforgettable.',
+    image: '/sector_3d_website.jpg',
+    models: 'Normal 3D Showcase vs Full Stack 3D',
+    timeline: '7-14 Days Delivery',
+    specs: ['60 FPS WebGL Engine', 'Draco 3D Mesh Compression', 'Spatial Camera Rigs', 'Hardware Accelerated'],
+    tags: ['Three.js', 'WebGL', 'R3F', 'Shader Motion', 'Blender'],
     accent: '#a78bfa',
     glow: 'rgba(167,139,250,0.35)',
     icon: '⬢',
@@ -353,9 +363,14 @@ const WORKS = [
   {
     id: 'software',
     title: 'Custom Software Application',
-    meta: 'SOFTWARE / WEB APP',
-    desc: 'Tailored web apps, dashboards, admin panels and SaaS tools. From idea to deployment — secure, scalable and built for your exact workflow, not a template.',
-    tags: ['Web App', 'Dashboard', 'SaaS', 'MERN'],
+    subtitle: 'Enterprise SaaS, Dashboards & Microservices',
+    meta: '03 / 04 · SAAS & SOFTWARE',
+    desc: 'Tailored web applications, administrative dashboards, portals, and SaaS tools. From initial concept to cloud deployment — secure, scalable, and engineered around your exact workflow.',
+    image: '/sector_software.jpg',
+    models: 'Custom Portal vs Multi-Tenant SaaS',
+    timeline: '1-3 Weeks Sprint',
+    specs: ['REST / GraphQL APIs', 'Post-Quantum Auth & Storage', 'Real-Time WebSockets', 'Automated CI/CD Pipelines'],
+    tags: ['Web App', 'Admin Dashboard', 'SaaS Architecture', 'Node / Express', 'Cloud DB'],
     accent: '#34d399',
     glow: 'rgba(52,211,153,0.35)',
     icon: '⬣',
@@ -364,9 +379,14 @@ const WORKS = [
   {
     id: 'custom',
     title: 'Your Unique Idea — We Build It',
-    meta: 'CREATIVE / CUSTOM',
-    desc: 'Have a wild idea? Share your vision and we architect it into reality. Experimental builds, first-of-its-kind products — you imagine, we engineer the impossible.',
-    tags: ['Custom Build', 'Prototype', 'Creative', 'End-to-End'],
+    subtitle: 'Bespoke R&D, AI Agents & First-of-Kind Products',
+    meta: '04 / 04 · BESPOKE INNOVATION',
+    desc: 'Have a breakthrough vision or unique concept? Share your idea and our engineering pod architects it into reality. Experimental builds, custom AI pipelines, and uncharted digital platforms.',
+    image: '/sector_ai_automation.jpg',
+    models: 'Concept Prototype to Full Production',
+    timeline: 'Bespoke Engineering Sprint',
+    specs: ['Dedicated Engineering Pod', 'Weekly Milestone Demos', '100% Custom IP', 'Direct CEO Architecture'],
+    tags: ['Custom Build', 'AI Pipelines', 'Rapid Prototype', 'Direct CEO Line'],
     accent: '#f59e0b',
     glow: 'rgba(245,158,11,0.35)',
     icon: '✦',
@@ -492,8 +512,9 @@ async function initiateCashfreePayment(product, customerName, customerEmail, cus
 export default function WebDevStore() {
   const { userName, exitWebDevStore } = useStore()
 
-  // Service detail modal
+  // Service detail modal & Active Pathway
   const [selectedService, setSelectedService] = useState(null)
+  const [activePathwayIndex, setActivePathwayIndex] = useState(0)
 
   // Cart & Sidebar States
   const [cart, setCart] = useState([])
@@ -1383,38 +1404,169 @@ export default function WebDevStore() {
         </div>
       </section>
 
-      {/* ── What We Build — Unique Bento ── */}
+      {/* ── What We Build — Dynamic 4-Way Architecture Matrix ── */}
       <section className="webdev-bento-section">
         <div className="webdev-bento-header">
           <div className="webdev-bento-eyebrow">
             <span className="bento-eyebrow-dot" />
-            WHAT WE BUILD
+            WHAT WE BUILD · 4 CORE PATHWAYS
             <span className="bento-eyebrow-line" />
           </div>
           <h2 className="webdev-bento-title">Four ways we bring your idea to life</h2>
-          <p className="webdev-bento-sub">From simple to spatial to fully custom — plus your own unique vision, engineered without limits.</p>
+          <p className="webdev-bento-sub">From essential corporate web to spatial 3D and enterprise SaaS — select a pathway below to inspect architecture models.</p>
         </div>
-        <div className="webdev-bento-grid">
-          {WORKS.map((work, idx) => (
-            <div key={idx} className="webdev-bento-card interactive" style={{ '--accent': work.accent, '--glow': work.glow, cursor: 'pointer' }} onClick={() => { cinemaAudio.playOrbSelect(); setSelectedService(work.id) }}>
-              <div className="bento-accent-bar" style={{ background: work.accent }} />
-              <div className="bento-num">{work.num}</div>
-              <div className="bento-icon-ring" style={{ borderColor: work.accent + '45', boxShadow: `0 0 22px ${work.glow}` }}>
-                <span className="bento-icon" style={{ color: work.accent }}>{work.icon}</span>
+
+        {/* Pathway Tabs Selector */}
+        <div className="webdev-pathway-tabs" role="tablist">
+          {WORKS.map((work, idx) => {
+            const isSelected = activePathwayIndex === idx
+            return (
+              <button
+                key={work.id}
+                className={`webdev-pathway-tab interactive ${isSelected ? 'active' : ''}`}
+                style={{
+                  '--tab-accent': work.accent,
+                  '--tab-glow': work.glow,
+                }}
+                onClick={() => {
+                  cinemaAudio.playOrbSelect()
+                  setActivePathwayIndex(idx)
+                }}
+                role="tab"
+                aria-selected={isSelected}
+              >
+                <span className="pathway-tab-num">{work.num}</span>
+                <span className="pathway-tab-icon">{work.icon}</span>
+                <span className="pathway-tab-title">{work.title}</span>
+              </button>
+            )
+          })}
+        </div>
+
+        {/* Active Pathway Hero Stage (Split Showcase) */}
+        {(() => {
+          const activeWork = WORKS[activePathwayIndex] || WORKS[0]
+          return (
+            <div
+              className="webdev-pathway-stage"
+              style={{
+                '--stage-accent': activeWork.accent,
+                '--stage-glow': activeWork.glow,
+              }}
+            >
+              {/* Left Stage: Visualizer Preview */}
+              <div className="pathway-stage-visual">
+                <img src={activeWork.image} alt={activeWork.title} className="pathway-stage-img" loading="lazy" />
+                <div className="pathway-stage-overlay" />
+                <div className="pathway-stage-scanline" />
+                
+                <div className="pathway-stage-badge-bar">
+                  <span className="pathway-stage-badge" style={{ color: activeWork.accent, borderColor: activeWork.accent }}>
+                    {activeWork.meta}
+                  </span>
+                  <span className="pathway-stage-timeline">⏱ {activeWork.timeline}</span>
+                </div>
+
+                <div className="pathway-stage-corners tl" style={{ borderColor: activeWork.accent }} />
+                <div className="pathway-stage-corners tr" style={{ borderColor: activeWork.accent }} />
+                <div className="pathway-stage-corners bl" style={{ borderColor: activeWork.accent }} />
+                <div className="pathway-stage-corners br" style={{ borderColor: activeWork.accent }} />
               </div>
-              <div className="bento-meta" style={{ borderColor: work.accent + '40', color: work.accent }}>{work.meta}</div>
-              <h3 className="bento-title">{work.title}</h3>
-              <p className="bento-desc">{work.desc}</p>
-              <div className="bento-tags">
-                {work.tags.map((t, i) => (
-                  <span key={i} className="bento-tag" style={{ borderColor: work.accent + '28', color: 'rgba(255,255,255,0.82)' }}>{t}</span>
-                ))}
+
+              {/* Right Stage: Architecture Specs & Actions */}
+              <div className="pathway-stage-info">
+                <div>
+                  <div className="pathway-stage-header">
+                    <span className="pathway-stage-num">{activeWork.num}</span>
+                    <span className="pathway-stage-model-pill" style={{ color: activeWork.accent }}>
+                      {activeWork.models}
+                    </span>
+                  </div>
+                  <h3 className="pathway-stage-title">{activeWork.title}</h3>
+                  <div className="pathway-stage-subtitle" style={{ color: activeWork.accent }}>
+                    {activeWork.subtitle}
+                  </div>
+                  <p className="pathway-stage-desc">{activeWork.desc}</p>
+                </div>
+
+                {/* Specs Grid */}
+                <div className="pathway-stage-specs">
+                  {activeWork.specs?.map((spec, i) => (
+                    <div key={i} className="pathway-spec-chip">
+                      <span className="pathway-spec-dot" style={{ background: activeWork.accent }} />
+                      <span>{spec}</span>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Tech Tags */}
+                <div className="pathway-stage-tags">
+                  {activeWork.tags.map((t, i) => (
+                    <span key={i} className="pathway-tech-tag">{t}</span>
+                  ))}
+                </div>
+
+                {/* Actions */}
+                <div className="pathway-stage-actions">
+                  <button
+                    className="pathway-btn-primary interactive"
+                    style={{ background: activeWork.accent }}
+                    onClick={() => {
+                      cinemaAudio.playOrbSelect()
+                      setSelectedService(activeWork.id)
+                    }}
+                  >
+                    <span>🔍 EXPLORE DEEP ARCHITECTURE & QUOTE</span>
+                    <span>→</span>
+                  </button>
+                  <a
+                    href="mailto:bexsigmatech@gmail.com?subject=Project%20Inquiry%20-%20Bex%20Sigma%20Tech"
+                    className="pathway-btn-secondary interactive"
+                  >
+                    ✉ CONTACT CEO
+                  </a>
+                </div>
               </div>
-              <div className="bento-cta-hint" style={{ color: work.accent }}>Explore details →</div>
-              <div className="bento-shine" />
-              <div className="bento-glow-orb" style={{ background: work.glow }} />
             </div>
-          ))}
+          )
+        })()}
+
+        {/* 4-Card Pathway Interactive Strip */}
+        <div className="webdev-pathway-grid">
+          {WORKS.map((work, idx) => {
+            const isSelected = activePathwayIndex === idx
+            return (
+              <div
+                key={idx}
+                className={`webdev-pathway-mini-card interactive ${isSelected ? 'active' : ''}`}
+                style={{
+                  '--accent': work.accent,
+                  '--glow': work.glow,
+                }}
+                onClick={() => {
+                  cinemaAudio.playOrbSelect()
+                  setActivePathwayIndex(idx)
+                }}
+              >
+                <div className="pathway-mini-img-wrap">
+                  <img src={work.image} alt={work.title} className="pathway-mini-img" loading="lazy" />
+                  <div className="pathway-mini-img-overlay" />
+                  <span className="pathway-mini-num">{work.num}</span>
+                </div>
+                <div className="pathway-mini-content">
+                  <div className="pathway-mini-top">
+                    <span className="pathway-mini-icon">{work.icon}</span>
+                    <span className="pathway-mini-meta" style={{ color: work.accent }}>{work.meta.split('·')[1]?.trim() || work.meta}</span>
+                  </div>
+                  <h4 className="pathway-mini-title">{work.title}</h4>
+                  <div className="pathway-mini-cta" style={{ color: work.accent }}>
+                    <span>{isSelected ? '● Active' : 'Select'}</span>
+                    <span>→</span>
+                  </div>
+                </div>
+              </div>
+            )
+          })}
         </div>
       </section>
 
