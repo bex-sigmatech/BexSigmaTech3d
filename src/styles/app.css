@@ -4271,20 +4271,20 @@ body {
 
   .hq-bottom-dock {
     position: absolute !important;
-    bottom: calc(env(safe-area-inset-bottom, 12px) + 8px) !important;
+    bottom: calc(env(safe-area-inset-bottom, 12px) + 6px) !important;
     left: 50% !important;
     transform: translateX(-50%) !important;
     width: calc(100vw - 24px) !important;
-    max-width: 440px !important;
-    gap: 6px !important;
+    max-width: 320px !important;
+    gap: 4px !important;
     z-index: 20 !important;
     pointer-events: none !important;
   }
 
   .jarvis-orb-minimap {
-    padding: 5px 8px !important;
-    gap: 4px !important;
-    background: rgba(15, 23, 42, 0.55) !important;
+    padding: 3px 6px !important;
+    gap: 3px !important;
+    background: rgba(15, 23, 42, 0.65) !important;
     border: 1px solid rgba(255, 255, 255, 0.14) !important;
     border-radius: 999px !important;
     backdrop-filter: blur(20px) !important;
@@ -4293,41 +4293,49 @@ body {
   }
 
   .jarvis-minimap-item {
-    padding: 3px 8px !important;
-    font-size: 0.6rem !important;
+    padding: 2px 6px !important;
+    font-size: 0.54rem !important;
   }
 
   .jarvis-minimap-dot {
-    width: 6px !important;
-    height: 6px !important;
+    width: 5px !important;
+    height: 5px !important;
   }
 
   .jarvis-dept-panel {
-    padding: 8px 12px !important;
-    gap: 6px !important;
-    background: rgba(6, 12, 24, 0.85) !important;
+    padding: 6px 10px !important;
+    gap: 4px !important;
+    background: rgba(4, 10, 22, 0.9) !important;
     border: 1px solid rgba(255, 255, 255, 0.14) !important;
-    border-radius: 14px !important;
+    border-radius: 10px !important;
     backdrop-filter: blur(20px) !important;
     -webkit-backdrop-filter: blur(20px) !important;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
     pointer-events: auto !important;
   }
 
+  .jarvis-dept-orb-dot {
+    width: 7px !important;
+    height: 7px !important;
+    margin-top: 3px !important;
+  }
+
   .jarvis-dept-index {
-    font-size: 0.52rem !important;
-    margin-bottom: 2px !important;
+    font-size: 0.46rem !important;
+    margin-bottom: 1px !important;
   }
 
   .jarvis-dept-title {
-    font-size: 0.95rem !important;
-    margin-bottom: 2px !important;
+    font-size: 0.82rem !important;
+    line-height: 1.15 !important;
+    margin-bottom: 1px !important;
   }
 
   .jarvis-dept-subtitle {
-    font-size: 0.64rem !important;
-    margin-bottom: 4px !important;
-    opacity: 0.8 !important;
+    font-size: 0.58rem !important;
+    line-height: 1.15 !important;
+    margin-bottom: 3px !important;
+    opacity: 0.85 !important;
   }
 
   .jarvis-dept-desc {
@@ -4335,25 +4343,25 @@ body {
   }
 
   .nolan-dept-tech-row {
-    display: flex !important;
-    gap: 4px !important;
-    margin-bottom: 6px !important;
-    flex-wrap: wrap !important;
+    display: none !important;
   }
 
   .nolan-tech-tag {
-    font-size: 0.52rem !important;
-    padding: 2px 6px !important;
+    display: none !important;
+  }
+
+  .nolan-dept-actions {
+    margin-top: 2px !important;
   }
 
   .nolan-btn-primary.jarvis-engage-btn {
-    font-size: 0.65rem !important;
-    padding: 8px 12px !important;
+    font-size: 0.58rem !important;
+    padding: 5px 8px !important;
     width: 100% !important;
     justify-content: center !important;
-    border-radius: 8px !important;
-    min-height: 36px !important;
-    letter-spacing: 0.06em !important;
+    border-radius: 6px !important;
+    min-height: 28px !important;
+    letter-spacing: 0.05em !important;
   }
 
   /* ──── Boot Screen ──── */

@@ -2700,70 +2700,154 @@
   }
 }
 
-/* Small Mobile (<= 480px) */
-@media (max-width: 480px) {
+/* Small Mobile (<= 480px / 500px) */
+@media (max-width: 500px) {
+  .mc-page-scroll {
+    padding-bottom: 50px;
+  }
+  .mc-body-grid.mc-linear-flow {
+    padding: 8px 10px 24px !important;
+    gap: 10px !important;
+    max-width: 100% !important;
+  }
   .mc-page-title {
-    font-size: 1.15rem;
+    font-size: 1.05rem;
   }
   .mc-page-subtitle {
-    font-size: 0.68rem;
+    font-size: 0.64rem;
   }
   .mc-ceo-card {
-    padding: 12px 14px !important;
-    gap: 8px !important;
-    border-radius: 12px !important;
-  }
-  .mc-overview-box {
-    padding: 12px 14px !important;
-    border-radius: 12px !important;
-  }
-  .mc-tech-card {
-    padding: 12px 14px !important;
-    border-radius: 12px !important;
-  }
-  .mc-smooth-card {
-    padding: 8px 10px !important;
-    gap: 8px !important;
+    padding: 10px 12px !important;
+    gap: 6px !important;
     border-radius: 10px !important;
   }
+  .mc-ceo-avatar-wrap {
+    width: 48px !important;
+    height: 48px !important;
+    min-width: 48px !important;
+  }
+  .mc-ceo-name {
+    font-size: 1rem !important;
+  }
+  .mc-ceo-quote {
+    font-size: 0.65rem !important;
+    padding: 6px 8px !important;
+  }
+  .mc-overview-box {
+    padding: 10px 12px !important;
+    border-radius: 10px !important;
+  }
+  .mc-mission-title {
+    font-size: 0.95rem !important;
+    margin-bottom: 4px !important;
+  }
+  .mc-overview-text {
+    font-size: 0.72rem !important;
+    line-height: 1.45 !important;
+  }
+  .mc-tech-card {
+    padding: 10px 12px !important;
+    border-radius: 10px !important;
+  }
+  .mc-tech-heading {
+    font-size: 0.85rem !important;
+    margin-bottom: 6px !important;
+  }
+  .mc-tech-pill {
+    font-size: 0.56rem !important;
+    padding: 3px 8px !important;
+  }
+  .mc-capabilities-section {
+    margin-top: 6px !important;
+  }
+  .mc-section-title {
+    font-size: 0.92rem !important;
+  }
+  .mc-smooth-grid {
+    gap: 8px !important;
+  }
+  .mc-smooth-card {
+    padding: 8px !important;
+    gap: 6px !important;
+    border-radius: 8px !important;
+  }
   .mc-smooth-img-wrap {
-    height: 120px !important;
+    height: 105px !important;
+    border-radius: 6px !important;
+  }
+  .mc-smooth-title {
+    font-size: 0.82rem !important;
+  }
+  .mc-smooth-subtitle {
+    font-size: 0.62rem !important;
+    margin-bottom: 2px !important;
+  }
+  .mc-smooth-desc {
+    font-size: 0.68rem !important;
+    line-height: 1.35 !important;
+    -webkit-line-clamp: 2 !important;
+    margin-bottom: 4px !important;
+  }
+  .mc-smooth-footer {
+    gap: 4px !important;
+  }
+  .mc-smooth-specs {
+    gap: 3px !important;
+  }
+  .mc-smooth-spec-pill {
+    font-size: 0.50rem !important;
+    padding: 1px 4px !important;
   }
   .mc-bottom-cta {
-    padding: 14px 12px !important;
-    margin: 8px 0 0 !important;
-    border-radius: 12px !important;
+    padding: 12px 10px !important;
+    margin: 6px 0 0 !important;
+    border-radius: 10px !important;
+  }
+  .mc-bottom-cta-title {
+    font-size: 0.95rem !important;
+  }
+  .mc-bottom-cta-desc {
+    font-size: 0.68rem !important;
   }
   .mc-ai-solo-loading-wrap {
-    padding: 20px 10px;
-    min-height: calc(65vh - 50px);
+    padding: 16px 8px !important;
+    min-height: calc(60vh - 40px) !important;
   }
   .mc-ai-solo-card {
-    padding: 24px 14px;
-    border-radius: 16px;
+    max-width: 290px !important;
+    padding: 16px 12px !important;
+    border-radius: 12px !important;
   }
   .mc-ai-solo-spinner-box {
-    width: 80px;
-    height: 80px;
-    margin-bottom: 14px;
+    width: 60px !important;
+    height: 60px !important;
+    margin-bottom: 8px !important;
+  }
+  .mc-ai-solo-core {
+    font-size: 1.3rem !important;
   }
   .mc-ai-solo-title {
-    font-size: 1.18rem;
-    margin-bottom: 4px;
+    font-size: 0.98rem !important;
+    margin-bottom: 4px !important;
   }
   .mc-ai-solo-subtitle {
-    font-size: 0.74rem;
-    margin-bottom: 16px;
+    font-size: 0.68rem !important;
+    line-height: 1.4 !important;
+    margin-bottom: 10px !important;
   }
   .mc-ai-solo-progress-box {
-    padding: 8px 10px;
-    margin-bottom: 16px;
+    padding: 6px 8px !important;
+    margin-bottom: 10px !important;
+    border-radius: 6px !important;
+  }
+  .mc-ai-solo-progress-info {
+    font-size: 0.54rem !important;
   }
   .mc-ai-solo-back-btn {
-    width: 100%;
-    text-align: center;
-    padding: 8px 14px;
-    font-size: 0.65rem;
+    width: 100% !important;
+    text-align: center !important;
+    padding: 6px 12px !important;
+    font-size: 0.60rem !important;
   }
   .mc-stats-grid.mc-ceo-stats {
     grid-template-columns: 1fr;
