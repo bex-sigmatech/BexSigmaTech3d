@@ -2708,34 +2708,62 @@
   .mc-page-subtitle {
     font-size: 0.68rem;
   }
+  .mc-ceo-card {
+    padding: 12px 14px !important;
+    gap: 8px !important;
+    border-radius: 12px !important;
+  }
+  .mc-overview-box {
+    padding: 12px 14px !important;
+    border-radius: 12px !important;
+  }
+  .mc-tech-card {
+    padding: 12px 14px !important;
+    border-radius: 12px !important;
+  }
+  .mc-smooth-card {
+    padding: 8px 10px !important;
+    gap: 8px !important;
+    border-radius: 10px !important;
+  }
+  .mc-smooth-img-wrap {
+    height: 120px !important;
+  }
+  .mc-bottom-cta {
+    padding: 14px 12px !important;
+    margin: 8px 0 0 !important;
+    border-radius: 12px !important;
+  }
   .mc-ai-solo-loading-wrap {
-    padding: 24px 10px;
-    min-height: calc(70vh - 60px);
+    padding: 20px 10px;
+    min-height: calc(65vh - 50px);
   }
   .mc-ai-solo-card {
-    padding: 30px 16px;
-    border-radius: 18px;
+    padding: 24px 14px;
+    border-radius: 16px;
   }
   .mc-ai-solo-spinner-box {
-    width: 90px;
-    height: 90px;
-    margin-bottom: 16px;
+    width: 80px;
+    height: 80px;
+    margin-bottom: 14px;
   }
   .mc-ai-solo-title {
-    font-size: 1.25rem;
-    margin-bottom: 6px;
+    font-size: 1.18rem;
+    margin-bottom: 4px;
   }
   .mc-ai-solo-subtitle {
-    font-size: 0.78rem;
-    margin-bottom: 18px;
+    font-size: 0.74rem;
+    margin-bottom: 16px;
   }
   .mc-ai-solo-progress-box {
-    padding: 10px 12px;
-    margin-bottom: 18px;
+    padding: 8px 10px;
+    margin-bottom: 16px;
   }
   .mc-ai-solo-back-btn {
     width: 100%;
     text-align: center;
+    padding: 8px 14px;
+    font-size: 0.65rem;
   }
   .mc-stats-grid.mc-ceo-stats {
     grid-template-columns: 1fr;

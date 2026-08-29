@@ -4303,43 +4303,57 @@ body {
   }
 
   .jarvis-dept-panel {
-    padding: 12px 14px !important;
-    gap: 8px !important;
-    background: rgba(15, 23, 42, 0.65) !important;
-    border: 1px solid rgba(255, 255, 255, 0.16) !important;
-    border-radius: 20px !important;
-    backdrop-filter: blur(28px) !important;
-    -webkit-backdrop-filter: blur(28px) !important;
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.25) !important;
+    padding: 8px 12px !important;
+    gap: 6px !important;
+    background: rgba(6, 12, 24, 0.85) !important;
+    border: 1px solid rgba(255, 255, 255, 0.14) !important;
+    border-radius: 14px !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
     pointer-events: auto !important;
   }
 
+  .jarvis-dept-index {
+    font-size: 0.52rem !important;
+    margin-bottom: 2px !important;
+  }
+
   .jarvis-dept-title {
-    font-size: 1.15rem !important;
+    font-size: 0.95rem !important;
+    margin-bottom: 2px !important;
   }
 
   .jarvis-dept-subtitle {
-    font-size: 0.7rem !important;
+    font-size: 0.64rem !important;
+    margin-bottom: 4px !important;
+    opacity: 0.8 !important;
   }
 
   .jarvis-dept-desc {
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    font-size: 0.68rem !important;
+    display: none !important;
+  }
+
+  .nolan-dept-tech-row {
+    display: flex !important;
+    gap: 4px !important;
+    margin-bottom: 6px !important;
+    flex-wrap: wrap !important;
+  }
+
+  .nolan-tech-tag {
+    font-size: 0.52rem !important;
+    padding: 2px 6px !important;
   }
 
   .nolan-btn-primary.jarvis-engage-btn {
-    font-size: 0.72rem !important;
-    padding: 12px 14px !important;
+    font-size: 0.65rem !important;
+    padding: 8px 12px !important;
     width: 100% !important;
     justify-content: center !important;
-    border-radius: 12px !important;
-    min-height: 46px !important;
-    background: linear-gradient(135deg, rgba(147, 51, 234, 0.9) 0%, rgba(126, 34, 206, 0.8) 100%) !important;
-    box-shadow: 0 4px 20px rgba(147, 51, 234, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.4) !important;
+    border-radius: 8px !important;
+    min-height: 36px !important;
+    letter-spacing: 0.06em !important;
   }
 
   /* ──── Boot Screen ──── */
@@ -8847,8 +8861,9 @@ body {
   .jarvis-orb-minimap::-webkit-scrollbar { display: none; }
   .jarvis-minimap-item { flex-shrink: 0; }
   .jarvis-dept-panel {
-    border-radius: 20px !important;
-    padding: 16px !important;
+    border-radius: 14px !important;
+    padding: 8px 12px !important;
+    background: rgba(6, 12, 24, 0.88) !important;
   }
   /* Store mobile: thumb-friendly */
   .webdev-slider-viewport { height: 440px !important; }
