@@ -2705,17 +2705,142 @@
   .mc-page-scroll {
     padding-bottom: 50px;
   }
+  
+  /* ── Cyber-Cockpit Mobile Header Pattern ── */
   .mc-header {
-    background: rgba(3, 6, 14, 0.55) !important;
-    border-bottom: 1px solid rgba(0, 212, 255, 0.1) !important;
-    backdrop-filter: blur(16px) !important;
-    -webkit-backdrop-filter: blur(16px) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 6px !important;
+    padding: 8px 12px 6px !important;
+    background: rgba(3, 8, 18, 0.65) !important;
+    border-bottom: 1px solid rgba(0, 212, 255, 0.12) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 100 !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5) !important;
   }
+
+  .mc-header-left {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    gap: 4px !important;
+  }
+
+  .mc-back-btn {
+    align-self: flex-start !important;
+    padding: 4px 10px !important;
+    font-size: 0.58rem !important;
+    border-radius: 16px !important;
+    background: rgba(0, 212, 255, 0.08) !important;
+    border: 1px solid rgba(0, 212, 255, 0.28) !important;
+    color: #00d4ff !important;
+    letter-spacing: 0.06em !important;
+    font-weight: 800 !important;
+  }
+
+  .mc-header-titles {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 2px !important;
+  }
+
+  .mc-dept-label {
+    display: flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+    flex-wrap: wrap !important;
+    font-size: 0.48rem !important;
+    margin-bottom: 1px !important;
+  }
+
+  .mc-badge-pill {
+    font-size: 0.48rem !important;
+    padding: 1px 5px !important;
+    border-radius: 4px !important;
+    background: rgba(0, 212, 255, 0.15) !important;
+    border: 1px solid rgba(0, 212, 255, 0.35) !important;
+    color: #00d4ff !important;
+  }
+
+  .mc-user-tag {
+    font-size: 0.48rem !important;
+    padding: 1px 5px !important;
+    border-radius: 4px !important;
+    background: rgba(255, 255, 255, 0.04) !important;
+    border: 1px solid rgba(255, 255, 255, 0.06) !important;
+    color: rgba(255, 255, 255, 0.6) !important;
+  }
+
+  .mc-page-title {
+    font-family: 'Orbitron', monospace !important;
+    font-size: 1.05rem !important;
+    font-weight: 800 !important;
+    color: #fff !important;
+    margin: 0 !important;
+    line-height: 1.15 !important;
+    letter-spacing: 0.02em !important;
+    text-shadow: 0 0 12px rgba(0, 212, 255, 0.35) !important;
+  }
+
+  .mc-page-subtitle {
+    font-size: 0.62rem !important;
+    color: rgba(255, 255, 255, 0.6) !important;
+    line-height: 1.2 !important;
+    margin: 0 !important;
+  }
+
+  .mc-header-right {
+    display: flex !important;
+    width: 100% !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    margin-top: 2px !important;
+    padding-top: 4px !important;
+    border-top: 1px dashed rgba(255, 255, 255, 0.06) !important;
+  }
+
+  .mc-audio-btn {
+    padding: 4px 10px !important;
+    font-size: 0.54rem !important;
+    border-radius: 14px !important;
+    background: rgba(0, 255, 136, 0.08) !important;
+    border: 1px solid rgba(0, 255, 136, 0.25) !important;
+    color: #00ff88 !important;
+    letter-spacing: 0.06em !important;
+  }
+
+  .mc-clock-badge {
+    padding: 2px 8px !important;
+    font-size: 0.52rem !important;
+    border-radius: 14px !important;
+    background: rgba(255, 255, 255, 0.04) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  }
+
   .mc-sector-nav {
-    background: rgba(2, 5, 12, 0.4) !important;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.04) !important;
-    backdrop-filter: blur(12px) !important;
-    -webkit-backdrop-filter: blur(12px) !important;
+    background: rgba(2, 5, 12, 0.45) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+    backdrop-filter: blur(14px) !important;
+    -webkit-backdrop-filter: blur(14px) !important;
+    padding: 4px 8px !important;
+  }
+
+  .mc-sector-chip {
+    padding: 4px 9px !important;
+    font-size: 0.56rem !important;
+    border-radius: 14px !important;
+    background: rgba(255, 255, 255, 0.03) !important;
+    border: 1px solid rgba(255, 255, 255, 0.07) !important;
+  }
+
+  .mc-sector-chip.active {
+    background: linear-gradient(135deg, rgba(0, 212, 255, 0.22), rgba(167, 139, 250, 0.2)) !important;
+    border-color: #00d4ff !important;
+    color: #fff !important;
+    box-shadow: 0 0 10px rgba(0, 212, 255, 0.35) !important;
   }
   .mc-body-grid.mc-linear-flow {
     padding: 8px 10px 24px !important;
