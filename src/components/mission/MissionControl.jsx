@@ -260,44 +260,79 @@ export default function MissionControl() {
             {/* 1. FOUNDER & CEO PROFILE CONTAINER */}
             <section className="mc-ceo-card mc-ceo-card-fullwidth">
               <div className="mc-ceo-glow-ring" />
+              
+              {/* Top HUD Security & Protocol Header */}
               <div className="mc-ceo-top-header">
                 <div className="mc-section-eyebrow">
                   <span className="mc-eyebrow-dot" />
-                  FOUNDER & LEADERSHIP
+                  <span className="mc-eyebrow-tag">LVL-9 ARCHITECT</span>
+                  <span>FOUNDER & LEADERSHIP</span>
                 </div>
                 <div className="mc-live-status-pill">
                   <span className="mc-live-dot" />
-                  <span>ONLINE · DIRECT LINE ACTIVE</span>
+                  <span>DIRECT LINE ACTIVE</span>
                 </div>
               </div>
 
               <div className="mc-ceo-content">
+                {/* Holographic Cyber Avatar Chamber */}
                 <div className="mc-ceo-avatar-wrap">
-                  <img
-                    src="/ceo_hariharan.jpg"
-                    alt="Hariharan.D — Founder & CEO of Bex Sigma Tech"
-                    className="mc-ceo-avatar"
-                  />
+                  <div className="mc-avatar-chamber-frame">
+                    <img
+                      src="/ceo_hariharan.jpg"
+                      alt="Hariharan.D — Founder & CEO of Bex Sigma Tech"
+                      className="mc-ceo-avatar"
+                    />
+                    <div className="mc-avatar-scanline" />
+                    <div className="mc-avatar-crosshair tl" />
+                    <div className="mc-avatar-crosshair tr" />
+                    <div className="mc-avatar-crosshair bl" />
+                    <div className="mc-avatar-crosshair br" />
+                  </div>
                   <div className="mc-ceo-avatar-ring" />
                   <div className="mc-ceo-status-dot" title="Online" />
-                </div>
-                <div className="mc-ceo-info">
-                  <div className="mc-ceo-badge">FOUNDER & CEO</div>
-                  <h2 className="mc-ceo-name">Hariharan.D</h2>
-                  <p className="mc-ceo-tagline">Visionary Architect & Founder · BEX Sigma Tech</p>
-                  <a
-                    href="mailto:bexsigmatech@gmail.com"
-                    className="mc-ceo-email interactive"
-                  >
-                    <span className="mc-ceo-email-icon">✉</span>
-                    <span>bexsigmatech@gmail.com</span>
-                  </a>
+                  <div className="mc-ceo-verified-badge">
+                    <span className="mc-verified-icon">✓</span>
+                    <span>VERIFIED</span>
+                  </div>
                 </div>
 
+                {/* Identity & Cyber Bio */}
+                <div className="mc-ceo-info">
+                  <div className="mc-ceo-badge-row">
+                    <span className="mc-ceo-badge">FOUNDER & CEO</span>
+                    <span className="mc-ceo-sub-badge">CHIEF ARCHITECT</span>
+                  </div>
+                  <h2 className="mc-ceo-name">Hariharan.D</h2>
+                  <p className="mc-ceo-tagline">Visionary Architect & Full-Stack Pioneer · BEX Sigma Tech</p>
+
+                  {/* Specialization Pills */}
+                  <div className="mc-ceo-skills-row">
+                    <span className="mc-ceo-skill-pill">⚡ 3D Spatial Engines</span>
+                    <span className="mc-ceo-skill-pill">🧠 Autonomous AI</span>
+                    <span className="mc-ceo-skill-pill">🛡️ Core Architecture</span>
+                  </div>
+
+                  {/* Direct Contact Action Button */}
+                  <div className="mc-ceo-action-row">
+                    <a
+                      href="mailto:bexsigmatech@gmail.com"
+                      className="mc-ceo-email interactive"
+                      title="Direct Line to Founder & CEO"
+                    >
+                      <span className="mc-ceo-email-icon">✉</span>
+                      <span>bexsigmatech@gmail.com</span>
+                      <span className="mc-ceo-email-arrow">⚡</span>
+                    </a>
+                  </div>
+                </div>
+
+                {/* 3-Segment KPI Metrics */}
                 {article.stats && (
                   <div className="mc-stats-grid mc-ceo-stats">
                     {article.stats.map((s, i) => (
                       <div key={i} className="mc-stat-item">
+                        <div className="mc-stat-item-bar" />
                         <div className="mc-stat-item-val">
                           <AnimatedCounter value={s.value} duration={1200 + i * 200} />
                         </div>
@@ -308,8 +343,19 @@ export default function MissionControl() {
                 )}
               </div>
 
+              {/* Holographic Manifesto Transmission */}
               <div className="mc-ceo-quote">
-                "We don't just build software — we architect digital experiences that redefine what's possible."
+                <div className="mc-quote-header">
+                  <span className="mc-quote-prefix">// ARCHITECT TRANSMISSION #001</span>
+                  <span className="mc-quote-wave">
+                    <span />
+                    <span />
+                    <span />
+                  </span>
+                </div>
+                <div className="mc-quote-body">
+                  "We don't just build software — we architect digital experiences that redefine what's possible."
+                </div>
               </div>
             </section>
 
