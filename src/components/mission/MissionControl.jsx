@@ -206,242 +206,140 @@ export default function MissionControl() {
           </div>
         </nav>
 
-        {/* ── Main Command Body (Linear Flow) ── */}
-        <main className="mc-body-grid mc-linear-flow">
-          {/* 1. FOUNDER & CEO PROFILE CONTAINER */}
-          <section className="mc-ceo-card mc-ceo-card-fullwidth">
-            <div className="mc-ceo-glow-ring" />
-            <div className="mc-ceo-top-header">
-              <div className="mc-section-eyebrow">
-                <span className="mc-eyebrow-dot" />
-                FOUNDER & LEADERSHIP
+        {/* ── Main Command Body ── */}
+        {article.id === 'ai_auto' ? (
+          <main className="mc-ai-solo-loading-wrap">
+            <div className="mc-ai-solo-card">
+              {/* Glowing High-Tech Loading Spinner / Gyro */}
+              <div className="mc-ai-solo-spinner-box">
+                <div className="mc-ai-solo-ring ring-outer" />
+                <div className="mc-ai-solo-ring ring-mid" />
+                <div className="mc-ai-solo-ring ring-inner" />
+                <div className="mc-ai-solo-core">
+                  <span className="mc-ai-solo-icon">🤖</span>
+                  <div className="mc-ai-solo-glow-orb" />
+                </div>
               </div>
-              <div className="mc-live-status-pill">
-                <span className="mc-live-dot" />
-                <span>ONLINE · DIRECT LINE ACTIVE</span>
-              </div>
-            </div>
 
-            <div className="mc-ceo-content">
-              <div className="mc-ceo-avatar-wrap">
-                <img
-                  src="/ceo_hariharan.jpg"
-                  alt="Hariharan.D — Founder & CEO of Bex Sigma Tech"
-                  className="mc-ceo-avatar"
-                />
-                <div className="mc-ceo-avatar-ring" />
-                <div className="mc-ceo-status-dot" title="Online" />
+              {/* Status Badge */}
+              <div className="mc-ai-solo-badge">
+                <span className="mc-ai-solo-pulse-dot" />
+                <span>AI AUTOMATION DIVISION</span>
               </div>
-              <div className="mc-ceo-info">
-                <div className="mc-ceo-badge">FOUNDER & CEO</div>
-                <h2 className="mc-ceo-name">Hariharan.D</h2>
-                <p className="mc-ceo-tagline">Visionary Architect & Founder · BEX Sigma Tech</p>
-                <a
-                  href="mailto:bexsigmatech@gmail.com"
-                  className="mc-ceo-email interactive"
+
+              {/* Title & Subtitle */}
+              <h2 className="mc-ai-solo-title">Working on Projects...</h2>
+              <p className="mc-ai-solo-subtitle">
+                Our AI engineering pod is currently building and calibrating custom autonomous agent pipelines.
+              </p>
+
+              {/* Animated Loading Bar */}
+              <div className="mc-ai-solo-progress-box">
+                <div className="mc-ai-solo-progress-track">
+                  <div className="mc-ai-solo-progress-bar" />
+                </div>
+                <div className="mc-ai-solo-progress-info">
+                  <span>Neural Pipeline Calibration</span>
+                  <span className="mc-ai-solo-pct">IN PROGRESS</span>
+                </div>
+              </div>
+
+              {/* Simple Back button */}
+              <div className="mc-ai-solo-actions">
+                <button
+                  className="mc-ai-solo-back-btn interactive"
+                  onClick={() => handleSectorSwitch('mission_control')}
                 >
-                  <span className="mc-ceo-email-icon">✉</span>
-                  <span>bexsigmatech@gmail.com</span>
-                </a>
+                  ← RETURN TO MISSION CONTROL
+                </button>
               </div>
-
-              {article.stats && (
-                <div className="mc-stats-grid mc-ceo-stats">
-                  {article.stats.map((s, i) => (
-                    <div key={i} className="mc-stat-item">
-                      <div className="mc-stat-item-val">
-                        <AnimatedCounter value={s.value} duration={1200 + i * 200} />
-                      </div>
-                      <div className="mc-stat-item-lbl">{s.label}</div>
-                    </div>
-                  ))}
-                </div>
-              )}
             </div>
-
-            <div className="mc-ceo-quote">
-              "We don't just build software — we architect digital experiences that redefine what's possible."
-            </div>
-          </section>
-
-          {/* 2. OUR MISSION & VISION CONTAINER */}
-          <section className="mc-overview-box">
-            <div className="mc-section-eyebrow" style={{ marginBottom: 10 }}>
-              <span className="mc-eyebrow-dot" />
-              OUR MISSION & VISION
-            </div>
-            <h3 className="mc-mission-title">{article.title} — {article.subtitle}</h3>
-            <p className="mc-overview-text">{article.overview}</p>
-          </section>
-
-          {/* 3. SIGMA TECHNOLOGY ESSENTIALS / ARSENAL */}
-          <section className="mc-tech-card">
-            <div className="mc-section-eyebrow">
-              <span className="mc-eyebrow-dot" />
-              SIGMA TECHNOLOGY ESSENTIALS
-            </div>
-            <h3 className="mc-tech-heading">Advanced Engineering Stack & Core Frameworks</h3>
-            <div className="mc-tech-tags-cloud">
-              {(article.tech || activeMission.tech || []).map((t, idx) => (
-                <span key={idx} className="mc-tech-pill interactive">
-                  {t}
-                </span>
-              ))}
-            </div>
-          </section>
-
-          {/* 4. SPECIALIZED CAPABILITIES / AI AUTOMATION ACTIVE LABS */}
-          {article.id === 'ai_auto' ? (
-            <section className="mc-ai-lab-section">
-              {/* Central Holographic Neural Loading Stage */}
-              <div className="mc-ai-loader-card">
-                <div className="mc-ai-loader-gyro">
-                  <div className="gyro-ring ring-1" />
-                  <div className="gyro-ring ring-2" />
-                  <div className="gyro-ring ring-3" />
-                  <div className="gyro-core">
-                    <span className="gyro-icon">🤖</span>
-                    <span className="gyro-pulse-dot" />
-                  </div>
-                </div>
-
-                <div className="mc-ai-loader-text-block">
-                  <div className="mc-ai-loader-status-pill">
-                    <span className="ai-status-pulse" />
-                    <span>ACTIVE R&D WORKSPACE · ACTIVE PIPELINE IN PROGRESS</span>
-                  </div>
-                  <h3 className="mc-ai-loader-title">Engineering Custom AI Agent Swarms & Autonomous Pipelines</h3>
-                  <p className="mc-ai-loader-desc">
-                    Our AI Automation division is actively building bespoke neural workflows, voice intelligence gateways, and custom knowledge synthesizers. We engineer tailor-made AI solutions specifically for your business infrastructure rather than generic off-the-shelf templates.
-                  </p>
-
-                  {/* Dynamic Progress Bar */}
-                  <div className="mc-ai-progress-container">
-                    <div className="mc-ai-progress-labels">
-                      <span>Neural Pipeline Calibration & Model Fine-Tuning</span>
-                      <span className="mc-ai-progress-pct">88.4% COMPILING</span>
-                    </div>
-                    <div className="mc-ai-progress-track">
-                      <div className="mc-ai-progress-fill" />
-                      <div className="mc-ai-progress-glow" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Active Projects In Development Matrix */}
-              <div className="mc-ai-projects-header">
+          </main>
+        ) : (
+          <main className="mc-body-grid mc-linear-flow">
+            {/* 1. FOUNDER & CEO PROFILE CONTAINER */}
+            <section className="mc-ceo-card mc-ceo-card-fullwidth">
+              <div className="mc-ceo-glow-ring" />
+              <div className="mc-ceo-top-header">
                 <div className="mc-section-eyebrow">
                   <span className="mc-eyebrow-dot" />
-                  CONFIDENTIAL CLIENT PODS & ACTIVE WORKSTREAMS
+                  FOUNDER & LEADERSHIP
                 </div>
-                <h3 className="mc-section-title">Current AI Projects Under Active Development</h3>
+                <div className="mc-live-status-pill">
+                  <span className="mc-live-dot" />
+                  <span>ONLINE · DIRECT LINE ACTIVE</span>
+                </div>
               </div>
 
-              <div className="mc-ai-projects-grid">
-                {[
-                  {
-                    code: 'PROJECT #01',
-                    title: 'Autonomous Multi-Agent Workflow Swarms',
-                    status: '⚡ PIPELINE COMPILING',
-                    pct: 88,
-                    color: '#00ff88',
-                    desc: 'Autonomous agent network handling multi-stage approvals, CRM synchronization, automated handoffs, and notification routing across enterprise tools.',
-                    tags: ['LangGraph', 'CrewAI', 'Node Core', 'REST Webhooks'],
-                  },
-                  {
-                    code: 'PROJECT #02',
-                    title: 'Intelligent Knowledge Synthesis & Note Generation',
-                    status: '🧠 NEURAL TRAINING',
-                    pct: 94,
-                    color: '#38bdf8',
-                    desc: 'Real-time audio/text transcription engine that classifies, summarizes, and automatically structures meeting minutes into searchable company wikis.',
-                    tags: ['Gemini 2.0', 'Vector DB', 'Semantic Index', 'Whisper'],
-                  },
-                  {
-                    code: 'PROJECT #03',
-                    title: 'Sub-500ms Voice Multimodal Customer Agents',
-                    status: '🎙️ LATENCY TUNING',
-                    pct: 82,
-                    color: '#a78bfa',
-                    desc: 'Low-latency natural conversational voice and chat agents for 24/7 customer booking, lead triage, and direct client support.',
-                    tags: ['WebRTC', 'Gemini Live', 'Voice HUD', 'Zero-Downtime'],
-                  },
-                  {
-                    code: 'PROJECT #04',
-                    title: 'Predictive Business Intelligence & Data Pipelines',
-                    status: '📊 MODEL EVALUATION',
-                    pct: 74,
-                    color: '#f59e0b',
-                    desc: 'Automated data extraction and neural forecasting models predicting customer demand, preventing churn, and drafting executive insight sheets.',
-                    tags: ['Python Core', 'PyTorch', 'TimescaleDB', 'Encrypted'],
-                  },
-                ].map((proj, idx) => (
-                  <div
-                    key={idx}
-                    className="mc-ai-project-card interactive"
-                    style={{
-                      '--proj-color': proj.color,
-                    }}
+              <div className="mc-ceo-content">
+                <div className="mc-ceo-avatar-wrap">
+                  <img
+                    src="/ceo_hariharan.jpg"
+                    alt="Hariharan.D — Founder & CEO of Bex Sigma Tech"
+                    className="mc-ceo-avatar"
+                  />
+                  <div className="mc-ceo-avatar-ring" />
+                  <div className="mc-ceo-status-dot" title="Online" />
+                </div>
+                <div className="mc-ceo-info">
+                  <div className="mc-ceo-badge">FOUNDER & CEO</div>
+                  <h2 className="mc-ceo-name">Hariharan.D</h2>
+                  <p className="mc-ceo-tagline">Visionary Architect & Founder · BEX Sigma Tech</p>
+                  <a
+                    href="mailto:bexsigmatech@gmail.com"
+                    className="mc-ceo-email interactive"
                   >
-                    <div className="mc-ai-proj-top">
-                      <span className="mc-ai-proj-code">{proj.code}</span>
-                      <span
-                        className="mc-ai-proj-status"
-                        style={{ color: proj.color, borderColor: proj.color + '55' }}
-                      >
-                        <span className="proj-status-dot" style={{ background: proj.color }} />
-                        {proj.status}
-                      </span>
-                    </div>
+                    <span className="mc-ceo-email-icon">✉</span>
+                    <span>bexsigmatech@gmail.com</span>
+                  </a>
+                </div>
 
-                    <h4 className="mc-ai-proj-title">{proj.title}</h4>
-                    <p className="mc-ai-proj-desc">{proj.desc}</p>
-
-                    {/* Mini animated loading bar */}
-                    <div className="mc-ai-mini-progress">
-                      <div className="mc-ai-mini-track">
-                        <div
-                          className="mc-ai-mini-fill"
-                          style={{
-                            width: `${proj.pct}%`,
-                            background: proj.color,
-                            boxShadow: `0 0 10px ${proj.color}`,
-                          }}
-                        />
+                {article.stats && (
+                  <div className="mc-stats-grid mc-ceo-stats">
+                    {article.stats.map((s, i) => (
+                      <div key={i} className="mc-stat-item">
+                        <div className="mc-stat-item-val">
+                          <AnimatedCounter value={s.value} duration={1200 + i * 200} />
+                        </div>
+                        <div className="mc-stat-item-lbl">{s.label}</div>
                       </div>
-                      <span className="mc-ai-mini-pct">{proj.pct}%</span>
-                    </div>
-
-                    <div className="mc-ai-proj-tags">
-                      {proj.tags.map((t, i) => (
-                        <span key={i} className="mc-ai-proj-tag">
-                          {t}
-                        </span>
-                      ))}
-                    </div>
+                    ))}
                   </div>
-                ))}
+                )}
               </div>
 
-              {/* Commission Custom AI Project Callout */}
-              <div className="mc-ai-custom-banner">
-                <div className="mc-ai-banner-icon">⚡</div>
-                <div className="mc-ai-banner-content">
-                  <h4>Have a Specific Workflow You Want Automated?</h4>
-                  <p>
-                    We don't sell generic templates. Tell us your manual bottlenecks and our AI engineering team will architect a dedicated autonomous agent system tailored to your tech stack.
-                  </p>
-                </div>
-                <a
-                  href="mailto:bexsigmatech@gmail.com?subject=Custom%20AI%20Automation%20Inquiry%20-%20Bex%20Sigma%20Tech"
-                  className="mc-ai-banner-btn interactive"
-                >
-                  ✉ COMMISSION CUSTOM AI PROJECT
-                </a>
+              <div className="mc-ceo-quote">
+                "We don't just build software — we architect digital experiences that redefine what's possible."
               </div>
             </section>
-          ) : (
+
+            {/* 2. OUR MISSION & VISION CONTAINER */}
+            <section className="mc-overview-box">
+              <div className="mc-section-eyebrow" style={{ marginBottom: 10 }}>
+                <span className="mc-eyebrow-dot" />
+                OUR MISSION & VISION
+              </div>
+              <h3 className="mc-mission-title">{article.title} — {article.subtitle}</h3>
+              <p className="mc-overview-text">{article.overview}</p>
+            </section>
+
+            {/* 3. SIGMA TECHNOLOGY ESSENTIALS / ARSENAL */}
+            <section className="mc-tech-card">
+              <div className="mc-section-eyebrow">
+                <span className="mc-eyebrow-dot" />
+                SIGMA TECHNOLOGY ESSENTIALS
+              </div>
+              <h3 className="mc-tech-heading">Advanced Engineering Stack & Core Frameworks</h3>
+              <div className="mc-tech-tags-cloud">
+                {(article.tech || activeMission.tech || []).map((t, idx) => (
+                  <span key={idx} className="mc-tech-pill interactive">
+                    {t}
+                  </span>
+                ))}
+              </div>
+            </section>
+
+            {/* 4. SPECIALIZED CAPABILITIES */}
             <section className="mc-capabilities-section">
               <div className="mc-section-header-row">
                 <div className="mc-section-title-wrap">
@@ -581,50 +479,50 @@ export default function MissionControl() {
                   })}
               </div>
             </section>
-          )}
 
-          {/* 5. READY TO CONTACT US */}
-          <section className="mc-bottom-cta">
-            <div className="mc-section-eyebrow" style={{ justifyContent: 'center', marginBottom: 12 }}>
-              <span className="mc-eyebrow-dot" />
-              READY TO CONTACT US
-            </div>
-            <h2 className="mc-bottom-cta-title">
-              {article.id === 'mission_control'
-                ? 'Ready to Launch Your Digital Future with BEX Sigma Tech?'
-                : `Ready to Initialize the ${article.title} Sector?`}
-            </h2>
-            <p className="mc-bottom-cta-desc">
-              {article.id === 'mission_control'
-                ? 'Step into our command mainframe and access software, websites, AI automation and custom tools.'
-                : `Connect with our engineering pod to architect and scale your ${article.title} solution.`}
-            </p>
+            {/* 5. READY TO CONTACT US */}
+            <section className="mc-bottom-cta">
+              <div className="mc-section-eyebrow" style={{ justifyContent: 'center', marginBottom: 12 }}>
+                <span className="mc-eyebrow-dot" />
+                READY TO CONTACT US
+              </div>
+              <h2 className="mc-bottom-cta-title">
+                {article.id === 'mission_control'
+                  ? 'Ready to Launch Your Digital Future with BEX Sigma Tech?'
+                  : `Ready to Initialize the ${article.title} Sector?`}
+              </h2>
+              <p className="mc-bottom-cta-desc">
+                {article.id === 'mission_control'
+                  ? 'Step into our command mainframe and access software, websites, AI automation and custom tools.'
+                  : `Connect with our engineering pod to architect and scale your ${article.title} solution.`}
+              </p>
 
-            <div className="mc-bottom-cta-actions">
-              {article.id === 'web_dev' && (
-                <button className="mc-btn-primary interactive" onClick={handleStartMission}>
-                  🚀 ENTER WEB STORE
+              <div className="mc-bottom-cta-actions">
+                {article.id === 'web_dev' && (
+                  <button className="mc-btn-primary interactive" onClick={handleStartMission}>
+                    🚀 ENTER WEB STORE
+                  </button>
+                )}
+                <a
+                  href="mailto:bexsigmatech@gmail.com?subject=Project%20Inquiry%20-%20Bex%20Sigma%20Tech"
+                  className="mc-btn-ceo-contact interactive"
+                >
+                  ✉ CONTACT CEO HARIHARAN.D
+                </a>
+                <button className="mc-btn-secondary interactive" onClick={handleClose}>
+                  ← RETURN TO HQ OBSERVATORY
                 </button>
-              )}
-              <a
-                href="mailto:bexsigmatech@gmail.com?subject=Project%20Inquiry%20-%20Bex%20Sigma%20Tech"
-                className="mc-btn-ceo-contact interactive"
-              >
-                ✉ CONTACT CEO HARIHARAN.D
-              </a>
-              <button className="mc-btn-secondary interactive" onClick={handleClose}>
-                ← RETURN TO HQ OBSERVATORY
-              </button>
-            </div>
+              </div>
 
-            <div className="mc-trust-badges-row">
-              <span>🔒 Post-Quantum Encryption</span>
-              <span>⚡ Zero-Downtime SLA</span>
-              <span>🛡️ SOC2 / GDPR Ready</span>
-              <span>🌐 24/7 Dedicated Pod</span>
-            </div>
-          </section>
-        </main>
+              <div className="mc-trust-badges-row">
+                <span>🔒 Post-Quantum Encryption</span>
+                <span>⚡ Zero-Downtime SLA</span>
+                <span>🛡️ SOC2 / GDPR Ready</span>
+                <span>🌐 24/7 Dedicated Pod</span>
+              </div>
+            </section>
+          </main>
+        )}
       </div>
 
       {/* ── Interactive Capability Detail Blueprint Modal ── */}
