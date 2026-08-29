@@ -248,7 +248,7 @@ export default function MissionControl() {
               <div className="mc-ai-solo-actions">
                 <button
                   className="mc-ai-solo-back-btn interactive"
-                  onClick={() => handleSectorSwitch('mission_control')}
+                  onClick={() => handleSelectSector('mission_control')}
                 >
                   ← RETURN TO MISSION CONTROL
                 </button>
