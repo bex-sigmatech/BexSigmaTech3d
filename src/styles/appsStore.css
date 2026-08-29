@@ -1063,3 +1063,57 @@
   border-radius: 8px;
   cursor: pointer;
 }
+
+/* ══════════════════════════════════════════════
+   APPS STORE RESPONSIVE POLISH
+   ══════════════════════════════════════════════ */
+@media (max-width: 768px) {
+  .apps-store-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 16px;
+  }
+  .apps-store-header-right {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .apps-store-body {
+    padding: 14px 16px;
+  }
+  .apps-hero-card {
+    padding: 18px 16px;
+  }
+  .apps-phone-mockup {
+    max-width: 260px;
+    margin: 0 auto 16px;
+  }
+  .apps-modal-pricing-box {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+  .apps-modal-add-btn {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+@media (max-width: 500px) {
+  .apps-title {
+    font-size: 1.15rem;
+  }
+  .apps-tagline {
+    font-size: 0.74rem;
+  }
+  .apps-btn-row {
+    flex-direction: column;
+    gap: 8px;
+  }
+  .apps-btn-primary,
+  .apps-btn-secondary {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+  }
+}
