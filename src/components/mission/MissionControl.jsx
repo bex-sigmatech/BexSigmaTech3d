@@ -58,6 +58,7 @@ export default function MissionControl() {
   const [selectedServiceDetail, setSelectedServiceDetail] = useState(null)
   const [isNarrating, setIsNarrating] = useState(false)
   const [currentTime, setCurrentTime] = useState('')
+  const [selectedCategory, setSelectedCategory] = useState('all')
 
 
 
@@ -301,78 +302,132 @@ export default function MissionControl() {
               </div>
             </div>
 
-            <div className="mc-capabilities-grid">
-              {article.services.map((svc, idx) => {
-                const palette = ACCENT_PALETTES[idx % ACCENT_PALETTES.length]
+            {/* Smooth Pillar Category Filter Chips */}
+            <div className="mc-pillar-filter-bar" role="tablist">
+              {[
+                { id: 'all', label: 'All 8 Pillars', icon: '✦' },
+                { id: 'engineering', label: 'Software & Apps', icon: '⚡' },
+                { id: 'web', label: 'Web & 3D Spatial', icon: '🌐' },
+                { id: 'growth', label: 'Marketing & Content', icon: '🚀' },
+                { id: 'ai', label: 'AI & Knowledge', icon: '🤖' },
+              ].map((filter) => {
+                const isActive = (selectedCategory || 'all') === filter.id
                 return (
-                  <div
-                    key={idx}
-                    className={`mc-cap-card ${svc.image ? 'mc-cap-card--has-image' : ''} interactive`}
-                    style={{
-                      '--card-accent': palette.color,
-                      '--card-glow': palette.glow,
-                    }}
+                  <button
+                    key={filter.id}
+                    className={`mc-pillar-chip interactive ${isActive ? 'active' : ''}`}
                     onClick={() => {
                       cinemaAudio.playOrbSelect()
-                      setSelectedServiceDetail({ ...svc, index: idx, palette })
+                      setSelectedCategory(filter.id)
                     }}
+                    role="tab"
+                    aria-selected={isActive}
                   >
-                    {/* Image Preview Container with Holographic HUD Frame */}
-                    {svc.image && (
-                      <div className="mc-cap-img-wrap">
-                        <img
-                          src={svc.image}
-                          alt={svc.title}
-                          className="mc-cap-img"
-                          loading="lazy"
-                        />
-                        <div className="mc-cap-img-overlay" />
-                        <div className="mc-cap-img-scanline" />
-                        {svc.badge && (
-                          <span
-                            className="mc-cap-img-badge"
-                            style={{
-                              color: palette.color,
-                              borderColor: palette.border,
-                              background: palette.glow,
-                            }}
-                          >
-                            {svc.badge}
-                          </span>
-                        )}
-                        <div className="mc-cap-img-corner tl" style={{ borderColor: palette.color }} />
-                        <div className="mc-cap-img-corner tr" style={{ borderColor: palette.color }} />
-                        <div className="mc-cap-img-corner bl" style={{ borderColor: palette.color }} />
-                        <div className="mc-cap-img-corner br" style={{ borderColor: palette.color }} />
-                      </div>
-                    )}
-
-                    <div className="mc-cap-content-wrap">
-                      <div className="mc-cap-top-row">
-                        <div className="mc-cap-icon-box">
-                          {SERVICE_ICONS[idx % SERVICE_ICONS.length]}
-                        </div>
-                        <span className="mc-cap-num">0{idx + 1}</span>
-                      </div>
-
-                      <div className="mc-cap-text-block">
-                        <h4 className="mc-cap-title">{svc.title}</h4>
-                        {svc.subtitle && (
-                          <div className="mc-cap-subtitle" style={{ color: palette.color }}>
-                            {svc.subtitle}
-                          </div>
-                        )}
-                        <p className="mc-cap-desc">{svc.desc}</p>
-                      </div>
-
-                      <div className="mc-cap-footer">
-                        <span>Inspect Sigma Blueprint</span>
-                        <span className="mc-cap-arrow">→</span>
-                      </div>
-                    </div>
-                  </div>
+                    <span className="mc-chip-filter-icon">{filter.icon}</span>
+                    <span>{filter.label}</span>
+                    {filter.id === 'all' && <span className="mc-chip-count">8</span>}
+                  </button>
                 )
               })}
+            </div>
+
+            {/* Smooth Horizontal Bento Capabilities Grid */}
+            <div className="mc-smooth-grid">
+              {article.services
+                .filter((svc) => {
+                  const cat = selectedCategory || 'all'
+                  if (cat === 'all') return true
+                  if (cat === 'engineering') return svc.title === 'Software' || svc.title === 'Application'
+                  if (cat === 'web') return svc.title === 'Website' || svc.title === '3D Website'
+                  if (cat === 'growth') return svc.title === 'Digital Marketing' || svc.title === 'Content'
+                  if (cat === 'ai') return svc.title === 'AI Automation' || svc.title === 'Generate Notes'
+                  return true
+                })
+                .map((svc, idx) => {
+                  const originalIndex = article.services.findIndex((s) => s.title === svc.title)
+                  const palette = ACCENT_PALETTES[originalIndex % ACCENT_PALETTES.length]
+                  return (
+                    <div
+                      key={svc.title}
+                      className="mc-smooth-card interactive"
+                      style={{
+                        '--card-accent': palette.color,
+                        '--card-glow': palette.glow,
+                        '--card-border': palette.border,
+                      }}
+                      onClick={() => {
+                        cinemaAudio.playOrbSelect()
+                        setSelectedServiceDetail({ ...svc, index: originalIndex, palette })
+                      }}
+                    >
+                      {/* Left Side: Sleek Holographic Thumbnail */}
+                      <div className="mc-smooth-img-wrap">
+                        {svc.image ? (
+                          <img
+                            src={svc.image}
+                            alt={svc.title}
+                            className="mc-smooth-img"
+                            loading="lazy"
+                          />
+                        ) : (
+                          <div className="mc-smooth-img-placeholder">
+                            {SERVICE_ICONS[originalIndex % SERVICE_ICONS.length]}
+                          </div>
+                        )}
+                        <div className="mc-smooth-img-overlay" />
+                        <div className="mc-smooth-img-scanline" />
+                        
+                        <div className="mc-smooth-img-top">
+                          <span className="mc-smooth-index">0{originalIndex + 1}</span>
+                          {svc.badge && (
+                            <span
+                              className="mc-smooth-badge"
+                              style={{
+                                color: palette.color,
+                                borderColor: palette.border,
+                              }}
+                            >
+                              {svc.badge}
+                            </span>
+                          )}
+                        </div>
+                      </div>
+
+                      {/* Right Side: Smooth Info & Action Flow */}
+                      <div className="mc-smooth-content">
+                        <div>
+                          <div className="mc-smooth-title-row">
+                            <h4 className="mc-smooth-title">{svc.title}</h4>
+                            <div className="mc-smooth-icon" style={{ color: palette.color }}>
+                              {SERVICE_ICONS[originalIndex % SERVICE_ICONS.length]}
+                            </div>
+                          </div>
+                          {svc.subtitle && (
+                            <div className="mc-smooth-subtitle" style={{ color: palette.color }}>
+                              {svc.subtitle}
+                            </div>
+                          )}
+                          <p className="mc-smooth-desc">{svc.desc}</p>
+                        </div>
+
+                        <div className="mc-smooth-footer">
+                          <div className="mc-smooth-specs">
+                            <span className="mc-smooth-spec-pill">
+                              {svc.specs?.latency || '< 48h Sprint'}
+                            </span>
+                            <span className="mc-smooth-spec-pill">
+                              {svc.specs?.integrity || '100% QA'}
+                            </span>
+                          </div>
+                          <div className="mc-smooth-cta-btn">
+                            <span>Blueprint</span>
+                            <span className="mc-smooth-arrow">→</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )
+                })}
             </div>
           </section>
 
