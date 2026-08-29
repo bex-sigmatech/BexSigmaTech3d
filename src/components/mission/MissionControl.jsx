@@ -271,14 +271,6 @@ export default function MissionControl() {
             </div>
             <h3 className="mc-mission-title">{article.title} — {article.subtitle}</h3>
             <p className="mc-overview-text">{article.overview}</p>
-            <div className="mc-overview-actions">
-              <button className="mc-btn-primary interactive" onClick={handleStartMission}>
-                {article.id === 'web_dev' ? '🚀 LAUNCH WEB STORE' : article.id === 'cloud' ? '📱 LAUNCH APPS MATRIX' : '⚡ INITIALIZE SECTOR MAINFRAME'}
-              </button>
-              <button className="mc-btn-secondary interactive" onClick={toggleNarration}>
-                {isNarrating ? '⏹ STOP VOICE BRIEF' : '🎙️ SIGMA VOICE BRIEF'}
-              </button>
-            </div>
           </section>
 
           {/* 3. SIGMA TECHNOLOGY ESSENTIALS / ARSENAL */}
