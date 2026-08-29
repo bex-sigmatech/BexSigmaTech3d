@@ -1915,6 +1915,170 @@ body {
   transform: scale(1.03);
 }
 
+/* ─── Cyber HUD Floating Capsule Pattern (Dynamic Island Dock) ─── */
+.jarvis-capsule-pattern {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  background: linear-gradient(135deg, rgba(6, 14, 30, 0.6) 0%, rgba(2, 6, 16, 0.75) 100%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-top-color: var(--dept-color, #00d4ff) !important;
+  border-radius: 20px !important;
+  padding: 10px 14px !important;
+  backdrop-filter: blur(24px) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6), 0 0 20px rgba(0, 212, 255, 0.08) !important;
+  position: relative !important;
+  pointer-events: auto !important;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.jarvis-capsule-nav-btn {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.7);
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+  padding: 0;
+}
+
+.jarvis-capsule-nav-btn:hover {
+  background: rgba(0, 212, 255, 0.2);
+  border-color: #00d4ff;
+  color: #fff;
+  transform: scale(1.1);
+}
+
+.jarvis-capsule-orb-wrap {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.jarvis-capsule-orb {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1.5px solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  color: #fff;
+  position: relative;
+  z-index: 2;
+}
+
+.jarvis-capsule-pulse-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1px dashed;
+  opacity: 0.6;
+  animation: gyroSpin 6s linear infinite;
+}
+
+.jarvis-capsule-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.jarvis-capsule-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-family: 'Orbitron', monospace;
+  font-size: 0.54rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  margin-bottom: 2px;
+}
+
+.jarvis-capsule-status-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  animation: pulse 1.2s infinite;
+}
+
+.jarvis-capsule-protocol {
+  color: rgba(255, 255, 255, 0.45);
+  font-size: 0.48rem;
+}
+
+.jarvis-capsule-title {
+  font-family: 'Orbitron', monospace;
+  font-size: 0.94rem;
+  font-weight: 800;
+  margin: 0;
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.jarvis-capsule-subtitle {
+  font-size: 0.60rem;
+  color: rgba(255, 255, 255, 0.65);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.2;
+  margin-top: 1px;
+}
+
+.jarvis-capsule-engage-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: #000;
+  font-family: 'Orbitron', monospace;
+  font-size: 0.66rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  padding: 7px 13px;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+  flex-shrink: 0;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.jarvis-capsule-engage-btn:hover {
+  transform: translateY(-2px) scale(1.04);
+  filter: brightness(1.15);
+  box-shadow: 0 6px 20px rgba(0, 212, 255, 0.4);
+}
+
+.jarvis-capsule-btn-arrow {
+  font-size: 0.72rem;
+}
+
+.jarvis-minimap-num {
+  font-family: 'Orbitron', monospace;
+  font-size: 0.54rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.5);
+  display: none;
+}
+
 /* ─── Orb Mini-Map — right sidebar ─── */
 .jarvis-orb-minimap {
   position: absolute;
@@ -4270,33 +4434,51 @@ body {
   }
 
   .hq-bottom-dock {
-    position: absolute !important;
-    bottom: calc(env(safe-area-inset-bottom, 12px) + 6px) !important;
+    position: fixed !important;
+    bottom: calc(env(safe-area-inset-bottom, 12px) + 8px) !important;
     left: 50% !important;
     transform: translateX(-50%) !important;
-    width: calc(100vw - 24px) !important;
-    max-width: 320px !important;
-    gap: 4px !important;
-    z-index: 20 !important;
+    width: calc(100vw - 20px) !important;
+    max-width: 380px !important;
+    gap: 6px !important;
+    z-index: 25 !important;
     pointer-events: none !important;
     background: transparent !important;
   }
 
   .jarvis-orb-minimap {
     padding: 3px 6px !important;
-    gap: 3px !important;
+    gap: 4px !important;
     background: rgba(4, 10, 24, 0.4) !important;
-    border: 1px solid rgba(0, 212, 255, 0.1) !important;
+    border: 1px solid rgba(0, 212, 255, 0.12) !important;
     border-radius: 999px !important;
     backdrop-filter: blur(16px) !important;
     -webkit-backdrop-filter: blur(16px) !important;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35) !important;
     pointer-events: auto !important;
+    display: flex !important;
+    flex-direction: row !important;
+    overflow-x: auto !important;
+    scrollbar-width: none !important;
+    max-width: 100% !important;
+  }
+
+  .jarvis-orb-minimap::-webkit-scrollbar {
+    display: none !important;
   }
 
   .jarvis-minimap-item {
-    padding: 2px 6px !important;
-    font-size: 0.54rem !important;
+    padding: 3px 6px !important;
+    font-size: 0.52rem !important;
+    flex-shrink: 0 !important;
+    border: none !important;
+    background: transparent !important;
+    cursor: pointer !important;
+  }
+
+  .jarvis-minimap-item.active {
+    background: rgba(0, 212, 255, 0.15) !important;
+    border-radius: 999px !important;
   }
 
   .jarvis-minimap-dot {
@@ -4304,68 +4486,59 @@ body {
     height: 5px !important;
   }
 
-  .jarvis-dept-panel {
-    padding: 6px 10px !important;
-    gap: 4px !important;
-    background: linear-gradient(180deg, rgba(4, 10, 24, 0.45) 0%, rgba(2, 6, 16, 0.6) 100%) !important;
-    border: 1px solid rgba(0, 212, 255, 0.12) !important;
-    border-radius: 10px !important;
-    backdrop-filter: blur(18px) !important;
-    -webkit-backdrop-filter: blur(18px) !important;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+  .jarvis-minimap-num {
+    display: inline-block !important;
+    font-size: 0.52rem !important;
+    margin-right: 2px !important;
+  }
+
+  .jarvis-minimap-label {
+    display: none !important;
+  }
+
+  .jarvis-dept-panel.jarvis-capsule-pattern {
+    padding: 8px 10px !important;
+    gap: 8px !important;
+    background: linear-gradient(135deg, rgba(6, 14, 30, 0.72) 0%, rgba(2, 6, 16, 0.85) 100%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-top-color: var(--dept-color, #00d4ff) !important;
+    border-radius: 16px !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.65), 0 0 20px rgba(0, 212, 255, 0.08) !important;
     pointer-events: auto !important;
-  }
-
-  .jarvis-dept-orb-dot {
-    width: 7px !important;
-    height: 7px !important;
-    margin-top: 3px !important;
-  }
-
-  .jarvis-dept-index {
-    font-size: 0.46rem !important;
-    margin-bottom: 1px !important;
-  }
-
-  .jarvis-dept-title {
-    font-size: 0.82rem !important;
-    line-height: 1.15 !important;
-    margin-bottom: 1px !important;
-  }
-
-  .jarvis-dept-subtitle {
-    font-size: 0.58rem !important;
-    line-height: 1.15 !important;
-    margin-bottom: 3px !important;
-    opacity: 0.85 !important;
-  }
-
-  .jarvis-dept-desc {
-    display: none !important;
-  }
-
-  .nolan-dept-tech-row {
-    display: none !important;
-  }
-
-  .nolan-tech-tag {
-    display: none !important;
-  }
-
-  .nolan-dept-actions {
-    margin-top: 2px !important;
-  }
-
-  .nolan-btn-primary.jarvis-engage-btn {
-    font-size: 0.58rem !important;
-    padding: 5px 8px !important;
     width: 100% !important;
-    justify-content: center !important;
-    border-radius: 6px !important;
-    min-height: 28px !important;
-    letter-spacing: 0.05em !important;
-    backdrop-filter: blur(8px) !important;
-    box-shadow: 0 4px 15px rgba(0, 212, 255, 0.25) !important;
+  }
+
+  .jarvis-capsule-orb-wrap {
+    width: 32px !important;
+    height: 32px !important;
+  }
+
+  .jarvis-capsule-orb {
+    width: 26px !important;
+    height: 26px !important;
+    font-size: 0.7rem !important;
+  }
+
+  .jarvis-capsule-nav-btn {
+    width: 24px !important;
+    height: 24px !important;
+    font-size: 1rem !important;
+  }
+
+  .jarvis-capsule-title {
+    font-size: 0.86rem !important;
+  }
+
+  .jarvis-capsule-subtitle {
+    font-size: 0.58rem !important;
+  }
+
+  .jarvis-capsule-engage-btn {
+    padding: 6px 11px !important;
+    font-size: 0.62rem !important;
+    border-radius: 14px !important;
   }
 
   /* ──── Boot Screen ──── */

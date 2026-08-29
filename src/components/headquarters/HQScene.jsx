@@ -673,18 +673,19 @@ export default function HQScene() {
         </Canvas>
       </div>
 
-      {/* ── RESPONSIVE DOCK: Department Minimap & Info Panel ── */}
+      {/* ── RESPONSIVE CYBER HUD CAPSULE DOCK ── */}
       <div className="hq-bottom-dock">
-        {/* ── ORBS MINI-MAP — right side (desktop) / top dock row (responsive) ── */}
+        {/* ── 1. ORBIT SECTOR MINI-MAP ── */}
         <div className="jarvis-orb-minimap">
           {DEPARTMENTS.map((dept, idx) => (
-            <div
+            <button
               key={dept.id}
               className={`jarvis-minimap-item interactive ${idx === activeIndex ? 'active' : ''}`}
               onClick={() => {
                 if (idx !== activeIndex) cinemaAudio.playSectorTransition()
                 setActiveIndex(idx)
               }}
+              title={`Switch to ${dept.title}`}
             >
               <span
                 className="jarvis-minimap-dot"
@@ -693,54 +694,95 @@ export default function HQScene() {
                   boxShadow: idx === activeIndex ? `0 0 10px ${dept.color}` : 'none',
                 }}
               />
+              <span className="jarvis-minimap-num">{String(idx + 1).padStart(2, '0')}</span>
               <span className="jarvis-minimap-label">{dept.title}</span>
-            </div>
+            </button>
           ))}
         </div>
 
-        {/* ── DEPARTMENT INFO PANEL — bottom left (desktop) / bottom card (responsive) ── */}
-        <div className="jarvis-dept-panel" key={currentDept.id} style={{ pointerEvents: 'auto', touchAction: 'manipulation', position: 'absolute' }}>
-          <div className="jarvis-dept-orb-dot" style={{ background: currentDept.color, boxShadow: `0 0 18px ${currentDept.color}` }} />
-          <div className="jarvis-dept-content">
-            <div className="jarvis-dept-index">
-              DEPT {String(activeIndex + 1).padStart(2, '0')} · {currentDept.id.toUpperCase()}
+        {/* ── 2. CYBER HUD DEPARTMENT CAPSULE ── */}
+        <div
+          className="jarvis-dept-panel jarvis-capsule-pattern"
+          key={currentDept.id}
+          style={{ '--dept-color': currentDept.color }}
+        >
+          {/* Previous Sector Button */}
+          <button
+            className="jarvis-capsule-nav-btn prev interactive"
+            onClick={(e) => {
+              e.stopPropagation()
+              cinemaAudio.playScrollTransition()
+              setActiveIndex((prev) => (prev > 0 ? prev - 1 : DEPARTMENTS.length - 1))
+            }}
+            title="Previous Sector"
+            aria-label="Previous Sector"
+          >
+            ‹
+          </button>
+
+          {/* Holographic Glowing Orb Badge */}
+          <div className="jarvis-capsule-orb-wrap">
+            <div
+              className="jarvis-capsule-orb"
+              style={{
+                background: `radial-gradient(circle, ${currentDept.color}33 0%, rgba(2,6,16,0.9) 70%)`,
+                borderColor: currentDept.color,
+                boxShadow: `0 0 16px ${currentDept.color}66`,
+              }}
+            >
+              <span className="jarvis-capsule-orb-icon">✦</span>
             </div>
-            <h1 className="jarvis-dept-title" style={{ color: currentDept.color }}>{currentDept.title}</h1>
-            <h2 className="jarvis-dept-subtitle">{currentDept.subtitle}</h2>
-            <p className="jarvis-dept-desc">{currentDept.desc}</p>
-            <div className="nolan-dept-tech-row">
-              {currentDept.tech.map((t, i) => (
-                <span key={i} className="nolan-tech-tag" style={{ borderColor: `${currentDept.color}44` }}>{t}</span>
-              ))}
-            </div>
-            <div className="nolan-dept-actions">
-              <button
-                className="nolan-btn-primary interactive jarvis-engage-btn"
-                style={{
-                  background: currentDept.color,
-                  color: isZooming ? 'rgba(0,0,0,0.45)' : '#000',
-                  opacity: isZooming ? 0.55 : 1,
-                  cursor: isZooming ? 'wait' : 'pointer',
-                  pointerEvents: isZooming ? 'none' : 'auto',
-                  touchAction: 'manipulation',
-                  WebkitTapHighlightColor: 'transparent',
-                  position: 'relative',
-                  zIndex: 2,
-                }}
-                onClick={(e) => {
-                  e.preventDefault()
-                  e.stopPropagation()
-                  handleEngage(currentDept)
-                }}
-                onPointerDown={(e) => e.stopPropagation()}
-                disabled={isZooming}
-                aria-busy={isZooming}
-                title={isZooming ? 'Engaging — please wait' : `Enter ${currentDept.title}`}
-              >
-                {isZooming ? 'ENGAGING…' : 'ENGAGE DEPARTMENT TERMINAL'}
-              </button>
-            </div>
+            <span className="jarvis-capsule-pulse-ring" style={{ borderColor: currentDept.color }} />
           </div>
+
+          {/* Department Meta & Title */}
+          <div className="jarvis-capsule-info">
+            <div className="jarvis-capsule-eyebrow">
+              <span className="jarvis-capsule-tag" style={{ color: currentDept.color }}>
+                SECTOR {String(activeIndex + 1).padStart(2, '0')}
+              </span>
+              <span className="jarvis-capsule-status-dot" style={{ background: currentDept.color }} />
+              <span className="jarvis-capsule-protocol">ONLINE</span>
+            </div>
+            <h2 className="jarvis-capsule-title" style={{ color: currentDept.color }}>
+              {currentDept.title}
+            </h2>
+            <div className="jarvis-capsule-subtitle">{currentDept.subtitle}</div>
+          </div>
+
+          {/* Quick Engage Button */}
+          <button
+            className="jarvis-capsule-engage-btn interactive"
+            style={{
+              background: currentDept.color,
+            }}
+            onClick={(e) => {
+              e.preventDefault()
+              e.stopPropagation()
+              handleEngage(currentDept)
+            }}
+            disabled={isZooming}
+            title={isZooming ? 'Initializing…' : `Enter ${currentDept.title}`}
+          >
+            <span className="jarvis-capsule-btn-text">
+              {isZooming ? 'INITIALIZING…' : 'ENTER'}
+            </span>
+            <span className="jarvis-capsule-btn-arrow">⚡</span>
+          </button>
+
+          {/* Next Sector Button */}
+          <button
+            className="jarvis-capsule-nav-btn next interactive"
+            onClick={(e) => {
+              e.stopPropagation()
+              cinemaAudio.playScrollTransition()
+              setActiveIndex((prev) => (prev < DEPARTMENTS.length - 1 ? prev + 1 : 0))
+            }}
+            title="Next Sector"
+            aria-label="Next Sector"
+          >
+            ›
+          </button>
         </div>
       </div>
 
