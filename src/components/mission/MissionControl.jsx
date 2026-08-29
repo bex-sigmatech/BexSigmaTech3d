@@ -290,146 +290,298 @@ export default function MissionControl() {
             </div>
           </section>
 
-          {/* 4. SPECIALIZED CAPABILITIES */}
-          <section className="mc-capabilities-section">
-            <div className="mc-section-header-row">
-              <div className="mc-section-title-wrap">
+          {/* 4. SPECIALIZED CAPABILITIES / AI AUTOMATION ACTIVE LABS */}
+          {article.id === 'ai_auto' ? (
+            <section className="mc-ai-lab-section">
+              {/* Central Holographic Neural Loading Stage */}
+              <div className="mc-ai-loader-card">
+                <div className="mc-ai-loader-gyro">
+                  <div className="gyro-ring ring-1" />
+                  <div className="gyro-ring ring-2" />
+                  <div className="gyro-ring ring-3" />
+                  <div className="gyro-core">
+                    <span className="gyro-icon">🤖</span>
+                    <span className="gyro-pulse-dot" />
+                  </div>
+                </div>
+
+                <div className="mc-ai-loader-text-block">
+                  <div className="mc-ai-loader-status-pill">
+                    <span className="ai-status-pulse" />
+                    <span>ACTIVE R&D WORKSPACE · ACTIVE PIPELINE IN PROGRESS</span>
+                  </div>
+                  <h3 className="mc-ai-loader-title">Engineering Custom AI Agent Swarms & Autonomous Pipelines</h3>
+                  <p className="mc-ai-loader-desc">
+                    Our AI Automation division is actively building bespoke neural workflows, voice intelligence gateways, and custom knowledge synthesizers. We engineer tailor-made AI solutions specifically for your business infrastructure rather than generic off-the-shelf templates.
+                  </p>
+
+                  {/* Dynamic Progress Bar */}
+                  <div className="mc-ai-progress-container">
+                    <div className="mc-ai-progress-labels">
+                      <span>Neural Pipeline Calibration & Model Fine-Tuning</span>
+                      <span className="mc-ai-progress-pct">88.4% COMPILING</span>
+                    </div>
+                    <div className="mc-ai-progress-track">
+                      <div className="mc-ai-progress-fill" />
+                      <div className="mc-ai-progress-glow" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Active Projects In Development Matrix */}
+              <div className="mc-ai-projects-header">
                 <div className="mc-section-eyebrow">
                   <span className="mc-eyebrow-dot" />
-                  SIGMA DELIVERABLES & CORE DISCIPLINES
+                  CONFIDENTIAL CLIENT PODS & ACTIVE WORKSTREAMS
                 </div>
-                <h3 className="mc-section-title">Specialized Capabilities ({article.services.length} Pillars)</h3>
+                <h3 className="mc-section-title">Current AI Projects Under Active Development</h3>
               </div>
-            </div>
 
-            {/* Smooth Pillar Category Filter Chips */}
-            <div className="mc-pillar-filter-bar" role="tablist">
-              {[
-                { id: 'all', label: 'All 8 Pillars', icon: '✦' },
-                { id: 'engineering', label: 'Software & Apps', icon: '⚡' },
-                { id: 'web', label: 'Web & 3D Spatial', icon: '🌐' },
-                { id: 'growth', label: 'Marketing & Content', icon: '🚀' },
-                { id: 'ai', label: 'AI & Knowledge', icon: '🤖' },
-              ].map((filter) => {
-                const isActive = (selectedCategory || 'all') === filter.id
-                return (
-                  <button
-                    key={filter.id}
-                    className={`mc-pillar-chip interactive ${isActive ? 'active' : ''}`}
-                    onClick={() => {
-                      cinemaAudio.playOrbSelect()
-                      setSelectedCategory(filter.id)
+              <div className="mc-ai-projects-grid">
+                {[
+                  {
+                    code: 'PROJECT #01',
+                    title: 'Autonomous Multi-Agent Workflow Swarms',
+                    status: '⚡ PIPELINE COMPILING',
+                    pct: 88,
+                    color: '#00ff88',
+                    desc: 'Autonomous agent network handling multi-stage approvals, CRM synchronization, automated handoffs, and notification routing across enterprise tools.',
+                    tags: ['LangGraph', 'CrewAI', 'Node Core', 'REST Webhooks'],
+                  },
+                  {
+                    code: 'PROJECT #02',
+                    title: 'Intelligent Knowledge Synthesis & Note Generation',
+                    status: '🧠 NEURAL TRAINING',
+                    pct: 94,
+                    color: '#38bdf8',
+                    desc: 'Real-time audio/text transcription engine that classifies, summarizes, and automatically structures meeting minutes into searchable company wikis.',
+                    tags: ['Gemini 2.0', 'Vector DB', 'Semantic Index', 'Whisper'],
+                  },
+                  {
+                    code: 'PROJECT #03',
+                    title: 'Sub-500ms Voice Multimodal Customer Agents',
+                    status: '🎙️ LATENCY TUNING',
+                    pct: 82,
+                    color: '#a78bfa',
+                    desc: 'Low-latency natural conversational voice and chat agents for 24/7 customer booking, lead triage, and direct client support.',
+                    tags: ['WebRTC', 'Gemini Live', 'Voice HUD', 'Zero-Downtime'],
+                  },
+                  {
+                    code: 'PROJECT #04',
+                    title: 'Predictive Business Intelligence & Data Pipelines',
+                    status: '📊 MODEL EVALUATION',
+                    pct: 74,
+                    color: '#f59e0b',
+                    desc: 'Automated data extraction and neural forecasting models predicting customer demand, preventing churn, and drafting executive insight sheets.',
+                    tags: ['Python Core', 'PyTorch', 'TimescaleDB', 'Encrypted'],
+                  },
+                ].map((proj, idx) => (
+                  <div
+                    key={idx}
+                    className="mc-ai-project-card interactive"
+                    style={{
+                      '--proj-color': proj.color,
                     }}
-                    role="tab"
-                    aria-selected={isActive}
                   >
-                    <span className="mc-chip-filter-icon">{filter.icon}</span>
-                    <span>{filter.label}</span>
-                    {filter.id === 'all' && <span className="mc-chip-count">8</span>}
-                  </button>
-                )
-              })}
-            </div>
+                    <div className="mc-ai-proj-top">
+                      <span className="mc-ai-proj-code">{proj.code}</span>
+                      <span
+                        className="mc-ai-proj-status"
+                        style={{ color: proj.color, borderColor: proj.color + '55' }}
+                      >
+                        <span className="proj-status-dot" style={{ background: proj.color }} />
+                        {proj.status}
+                      </span>
+                    </div>
 
-            {/* Smooth Horizontal Bento Capabilities Grid */}
-            <div className="mc-smooth-grid">
-              {article.services
-                .filter((svc) => {
-                  const cat = selectedCategory || 'all'
-                  if (cat === 'all') return true
-                  if (cat === 'engineering') return svc.title === 'Software' || svc.title === 'Application'
-                  if (cat === 'web') return svc.title === 'Website' || svc.title === '3D Website'
-                  if (cat === 'growth') return svc.title === 'Digital Marketing' || svc.title === 'Content'
-                  if (cat === 'ai') return svc.title === 'AI Automation' || svc.title === 'Generate Notes'
-                  return true
-                })
-                .map((svc, idx) => {
-                  const originalIndex = article.services.findIndex((s) => s.title === svc.title)
-                  const palette = ACCENT_PALETTES[originalIndex % ACCENT_PALETTES.length]
+                    <h4 className="mc-ai-proj-title">{proj.title}</h4>
+                    <p className="mc-ai-proj-desc">{proj.desc}</p>
+
+                    {/* Mini animated loading bar */}
+                    <div className="mc-ai-mini-progress">
+                      <div className="mc-ai-mini-track">
+                        <div
+                          className="mc-ai-mini-fill"
+                          style={{
+                            width: `${proj.pct}%`,
+                            background: proj.color,
+                            boxShadow: `0 0 10px ${proj.color}`,
+                          }}
+                        />
+                      </div>
+                      <span className="mc-ai-mini-pct">{proj.pct}%</span>
+                    </div>
+
+                    <div className="mc-ai-proj-tags">
+                      {proj.tags.map((t, i) => (
+                        <span key={i} className="mc-ai-proj-tag">
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Commission Custom AI Project Callout */}
+              <div className="mc-ai-custom-banner">
+                <div className="mc-ai-banner-icon">⚡</div>
+                <div className="mc-ai-banner-content">
+                  <h4>Have a Specific Workflow You Want Automated?</h4>
+                  <p>
+                    We don't sell generic templates. Tell us your manual bottlenecks and our AI engineering team will architect a dedicated autonomous agent system tailored to your tech stack.
+                  </p>
+                </div>
+                <a
+                  href="mailto:bexsigmatech@gmail.com?subject=Custom%20AI%20Automation%20Inquiry%20-%20Bex%20Sigma%20Tech"
+                  className="mc-ai-banner-btn interactive"
+                >
+                  ✉ COMMISSION CUSTOM AI PROJECT
+                </a>
+              </div>
+            </section>
+          ) : (
+            <section className="mc-capabilities-section">
+              <div className="mc-section-header-row">
+                <div className="mc-section-title-wrap">
+                  <div className="mc-section-eyebrow">
+                    <span className="mc-eyebrow-dot" />
+                    SIGMA DELIVERABLES & CORE DISCIPLINES
+                  </div>
+                  <h3 className="mc-section-title">Specialized Capabilities ({article.services.length} Pillars)</h3>
+                </div>
+              </div>
+
+              {/* Smooth Pillar Category Filter Chips */}
+              <div className="mc-pillar-filter-bar" role="tablist">
+                {[
+                  { id: 'all', label: 'All 8 Pillars', icon: '✦' },
+                  { id: 'engineering', label: 'Software & Apps', icon: '⚡' },
+                  { id: 'web', label: 'Web & 3D Spatial', icon: '🌐' },
+                  { id: 'growth', label: 'Marketing & Content', icon: '🚀' },
+                  { id: 'ai', label: 'AI & Knowledge', icon: '🤖' },
+                ].map((filter) => {
+                  const isActive = (selectedCategory || 'all') === filter.id
                   return (
-                    <div
-                      key={svc.title}
-                      className="mc-smooth-card interactive"
-                      style={{
-                        '--card-accent': palette.color,
-                        '--card-glow': palette.glow,
-                        '--card-border': palette.border,
-                      }}
+                    <button
+                      key={filter.id}
+                      className={`mc-pillar-chip interactive ${isActive ? 'active' : ''}`}
                       onClick={() => {
                         cinemaAudio.playOrbSelect()
-                        setSelectedServiceDetail({ ...svc, index: originalIndex, palette })
+                        setSelectedCategory(filter.id)
                       }}
+                      role="tab"
+                      aria-selected={isActive}
                     >
-                      {/* Left Side: Sleek Holographic Thumbnail */}
-                      <div className="mc-smooth-img-wrap">
-                        {svc.image ? (
-                          <img
-                            src={svc.image}
-                            alt={svc.title}
-                            className="mc-smooth-img"
-                            loading="lazy"
-                          />
-                        ) : (
-                          <div className="mc-smooth-img-placeholder">
-                            {SERVICE_ICONS[originalIndex % SERVICE_ICONS.length]}
-                          </div>
-                        )}
-                        <div className="mc-smooth-img-overlay" />
-                        <div className="mc-smooth-img-scanline" />
-                        
-                        <div className="mc-smooth-img-top">
-                          <span className="mc-smooth-index">0{originalIndex + 1}</span>
-                          {svc.badge && (
-                            <span
-                              className="mc-smooth-badge"
-                              style={{
-                                color: palette.color,
-                                borderColor: palette.border,
-                              }}
-                            >
-                              {svc.badge}
-                            </span>
-                          )}
-                        </div>
-                      </div>
-
-                      {/* Right Side: Smooth Info & Action Flow */}
-                      <div className="mc-smooth-content">
-                        <div>
-                          <div className="mc-smooth-title-row">
-                            <h4 className="mc-smooth-title">{svc.title}</h4>
-                            <div className="mc-smooth-icon" style={{ color: palette.color }}>
-                              {SERVICE_ICONS[originalIndex % SERVICE_ICONS.length]}
-                            </div>
-                          </div>
-                          {svc.subtitle && (
-                            <div className="mc-smooth-subtitle" style={{ color: palette.color }}>
-                              {svc.subtitle}
-                            </div>
-                          )}
-                          <p className="mc-smooth-desc">{svc.desc}</p>
-                        </div>
-
-                        <div className="mc-smooth-footer">
-                          <div className="mc-smooth-specs">
-                            <span className="mc-smooth-spec-pill">
-                              {svc.specs?.latency || '< 48h Sprint'}
-                            </span>
-                            <span className="mc-smooth-spec-pill">
-                              {svc.specs?.integrity || '100% QA'}
-                            </span>
-                          </div>
-                          <div className="mc-smooth-cta-btn">
-                            <span>Blueprint</span>
-                            <span className="mc-smooth-arrow">→</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                      <span className="mc-chip-filter-icon">{filter.icon}</span>
+                      <span>{filter.label}</span>
+                      {filter.id === 'all' && <span className="mc-chip-count">8</span>}
+                    </button>
                   )
                 })}
-            </div>
-          </section>
+              </div>
+
+              {/* Smooth Horizontal Bento Capabilities Grid */}
+              <div className="mc-smooth-grid">
+                {article.services
+                  .filter((svc) => {
+                    const cat = selectedCategory || 'all'
+                    if (cat === 'all') return true
+                    if (cat === 'engineering') return svc.title === 'Software' || svc.title === 'Application'
+                    if (cat === 'web') return svc.title === 'Website' || svc.title === '3D Website'
+                    if (cat === 'growth') return svc.title === 'Digital Marketing' || svc.title === 'Content'
+                    if (cat === 'ai') return svc.title === 'AI Automation' || svc.title === 'Generate Notes'
+                    return true
+                  })
+                  .map((svc, idx) => {
+                    const originalIndex = article.services.findIndex((s) => s.title === svc.title)
+                    const palette = ACCENT_PALETTES[originalIndex % ACCENT_PALETTES.length]
+                    return (
+                      <div
+                        key={svc.title}
+                        className="mc-smooth-card interactive"
+                        style={{
+                          '--card-accent': palette.color,
+                          '--card-glow': palette.glow,
+                          '--card-border': palette.border,
+                        }}
+                        onClick={() => {
+                          cinemaAudio.playOrbSelect()
+                          setSelectedServiceDetail({ ...svc, index: originalIndex, palette })
+                        }}
+                      >
+                        {/* Left Side: Sleek Holographic Thumbnail */}
+                        <div className="mc-smooth-img-wrap">
+                          {svc.image ? (
+                            <img
+                              src={svc.image}
+                              alt={svc.title}
+                              className="mc-smooth-img"
+                              loading="lazy"
+                            />
+                          ) : (
+                            <div className="mc-smooth-img-placeholder">
+                              {SERVICE_ICONS[originalIndex % SERVICE_ICONS.length]}
+                            </div>
+                          )}
+                          <div className="mc-smooth-img-overlay" />
+                          <div className="mc-smooth-img-scanline" />
+                          
+                          <div className="mc-smooth-img-top">
+                            <span className="mc-smooth-index">0{originalIndex + 1}</span>
+                            {svc.badge && (
+                              <span
+                                className="mc-smooth-badge"
+                                style={{
+                                  color: palette.color,
+                                  borderColor: palette.border,
+                                }}
+                              >
+                                {svc.badge}
+                              </span>
+                            )}
+                          </div>
+                        </div>
+
+                        {/* Right Side: Smooth Info & Action Flow */}
+                        <div className="mc-smooth-content">
+                          <div>
+                            <div className="mc-smooth-title-row">
+                              <h4 className="mc-smooth-title">{svc.title}</h4>
+                              <div className="mc-smooth-icon" style={{ color: palette.color }}>
+                                {SERVICE_ICONS[originalIndex % SERVICE_ICONS.length]}
+                              </div>
+                            </div>
+                            {svc.subtitle && (
+                              <div className="mc-smooth-subtitle" style={{ color: palette.color }}>
+                                {svc.subtitle}
+                              </div>
+                            )}
+                            <p className="mc-smooth-desc">{svc.desc}</p>
+                          </div>
+
+                          <div className="mc-smooth-footer">
+                            <div className="mc-smooth-specs">
+                              <span className="mc-smooth-spec-pill">
+                                {svc.specs?.latency || '< 48h Sprint'}
+                              </span>
+                              <span className="mc-smooth-spec-pill">
+                                {svc.specs?.integrity || '100% QA'}
+                              </span>
+                            </div>
+                            <div className="mc-smooth-cta-btn">
+                              <span>Blueprint</span>
+                              <span className="mc-smooth-arrow">→</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    )
+                  })}
+              </div>
+            </section>
+          )}
 
           {/* 5. READY TO CONTACT US */}
           <section className="mc-bottom-cta">
