@@ -2705,6 +2705,18 @@
   .mc-page-scroll {
     padding-bottom: 50px;
   }
+  .mc-header {
+    background: rgba(3, 6, 14, 0.55) !important;
+    border-bottom: 1px solid rgba(0, 212, 255, 0.1) !important;
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
+  }
+  .mc-sector-nav {
+    background: rgba(2, 5, 12, 0.4) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+  }
   .mc-body-grid.mc-linear-flow {
     padding: 8px 10px 24px !important;
     gap: 10px !important;
@@ -2720,6 +2732,11 @@
     padding: 10px 12px !important;
     gap: 6px !important;
     border-radius: 10px !important;
+    background: linear-gradient(135deg, rgba(6, 14, 30, 0.45) 0%, rgba(2, 6, 16, 0.55) 100%) !important;
+    border: 1px solid rgba(0, 212, 255, 0.12) !important;
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4) !important;
   }
   .mc-ceo-avatar-wrap {
     width: 48px !important;
@@ -2732,10 +2749,16 @@
   .mc-ceo-quote {
     font-size: 0.65rem !important;
     padding: 6px 8px !important;
+    background: rgba(255, 255, 255, 0.02) !important;
+    border: 1px solid rgba(255, 255, 255, 0.04) !important;
   }
   .mc-overview-box {
     padding: 10px 12px !important;
     border-radius: 10px !important;
+    background: rgba(4, 10, 22, 0.35) !important;
+    border: 1px solid rgba(255, 255, 255, 0.06) !important;
+    backdrop-filter: blur(14px) !important;
+    -webkit-backdrop-filter: blur(14px) !important;
   }
   .mc-mission-title {
     font-size: 0.95rem !important;
@@ -2748,6 +2771,10 @@
   .mc-tech-card {
     padding: 10px 12px !important;
     border-radius: 10px !important;
+    background: rgba(4, 10, 22, 0.35) !important;
+    border: 1px solid rgba(255, 255, 255, 0.06) !important;
+    backdrop-filter: blur(14px) !important;
+    -webkit-backdrop-filter: blur(14px) !important;
   }
   .mc-tech-heading {
     font-size: 0.85rem !important;
@@ -2756,6 +2783,7 @@
   .mc-tech-pill {
     font-size: 0.56rem !important;
     padding: 3px 8px !important;
+    background: rgba(255, 255, 255, 0.03) !important;
   }
   .mc-capabilities-section {
     margin-top: 6px !important;
@@ -2770,6 +2798,11 @@
     padding: 8px !important;
     gap: 6px !important;
     border-radius: 8px !important;
+    background: linear-gradient(145deg, rgba(6, 12, 26, 0.4) 0%, rgba(2, 6, 16, 0.5) 100%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.06) !important;
+    backdrop-filter: blur(14px) !important;
+    -webkit-backdrop-filter: blur(14px) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
   }
   .mc-smooth-img-wrap {
     height: 105px !important;
@@ -2802,6 +2835,10 @@
     padding: 12px 10px !important;
     margin: 6px 0 0 !important;
     border-radius: 10px !important;
+    background: linear-gradient(180deg, rgba(4, 10, 22, 0.4) 0%, rgba(2, 6, 14, 0.55) 100%) !important;
+    border: 1px solid rgba(0, 212, 255, 0.1) !important;
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
   }
   .mc-bottom-cta-title {
     font-size: 0.95rem !important;
@@ -2817,6 +2854,11 @@
     max-width: 290px !important;
     padding: 16px 12px !important;
     border-radius: 12px !important;
+    background: rgba(2, 10, 8, 0.45) !important;
+    border: 1px solid rgba(0, 255, 136, 0.15) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 255, 136, 0.06) !important;
   }
   .mc-ai-solo-spinner-box {
     width: 60px !important;
@@ -2839,6 +2881,7 @@
     padding: 6px 8px !important;
     margin-bottom: 10px !important;
     border-radius: 6px !important;
+    background: rgba(2, 6, 16, 0.5) !important;
   }
   .mc-ai-solo-progress-info {
     font-size: 0.54rem !important;
@@ -2848,6 +2891,7 @@
     text-align: center !important;
     padding: 6px 12px !important;
     font-size: 0.60rem !important;
+    background: rgba(255, 255, 255, 0.03) !important;
   }
   .mc-stats-grid.mc-ceo-stats {
     grid-template-columns: 1fr;
