@@ -394,9 +394,11 @@ export default function MissionControl() {
             </p>
 
             <div className="mc-bottom-cta-actions">
-              <button className="mc-btn-primary interactive" onClick={handleStartMission}>
-                {article.id === 'web_dev' ? '🚀 ENTER WEB STORE' : '⚡ INITIATE DEPARTMENT MAINFRAME'}
-              </button>
+              {article.id === 'web_dev' && (
+                <button className="mc-btn-primary interactive" onClick={handleStartMission}>
+                  🚀 ENTER WEB STORE
+                </button>
+              )}
               <a
                 href="mailto:bexsigmatech@gmail.com?subject=Project%20Inquiry%20-%20Bex%20Sigma%20Tech"
                 className="mc-btn-ceo-contact interactive"
