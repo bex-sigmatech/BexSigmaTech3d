@@ -303,9 +303,9 @@ export default function MissionControl() {
               <div className="mc-section-title-wrap">
                 <div className="mc-section-eyebrow">
                   <span className="mc-eyebrow-dot" />
-                  SIGMA DELIVERABLES
+                  SIGMA DELIVERABLES & CORE DISCIPLINES
                 </div>
-                <h3 className="mc-section-title">Specialized Capabilities</h3>
+                <h3 className="mc-section-title">Specialized Capabilities ({article.services.length} Pillars)</h3>
               </div>
             </div>
 
@@ -315,7 +315,7 @@ export default function MissionControl() {
                 return (
                   <div
                     key={idx}
-                    className="mc-cap-card interactive"
+                    className={`mc-cap-card ${svc.image ? 'mc-cap-card--has-image' : ''} interactive`}
                     style={{
                       '--card-accent': palette.color,
                       '--card-glow': palette.glow,
@@ -325,21 +325,58 @@ export default function MissionControl() {
                       setSelectedServiceDetail({ ...svc, index: idx, palette })
                     }}
                   >
-                    <div className="mc-cap-top-row">
-                      <div className="mc-cap-icon-box">
-                        {SERVICE_ICONS[idx % SERVICE_ICONS.length]}
+                    {/* Image Preview Container with Holographic HUD Frame */}
+                    {svc.image && (
+                      <div className="mc-cap-img-wrap">
+                        <img
+                          src={svc.image}
+                          alt={svc.title}
+                          className="mc-cap-img"
+                          loading="lazy"
+                        />
+                        <div className="mc-cap-img-overlay" />
+                        <div className="mc-cap-img-scanline" />
+                        {svc.badge && (
+                          <span
+                            className="mc-cap-img-badge"
+                            style={{
+                              color: palette.color,
+                              borderColor: palette.border,
+                              background: palette.glow,
+                            }}
+                          >
+                            {svc.badge}
+                          </span>
+                        )}
+                        <div className="mc-cap-img-corner tl" style={{ borderColor: palette.color }} />
+                        <div className="mc-cap-img-corner tr" style={{ borderColor: palette.color }} />
+                        <div className="mc-cap-img-corner bl" style={{ borderColor: palette.color }} />
+                        <div className="mc-cap-img-corner br" style={{ borderColor: palette.color }} />
                       </div>
-                      <span className="mc-cap-num">0{idx + 1}</span>
-                    </div>
+                    )}
 
-                    <div>
-                      <h4 className="mc-cap-title">{svc.title}</h4>
-                      <p className="mc-cap-desc">{svc.desc}</p>
-                    </div>
+                    <div className="mc-cap-content-wrap">
+                      <div className="mc-cap-top-row">
+                        <div className="mc-cap-icon-box">
+                          {SERVICE_ICONS[idx % SERVICE_ICONS.length]}
+                        </div>
+                        <span className="mc-cap-num">0{idx + 1}</span>
+                      </div>
 
-                    <div className="mc-cap-footer">
-                      <span>Inspect Sigma Blueprint</span>
-                      <span>→</span>
+                      <div className="mc-cap-text-block">
+                        <h4 className="mc-cap-title">{svc.title}</h4>
+                        {svc.subtitle && (
+                          <div className="mc-cap-subtitle" style={{ color: palette.color }}>
+                            {svc.subtitle}
+                          </div>
+                        )}
+                        <p className="mc-cap-desc">{svc.desc}</p>
+                      </div>
+
+                      <div className="mc-cap-footer">
+                        <span>Inspect Sigma Blueprint</span>
+                        <span className="mc-cap-arrow">→</span>
+                      </div>
                     </div>
                   </div>
                 )
@@ -405,7 +442,7 @@ export default function MissionControl() {
                 className="mc-blueprint-badge"
                 style={{ color: selectedServiceDetail.palette?.color }}
               >
-                {article.badge} · TECHNICAL BLUEPRINT
+                {selectedServiceDetail.badge || article.badge} · TECHNICAL BLUEPRINT
               </span>
               <button
                 className="mc-blueprint-close interactive"
@@ -416,25 +453,45 @@ export default function MissionControl() {
             </div>
 
             <div className="mc-blueprint-body">
+              {selectedServiceDetail.image && (
+                <div className="mc-blueprint-hero-wrap">
+                  <img
+                    src={selectedServiceDetail.image}
+                    alt={selectedServiceDetail.title}
+                    className="mc-blueprint-hero-img"
+                  />
+                  <div className="mc-blueprint-hero-overlay" />
+                  <div className="mc-blueprint-hero-tag">
+                    <span className="mc-live-dot" />
+                    <span>SYSTEM NODE: {selectedServiceDetail.title.toUpperCase()}</span>
+                  </div>
+                </div>
+              )}
+
               <h3 className="mc-blueprint-title">{selectedServiceDetail.title}</h3>
+              {selectedServiceDetail.subtitle && (
+                <h4 className="mc-blueprint-subtitle" style={{ color: selectedServiceDetail.palette?.color }}>
+                  {selectedServiceDetail.subtitle}
+                </h4>
+              )}
               <p className="mc-blueprint-desc">{selectedServiceDetail.desc}</p>
 
               <div className="mc-blueprint-specs-grid">
                 <div className="mc-blueprint-spec-item">
                   <div className="mc-spec-lbl">PROVISIONING LATENCY</div>
-                  <div className="mc-spec-val">&lt; 48h Sprint Ready</div>
+                  <div className="mc-spec-val">{selectedServiceDetail.specs?.latency || '< 48h Sprint Ready'}</div>
                 </div>
                 <div className="mc-blueprint-spec-item">
                   <div className="mc-spec-lbl">CODE INTEGRITY</div>
-                  <div className="mc-spec-val">100% Automated CI/CD + QA</div>
+                  <div className="mc-spec-val">{selectedServiceDetail.specs?.integrity || '100% Automated CI/CD + QA'}</div>
                 </div>
                 <div className="mc-blueprint-spec-item">
                   <div className="mc-spec-lbl">SECURITY POSTURE</div>
-                  <div className="mc-spec-val">Post-Quantum Cryptography</div>
+                  <div className="mc-spec-val">{selectedServiceDetail.specs?.security || 'Post-Quantum Cryptography'}</div>
                 </div>
                 <div className="mc-blueprint-spec-item">
                   <div className="mc-spec-lbl">MAINTENANCE SLA</div>
-                  <div className="mc-spec-val">24/7 Continuous Monitoring</div>
+                  <div className="mc-spec-val">{selectedServiceDetail.specs?.sla || '24/7 Continuous Monitoring'}</div>
                 </div>
               </div>
 
@@ -442,8 +499,13 @@ export default function MissionControl() {
                 <button
                   className="mc-btn-primary interactive"
                   onClick={() => {
+                    const target = selectedServiceDetail.targetSector
                     setSelectedServiceDetail(null)
-                    handleStartMission()
+                    if (target) {
+                      handleSelectSector(target)
+                    } else {
+                      handleStartMission()
+                    }
                   }}
                 >
                   PROVISION THIS SERVICE NOW

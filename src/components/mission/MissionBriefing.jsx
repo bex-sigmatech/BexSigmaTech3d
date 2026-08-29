@@ -96,12 +96,22 @@ export default function MissionBriefing() {
 
           {/* Services */}
           <div className="nolan-briefing-section">
-            <label className="nolan-briefing-label">WHAT WE DO</label>
+            <label className="nolan-briefing-label">WHAT WE DO & CORE DISCIPLINES</label>
             <div className="sector-article-grid">
               {article.services.map((svc, idx) => (
-                <div key={idx} className="sector-service-card">
-                  <div className="sector-service-title">{svc.title}</div>
-                  <div className="sector-service-desc">{svc.desc}</div>
+                <div key={idx} className={`sector-service-card ${svc.image ? 'sector-service-card--has-img' : ''}`}>
+                  {svc.image && (
+                    <div className="sector-service-img-wrap">
+                      <img src={svc.image} alt={svc.title} className="sector-service-img" loading="lazy" />
+                      <div className="sector-service-img-overlay" />
+                      {svc.badge && <span className="sector-service-badge">{svc.badge}</span>}
+                    </div>
+                  )}
+                  <div className="sector-service-content">
+                    <div className="sector-service-title">{svc.title}</div>
+                    {svc.subtitle && <div className="sector-service-subtitle">{svc.subtitle}</div>}
+                    <div className="sector-service-desc">{svc.desc}</div>
+                  </div>
                 </div>
               ))}
             </div>
