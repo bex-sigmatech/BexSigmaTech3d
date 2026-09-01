@@ -128,7 +128,7 @@ export default function BootScreen() {
                 </div>
 
                 <div className="mb-brand-typography">
-                  <h1 className="mb-brand-title">BEX SIGMA TECH</h1>
+                  <h1 className="mb-brand-title">BEx Sigma Tech</h1>
                   <p className="mb-brand-subtitle">NEXT-GENERATION AEROSPACE &amp; AI SYSTEMS</p>
                 </div>
               </div>
@@ -159,7 +159,7 @@ export default function BootScreen() {
             </div>
           ) : (
             <div className="nolan-boot-content mobile-boot-loading">
-              <div className="nolan-logo">BEX SIGMA TECH</div>
+              <div className="nolan-logo">BEx Sigma Tech</div>
 
               {/* Circular HUD Loader */}
               <div className="boot-circular-loader">
@@ -233,7 +233,7 @@ export default function BootScreen() {
             </div>
           ) : (
             <div className="nolan-boot-content">
-              <div className="nolan-logo">BEX SIGMA TECH</div>
+              <div className="nolan-logo">BEx Sigma Tech</div>
 
               <div className="boot-circular-loader">
                 <svg viewBox="0 0 150 150" width="150" height="150" className="boot-svg-ring">

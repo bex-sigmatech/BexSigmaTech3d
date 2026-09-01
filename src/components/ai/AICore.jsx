@@ -638,7 +638,7 @@ export default function AICore() {
               <div className="cl-card-header">
                 <div className="cl-logo-tile">XΣ</div>
                 <div className="cl-title-stack">
-                  <span className="cl-title-brand">BEX SIGMA TECH</span>
+                  <span className="cl-title-brand">BEx Sigma Tech</span>
                   <span className="cl-card-title">AI COMMAND PORTAL</span>
                 </div>
                 <span className={`cl-header-status ${scene === 'ai_response' ? 'ok' : ''}`}>
@@ -652,7 +652,7 @@ export default function AICore() {
                 {scene !== 'ai_response' ? (
                   <>
                     <p className="cl-dialogue-main">
-                      <TypewriterText text="BEX SIGMA TECH · AEROSPACE AI INFRASTRUCTURE" speed={35} />
+                      <TypewriterText text="BEx Sigma Tech · Aerospace AI Infrastructure" speed={35} />
                     </p>
                     <p className="cl-dialogue-sub">
                       <TypewriterText text="Operator authorisation required. Please synchronise your unique callsign to proceed." speed={20} />
@@ -762,7 +762,7 @@ export default function AICore() {
               <div className="cinematic-letterbox-bottom" />
               <div className="cinematic-caption">
                 <div className="caption-location">ORBITAL RESEARCH HEADQUARTERS · 408 KM ALTITUDE</div>
-                <div className="caption-title">BEX SIGMA TECH COMMAND STATION</div>
+                <div className="caption-title">BEx Sigma Tech Command Station</div>
               </div>
               <HUDCorners />
             </div>
@@ -856,7 +856,7 @@ export default function AICore() {
 
                 <div className="id-panel-badge-row">
                   <div className="id-badge-dot" />
-                  <span className="id-badge-label">BEX SIGMA TECH · AI NODE S7 · ACCESS: PENDING</span>
+                  <span className="id-badge-label">BEx Sigma Tech · AI NODE S7 · ACCESS: PENDING</span>
                 </div>
 
                 {/* Zoom phase progress dots */}
@@ -892,7 +892,7 @@ export default function AICore() {
                   {scene !== 'ai_response' ? (
                     <>
                       <p className="id-line-main" style={{ fontSize: 'clamp(0.95rem, 1.8vw, 1.3rem)' }}>
-                        “<TypewriterText text="BEX SIGMA TECH is a premium SaaS software company." speed={35} />”
+                        “<TypewriterText text="BEx Sigma Tech is a premium SaaS software company." speed={35} />”
                       </p>
                       <p className="id-line-sub" style={{ fontSize: 'clamp(0.72rem, 1.3vw, 0.85rem)', color: 'rgba(0, 212, 255, 0.75)' }}>
                         “<TypewriterText text="We provide digital marketing, run Meta Ads campaigns, create content, and offer financial systems support. Please synchronise your callsign to enter." speed={20} />”

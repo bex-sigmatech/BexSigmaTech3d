@@ -17,8 +17,8 @@ const DEPARTMENTS = [
   {
     id: 'mission_control',
     title: 'Mission Control',
-    subtitle: 'BEX Sigma Tech — Core Command & Company Hub',
-    desc: 'Central hub of BEX Sigma Tech — we build software, websites, 3D websites, applications, digital marketing, content creation, AI automation and custom generated notes. Your idea, our end-to-end execution.',
+    subtitle: 'BEx Sigma Tech — Core Command & Company Hub',
+    desc: 'Central hub of BEx Sigma Tech — we build software, websites, 3D websites, applications, digital marketing, content creation, AI automation and custom generated notes. Your idea, our end-to-end execution.',
     tech: ['Software', 'Websites', '3D Web', 'AI Automation', 'Digital Marketing', 'Content'],
     color: '#00d4ff', emissive: '#0088cc', pos: [0, 0, 0]
   },

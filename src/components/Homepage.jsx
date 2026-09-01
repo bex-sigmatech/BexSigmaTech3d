@@ -776,7 +776,7 @@ function Footer() {
         </div>
       </div>
       <div className="footer-bottom">
-        <span>&copy; 2026 Bex Sigma Tech. All rights reserved.</span>
+        <span>&copy; 2026 BEx Sigma Tech. All rights reserved.</span>
         <span className="footer-status"><span className="status-dot" /> All systems operational</span>
       </div>
     </footer>

@@ -319,7 +319,7 @@ export default function MissionControl() {
                       <span className="mc-ceo-sub-badge">CHIEF ARCHITECT</span>
                     </div>
                     <h2 className="mc-ceo-name">Hariharan.D</h2>
-                    <p className="mc-ceo-tagline">Visionary Architect & Full-Stack Pioneer · BEX Sigma Tech</p>
+                    <p className="mc-ceo-tagline">Visionary Architect & Full-Stack Pioneer · BEx Sigma Tech</p>
 
                     {/* Direct Contact Action Button */}
                     <div className="mc-ceo-action-row">
@@ -556,7 +556,7 @@ export default function MissionControl() {
               </div>
               <h2 className="mc-bottom-cta-title">
                 {article.id === 'mission_control'
-                  ? 'Ready to Launch Your Digital Future with BEX Sigma Tech?'
+                  ? 'Ready to Launch Your Digital Future with BEx Sigma Tech?'
                   : `Ready to Initialize the ${article.title} Sector?`}
               </h2>
               <p className="mc-bottom-cta-desc">

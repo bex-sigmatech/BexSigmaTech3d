@@ -8,9 +8,9 @@ export const SECTOR_ARTICLES = {
   mission_control: {
     id: 'mission_control',
     title: 'Mission Control',
-    subtitle: 'BEX Sigma Tech — Core Command & Enterprise Digital Hub',
-    badge: 'BEX SIGMA TECH',
-    overview: `BEX Sigma Tech is your end-to-end digital engineering partner. From our central Mission Control hub, we design, engineer, and deploy high-impact digital solutions across 8 specialized disciplines: Software Development, Multi-Platform Applications, Corporate & E-Commerce Websites, Immersive 3D Spatial Websites, Performance Digital Marketing, Strategic Content & Copywriting, Autonomous AI Automation, and Intelligent Note Generation & Knowledge Synthesis.`,
+    subtitle: 'BEx Sigma Tech — Core Command & Enterprise Digital Hub',
+    badge: 'BEx Sigma Tech',
+    overview: `BEx Sigma Tech is your end-to-end digital engineering partner. From our central Mission Control hub, we design, engineer, and deploy high-impact digital solutions across 8 specialized disciplines: Software Development, Multi-Platform Applications, Corporate & E-Commerce Websites, Immersive 3D Spatial Websites, Performance Digital Marketing, Strategic Content & Copywriting, Autonomous AI Automation, and Intelligent Note Generation & Knowledge Synthesis.`,
     services: [
       {
         title: 'Software',
@@ -142,7 +142,7 @@ export const SECTOR_ARTICLES = {
       { value: '100%', label: 'Custom Built' },
       { value: '24/7', label: 'Direct Support' }
     ],
-    whyChoose: 'BEX Sigma Tech delivers all 8 core disciplines under one roof. Whether you need an enterprise software suite, a 3D spatial website, high-converting digital marketing, autonomous AI workflows, or automated note synthesis, we engineer with speed, precision, and excellence.',
+    whyChoose: 'BEx Sigma Tech delivers all 8 core disciplines under one roof. Whether you need an enterprise software suite, a 3D spatial website, high-converting digital marketing, autonomous AI workflows, or automated note synthesis, we engineer with speed, precision, and excellence.',
     tech: ['Software Engineering', 'Autonomous Apps', 'Modern Web', '3D WebGL Spatial', 'Digital Marketing', 'Creative Content', 'AI Automation', 'Generate Notes AI'],
   },
 
@@ -151,7 +151,7 @@ export const SECTOR_ARTICLES = {
     title: 'Web Development',
     subtitle: 'Quantum Spatial Web & Next-Gen Interfaces',
     badge: 'WEB DIVISION',
-    overview: `Web Development at BEX Sigma Tech builds fast, secure and scalable websites that work flawlessly on every device. Whether you need a corporate site, a custom web application or a complete e-commerce store, we engineer for speed, SEO and future growth. Every build is responsive, accessible and optimized for real-world business results — not just good looks.`,
+    overview: `Web Development at BEx Sigma Tech builds fast, secure and scalable websites that work flawlessly on every device. Whether you need a corporate site, a custom web application or a complete e-commerce store, we engineer for speed, SEO and future growth. Every build is responsive, accessible and optimized for real-world business results — not just good looks.`,
     services: [
       { title: 'Corporate & Landing Websites', subtitle: 'Conversion-Focused Architecture', desc: 'Clean, high-performance websites that communicate trust and convert visitors into customers.', image: '/sector_website.jpg', badge: 'WEB CORE' },
       { title: '3D Spatial Web Experiences', subtitle: 'Three.js & WebGL 3D Interfaces', desc: 'Interactive Three.js & WebGL 3D websites with spatial navigation and hardware-accelerated graphics.', image: '/sector_3d_website.jpg', badge: '3D SPATIAL' },
@@ -170,7 +170,7 @@ export const SECTOR_ARTICLES = {
     title: 'Autonomous Applications',
     subtitle: 'Autonomous Application Matrix · Mobile & Desktop Software',
     badge: 'APP MATRIX',
-    overview: `Autonomous Applications at BEX Sigma Tech engineers native mobile apps, cross-platform mobile apps (iOS & Android), progressive web applications, and enterprise software. Explore our production-ready products Future Path and UrDay, or architect custom software in our engineering lab.`,
+    overview: `Autonomous Applications at BEx Sigma Tech engineers native mobile apps, cross-platform mobile apps (iOS & Android), progressive web applications, and enterprise software. Explore our production-ready products Future Path and UrDay, or architect custom software in our engineering lab.`,
     services: [
       { title: 'iOS & Android Mobile Apps', subtitle: 'React Native & Flutter', desc: 'Native and cross-platform mobile applications built with React Native and Flutter for 60 FPS performance.', image: '/sector_application.jpg', badge: 'MOBILE' },
       { title: 'Custom SaaS & Web Apps', subtitle: 'Subscription & Admin Systems', desc: 'Scalable subscription software, administrative dashboards, and internal business tools.', image: '/sector_software.jpg', badge: 'SAAS CORE' },
@@ -189,7 +189,7 @@ export const SECTOR_ARTICLES = {
     title: 'Our Client Projects',
     subtitle: 'Proven Case Studies, Enterprise Deployments & Client Success',
     badge: 'CLIENT SUCCESS',
-    overview: `Explore real-world client success stories architected and deployed by BEX Sigma Tech. From custom enterprise web platforms and high-conversion e-commerce systems to AI agent workflow automations and cloud infrastructure migrations, our client projects demonstrate our commitment to delivering tangible business value, rapid turnarounds, and exceptional digital experiences.`,
+    overview: `Explore real-world client success stories architected and deployed by BEx Sigma Tech. From custom enterprise web platforms and high-conversion e-commerce systems to AI agent workflow automations and cloud infrastructure migrations, our client projects demonstrate our commitment to delivering tangible business value, rapid turnarounds, and exceptional digital experiences.`,
     services: [
       { title: 'Enterprise Web & 3D Platforms', subtitle: 'Global Digital Showcases', desc: 'Custom high-performance web applications and immersive 3D spatial showcases delivered for global clients.', image: '/sector_3d_website.jpg', badge: 'SHOWCASE' },
       { title: 'Performance Marketing & Branding', subtitle: 'High-Conversion Acquisition', desc: 'End-to-end digital marketing funnels, creative content campaigns, and high-impact acquisition pipelines.', image: '/sector_marketing.jpg', badge: 'GROWTH' },

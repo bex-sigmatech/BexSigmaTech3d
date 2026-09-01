@@ -124,7 +124,7 @@ export default function AppsStore() {
     setInquirySent(true)
     const mailSubject = encodeURIComponent(`Custom App Build Inquiry: ${customAppPlatform}`)
     const mailBody = encodeURIComponent(
-      `Hi Hariharan,\n\nI want to build a custom application with BEX Sigma Tech.\n\n` +
+      `Hi Hariharan,\n\nI want to build a custom application with BEx Sigma Tech.\n\n` +
       `Platform: ${customAppPlatform}\n` +
       `Target Scale & Timeline: ${customAppScale}\n` +
       `User Email: ${customAppEmail}\n\n` +
@@ -555,7 +555,7 @@ export default function AppsStore() {
                     <span>Production Architecture · Custom Deployment & White-Label Available</span>
                   </div>
                   <a
-                    href={`mailto:bexsigmatech@gmail.com?subject=${encodeURIComponent(`Inquiry Regarding ${selectedAppModal.name} Platform`)}&body=${encodeURIComponent(`Hi Hariharan,\n\nI am interested in the ${selectedAppModal.name} platform and custom application engineering with BEX Sigma Tech.\n\nLooking forward to connecting!`)}`}
+                    href={`mailto:bexsigmatech@gmail.com?subject=${encodeURIComponent(`Inquiry Regarding ${selectedAppModal.name} Platform`)}&body=${encodeURIComponent(`Hi Hariharan,\n\nI am interested in the ${selectedAppModal.name} platform and custom application engineering with BEx Sigma Tech.\n\nLooking forward to connecting!`)}`}
                     className="apps-modal-inquire-btn interactive"
                   >
                     ✉ INQUIRE ABOUT THIS PLATFORM →

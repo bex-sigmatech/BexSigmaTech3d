@@ -139,7 +139,7 @@ export default function MissionBriefing() {
 
           {/* Why Choose */}
           <div className="nolan-briefing-section" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 10, padding: '14px 16px' }}>
-            <label className="nolan-briefing-label">WHY BEX SIGMA TECH</label>
+            <label className="nolan-briefing-label">WHY BEx Sigma Tech</label>
             <p className="nolan-briefing-desc" style={{ marginTop: 6 }}>{article.whyChoose}</p>
           </div>
 

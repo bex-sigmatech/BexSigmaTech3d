@@ -56,7 +56,7 @@ export const VoiceLibrary = {
     priority: 3,
     cooldown: 0
   },
-  WELCOME_SCREEN_VISIBLE: { text: "Welcome aboard BEX SIGMA TECH.", priority: 2, cooldown: 0 },
+  WELCOME_SCREEN_VISIBLE: { text: "Welcome aboard BEx Sigma Tech.", priority: 2, cooldown: 0 },
   AI_ROBOT_VISIBLE: { text: "I will assist you throughout your journey.", priority: 2, cooldown: 0 },
   NAME_INPUT_VISIBLE: { text: "Please identify yourself. Enter your commander callsign to proceed.", priority: 2, cooldown: 0 },
   NAME_SUBMITTED: {

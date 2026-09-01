@@ -42,7 +42,7 @@ const CLIENT_DOSSIERS = [
     ],
     techStack: ['React.js', 'Vite', 'Node.js', 'PostgreSQL', 'Edge CDN', 'Adobe CC', 'Meta Graph API'],
     testimonial: {
-      quote: 'BEX Sigma Tech delivered far beyond expectations. Their execution velocity and design standards are world-class.',
+      quote: 'BEx Sigma Tech delivered far beyond expectations. Their execution velocity and design standards are world-class.',
       author: 'Leadership Team · FinexHub'
     }
   }

@@ -196,7 +196,7 @@ export default function ServiceDetail({ serviceId, onClose }) {
                           ))}
                         </div>
                         <div className="service-type-ideal"><strong>Ideal for:</strong> {t.idealFor}</div>
-                        <button className="service-type-cta" style={{ background: idx === 1 ? accent : 'transparent', color: idx === 1 ? '#000' : '#fff', borderColor: idx === 1 ? accent : 'rgba(255,255,255,0.18)' }} onClick={() => openContact(`${t.name} — ${detail.title}`, `Hi BEX Sigma Tech, I'm interested in ${t.name} for ${detail.title}. Please share next steps.`)}> 
+                        <button className="service-type-cta" style={{ background: idx === 1 ? accent : 'transparent', color: idx === 1 ? '#000' : '#fff', borderColor: idx === 1 ? accent : 'rgba(255,255,255,0.18)' }} onClick={() => openContact(`${t.name} — ${detail.title}`, `Hi BEx Sigma Tech, I'm interested in ${t.name} for ${detail.title}. Please share next steps.`)}> 
                           Contact Us →
                         </button>
                       </div>
