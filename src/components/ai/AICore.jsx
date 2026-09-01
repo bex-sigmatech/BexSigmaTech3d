@@ -610,17 +610,7 @@ export default function AICore() {
               {/* Scanning beam */}
               <div className="cl-robot-scan-beam" />
 
-              {/* Neural core pulsing orb */}
-              <div className="cl-robot-neural-core">
-                <div className="cl-neural-pulse-ring r1" />
-                <div className="cl-neural-pulse-ring r2" />
-                <div className="cl-neural-pulse-ring r3" />
-                <div className="cl-neural-center">
-                  <span className="cl-orb-sigil">XΣ</span>
-                </div>
-              </div>
-
-              {/* Floating HUD chips — repositioned for arc */}
+              {/* Floating HUD chips */}
               <div className="cl-chip chip-tl"><b>SYS</b><span>87.4%</span></div>
               <div className="cl-chip chip-tr"><b>NEURAL</b><span>SYNC OK</span></div>
               <div className="cl-chip chip-bl"><b>CORE</b><span>STABLE</span></div>
@@ -653,26 +643,7 @@ export default function AICore() {
                 </div>
                 <span className={`cl-header-status ${scene === 'ai_response' ? 'ok' : ''}`}>
                   <span className="status-dot" />
-                  {scene === 'ai_response' ? 'GRANTED' : 'READY'}
-                </span>
-              </div>
-
-              {/* Biometric Verification Module */}
-              <div className="cl-fp-module">
-                <div className="cl-fp-frame">
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M12 10a2 2 0 0 0-2 2c0 1.02-.1 2.51-.26 4 M14 13.12c0 2.38 0 3.38-.4 4.88 M18 11a6 6 0 0 0-11.8 1.48 C6.08 14 6 15 5.5 17 M12 6a10 10 0 0 0-9.35 6.4 M20 15c-.46 2.05-.8 3.08-1.5 4.5 M21.8 11.5a14 14 0 0 0-2.5-6" />
-                  </svg>
-                  <span className="cl-fp-scanline" />
-                </div>
-                <div className="cl-fp-meta">
-                  <span className="cl-fp-label">BIOMETRIC SCAN</span>
-                  <span className="cl-fp-match">
-                    {scene === 'ai_response' ? 'IDENTITY LOCKED ✓' : `${fpMatch.toFixed(1)}% MATCH`}
-                  </span>
-                </div>
-                <span className={`cl-fp-state ${scene === 'ai_response' ? 'ok' : ''}`}>
-                  {scene === 'ai_response' ? '✓' : '●'}
+                  {scene === 'ai_response' ? '100% MATCH' : `${fpMatch.toFixed(1)}% MATCH`}
                 </span>
               </div>
 
