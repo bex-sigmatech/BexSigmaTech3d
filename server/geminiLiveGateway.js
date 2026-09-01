@@ -10,33 +10,18 @@ const https = require('https')
 const GEMINI_LIVE_HOST = 'generativelanguage.googleapis.com'
 const GEMINI_LIVE_PATH = '/ws/google.ai.generativelanguage.v1beta.GenerativeService.BidiGenerateContent'
 
-function buildSystemInstruction({ userName, scene, cartCount } = {}) {
-  const namePart = userName ? `Current operator: ${userName}. Address them by name.` : 'Operator not yet identified — ask their name.'
-  const scenePart = scene ? `Current sector: ${scene}. Tailor your guidance to this sector.` : 'At orbital entry.'
-  return `
-You are SIGMA, the senior AI executive and client consultant for BEX SIGMA TECH (Year 2070).
-Your goal is to conduct real-time, interactive, professional client consultations and guide visitors through the company's capabilities and 3D orbital command station.
-Context: ${namePart} ${scenePart} Cart items: ${cartCount || 0}.
+function buildSystemInstruction({ userName, scene } = {}) {
+  const namePart = userName ? `Operator callsign: ${userName}. Address them respectfully by name.` : 'Address the operator warmly as a consultant.'
+  const scenePart = scene ? `Current sector: ${scene}.` : 'At BEx Sigma Tech orbital station.'
+  return `You are SIGMA, the senior AI executive and consultant for BEx Sigma Tech.
+Context: ${namePart} ${scenePart}
+About BEx Sigma Tech: We engineer high-performance 3D spatial web platforms, mobile apps (UrDay & Future Path), AI automation agents, and custom enterprise software.
 
-About BEX Sigma Tech:
-- We build Next-Generation 3D Web Experiences, Autonomous AI Agent workflows, Quantum Cloud Systems, Cybersecurity Grids, and Executive Analytics Dashboard Blueprints.
-- Products & Blueprints in Store: Marketing Performance Dashboard (₹299), Business Executive Analytics Dashboard (₹349), Financial Trend Dashboard (₹319), HR KPI Suite (₹295), KPI Dashboard (₹295), One Dashboard BI Suite (₹256), plus SaaS: OmniCoder AI, QuantumShield, SpaceMesh, VisionSpatial, BioSync (₹289-359).
-
-Client Conversation Protocol:
-1. Greet the client warmly, ask their name, and inquire how you can assist their business or project.
-2. When the client tells you their name (e.g., "I am Kandavel"), acknowledge it respectfully and address them by name (e.g. "Welcome, Commander Kandavel").
-3. When the client asks "tell about your website", "what do you do", or "show me your services":
-   - Provide a clear, charismatic overview of BEX Sigma Tech.
-   - Explain how our 3D web apps and AI solutions transform businesses.
-   - Call the relevant tool to navigate them visually to that sector:
-     - Sector 9 Web Development & Store: navigateSector('web_dev')
-     - Mission Control & Core AI: navigateSector('mission_control')
-     - Biometric Clearance: triggerBiometricScan(callsign)
-4. Keep spoken responses natural, engaging, and concise (2-3 sentences per turn) so the conversation flows seamlessly without long monologues.
-5. If the client asks about pricing, blueprints, or wants to buy:
-   - Use showProductDetails(productId) to surface pricing, then addToCart(productId) or openCheckout(productId) as requested.
-   - For cart status, use showPricing to list all products.
-`.trim()
+Core Directives:
+1. Respond INSTANTLY and CONCISELY (1-2 sentences maximum per turn).
+2. Use a professional, charismatic, deep male executive tone.
+3. Keep the conversation natural, dynamic, and fluid without long monologues.
+4. When asked to navigate to a sector or department (e.g., web dev, mission control, applications), use the navigateSector tool immediately.`.trim()
 }
 const SYSTEM_INSTRUCTION = buildSystemInstruction()
 
@@ -49,67 +34,12 @@ const TOOL_DECLARATIONS = [
       properties: {
         sector: {
           type: 'STRING',
-          description: 'Sector to navigate to: web_dev, mission_control, ai_auto, analytics, cyber, cloud, store',
-          enum: ['web_dev', 'mission_control', 'ai_auto', 'analytics', 'cyber', 'cloud', 'store']
+          description: 'Sector to navigate to: web_dev, mission_control, cloud, client_projects',
+          enum: ['web_dev', 'mission_control', 'cloud', 'client_projects']
         }
       },
       required: ['sector']
     }
-  },
-  {
-    name: 'triggerBiometricScan',
-    description: 'Triggers the biometric scanning sequence for identity authorization.',
-    parameters: {
-      type: 'OBJECT',
-      properties: {
-        callsign: {
-          type: 'STRING',
-          description: 'Operator callsign or name'
-        }
-      }
-    }
-  },
-  {
-    name: 'showProductDetails',
-    description: 'Displays details and pricing of a specific BI dashboard or software blueprint.',
-    parameters: {
-      type: 'OBJECT',
-      properties: {
-        productId: {
-          type: 'STRING',
-          description: 'Product identifier: marketing-dashboard, business-dashboard, finance-trend, sales-dashboard, hr-kpi, kpi-dashboard, dashboard-suite, omnicoder-ai, quantum-shield, spacemesh-iot, vision-spatial, biosync-health'
-        }
-      },
-      required: ['productId']
-    }
-  },
-  {
-    name: 'addToCart',
-    description: 'Adds a product to the observatory cart (single-file ZIP, single-use).',
-    parameters: {
-      type: 'OBJECT',
-      properties: {
-        productId: { type: 'STRING', description: 'Product id to add, e.g. sales-dashboard' },
-        quantity: { type: 'INTEGER', description: 'Quantity, default 1' }
-      },
-      required: ['productId']
-    }
-  },
-  {
-    name: 'openCheckout',
-    description: 'Opens secure checkout for a product (collects name/email then Cashfree).',
-    parameters: {
-      type: 'OBJECT',
-      properties: {
-        productId: { type: 'STRING', description: 'Product id to checkout' }
-      },
-      required: ['productId']
-    }
-  },
-  {
-    name: 'showPricing',
-    description: 'Lists all products with pricing and secure single-use delivery info.',
-    parameters: { type: 'OBJECT', properties: {}, required: [] }
   }
 ]
 
@@ -162,9 +92,10 @@ function setupGeminiLiveGateway(server) {
           const dynamicInstruction = buildSystemInstruction(clientContext)
           const setupMessage = {
             setup: {
-              model: 'models/gemini-2.5-flash-native-audio-latest',
+              model: 'models/gemini-2.0-flash-exp',
               generationConfig: {
                 responseModalities: ['AUDIO'],
+                temperature: 0.6,
                 speechConfig: {
                   voiceConfig: {
                     prebuiltVoiceConfig: {
@@ -196,7 +127,7 @@ function setupGeminiLiveGateway(server) {
                   turns: [
                     {
                       role: 'user',
-                      parts: [{ text: "The client has just entered the website. Greet them warmly and professionally as Sigma from BEX Sigma Tech. Say: 'Hello! Welcome to BEX Sigma Tech. I am Sigma, your AI consultant. What is your name, and how can I assist you today?'" }]
+                      parts: [{ text: "The user has connected to the voice channel. Greet them warmly and professionally as Sigma from BEx Sigma Tech in one short sentence: 'Hello! I am Sigma from BEx Sigma Tech. How can I assist you today?'" }]
                     }
                   ],
                   turnComplete: true
