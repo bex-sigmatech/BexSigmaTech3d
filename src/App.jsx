@@ -67,7 +67,7 @@ export default function App() {
         </Suspense>
       )}
 
-      {/* Scene 10: Apps Products Matrix (Future Path & Track Me + Custom App Build) */}
+      {/* Scene 10: Apps Products Matrix (Future Path & UrDay + Custom App Build) */}
       {scene === 'apps_store' && (
         <Suspense fallback={<div style={{ color: '#00d4ff', fontFamily: 'Orbitron', letterSpacing: '0.2em', fontSize: '0.8rem' }}>INITIALIZING APPS MATRIX...</div>}>
           <AppsStore />

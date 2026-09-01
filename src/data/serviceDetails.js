@@ -125,10 +125,10 @@ export const SERVICE_DETAILS = {
         status: 'Live — expanding to schools'
       },
       {
-        name: 'Track Me',
+        name: 'UrDay',
         purpose: 'DISCIPLINE PURPOSE',
         tag: 'HABIT · FOCUS · CONSISTENCY',
-        desc: `Track Me is a discipline companion — built to turn intentions into habits. Log habits, block distractions, review weekly reports and stay accountable with streaks and gentle nudges. Less guilt, more consistency.`,
+        desc: `UrDay is a discipline companion — built to turn intentions into habits. Log habits, block distractions, review weekly reports and stay accountable with streaks and gentle nudges. Less guilt, more consistency.`,
         features: [
           'Habit builder with daily check-ins & streaks',
           'Focus timer & distraction blocker',
@@ -143,7 +143,7 @@ export const SERVICE_DETAILS = {
     ],
     customNote: {
       title: 'Need something else? We build any software.',
-      desc: `Beyond Future Path and Track Me, we architect custom apps: CRMs, ERPs, booking systems, inventory, analytics dashboards and SaaS MVPs. Bring your workflow on paper — we return a working product with admin, auth, payments and deployment handled.`,
+      desc: `Beyond Future Path and UrDay, we architect custom apps: CRMs, ERPs, booking systems, inventory, analytics dashboards and SaaS MVPs. Bring your workflow on paper — we return a working product with admin, auth, payments and deployment handled.`,
       examples: ['Business dashboard', 'Booking / scheduling app', 'Inventory & billing', 'Custom CRM / ERP', 'SaaS MVP']
     },
     cta: 'Have a workflow that eats hours? Show it to us — we’ll map it into software in one call.'

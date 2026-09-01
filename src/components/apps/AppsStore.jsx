@@ -6,7 +6,7 @@ import '../../styles/appsStore.css'
 
 /* ==========================================================================
    BEX SIGMA TECH — APPS & MOBILE PRODUCTS STORE
-   Featuring Future Path & Track Me + Custom App Development Advertisement
+   Featuring Future Path & UrDay + Custom App Development Advertisement
    ========================================================================== */
 
 const APP_PRODUCTS = [
@@ -57,9 +57,9 @@ const APP_PRODUCTS = [
     ]
   },
   {
-    id: 'track-me',
+    id: 'ur-day',
     badge: '⚡ HABITS & CASH FLOW',
-    name: 'Track Me',
+    name: 'UrDay',
     tagline: 'Build Unbreakable Habits & Master Your Money',
     shortDesc: 'Track daily habits with visual streak grids, enforce accountability with missed reflections, and take control of your cash flow with ESBI budgeting.',
     conceptTheme: 'telemetry',
@@ -83,17 +83,11 @@ const APP_PRODUCTS = [
       { title: 'Smart Reminders', desc: 'Stay disciplined with timely scheduled notifications for daily habits and milestones.' },
       { title: 'Profile & Lifetime Stats', desc: 'View current and best streaks, habit completion records, and growth analytics.' }
     ],
-    price: 399,
-    priceDisplay: '₹399',
-    originalPrice: '₹799',
-    currency: 'INR',
     color: '#00ff88',
     glowColor: 'rgba(0, 255, 136, 0.25)',
-    logo: '/track_me_logo.jpg',
+    logo: '/urday_logo.png',
     tech: ['Flutter', 'Dart', 'Local SQLite', 'ESBI Cash Flow'],
     platforms: ['iOS', 'Android', 'macOS', 'Windows'],
-    deliveryDays: 3,
-    popular: false,
     rating: '4.95 ★★★★★',
     downloads: '15K+ Active Users',
     mockScreens: [
@@ -266,8 +260,8 @@ export default function AppsStore() {
                     </div>
                   </div>
                 ) : (
-                  /* ── Track Me: Live Discipline & Cash Flow Telemetry ── */
-                  <div className="apps-concept-widget track-me-widget">
+                  /* ── UrDay: Live Discipline & Cash Flow Telemetry ── */
+                  <div className="apps-concept-widget ur-day-widget track-me-widget">
                     <div className="apps-widget-header">
                       <span className="apps-widget-title">⚡ DISCIPLINE & CASH FLOW MATRIX</span>
                       <span className="apps-widget-score" style={{ color: '#00ff88' }}>{app.heroMetric.value}</span>

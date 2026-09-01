@@ -35,7 +35,7 @@ const DEPARTMENTS = [
     title: 'Autonomous Applications',
     subtitle: 'Autonomous Application Matrix · Mobile & Desktop Software',
     desc: 'Flagship consumer & enterprise mobile apps engineered for speed, privacy, and seamless cross-platform performance.',
-    tech: ['React Native', 'Flutter', 'Future Path AI', 'Track Me ESBI'],
+    tech: ['React Native', 'Flutter', 'Future Path AI', 'UrDay ESBI'],
     color: '#38bdf8', emissive: '#0369a1', pos: [4.0, -2.5, -6]
   },
   {

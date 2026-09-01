@@ -273,7 +273,7 @@
   background: linear-gradient(90deg, #00d4ff, #7c3aed);
 }
 
-/* ── Telemetry Grid for Track Me ── */
+/* ── Telemetry Grid for UrDay ── */
 .apps-telemetry-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
