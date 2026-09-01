@@ -8064,22 +8064,23 @@ body {
   /* ── TOP BAR ── */
   .cl-topbar {
     position: relative;
-    z-index: 3;
+    z-index: 10;
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;
     max-width: 400px;
     padding: 6px 12px;
-    background: linear-gradient(90deg, rgba(8, 22, 40, 0.66), rgba(6, 16, 30, 0.5));
-    border: 1px solid rgba(56, 189, 248, 0.2);
+    background: linear-gradient(90deg, rgba(8, 22, 40, 0.75), rgba(6, 16, 30, 0.6));
+    border: 1px solid rgba(56, 189, 248, 0.25);
     border-radius: 999px;
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     box-shadow:
-      0 4px 22px rgba(0, 0, 0, 0.35),
-      inset 0 1px 0 rgba(125, 211, 252, 0.08);
+      0 4px 22px rgba(0, 0, 0, 0.45),
+      inset 0 1px 0 rgba(125, 211, 252, 0.12);
     animation: cl-drop-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+    margin-bottom: -20px;
   }
 
   .cl-topbar-left {
@@ -8130,24 +8131,24 @@ body {
     box-shadow: 0 0 20px rgba(0, 212, 255, 0.35);
   }
 
-  /* ── HERO SECTION ── */
+  /* ── HERO SECTION — FULL TOP SCREEN LAYER ── */
   .cl-hero-section {
     position: relative;
     z-index: 2;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 4px;
+    gap: 2px;
     width: 100%;
-    max-width: 400px;
+    max-width: 440px;
     flex-shrink: 0;
   }
 
   .cl-3d-robot-bg {
     position: relative;
     width: 100%;
-    max-width: 400px;
-    height: clamp(190px, 26vh, 235px);
+    max-width: 440px;
+    height: clamp(235px, 33vh, 285px);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -8161,26 +8162,26 @@ body {
   /* Deep ambient glow field behind robot */
   .cl-robot-glowfield {
     position: absolute;
-    inset: -12%;
+    inset: -20%;
     background:
-      radial-gradient(ellipse 68% 58% at 50% 44%, rgba(0, 174, 255, 0.2) 0%, transparent 68%),
-      radial-gradient(circle at 50% 62%, rgba(0, 212, 255, 0.14) 0%, transparent 58%);
-    filter: blur(3px);
+      radial-gradient(ellipse 75% 62% at 50% 38%, rgba(0, 174, 255, 0.26) 0%, transparent 72%),
+      radial-gradient(circle at 50% 50%, rgba(0, 212, 255, 0.16) 0%, transparent 60%);
+    filter: blur(4px);
     animation: cl-depth-far-drift 7s ease-in-out infinite alternate;
     pointer-events: none;
   }
 
-  /* Photo-real sentinel, edges dissolved into scene */
+  /* Photo-real sentinel covering top layer */
   .cl-robot-img {
     position: relative;
     z-index: 1;
-    width: min(84vw, 275px);
+    width: min(96vw, 360px);
     height: 100%;
     object-fit: cover;
-    object-position: center 18% !important;
-    -webkit-mask-image: radial-gradient(ellipse 70% 64% at 50% 45%, #000 56%, transparent 96%);
-    mask-image: radial-gradient(ellipse 70% 64% at 50% 45%, #000 56%, transparent 96%);
-    filter: saturate(1.22) brightness(1.05) contrast(1.08) drop-shadow(0 0 24px rgba(0, 190, 255, 0.28));
+    object-position: center 12% !important;
+    -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 42%, #000 60%, transparent 98%);
+    mask-image: radial-gradient(ellipse 80% 70% at 50% 42%, #000 60%, transparent 98%);
+    filter: saturate(1.24) brightness(1.06) contrast(1.08) drop-shadow(0 0 28px rgba(0, 190, 255, 0.3));
     user-select: none;
     -webkit-user-drag: none;
     animation: cl-robot-breathe 6s ease-in-out infinite;
@@ -8214,13 +8215,13 @@ body {
   .cl-orbit {
     position: absolute;
     left: 50%;
-    top: 48%;
-    width: 250px;
-    height: 250px;
-    margin: -125px 0 0 -125px;
+    top: 46%;
+    width: 300px;
+    height: 300px;
+    margin: -150px 0 0 -150px;
     border-radius: 50%;
     border: 1px solid rgba(56, 189, 248, 0.24);
-    box-shadow: 0 0 16px rgba(56, 189, 248, 0.08), inset 0 0 16px rgba(56, 189, 248, 0.05);
+    box-shadow: 0 0 18px rgba(56, 189, 248, 0.08), inset 0 0 18px rgba(56, 189, 248, 0.05);
     pointer-events: none;
     z-index: 3;
   }
@@ -8230,8 +8231,8 @@ body {
     position: absolute;
     top: -2.5px;
     left: 50%;
-    width: 5px;
-    height: 5px;
+    width: 6px;
+    height: 6px;
     border-radius: 50%;
     background: #7dd3fc;
     box-shadow: 0 0 8px #22d3ee, 0 0 18px rgba(34, 211, 238, 0.6);
@@ -8243,10 +8244,10 @@ body {
   }
 
   .cl-orbit.r2 {
-    width: 195px;
-    height: 195px;
-    margin: -97px 0 0 -97px;
-    top: 50%;
+    width: 235px;
+    height: 235px;
+    margin: -117px 0 0 -117px;
+    top: 48%;
     border-color: rgba(125, 211, 252, 0.18);
     border-style: dashed;
     animation: cl-orbit-spin-rev 17s linear infinite;
@@ -8255,8 +8256,8 @@ body {
   .cl-orbit.r2::after {
     top: auto;
     bottom: -2px;
-    width: 4px;
-    height: 4px;
+    width: 5px;
+    height: 5px;
     background: #00d4ff;
   }
 
@@ -8283,11 +8284,11 @@ body {
   /* ── Scanning beam ── */
   .cl-robot-scan-beam {
     position: absolute;
-    left: 14%;
-    right: 14%;
+    left: 10%;
+    right: 10%;
     height: 2px;
     background: linear-gradient(90deg, transparent, rgba(34, 211, 238, 0.45), rgba(125, 211, 252, 0.75), rgba(34, 211, 238, 0.45), transparent);
-    box-shadow: 0 0 14px rgba(34, 211, 238, 0.35), 0 0 30px rgba(0, 212, 255, 0.15);
+    box-shadow: 0 0 16px rgba(34, 211, 238, 0.35), 0 0 32px rgba(0, 212, 255, 0.15);
     animation: cl-scan-beam 3.8s ease-in-out infinite;
     z-index: 4;
     pointer-events: none;
@@ -8295,7 +8296,7 @@ body {
 
   @keyframes cl-scan-beam {
     0% {
-      top: 10%;
+      top: 8%;
       opacity: 0;
     }
 
@@ -8308,7 +8309,7 @@ body {
     }
 
     100% {
-      top: 86%;
+      top: 88%;
       opacity: 0;
     }
   }
@@ -8319,17 +8320,17 @@ body {
     display: flex;
     align-items: baseline;
     gap: 4px;
-    padding: 3px 6px;
-    background: rgba(6, 20, 36, 0.65);
-    border: 1px solid rgba(56, 189, 248, 0.28);
+    padding: 3px 7px;
+    background: rgba(6, 20, 36, 0.7);
+    border: 1px solid rgba(56, 189, 248, 0.3);
     border-radius: 5px;
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     font-family: 'Orbitron', sans-serif;
     pointer-events: none;
     z-index: 6;
     animation: cl-chip-float 5s ease-in-out infinite;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
   }
 
   .cl-chip b {
@@ -8347,25 +8348,25 @@ body {
   }
 
   .chip-tl {
-    top: 10%;
+    top: 14%;
     left: 2%;
     animation-delay: 0s;
   }
 
   .chip-tr {
-    top: 10%;
+    top: 14%;
     right: 2%;
     animation-delay: 1.1s;
   }
 
   .chip-bl {
-    bottom: 12%;
+    bottom: 10%;
     left: 2%;
     animation-delay: 2.2s;
   }
 
   .chip-br {
-    bottom: 12%;
+    bottom: 10%;
     right: 2%;
     animation-delay: 3.1s;
   }
