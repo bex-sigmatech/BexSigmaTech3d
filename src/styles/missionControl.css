@@ -2842,213 +2842,208 @@
   }
 }
 
-/* Mobile Screens (<= 600px) */
-@media (max-width: 600px) {
-  .mc-smooth-card {
-    flex-direction: column;
-    min-height: auto;
-    padding: 12px;
-    gap: 12px;
-  }
-  .mc-smooth-img-wrap {
-    width: 100%;
-    min-width: 100%;
-    height: 160px;
-  }
-  .mc-smooth-title {
-    font-size: 0.95rem;
-  }
-  .mc-smooth-desc {
-    font-size: 0.76rem;
-    -webkit-line-clamp: 3;
-  }
-  .mc-smooth-footer {
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-  .mc-blueprint-hero-wrap {
-    height: 160px;
-  }
-  .mc-blueprint-specs-grid {
-    grid-template-columns: 1fr;
-  }
-  .mc-blueprint-actions {
-    flex-direction: column;
-    width: 100%;
-  }
-  .mc-blueprint-actions > * {
-    width: 100%;
-    justify-content: center;
-    text-align: center;
-  }
-}
-
-/* Small Mobile (<= 480px / 500px) */
-@media (max-width: 500px) {
+/* Mobile Screens (<= 768px / 600px / 500px) — 10/10 TACTICAL CYBER DECK */
+@media (max-width: 768px) {
   .mc-page-scroll {
-    padding-bottom: 50px;
+    padding-bottom: calc(90px + env(safe-area-inset-bottom)) !important;
+    scrollbar-width: none;
   }
-  
-  /* ── Cyber-Cockpit Mobile Header Pattern ── */
+  .mc-page-scroll::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* ── 1. Cyber-Cockpit Mobile Header ── */
   .mc-header {
     display: flex !important;
-    flex-direction: column !important;
-    gap: 6px !important;
-    padding: 8px 12px 6px !important;
-    background: rgba(3, 8, 18, 0.65) !important;
-    border-bottom: 1px solid rgba(0, 212, 255, 0.12) !important;
-    backdrop-filter: blur(20px) !important;
-    -webkit-backdrop-filter: blur(20px) !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    gap: 8px !important;
+    padding: calc(8px + env(safe-area-inset-top, 0px)) 12px 8px !important;
+    background: rgba(3, 7, 16, 0.9) !important;
+    border-bottom: 1px solid rgba(0, 212, 255, 0.18) !important;
+    backdrop-filter: blur(24px) !important;
+    -webkit-backdrop-filter: blur(24px) !important;
     position: sticky !important;
     top: 0 !important;
     z-index: 100 !important;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5) !important;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.7) !important;
   }
 
   .mc-header-left {
     display: flex !important;
-    flex-direction: column !important;
-    width: 100% !important;
-    gap: 4px !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 10px !important;
+    flex: 1 !important;
+    min-width: 0 !important;
   }
 
   .mc-back-btn {
-    align-self: flex-start !important;
-    padding: 4px 10px !important;
-    font-size: 0.58rem !important;
-    border-radius: 16px !important;
-    background: rgba(0, 212, 255, 0.08) !important;
-    border: 1px solid rgba(0, 212, 255, 0.28) !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+    padding: 6px 12px !important;
+    font-size: 0.62rem !important;
+    font-weight: 900 !important;
+    border-radius: 999px !important;
+    background: rgba(0, 212, 255, 0.12) !important;
+    border: 1px solid rgba(0, 212, 255, 0.4) !important;
     color: #00d4ff !important;
-    letter-spacing: 0.06em !important;
-    font-weight: 800 !important;
+    letter-spacing: 0.08em !important;
+    flex-shrink: 0 !important;
   }
 
   .mc-header-titles {
     display: flex !important;
     flex-direction: column !important;
-    gap: 2px !important;
+    gap: 1px !important;
+    min-width: 0 !important;
   }
 
   .mc-dept-label {
     display: flex !important;
     align-items: center !important;
     gap: 4px !important;
-    flex-wrap: wrap !important;
-    font-size: 0.48rem !important;
-    margin-bottom: 1px !important;
+    flex-wrap: nowrap !important;
+    font-size: 0.46rem !important;
   }
 
   .mc-badge-pill {
-    font-size: 0.48rem !important;
+    font-size: 0.44rem !important;
     padding: 1px 5px !important;
     border-radius: 4px !important;
     background: rgba(0, 212, 255, 0.15) !important;
     border: 1px solid rgba(0, 212, 255, 0.35) !important;
     color: #00d4ff !important;
+    font-weight: 800 !important;
+    white-space: nowrap !important;
   }
 
   .mc-user-tag {
-    font-size: 0.48rem !important;
+    font-size: 0.44rem !important;
     padding: 1px 5px !important;
     border-radius: 4px !important;
-    background: rgba(255, 255, 255, 0.04) !important;
-    border: 1px solid rgba(255, 255, 255, 0.06) !important;
-    color: rgba(255, 255, 255, 0.6) !important;
+    background: rgba(168, 85, 247, 0.12) !important;
+    border: 1px solid rgba(168, 85, 247, 0.3) !important;
+    color: #c084fc !important;
+    white-space: nowrap !important;
   }
 
   .mc-page-title {
     font-family: 'Orbitron', monospace !important;
-    font-size: 1.05rem !important;
-    font-weight: 800 !important;
-    color: #fff !important;
-    margin: 0 !important;
-    line-height: 1.15 !important;
+    font-size: 1.02rem !important;
+    font-weight: 900 !important;
+    color: #ffffff !important;
+    line-height: 1.1 !important;
     letter-spacing: 0.02em !important;
-    text-shadow: 0 0 12px rgba(0, 212, 255, 0.35) !important;
+    text-shadow: 0 0 14px rgba(0, 212, 255, 0.35) !important;
+    margin: 0 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
   }
 
   .mc-page-subtitle {
-    font-size: 0.62rem !important;
-    color: rgba(255, 255, 255, 0.6) !important;
-    line-height: 1.2 !important;
-    margin: 0 !important;
+    display: none !important;
   }
 
   .mc-header-right {
     display: flex !important;
-    width: 100% !important;
-    justify-content: space-between !important;
     align-items: center !important;
-    margin-top: 2px !important;
-    padding-top: 4px !important;
-    border-top: 1px dashed rgba(255, 255, 255, 0.06) !important;
+    gap: 6px !important;
+    width: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    flex-shrink: 0 !important;
   }
 
   .mc-audio-btn {
-    padding: 4px 10px !important;
-    font-size: 0.54rem !important;
-    border-radius: 14px !important;
+    padding: 5px 10px !important;
+    font-size: 0.52rem !important;
+    font-weight: 800 !important;
+    border-radius: 999px !important;
     background: rgba(0, 255, 136, 0.08) !important;
-    border: 1px solid rgba(0, 255, 136, 0.25) !important;
+    border: 1px solid rgba(0, 255, 136, 0.3) !important;
     color: #00ff88 !important;
     letter-spacing: 0.06em !important;
+    flex-shrink: 0 !important;
   }
 
   .mc-clock-badge {
-    padding: 2px 8px !important;
-    font-size: 0.52rem !important;
-    border-radius: 14px !important;
-    background: rgba(255, 255, 255, 0.04) !important;
-    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    display: none !important;
   }
 
+  /* ── 2. Horizontal Sector Directory Carousel ── */
   .mc-sector-nav {
-    background: rgba(2, 5, 12, 0.45) !important;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
-    backdrop-filter: blur(14px) !important;
-    -webkit-backdrop-filter: blur(14px) !important;
-    padding: 4px 8px !important;
+    display: flex !important;
+    background: rgba(2, 6, 14, 0.65) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
+    padding: 6px 10px !important;
+  }
+
+  .mc-sector-nav-label {
+    display: none !important;
+  }
+
+  .mc-sector-nav-track {
+    display: flex !important;
+    gap: 6px !important;
+    overflow-x: auto !important;
+    scrollbar-width: none !important;
+    -webkit-overflow-scrolling: touch !important;
+    padding: 2px 0 !important;
+  }
+  .mc-sector-nav-track::-webkit-scrollbar {
+    display: none !important;
   }
 
   .mc-sector-chip {
-    padding: 4px 9px !important;
-    font-size: 0.56rem !important;
-    border-radius: 14px !important;
-    background: rgba(255, 255, 255, 0.03) !important;
-    border: 1px solid rgba(255, 255, 255, 0.07) !important;
+    padding: 5px 11px !important;
+    font-size: 0.58rem !important;
+    font-weight: 700 !important;
+    border-radius: 999px !important;
+    background: rgba(255, 255, 255, 0.04) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
   }
 
   .mc-sector-chip.active {
-    background: linear-gradient(135deg, rgba(0, 212, 255, 0.22), rgba(167, 139, 250, 0.2)) !important;
-    border-color: #00d4ff !important;
-    color: #fff !important;
-    box-shadow: 0 0 10px rgba(0, 212, 255, 0.35) !important;
+    background: linear-gradient(135deg, rgba(0, 212, 255, 0.28) 0%, rgba(168, 85, 247, 0.28) 100%) !important;
+    border: 1px solid #00d4ff !important;
+    color: #ffffff !important;
+    box-shadow: 0 0 12px rgba(0, 212, 255, 0.4) !important;
   }
 
-  /* ── Mobile Tactical View Switcher Ribbon ── */
+  /* ── 3. Mobile Tactical View Switcher Ribbon ── */
   .mc-mobile-tab-bar {
     display: flex !important;
     align-items: center !important;
-    gap: 4px !important;
+    gap: 5px !important;
     padding: 6px 10px !important;
-    background: rgba(3, 8, 18, 0.6) !important;
-    border-bottom: 1px solid rgba(0, 212, 255, 0.1) !important;
+    background: rgba(2, 6, 14, 0.8) !important;
+    border-bottom: 1px solid rgba(0, 212, 255, 0.14) !important;
     overflow-x: auto !important;
     scrollbar-width: none !important;
+    -webkit-overflow-scrolling: touch !important;
     backdrop-filter: blur(16px) !important;
     -webkit-backdrop-filter: blur(16px) !important;
   }
   .mc-mobile-tab-bar::-webkit-scrollbar {
     display: none !important;
   }
+
   .mc-mobile-tab-btn {
     flex-shrink: 0 !important;
     font-family: 'Orbitron', monospace !important;
-    font-size: 0.52rem !important;
+    font-size: 0.54rem !important;
     font-weight: 800 !important;
     letter-spacing: 0.06em !important;
-    padding: 5px 10px !important;
+    padding: 5px 11px !important;
     border-radius: 999px !important;
     background: rgba(255, 255, 255, 0.03) !important;
     border: 1px solid rgba(255, 255, 255, 0.08) !important;
@@ -3056,82 +3051,101 @@
     cursor: pointer !important;
     transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
   }
+
   .mc-mobile-tab-btn.active {
-    background: linear-gradient(135deg, rgba(0, 212, 255, 0.25), rgba(168, 85, 247, 0.25)) !important;
+    background: linear-gradient(135deg, rgba(0, 212, 255, 0.3) 0%, rgba(168, 85, 247, 0.3) 100%) !important;
     border-color: #00d4ff !important;
-    color: #fff !important;
-    box-shadow: 0 0 12px rgba(0, 212, 255, 0.35) !important;
-    transform: scale(1.02) !important;
+    color: #ffffff !important;
+    box-shadow: 0 0 14px rgba(0, 212, 255, 0.4) !important;
   }
+
   .mc-body-grid.mc-linear-flow {
-    padding: 8px 10px 24px !important;
-    gap: 10px !important;
+    padding: 10px 12px 30px !important;
+    gap: 12px !important;
     max-width: 100% !important;
   }
-  .mc-page-title {
-    font-size: 1.05rem;
-  }
-  .mc-page-subtitle {
-    font-size: 0.64rem;
-  }
-  /* ── Distinct Executive Holo-Dossier Founder Container Pattern ── */
+
+  /* ── 4. Holographic Executive Founder Dossier Card ── */
   .mc-ceo-card {
-    padding: 12px 14px !important;
-    gap: 6px !important;
-    border-radius: 14px !important;
-    background: linear-gradient(135deg, rgba(8, 18, 38, 0.6) 0%, rgba(3, 8, 20, 0.75) 100%) !important;
-    border: 1px solid rgba(0, 212, 255, 0.16) !important;
-    border-left: 3px solid #00d4ff !important;
-    backdrop-filter: blur(18px) !important;
-    -webkit-backdrop-filter: blur(18px) !important;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+    padding: 16px 14px !important;
+    border-radius: 18px !important;
+    background: linear-gradient(145deg, rgba(10, 24, 52, 0.8) 0%, rgba(3, 10, 26, 0.94) 100%) !important;
+    border: 1px solid rgba(0, 212, 255, 0.25) !important;
+    border-left: 4px solid #00d4ff !important;
+    backdrop-filter: blur(24px) !important;
+    -webkit-backdrop-filter: blur(24px) !important;
+    box-shadow: 0 14px 38px rgba(0, 0, 0, 0.65), 0 0 28px rgba(0, 212, 255, 0.1) !important;
   }
+
   .mc-ceo-top-header {
     display: flex !important;
     justify-content: space-between !important;
     align-items: center !important;
-    margin-bottom: 8px !important;
-    padding-bottom: 6px !important;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+    margin-bottom: 12px !important;
+    padding-bottom: 8px !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
   }
+
   .mc-ceo-top-header .mc-section-eyebrow {
-    font-size: 0.50rem !important;
-    letter-spacing: 0.1em !important;
+    font-size: 0.52rem !important;
+    letter-spacing: 0.12em !important;
+    font-weight: 800 !important;
   }
+
   .mc-live-status-pill {
     font-size: 0.48rem !important;
-    padding: 2px 6px !important;
-    border-radius: 10px !important;
-    letter-spacing: 0.04em !important;
+    padding: 3px 8px !important;
+    border-radius: 999px !important;
+    letter-spacing: 0.06em !important;
+    font-weight: 800 !important;
+    background: rgba(16, 185, 129, 0.12) !important;
+    border: 1px solid rgba(16, 185, 129, 0.4) !important;
+    color: #34d399 !important;
   }
+
   .mc-ceo-content {
     display: flex !important;
     flex-direction: row !important;
     align-items: center !important;
     text-align: left !important;
-    gap: 12px !important;
-    margin-bottom: 8px !important;
+    gap: 14px !important;
+    margin-bottom: 10px !important;
   }
+
   .mc-ceo-avatar-wrap {
-    width: 60px !important;
-    height: 60px !important;
-    min-width: 60px !important;
+    width: 66px !important;
+    height: 66px !important;
+    min-width: 66px !important;
     flex-shrink: 0 !important;
   }
+
   .mc-avatar-chamber-frame {
-    width: 54px !important;
-    height: 54px !important;
-    border-radius: 10px !important;
+    width: 60px !important;
+    height: 60px !important;
+    border-radius: 14px !important;
+    border: 1.5px solid #00d4ff !important;
+    box-shadow: 0 0 16px rgba(0, 212, 255, 0.35) !important;
   }
-  .mc-ceo-avatar-ring {
-    inset: -4px !important;
+
+  .mc-ceo-avatar {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
     border-radius: 12px !important;
   }
+
   .mc-ceo-verified-badge {
-    bottom: -5px !important;
-    padding: 1px 4px !important;
-    font-size: 0.38rem !important;
+    bottom: -6px !important;
+    padding: 2px 6px !important;
+    font-size: 0.40rem !important;
+    font-weight: 900 !important;
+    border-radius: 999px !important;
+    background: #10b981 !important;
+    color: #000000 !important;
+    letter-spacing: 0.06em !important;
+    box-shadow: 0 0 10px rgba(16, 185, 129, 0.6) !important;
   }
+
   .mc-ceo-info {
     display: flex !important;
     flex-direction: column !important;
@@ -3140,229 +3154,292 @@
     min-width: 0 !important;
     gap: 3px !important;
   }
+
   .mc-ceo-badge-row {
     display: flex !important;
     gap: 4px !important;
     align-items: center !important;
     margin-bottom: 1px !important;
   }
+
   .mc-ceo-badge {
-    font-size: 0.44rem !important;
-    padding: 1px 5px !important;
-    border-radius: 4px !important;
+    font-size: 0.46rem !important;
+    font-weight: 900 !important;
+    padding: 2px 6px !important;
+    border-radius: 5px !important;
     letter-spacing: 0.08em !important;
+    background: linear-gradient(135deg, rgba(0, 212, 255, 0.2), rgba(168, 85, 247, 0.2)) !important;
+    border: 1px solid rgba(0, 212, 255, 0.4) !important;
+    color: #00d4ff !important;
   }
+
   .mc-ceo-sub-badge {
-    font-size: 0.42rem !important;
-    padding: 1px 4px !important;
+    font-size: 0.44rem !important;
+    padding: 2px 5px !important;
+    border-radius: 4px !important;
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    color: rgba(255, 255, 255, 0.7) !important;
   }
+
   .mc-ceo-name {
-    font-size: 1.05rem !important;
-    font-weight: 800 !important;
+    font-family: 'Orbitron', monospace !important;
+    font-size: 1.15rem !important;
+    font-weight: 900 !important;
     line-height: 1.15 !important;
     margin: 0 !important;
-    color: #fff !important;
+    color: #ffffff !important;
     letter-spacing: 0.02em !important;
+    text-shadow: 0 0 16px rgba(0, 212, 255, 0.4) !important;
   }
+
   .mc-ceo-tagline {
-    font-size: 0.55rem !important;
-    color: rgba(255, 255, 255, 0.65) !important;
+    font-size: 0.58rem !important;
+    color: rgba(226, 232, 240, 0.75) !important;
     margin-bottom: 2px !important;
-    line-height: 1.2 !important;
+    line-height: 1.25 !important;
     white-space: nowrap !important;
     overflow: hidden !important;
     text-overflow: ellipsis !important;
     width: 100% !important;
   }
-  .mc-ceo-skills-row {
-    display: flex !important;
-    gap: 5px !important;
-    flex-wrap: wrap !important;
-    margin: 4px 0 8px 0 !important;
-    width: 100% !important;
-  }
-  .mc-ceo-skill-pill {
-    font-size: 0.46rem !important;
-    padding: 2px 7px !important;
-    border-radius: 6px !important;
-    background: rgba(0, 212, 255, 0.08) !important;
-    border: 1px solid rgba(0, 212, 255, 0.22) !important;
-    color: rgba(255, 255, 255, 0.9) !important;
-    white-space: nowrap !important;
-  }
+
   .mc-ceo-action-row {
-    margin-top: 2px !important;
+    margin-top: 3px !important;
   }
+
   .mc-ceo-email {
     display: inline-flex !important;
     align-items: center !important;
-    gap: 4px !important;
-    font-size: 0.50rem !important;
-    padding: 3px 8px !important;
-    border-radius: 14px !important;
-    background: rgba(0, 212, 255, 0.1) !important;
-    border: 1px solid rgba(0, 212, 255, 0.3) !important;
+    gap: 5px !important;
+    font-size: 0.52rem !important;
+    font-weight: 800 !important;
+    padding: 4px 10px !important;
+    border-radius: 999px !important;
+    background: linear-gradient(135deg, rgba(0, 212, 255, 0.15) 0%, rgba(168, 85, 247, 0.15) 100%) !important;
+    border: 1px solid rgba(0, 212, 255, 0.4) !important;
     color: #00d4ff !important;
-    font-weight: 700 !important;
+    letter-spacing: 0.04em !important;
     white-space: nowrap !important;
   }
+
+  .mc-ceo-skills-row {
+    display: flex !important;
+    gap: 6px !important;
+    flex-wrap: wrap !important;
+    margin: 4px 0 10px 0 !important;
+    width: 100% !important;
+  }
+
+  .mc-ceo-skill-pill {
+    font-size: 0.48rem !important;
+    font-weight: 700 !important;
+    padding: 3px 8px !important;
+    border-radius: 999px !important;
+    background: rgba(0, 212, 255, 0.08) !important;
+    border: 1px solid rgba(0, 212, 255, 0.28) !important;
+    color: rgba(255, 255, 255, 0.95) !important;
+    white-space: nowrap !important;
+  }
+
   .mc-stats-grid.mc-ceo-stats {
     display: grid !important;
     grid-template-columns: repeat(3, 1fr) !important;
     gap: 6px !important;
     width: 100% !important;
-    margin: 6px 0 8px 0 !important;
-    padding: 8px 6px !important;
-    background: rgba(2, 6, 16, 0.6) !important;
-    border-radius: 10px !important;
-    border: 1px solid rgba(0, 212, 255, 0.14) !important;
+    margin: 6px 0 10px 0 !important;
+    padding: 10px 6px !important;
+    background: rgba(2, 6, 18, 0.7) !important;
+    border-radius: 12px !important;
+    border: 1px solid rgba(0, 212, 255, 0.18) !important;
     box-sizing: border-box !important;
   }
+
   .mc-stats-grid.mc-ceo-stats .mc-stat-item {
     padding: 3px 2px !important;
     text-align: center !important;
   }
+
   .mc-stat-item-bar {
-    height: 1.5px !important;
-    margin-bottom: 3px !important;
+    height: 2px !important;
+    margin-bottom: 4px !important;
+    border-radius: 1px !important;
   }
+
   .mc-stats-grid.mc-ceo-stats .mc-stat-item-val {
-    font-size: 0.88rem !important;
-    font-weight: 800 !important;
+    font-family: 'Orbitron', monospace !important;
+    font-size: 1.02rem !important;
+    font-weight: 900 !important;
     color: #00ff88 !important;
     line-height: 1.1 !important;
+    text-shadow: 0 0 10px rgba(0, 255, 136, 0.4) !important;
   }
+
   .mc-stats-grid.mc-ceo-stats .mc-stat-item-lbl {
-    font-size: 0.44rem !important;
-    color: rgba(255, 255, 255, 0.6) !important;
+    font-size: 0.46rem !important;
+    font-weight: 700 !important;
+    color: rgba(203, 213, 225, 0.75) !important;
     line-height: 1.1 !important;
+    letter-spacing: 0.05em !important;
   }
+
   .mc-ceo-quote {
-    font-size: 0.60rem !important;
-    line-height: 1.4 !important;
-    color: rgba(255, 255, 255, 0.82) !important;
-    padding: 6px 8px !important;
-    border-radius: 6px !important;
-    background: rgba(255, 255, 255, 0.02) !important;
+    font-size: 0.64rem !important;
+    line-height: 1.45 !important;
+    color: rgba(255, 255, 255, 0.9) !important;
+    padding: 8px 10px !important;
+    border-radius: 8px !important;
+    background: rgba(0, 212, 255, 0.04) !important;
     border: none !important;
-    border-left: 2px solid #00d4ff !important;
+    border-left: 3px solid #00d4ff !important;
     text-align: left !important;
     margin-top: 4px !important;
   }
-  .mc-quote-prefix {
-    font-size: 0.46rem !important;
-  }
-  .mc-quote-body {
-    font-size: 0.60rem !important;
-  }
+
+  /* ── 5. Mission & Vision Container ── */
   .mc-overview-box {
-    padding: 12px 14px !important;
-    border-radius: 12px !important;
-    background: linear-gradient(135deg, rgba(6, 14, 30, 0.55) 0%, rgba(2, 6, 16, 0.7) 100%) !important;
-    border: 1px solid rgba(0, 212, 255, 0.12) !important;
-    border-left: 3px solid #38bdf8 !important;
-    backdrop-filter: blur(18px) !important;
-    -webkit-backdrop-filter: blur(18px) !important;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4) !important;
+    padding: 16px 14px !important;
+    border-radius: 16px !important;
+    background: linear-gradient(145deg, rgba(6, 16, 38, 0.7) 0%, rgba(2, 8, 22, 0.9) 100%) !important;
+    border: 1px solid rgba(0, 212, 255, 0.18) !important;
+    border-left: 4px solid #38bdf8 !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5) !important;
   }
+
   .mc-mission-title {
-    font-size: 0.95rem !important;
-    margin-bottom: 4px !important;
+    font-family: 'Orbitron', monospace !important;
+    font-size: 0.92rem !important;
+    font-weight: 800 !important;
+    margin-bottom: 6px !important;
     color: #38bdf8 !important;
+    line-height: 1.3 !important;
   }
+
   .mc-overview-text {
-    font-size: 0.70rem !important;
+    font-size: 0.66rem !important;
     line-height: 1.5 !important;
     color: #cbd5e1 !important;
   }
 
-  /* ── Core Technology Matrix ── */
+  /* ── 6. Core Technology Essentials Matrix ── */
   .mc-tech-card {
-    padding: 12px 14px !important;
-    border-radius: 12px !important;
-    background: linear-gradient(135deg, rgba(6, 14, 30, 0.5) 0%, rgba(2, 6, 16, 0.65) 100%) !important;
-    border: 1px solid rgba(255, 255, 255, 0.08) !important;
-    border-left: 3px solid #a855f7 !important;
-    backdrop-filter: blur(18px) !important;
-    -webkit-backdrop-filter: blur(18px) !important;
+    padding: 14px 14px !important;
+    border-radius: 16px !important;
+    background: linear-gradient(145deg, rgba(8, 16, 36, 0.65) 0%, rgba(2, 8, 20, 0.85) 100%) !important;
+    border: 1px solid rgba(168, 85, 247, 0.25) !important;
+    border-left: 4px solid #a855f7 !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
   }
+
   .mc-tech-heading {
-    font-size: 0.85rem !important;
-    margin-bottom: 8px !important;
+    font-family: 'Orbitron', monospace !important;
+    font-size: 0.88rem !important;
+    font-weight: 800 !important;
+    margin-bottom: 10px !important;
     color: #c084fc !important;
   }
-  .mc-tech-grid {
+
+  .mc-tech-tags-cloud {
     display: flex !important;
     flex-wrap: wrap !important;
-    gap: 5px !important;
+    gap: 6px !important;
   }
+
   .mc-tech-pill {
     font-size: 0.56rem !important;
-    padding: 3px 8px !important;
-    background: rgba(255, 255, 255, 0.04) !important;
-    border: 1px solid rgba(255, 255, 255, 0.08) !important;
-    border-radius: 6px !important;
+    font-weight: 700 !important;
+    padding: 4px 10px !important;
+    background: rgba(168, 85, 247, 0.08) !important;
+    border: 1px solid rgba(168, 85, 247, 0.28) !important;
+    border-radius: 999px !important;
     color: #e2e8f0 !important;
   }
 
-  /* ── 8 Specialized Capabilities Horizontal Split-Pod Cards ── */
+  /* ── 7. 8 Specialized Capabilities Horizontal Split-Pod Cards ── */
   .mc-capabilities-section {
-    margin-top: 8px !important;
+    margin-top: 6px !important;
   }
+
   .mc-section-title {
+    font-family: 'Orbitron', monospace !important;
     font-size: 0.95rem !important;
+    font-weight: 800 !important;
     margin-bottom: 8px !important;
+    color: #ffffff !important;
   }
+
   .mc-pillar-filter-bar {
     display: flex !important;
     overflow-x: auto !important;
     scrollbar-width: none !important;
-    gap: 5px !important;
-    padding-bottom: 4px !important;
+    -webkit-overflow-scrolling: touch !important;
+    gap: 6px !important;
+    padding: 2px 0 8px 0 !important;
     margin-bottom: 8px !important;
   }
   .mc-pillar-filter-bar::-webkit-scrollbar {
     display: none !important;
   }
-  .mc-pillar-filter-btn {
-    font-size: 0.52rem !important;
-    padding: 4px 10px !important;
-    border-radius: 12px !important;
+
+  .mc-pillar-chip {
+    font-size: 0.54rem !important;
+    font-weight: 700 !important;
+    padding: 5px 11px !important;
+    border-radius: 999px !important;
     white-space: nowrap !important;
     flex-shrink: 0 !important;
+    background: rgba(255, 255, 255, 0.04) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    color: rgba(255, 255, 255, 0.7) !important;
   }
+
+  .mc-pillar-chip.active {
+    background: linear-gradient(135deg, rgba(0, 212, 255, 0.25) 0%, rgba(168, 85, 247, 0.25) 100%) !important;
+    border-color: #00d4ff !important;
+    color: #ffffff !important;
+    box-shadow: 0 0 10px rgba(0, 212, 255, 0.3) !important;
+  }
+
   .mc-smooth-grid {
     display: flex !important;
     flex-direction: column !important;
-    gap: 8px !important;
+    gap: 10px !important;
   }
+
   .mc-smooth-card {
     display: flex !important;
     flex-direction: row !important;
     align-items: center !important;
-    padding: 8px !important;
-    gap: 10px !important;
-    border-radius: 12px !important;
-    background: linear-gradient(145deg, rgba(8, 16, 32, 0.55) 0%, rgba(3, 8, 20, 0.7) 100%) !important;
-    border: 1px solid rgba(255, 255, 255, 0.08) !important;
-    backdrop-filter: blur(16px) !important;
-    -webkit-backdrop-filter: blur(16px) !important;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35) !important;
-    transition: all 0.25s ease !important;
+    padding: 10px !important;
+    gap: 12px !important;
+    border-radius: 16px !important;
+    background: linear-gradient(145deg, rgba(8, 18, 38, 0.75) 0%, rgba(3, 8, 20, 0.9) 100%) !important;
+    border: 1px solid rgba(0, 212, 255, 0.18) !important;
+    border-top: 2.5px solid var(--card-accent, #00d4ff) !important;
+    backdrop-filter: blur(18px) !important;
+    -webkit-backdrop-filter: blur(18px) !important;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45) !important;
   }
+
   .mc-smooth-img-wrap {
-    width: 82px !important;
-    height: 82px !important;
-    min-width: 82px !important;
-    border-radius: 8px !important;
+    width: 86px !important;
+    height: 86px !important;
+    min-width: 86px !important;
+    border-radius: 12px !important;
     overflow: hidden !important;
     flex-shrink: 0 !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
   }
+
   .mc-smooth-img {
     width: 100% !important;
     height: 100% !important;
     object-fit: cover !important;
   }
+
   .mc-smooth-content {
     display: flex !important;
     flex-direction: column !important;
@@ -3370,55 +3447,74 @@
     min-width: 0 !important;
     gap: 2px !important;
   }
+
   .mc-smooth-title {
     font-family: 'Orbitron', monospace !important;
-    font-size: 0.82rem !important;
+    font-size: 0.86rem !important;
     font-weight: 800 !important;
     line-height: 1.2 !important;
-    color: #fff !important;
+    color: #ffffff !important;
     margin: 0 !important;
   }
+
   .mc-smooth-subtitle {
-    font-size: 0.56rem !important;
-    color: rgba(255, 255, 255, 0.6) !important;
-    margin-bottom: 2px !important;
+    font-size: 0.58rem !important;
+    color: rgba(255, 255, 255, 0.65) !important;
+    margin-bottom: 3px !important;
     white-space: nowrap !important;
     overflow: hidden !important;
     text-overflow: ellipsis !important;
   }
+
   .mc-smooth-desc {
-    font-size: 0.62rem !important;
+    font-size: 0.64rem !important;
     line-height: 1.35 !important;
-    color: rgba(255, 255, 255, 0.75) !important;
+    color: rgba(203, 213, 225, 0.8) !important;
     -webkit-line-clamp: 2 !important;
-    margin-bottom: 3px !important;
+    margin-bottom: 4px !important;
   }
+
   .mc-smooth-footer {
     display: flex !important;
     align-items: center !important;
     justify-content: space-between !important;
     margin-top: 2px !important;
   }
+
   .mc-smooth-specs {
     display: flex !important;
-    gap: 3px !important;
-  }
-  .mc-smooth-spec-pill {
-    font-size: 0.46rem !important;
-    padding: 1px 4px !important;
-    border-radius: 4px !important;
-  }
-  .mc-smooth-action-badge {
-    font-size: 0.50rem !important;
-    color: #00d4ff !important;
-    font-weight: 800 !important;
+    gap: 4px !important;
   }
 
-  /* ── Interactive Blueprint Drawer on Mobile ── */
+  .mc-smooth-spec-pill {
+    font-size: 0.48rem !important;
+    font-weight: 700 !important;
+    padding: 2px 5px !important;
+    border-radius: 4px !important;
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    color: rgba(255, 255, 255, 0.75) !important;
+  }
+
+  .mc-smooth-cta-btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+    padding: 3px 8px !important;
+    font-size: 0.52rem !important;
+    font-weight: 800 !important;
+    border-radius: 999px !important;
+    background: rgba(0, 212, 255, 0.15) !important;
+    border: 1px solid rgba(0, 212, 255, 0.4) !important;
+    color: #00d4ff !important;
+  }
+
+  /* ── 8. Interactive Blueprint Drawer on Mobile ── */
   .mc-blueprint-overlay {
     align-items: flex-end !important;
     padding: 0 !important;
   }
+
   .mc-blueprint-modal {
     width: 100vw !important;
     max-width: 100vw !important;
@@ -3428,87 +3524,74 @@
     margin: 0 !important;
   }
 
-  /* ── Bottom Command CTA Launch Pad ── */
+  /* ── 9. Bottom Command CTA Launch Pad ── */
   .mc-bottom-cta {
-    padding: 14px 14px !important;
-    margin: 8px 0 0 !important;
-    border-radius: 14px !important;
-    background: linear-gradient(135deg, rgba(8, 20, 44, 0.65) 0%, rgba(3, 8, 20, 0.8) 100%) !important;
-    border: 1px solid rgba(0, 212, 255, 0.25) !important;
-    backdrop-filter: blur(18px) !important;
-    -webkit-backdrop-filter: blur(18px) !important;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 212, 255, 0.08) !important;
+    padding: 18px 14px !important;
+    margin: 10px 0 0 !important;
+    border-radius: 18px !important;
+    background: linear-gradient(145deg, rgba(10, 24, 52, 0.8) 0%, rgba(3, 8, 22, 0.94) 100%) !important;
+    border: 1px solid rgba(0, 212, 255, 0.3) !important;
+    backdrop-filter: blur(24px) !important;
+    -webkit-backdrop-filter: blur(24px) !important;
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.65), 0 0 25px rgba(0, 212, 255, 0.1) !important;
     text-align: center !important;
   }
+
   .mc-bottom-cta-title {
     font-family: 'Orbitron', monospace !important;
-    font-size: 0.98rem !important;
-    font-weight: 800 !important;
-    margin-bottom: 2px !important;
-  }
-  .mc-bottom-cta-desc {
-    font-size: 0.65rem !important;
-    color: rgba(255, 255, 255, 0.7) !important;
-    margin-bottom: 8px !important;
-  }
-  .mc-bottom-cta-btn {
-    font-size: 0.64rem !important;
-    padding: 8px 16px !important;
-    border-radius: 20px !important;
-    width: 100% !important;
-    justify-content: center !important;
+    font-size: 1.05rem !important;
+    font-weight: 900 !important;
+    margin-bottom: 4px !important;
+    color: #ffffff !important;
+    text-shadow: 0 0 14px rgba(0, 212, 255, 0.35) !important;
   }
 
-  /* ── AI Automation Solo Loading ── */
+  .mc-bottom-cta-desc {
+    font-size: 0.66rem !important;
+    line-height: 1.4 !important;
+    color: rgba(226, 232, 240, 0.8) !important;
+    margin-bottom: 12px !important;
+  }
+
+  .mc-bottom-cta-actions {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+    width: 100% !important;
+  }
+
+  .mc-btn-ceo-contact {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    padding: 10px 18px !important;
+    font-size: 0.66rem !important;
+    font-weight: 900 !important;
+    letter-spacing: 0.08em !important;
+    border-radius: 999px !important;
+    background: linear-gradient(135deg, rgba(0, 212, 255, 0.25) 0%, rgba(168, 85, 247, 0.25) 100%) !important;
+    border: 1.5px solid #00d4ff !important;
+    color: #ffffff !important;
+    box-shadow: 0 0 20px rgba(0, 212, 255, 0.35) !important;
+    text-decoration: none !important;
+  }
+
+  /* ── 10. AI Automation Solo Loading ── */
   .mc-ai-solo-loading-wrap {
     padding: 16px 8px !important;
     min-height: calc(60vh - 40px) !important;
   }
+
   .mc-ai-solo-card {
-    max-width: 290px !important;
-    padding: 16px 12px !important;
-    border-radius: 12px !important;
-    background: rgba(2, 10, 8, 0.45) !important;
-    border: 1px solid rgba(0, 255, 136, 0.15) !important;
+    max-width: 300px !important;
+    padding: 18px 14px !important;
+    border-radius: 16px !important;
+    background: rgba(2, 10, 8, 0.6) !important;
+    border: 1px solid rgba(0, 255, 136, 0.25) !important;
     backdrop-filter: blur(20px) !important;
     -webkit-backdrop-filter: blur(20px) !important;
-    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 255, 136, 0.06) !important;
-  }
-  .mc-ai-solo-spinner-box {
-    width: 60px !important;
-    height: 60px !important;
-    margin-bottom: 8px !important;
-  }
-  .mc-ai-solo-core {
-    font-size: 1.3rem !important;
-  }
-  .mc-ai-solo-title {
-    font-size: 0.98rem !important;
-    margin-bottom: 4px !important;
-  }
-  .mc-ai-solo-subtitle {
-    font-size: 0.68rem !important;
-    line-height: 1.4 !important;
-    margin-bottom: 10px !important;
-  }
-  .mc-ai-solo-progress-box {
-    padding: 6px 8px !important;
-    margin-bottom: 10px !important;
-    border-radius: 6px !important;
-    background: rgba(2, 6, 16, 0.5) !important;
-  }
-  .mc-ai-solo-progress-info {
-    font-size: 0.54rem !important;
-  }
-  .mc-ai-solo-back-btn {
-    width: 100% !important;
-    text-align: center !important;
-    padding: 6px 12px !important;
-    font-size: 0.60rem !important;
-    background: rgba(255, 255, 255, 0.03) !important;
-  }
-  .mc-stats-grid.mc-ceo-stats {
-    grid-template-columns: 1fr;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 255, 136, 0.08) !important;
   }
 }
 

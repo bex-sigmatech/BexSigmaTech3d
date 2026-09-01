@@ -145,14 +145,13 @@ export default function MissionControl() {
         <header className="mc-header">
           <div className="mc-header-left">
             <button className="mc-back-btn interactive" onClick={handleClose} title="Return to 3D Observatory">
-              <span className="mc-back-btn-arrow">←</span>
-              <span className="mc-back-btn-text">HQ OBSERVATORY</span>
+              <span className="mc-back-btn-arrow">‹</span>
+              <span className="mc-back-btn-text">HQ</span>
             </button>
 
             <div className="mc-header-titles">
               <div className="mc-dept-label">
-                <span className="mc-badge-pill">{article.badge}</span>
-                <span>CODE: {article.id.toUpperCase()}</span>
+                <span className="mc-badge-pill">SECTOR {String((ALL_SECTORS.findIndex(s => s.id === currentSectorId) + 1) || 1).padStart(2, '0')}</span>
                 <span className="mc-user-tag">OPERATOR: {userName || 'COMMANDER'}</span>
               </div>
               <h1 className="mc-page-title">{article.title}</h1>
@@ -171,7 +170,7 @@ export default function MissionControl() {
                 <span className="mc-audio-bar" />
                 <span className="mc-audio-bar" />
               </div>
-              <span>{isNarrating ? 'NARRATING...' : 'SIGMA VOICE BRIEF'}</span>
+              <span>{isNarrating ? 'NARRATING…' : 'VOICE BRIEF'}</span>
             </button>
 
             <div className="mc-clock-badge">
