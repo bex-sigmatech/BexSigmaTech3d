@@ -7996,13 +7996,14 @@ body {
     position: relative;
     display: flex !important;
     flex-direction: column !important;
-    justify-content: space-between !important;
+    justify-content: center !important;
     align-items: center !important;
     width: 100vw !important;
     height: 100vh !important;
     height: 100dvh !important;
     min-height: -webkit-fill-available !important;
-    padding: calc(env(safe-area-inset-top, 6px) + 6px) 14px calc(env(safe-area-inset-bottom, 6px) + 6px) 14px !important;
+    padding: calc(env(safe-area-inset-top, 6px) + 8px) clamp(12px, 3.5vw, 18px) calc(env(safe-area-inset-bottom, 6px) + 10px) !important;
+    gap: clamp(8px, 1.6vh, 16px) !important;
     box-sizing: border-box !important;
     overflow-y: auto !important;
     overflow-x: hidden !important;
@@ -8069,8 +8070,8 @@ body {
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    max-width: 400px;
-    padding: 6px 12px;
+    max-width: min(92vw, 440px);
+    padding: clamp(6px, 1vh, 8px) clamp(10px, 2.5vw, 14px);
     background: linear-gradient(90deg, rgba(8, 22, 40, 0.75), rgba(6, 16, 30, 0.6));
     border: 1px solid rgba(56, 189, 248, 0.25);
     border-radius: 999px;
@@ -8080,7 +8081,7 @@ body {
       0 4px 22px rgba(0, 0, 0, 0.45),
       inset 0 1px 0 rgba(125, 211, 252, 0.12);
     animation: cl-drop-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
-    margin-bottom: -20px;
+    margin-bottom: -16px;
   }
 
   .cl-topbar-left {
@@ -8140,15 +8141,15 @@ body {
     align-items: center;
     gap: 2px;
     width: 100%;
-    max-width: 440px;
+    max-width: min(92vw, 440px);
     flex-shrink: 0;
   }
 
   .cl-3d-robot-bg {
     position: relative;
     width: 100%;
-    max-width: 440px;
-    height: clamp(235px, 33vh, 285px);
+    max-width: min(92vw, 440px);
+    height: clamp(235px, 32vh, 320px);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -8175,12 +8176,12 @@ body {
   .cl-robot-img {
     position: relative;
     z-index: 1;
-    width: min(96vw, 360px);
+    width: min(94vw, 360px);
     height: 100%;
     object-fit: cover;
     object-position: center 12% !important;
-    -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 42%, #000 60%, transparent 98%);
-    mask-image: radial-gradient(ellipse 80% 70% at 50% 42%, #000 60%, transparent 98%);
+    -webkit-mask-image: radial-gradient(ellipse 82% 70% at 50% 42%, #000 60%, transparent 98%);
+    mask-image: radial-gradient(ellipse 82% 70% at 50% 42%, #000 60%, transparent 98%);
     filter: saturate(1.24) brightness(1.06) contrast(1.08) drop-shadow(0 0 28px rgba(0, 190, 255, 0.3));
     user-select: none;
     -webkit-user-drag: none;
@@ -8319,11 +8320,11 @@ body {
     position: absolute;
     display: flex;
     align-items: baseline;
-    gap: 4px;
-    padding: 3px 7px;
+    gap: 5px;
+    padding: clamp(3px, 0.6vh, 5px) clamp(6px, 1.8vw, 9px);
     background: rgba(6, 20, 36, 0.7);
-    border: 1px solid rgba(56, 189, 248, 0.3);
-    border-radius: 5px;
+    border: 1px solid rgba(56, 189, 248, 0.32);
+    border-radius: 6px;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     font-family: 'Orbitron', sans-serif;
@@ -8334,14 +8335,14 @@ body {
   }
 
   .cl-chip b {
-    font-size: 0.38rem;
+    font-size: clamp(0.44rem, 1.4vw, 0.52rem);
     font-weight: 700;
     letter-spacing: 0.12em;
-    color: rgba(125, 211, 252, 0.75);
+    color: rgba(125, 211, 252, 0.8);
   }
 
   .cl-chip span {
-    font-size: 0.42rem;
+    font-size: clamp(0.48rem, 1.6vw, 0.58rem);
     font-weight: 700;
     letter-spacing: 0.06em;
     color: #e0f7ff;
@@ -8392,7 +8393,7 @@ body {
     justify-content: center;
     gap: 6px;
     font-family: 'Orbitron', sans-serif;
-    font-size: 0.52rem;
+    font-size: clamp(0.52rem, 1.6vw, 0.6rem);
     font-weight: 700;
     letter-spacing: 0.14em;
     color: rgba(186, 230, 253, 0.9);
@@ -8427,11 +8428,11 @@ body {
     position: relative;
     z-index: 4;
     width: 100%;
-    max-width: 400px;
+    max-width: min(92vw, 440px);
     background: rgba(15, 23, 42, 0.52);
     border: 1px solid rgba(255, 255, 255, 0.16);
     border-radius: 18px;
-    padding: 10px 14px 12px;
+    padding: clamp(10px, 1.5vh, 14px) clamp(12px, 3.2vw, 18px);
     backdrop-filter: blur(28px);
     -webkit-backdrop-filter: blur(28px);
     box-shadow:
@@ -8440,7 +8441,7 @@ body {
       0 0 30px rgba(0, 212, 255, 0.12);
     display: flex;
     flex-direction: column;
-    gap: 7px;
+    gap: clamp(6px, 1.2vh, 10px);
     align-items: center;
     overflow: hidden;
     box-sizing: border-box;
@@ -8468,15 +8469,15 @@ body {
   }
 
   .cl-logo-tile {
-    width: 28px;
-    height: 28px;
+    width: clamp(28px, 3.8vh, 32px);
+    height: clamp(28px, 3.8vh, 32px);
     flex-shrink: 0;
     display: flex;
     align-items: center;
     justify-content: center;
     font-family: 'Orbitron', sans-serif;
     font-weight: 900;
-    font-size: 0.78rem;
+    font-size: clamp(0.78rem, 2.2vw, 0.88rem);
     color: #ffffff;
     background: linear-gradient(135deg, rgba(56, 189, 248, 0.3) 0%, rgba(14, 165, 233, 0.1) 100%);
     border: 1px solid rgba(56, 189, 248, 0.4);
@@ -8495,7 +8496,7 @@ body {
 
   .cl-title-brand {
     font-family: 'Orbitron', sans-serif;
-    font-size: 0.44rem;
+    font-size: clamp(0.44rem, 1.4vw, 0.5rem);
     font-weight: 600;
     letter-spacing: 0.18em;
     color: rgba(148, 163, 184, 0.75);
@@ -8503,7 +8504,7 @@ body {
 
   .cl-card-title {
     font-family: 'Orbitron', sans-serif;
-    font-size: 0.82rem;
+    font-size: clamp(0.82rem, 2.4vw, 0.94rem);
     font-weight: 900;
     letter-spacing: 0.1em;
     color: #ffffff;
@@ -8515,7 +8516,7 @@ body {
     align-items: center;
     gap: 5px;
     font-family: 'Orbitron', sans-serif;
-    font-size: 0.5rem;
+    font-size: clamp(0.5rem, 1.6vw, 0.58rem);
     font-weight: 800;
     letter-spacing: 0.08em;
     color: #34d399;
@@ -8542,7 +8543,7 @@ body {
     background: rgba(15, 23, 42, 0.35);
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 10px;
-    padding: 6px 10px;
+    padding: clamp(6px, 1vh, 8px) clamp(8px, 2vw, 12px);
     text-align: center;
     box-sizing: border-box;
     backdrop-filter: blur(12px);
@@ -8550,7 +8551,7 @@ body {
 
   .cl-dialogue-main {
     font-family: 'Orbitron', sans-serif;
-    font-size: 0.62rem;
+    font-size: clamp(0.62rem, 1.9vw, 0.72rem);
     font-weight: 800;
     letter-spacing: 0.08em;
     color: #ffffff;
@@ -8565,7 +8566,7 @@ body {
 
   .cl-dialogue-sub {
     font-family: 'Inter', sans-serif;
-    font-size: 0.56rem;
+    font-size: clamp(0.56rem, 1.7vw, 0.65rem);
     color: rgba(203, 213, 225, 0.9);
     margin: 2px 0 0;
     line-height: 1.35;
@@ -8577,7 +8578,7 @@ body {
   .cl-form {
     display: flex;
     flex-direction: column;
-    gap: 7px;
+    gap: clamp(6px, 1vh, 9px);
     width: 100%;
   }
 
@@ -8597,11 +8598,11 @@ body {
     color: #ffffff !important;
     caret-color: #38bdf8;
     font-family: 'Orbitron', sans-serif !important;
-    font-size: 0.72rem !important;
+    font-size: clamp(0.72rem, 2vw, 0.82rem) !important;
     letter-spacing: 0.06em;
     padding: 8px 46px 8px 12px !important;
-    min-height: 40px !important;
-    height: 40px;
+    min-height: clamp(42px, 5vh, 46px) !important;
+    height: clamp(42px, 5vh, 46px);
     backdrop-filter: blur(20px) !important;
     -webkit-backdrop-filter: blur(20px) !important;
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
@@ -8620,7 +8621,7 @@ body {
   .cl-input::placeholder {
     color: #cbd5e1;
     opacity: 0.85;
-    font-size: 0.72rem;
+    font-size: clamp(0.7rem, 1.9vw, 0.78rem);
   }
 
   /* Hide signal tag when input focused — reduces competition (mobile credential only) */
@@ -8631,8 +8632,8 @@ body {
   }
 
   .cl-mic {
-    width: 40px;
-    min-height: 40px;
+    width: clamp(40px, 4.8vh, 44px);
+    min-height: clamp(40px, 4.8vh, 44px);
     border-radius: 10px;
     background: rgba(15, 23, 42, 0.6);
     border: 1px solid rgba(255, 255, 255, 0.16);
@@ -8666,13 +8667,13 @@ body {
     justify-content: center;
     gap: 8px;
     width: 100%;
-    height: 42px;
+    height: clamp(44px, 5.2vh, 48px);
     background: linear-gradient(135deg, rgba(56, 189, 248, 0.9) 0%, rgba(14, 165, 233, 0.75) 100%);
     border: none;
     border-radius: 10px;
     color: #020617;
     font-family: 'Orbitron', sans-serif;
-    font-size: 0.74rem;
+    font-size: clamp(0.76rem, 2.2vw, 0.86rem);
     font-weight: 900;
     letter-spacing: 0.12em;
     cursor: pointer;
@@ -8735,29 +8736,29 @@ body {
     z-index: 3;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 5px;
+    gap: clamp(4px, 1.2vw, 8px);
     width: 100%;
-    max-width: 400px;
+    max-width: min(92vw, 440px);
     animation: cl-fade-in 1s ease both 0.4s;
-    margin-top: 2px;
+    margin-top: 0;
   }
 
   .cl-hud-cell {
     background: linear-gradient(165deg, rgba(10, 26, 46, 0.6), rgba(5, 14, 27, 0.6));
     border: 1px solid rgba(56, 189, 248, 0.16);
-    border-radius: 6px;
-    padding: 4px 2px;
+    border-radius: 8px;
+    padding: clamp(4px, 0.8vh, 6px) clamp(2px, 0.8vw, 4px);
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1px;
+    gap: 2px;
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
   }
 
   .cl-hud-key {
     font-family: 'Orbitron', sans-serif;
-    font-size: 0.34rem;
+    font-size: clamp(0.42rem, 1.3vw, 0.5rem);
     font-weight: 600;
     letter-spacing: 0.1em;
     color: rgba(125, 211, 252, 0.6);
@@ -8765,7 +8766,7 @@ body {
 
   .cl-hud-val {
     font-family: 'Orbitron', sans-serif;
-    font-size: 0.48rem;
+    font-size: clamp(0.56rem, 1.8vw, 0.68rem);
     font-weight: 700;
     font-variant-numeric: tabular-nums;
   }
