@@ -11,7 +11,7 @@ class PCMProcessor extends AudioWorkletProcessor {
     this.inputSampleRate = sampleRate // Provided by browser global scope
     this.resampleRatio = this.inputSampleRate / this.targetSampleRate
 
-    this.outputBufferSize = 1024 // Send every ~64ms for optimal network streaming and zero latency
+    this.outputBufferSize = 512 // 10/10: 32ms chunks — half latency vs 1024, still efficient
     this.outputBuffer = new Int16Array(this.outputBufferSize)
     this.outputIndex = 0
 

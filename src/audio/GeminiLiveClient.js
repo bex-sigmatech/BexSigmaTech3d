@@ -148,8 +148,8 @@ class GeminiLiveClient {
   async initAudioContext() {
     if (!this.audioCtx) {
       const AudioContextClass = window.AudioContext || window.webkitAudioContext
-      // Use native browser sample rate for clean, jitter-free DAC output
-      this.audioCtx = new AudioContextClass()
+      // 10/10: interactive latency hint + native rate for zero-jitter DAC
+      this.audioCtx = new AudioContextClass({ latencyHint: 'interactive' })
     }
 
     if (this.audioCtx.state === 'suspended') {
@@ -159,7 +159,7 @@ class GeminiLiveClient {
     if (!this.analyser) {
       this.analyser = this.audioCtx.createAnalyser()
       this.analyser.fftSize = 64
-      this.analyser.smoothingTimeConstant = 0.8
+      this.analyser.smoothingTimeConstant = 0.6 // faster visual, lower lag
     }
 
     if (!this.outputGain) {
@@ -184,7 +184,7 @@ class GeminiLiveClient {
       })
 
       const AudioContextClass = window.AudioContext || window.webkitAudioContext
-      this.micCtx = new AudioContextClass()
+      this.micCtx = new AudioContextClass({ latencyHint: 'interactive' })
       if (this.micCtx.state === 'suspended') {
         await this.micCtx.resume()
       }
@@ -280,8 +280,8 @@ class GeminiLiveClient {
     source.connect(this.outputGain)
 
     const currentTime = this.audioCtx.currentTime
-    // Seamless scheduling: chain directly after previous chunk or start now with tiny 20ms lead
-    const startTime = Math.max(this.nextPlayTime, currentTime + 0.02)
+    // 10/10: ultra-low latency 5ms lead + seamless chaining
+    const startTime = Math.max(this.nextPlayTime, currentTime + 0.005)
     source.start(startTime)
 
     this.nextPlayTime = startTime + audioBuffer.duration
@@ -290,7 +290,7 @@ class GeminiLiveClient {
 
     source.onended = () => {
       this.activeSources.delete(source)
-      if (this.activeSources.size === 0 && this.audioCtx.currentTime >= this.nextPlayTime - 0.05) {
+      if (this.activeSources.size === 0 && this.audioCtx.currentTime >= this.nextPlayTime - 0.02) {
         this.setState('LISTENING')
       }
     }

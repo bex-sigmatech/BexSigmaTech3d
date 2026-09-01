@@ -498,7 +498,7 @@ export default function AICore() {
     voiceEmitter.emit('NAME_SUBMITTED', { userName: callsign })
     submitIdentity(callsign)
 
-    // Non-blocking background fetch for AI audio/text response
+    // 10/10: non-blocking background fetch with 4.5s timeout — matches server parallel race (3.2s)
     try {
       const backendUrl = import.meta.env.VITE_BACKEND_URL
         || (typeof window !== 'undefined' && window.location.hostname === 'localhost'
@@ -506,13 +506,14 @@ export default function AICore() {
           : 'https://bexsigmatech3d.onrender.com')
 
       const controller = new AbortController()
-      const timeoutId = setTimeout(() => controller.abort(), 12000)
+      const timeoutId = setTimeout(() => controller.abort(), 4500)
 
       const res = await fetch(`${backendUrl}/api/ai/chat`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ prompt: `User callsign: ${callsign}`, userName: callsign }),
-        signal: controller.signal
+        signal: controller.signal,
+        keepalive: true
       })
       clearTimeout(timeoutId)
 
@@ -520,11 +521,12 @@ export default function AICore() {
         const data = await res.json()
         if (data && data.response) {
           setAiCustomReply(data.response)
-          aiVoice.speakCustomText(data.response)
+          // 10/10: queue with high priority, but don't interrupt initial NAME_SUBMITTED voice that is already playing
+          setTimeout(() => aiVoice.speakCustomText(data.response), 800)
         }
       }
     } catch (err) {
-      console.warn('AI API response pending or offline:', err.message)
+      if (err.name !== 'AbortError') console.warn('AI API response pending or offline:', err.message)
     }
   }
 
