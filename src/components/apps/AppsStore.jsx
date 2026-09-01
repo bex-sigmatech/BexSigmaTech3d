@@ -106,15 +106,12 @@ const APP_PRODUCTS = [
 
 export default function AppsStore() {
   const { userName, exitWebDevStore } = useStore()
-  const [cart, setCart] = useState([])
-  const [isCartOpen, setIsCartOpen] = useState(false)
-  const [currency, setCurrency] = useState('INR')
   const [selectedAppModal, setSelectedAppModal] = useState(null)
   const [activeMockTab, setActiveMockTab] = useState(0)
 
   // Custom App Inquiry Form State
   const [customAppPlatform, setCustomAppPlatform] = useState('Cross-Platform (iOS & Android)')
-  const [customAppBudget, setCustomAppBudget] = useState('Mark II MVP (~₹45,000 - ₹95,000)')
+  const [customAppScale, setCustomAppScale] = useState('Commercial Production (4 - 6 Weeks)')
   const [customAppDesc, setCustomAppDesc] = useState('')
   const [customAppEmail, setCustomAppEmail] = useState('')
   const [inquirySent, setInquirySent] = useState(false)
@@ -126,45 +123,6 @@ export default function AppsStore() {
     voiceEmitter.emit('MISSION_BRIEF_VISIBLE')
   }, [])
 
-  // Cart Handlers
-  const addToCart = (product, e) => {
-    if (e) e.stopPropagation()
-    cinemaAudio.playOrbSelect()
-    setCart((prev) => {
-      const existing = prev.find((item) => item.id === product.id)
-      if (existing) {
-        return prev.map((item) =>
-          item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
-        )
-      }
-      return [...prev, { ...product, quantity: 1 }]
-    })
-    setIsCartOpen(true)
-  }
-
-  const removeFromCart = (id) => {
-    cinemaAudio.playScrollTransition()
-    setCart((prev) => prev.filter((item) => item.id !== id))
-  }
-
-  const updateQuantity = (id, delta) => {
-    cinemaAudio.playOrbHover()
-    setCart((prev) =>
-      prev
-        .map((item) => {
-          if (item.id === id) {
-            const newQty = item.quantity + delta
-            return newQty > 0 ? { ...item, quantity: newQty } : null
-          }
-          return item
-        })
-        .filter(Boolean)
-    )
-  }
-
-  const totalAmountINR = cart.reduce((sum, item) => sum + item.price * item.quantity, 0)
-  const totalAmountUSD = Math.round(totalAmountINR / 85)
-
   // Handle Custom App Inquiry Submission
   const handleInquirySubmit = (e) => {
     e.preventDefault()
@@ -174,7 +132,7 @@ export default function AppsStore() {
     const mailBody = encodeURIComponent(
       `Hi Hariharan,\n\nI want to build a custom application with BEX Sigma Tech.\n\n` +
       `Platform: ${customAppPlatform}\n` +
-      `Target Budget/Tier: ${customAppBudget}\n` +
+      `Target Scale & Timeline: ${customAppScale}\n` +
       `User Email: ${customAppEmail}\n\n` +
       `Project Scope:\n${customAppDesc}\n\n` +
       `Looking forward to connecting!`
@@ -205,43 +163,6 @@ export default function AppsStore() {
         </div>
 
         <div className="webdev-header-right">
-          {/* Currency Switcher */}
-          <button
-            className="interactive"
-            onClick={() => {
-              cinemaAudio.playOrbHover()
-              setCurrency(currency === 'INR' ? 'USD' : 'INR')
-            }}
-            style={{
-              background: 'rgba(0, 212, 255, 0.12)',
-              border: '1px solid rgba(0, 212, 255, 0.4)',
-              color: '#00d4ff',
-              padding: '6px 14px',
-              borderRadius: '6px',
-              fontFamily: 'Orbitron, sans-serif',
-              fontSize: '0.75rem',
-              cursor: 'pointer',
-              fontWeight: 'bold',
-            }}
-          >
-            💱 CURRENCY: {currency === 'INR' ? '₹ INR' : '$ USD (est.)'}
-          </button>
-
-          {/* Cart Trigger */}
-          <div
-            role="button"
-            tabIndex={0}
-            className="webdev-cart-trigger interactive"
-            onClick={() => setIsCartOpen(true)}
-          >
-            <span>🛒 APP CART</span>
-            {cart.length > 0 && (
-              <span className="webdev-cart-badge">
-                {cart.reduce((sum, item) => sum + item.quantity, 0)}
-              </span>
-            )}
-          </div>
-
           <div className="webdev-secure-badge">
             <span>🔒</span>
             <div>
@@ -397,37 +318,24 @@ export default function AppsStore() {
                   ))}
                 </div>
 
-                {/* Card Footer Pricing & Actions */}
+                {/* Card Footer Actions */}
                 <div className="apps-card-footer">
-                  <div className="apps-pricing">
-                    <div className="apps-price-val">
-                      {currency === 'INR' ? app.priceDisplay : `$${Math.round(app.price / 85)}`}
-                    </div>
-                    <div className="apps-price-orig">
-                      {currency === 'INR' ? app.originalPrice : `$${Math.round(parseInt(app.originalPrice.replace('₹', '')) / 85)}`}
-                    </div>
-                    <div className="apps-tier-note">Lifetime License</div>
+                  <div className="apps-status-pill">
+                    <span className="apps-status-dot" style={{ background: app.color }} />
+                    <span>VERIFIED PRODUCTION PLATFORM</span>
                   </div>
-
-                  <div className="apps-actions-group">
-                    <button
-                      className="apps-preview-btn interactive"
-                      onClick={(e) => {
-                        e.stopPropagation()
-                        cinemaAudio.playOrbSelect()
-                        setSelectedAppModal(app)
-                        setActiveMockTab(0)
-                      }}
-                    >
-                      📱 PREVIEW APP
-                    </button>
-                    <button
-                      className="apps-buy-btn interactive"
-                      onClick={(e) => addToCart(app, e)}
-                    >
-                      🛒 ADD TO CART
-                    </button>
-                  </div>
+                  <button
+                    className="apps-view-specs-btn interactive"
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      cinemaAudio.playOrbSelect()
+                      setSelectedAppModal(app)
+                      setActiveMockTab(0)
+                    }}
+                  >
+                    <span>✦ EXPLORE PLATFORM ARCHITECTURE</span>
+                    <span className="apps-btn-arrow">→</span>
+                  </button>
                 </div>
               </div>
             )
@@ -502,15 +410,15 @@ export default function AppsStore() {
                 </div>
 
                 <div className="apps-form-group">
-                  <label>DEVELOPMENT SCALE & BUDGET</label>
+                  <label>DEVELOPMENT SCALE & TIMELINE</label>
                   <select
-                    value={customAppBudget}
-                    onChange={(e) => setCustomAppBudget(e.target.value)}
+                    value={customAppScale}
+                    onChange={(e) => setCustomAppScale(e.target.value)}
                     className="apps-select interactive"
                   >
-                    <option>Mark I Sprint MVP (~₹25,000 - ₹45,000 · 2 Weeks)</option>
-                    <option>Mark II Commercial App (~₹45,000 - ₹95,000 · 4 Weeks)</option>
-                    <option>Mark III Enterprise Platform (~₹95,000+ · Dedicated Pod)</option>
+                    <option>Mark I Rapid MVP (2 Weeks Sprint)</option>
+                    <option>Mark II Commercial App (4 - 6 Weeks)</option>
+                    <option>Mark III Enterprise Platform (Dedicated Pod)</option>
                   </select>
                 </div>
               </div>
@@ -629,14 +537,12 @@ export default function AppsStore() {
                 <div className="apps-transformation-box" style={{ marginBottom: 18 }}>
                   <div className="apps-trans-label" style={{ color: selectedAppModal.color }}>
                     <span className="apps-trans-dot" style={{ background: selectedAppModal.color }} />
-                    MISSION PURPOSE
+                    TRANSFORMATION IMPACT
                   </div>
                   <div className="apps-trans-steps">
-                    <div className="apps-trans-step from">{selectedAppModal.purposeTransformation.from}</div>
+                    <div className="apps-trans-step from">{selectedAppModal.transformation.from}</div>
                     <div className="apps-trans-arrow">➔</div>
-                    <div className="apps-trans-step mid">{selectedAppModal.purposeTransformation.mid}</div>
-                    <div className="apps-trans-arrow">➔</div>
-                    <div className="apps-trans-step to">{selectedAppModal.purposeTransformation.to}</div>
+                    <div className="apps-trans-step to">{selectedAppModal.transformation.to}</div>
                   </div>
                 </div>
 
@@ -649,88 +555,20 @@ export default function AppsStore() {
                   ))}
                 </ul>
 
-                <div className="apps-modal-pricing-box">
-                  <div>
-                    <div className="apps-modal-price">
-                      {currency === 'INR' ? selectedAppModal.priceDisplay : `$${Math.round(selectedAppModal.price / 85)}`}
-                    </div>
-                    <div className="apps-modal-price-note">Lifetime License · Full Source Code Available</div>
+                <div className="apps-modal-action-box">
+                  <div className="apps-modal-status-badge">
+                    <span className="apps-modal-status-dot" style={{ background: selectedAppModal.color }} />
+                    <span>Production Architecture · Custom Deployment & White-Label Available</span>
                   </div>
-                  <button
-                    className="apps-modal-add-btn interactive"
-                    onClick={(e) => {
-                      addToCart(selectedAppModal, e)
-                      setSelectedAppModal(null)
-                    }}
+                  <a
+                    href={`mailto:bexsigmatech@gmail.com?subject=${encodeURIComponent(`Inquiry Regarding ${selectedAppModal.name} Platform`)}&body=${encodeURIComponent(`Hi Hariharan,\n\nI am interested in the ${selectedAppModal.name} platform and custom application engineering with BEX Sigma Tech.\n\nLooking forward to connecting!`)}`}
+                    className="apps-modal-inquire-btn interactive"
                   >
-                    🛒 ADD TO CART
-                  </button>
+                    ✉ INQUIRE ABOUT THIS PLATFORM →
+                  </a>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      )}
-
-      {/* ── Cart Drawer ── */}
-      {isCartOpen && (
-        <div className="webdev-cart-drawer-overlay" onClick={() => setIsCartOpen(false)}>
-          <div className="webdev-cart-drawer interactive" onClick={(e) => e.stopPropagation()}>
-            <div className="webdev-cart-header">
-              <h3>🛒 YOUR APP ORDER</h3>
-              <button className="webdev-cart-close interactive" onClick={() => setIsCartOpen(false)}>
-                ✕
-              </button>
-            </div>
-
-            <div className="webdev-cart-items">
-              {cart.length === 0 ? (
-                <div className="webdev-empty-cart">
-                  <div style={{ fontSize: '2.5rem', marginBottom: 10 }}>📦</div>
-                  <p>Your cart is empty.</p>
-                  <span style={{ fontSize: '0.75rem', opacity: 0.6 }}>Select Future Path or Track Me to add.</span>
-                </div>
-              ) : (
-                cart.map((item) => (
-                  <div key={item.id} className="webdev-cart-item">
-                    <img src={item.logo} alt={item.name} className="webdev-cart-item-img" />
-                    <div className="webdev-cart-item-info">
-                      <div className="webdev-cart-item-title">{item.name}</div>
-                      <div className="webdev-cart-item-price">
-                        {currency === 'INR' ? `₹${item.price * item.quantity}` : `$${Math.round((item.price * item.quantity) / 85)}`}
-                      </div>
-                      <div className="webdev-cart-qty-row">
-                        <button className="interactive" onClick={() => updateQuantity(item.id, -1)}>-</button>
-                        <span>{item.quantity}</span>
-                        <button className="interactive" onClick={() => updateQuantity(item.id, 1)}>+</button>
-                      </div>
-                    </div>
-                    <button className="webdev-cart-del interactive" onClick={() => removeFromCart(item.id)}>
-                      🗑️
-                    </button>
-                  </div>
-                ))
-              )}
-            </div>
-
-            {cart.length > 0 && (
-              <div className="webdev-cart-footer">
-                <div className="webdev-cart-total-row">
-                  <span>TOTAL ESTIMATE:</span>
-                  <span className="webdev-cart-total-val">
-                    {currency === 'INR' ? `₹${totalAmountINR}` : `$${totalAmountUSD}`}
-                  </span>
-                </div>
-
-                <a
-                  href={`mailto:bexsigmatech@gmail.com?subject=App%20Order%20Inquiry%20(${cart.map(i => i.name).join(', ')})&body=Hi%20Hariharan,%0A%0AI%20would%20like%20to%20order%20the%20following%20apps:%0A${cart.map(i => `- ${i.name} (Qty: ${i.quantity})`).join('%0A')}%0A%0ATotal:%20INR%20${totalAmountINR}`}
-                  className="webdev-checkout-btn interactive"
-                  style={{ textDecoration: 'none', display: 'flex', justifyContent: 'center', alignItems: 'center', textAlign: 'center' }}
-                >
-                  ⚡ ORDER VIA SECURE CHECKOUT / INQUIRE
-                </a>
-              </div>
-            )}
           </div>
         </div>
       )}
