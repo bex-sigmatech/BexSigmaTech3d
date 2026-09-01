@@ -149,31 +149,86 @@ class VoicePlayer {
   }
 
   _selectBestVoice(voices) {
-    const preferred = [
+    if (!voices || voices.length === 0) return
+
+    // Explicit list of known Male voice names across Mac, iOS, Windows, Android, Linux, Chrome
+    const maleVoiceNames = [
       'Google UK English Male',
+      'Google US English Male',
       'Microsoft David Desktop',
+      'Microsoft David',
       'Microsoft Mark',
+      'Microsoft George',
+      'Microsoft Guy Online',
       'Alex',
       'Daniel',
-      'Google US English',
-      'en-US',
-      'en-GB',
+      'Arthur',
+      'Aaron',
+      'Gordon',
+      'Fred',
+      'Rishi',
+      'Oliver',
+      'George',
+      'Tom',
+      'Thomas',
+      'en-us-x-iom-local',
+      'en-us-x-iom-network',
+      'en-us-x-iol-local',
+      'en-us-x-sfg#male',
+      'male'
     ]
 
-    for (const name of preferred) {
-      const found = voices.find(v =>
-        v.name.toLowerCase().includes(name.toLowerCase()) ||
-        (v.lang && v.lang.toLowerCase().startsWith(name.toLowerCase()))
-      )
-      if (found) {
-        this.preferredVoice = found
+    const femaleBlacklist = [
+      'samantha', 'karen', 'zira', 'hazel', 'moira', 'victoria', 
+      'tessa', 'fiona', 'catherine', 'susan', 'eva', 'heera', 
+      'veena', 'priya', 'serena', 'ava', 'allison', 'zoe', 
+      'female', 'woman', 'girl'
+    ]
+
+    // 1. Try finding an explicit male voice by name
+    for (const name of maleVoiceNames) {
+      const match = voices.find(v => {
+        const vName = (v.name || '').toLowerCase()
+        return vName.includes(name.toLowerCase())
+      })
+      if (match) {
+        this.preferredVoice = match
         return
       }
     }
-    this.preferredVoice = voices.find(v => v.lang && v.lang.startsWith('en')) || voices[0]
+
+    // 2. Try finding any English voice that explicitly has 'male' in name or URI
+    const explicitMale = voices.find(v => {
+      const vName = (v.name || '').toLowerCase()
+      const vUri = (v.voiceURI || '').toLowerCase()
+      const isEnglish = (v.lang || '').toLowerCase().startsWith('en')
+      const isMale = vName.includes('male') || vUri.includes('male')
+      const isFemale = femaleBlacklist.some(f => vName.includes(f) || vUri.includes(f))
+      return isEnglish && isMale && !isFemale
+    })
+    if (explicitMale) {
+      this.preferredVoice = explicitMale
+      return
+    }
+
+    // 3. Fallback: Find any English voice that is NOT on the female blacklist
+    const nonFemaleEnglish = voices.find(v => {
+      const vName = (v.name || '').toLowerCase()
+      const vUri = (v.voiceURI || '').toLowerCase()
+      const isEnglish = (v.lang || '').toLowerCase().startsWith('en')
+      const isFemale = femaleBlacklist.some(f => vName.includes(f) || vUri.includes(f))
+      return isEnglish && !isFemale
+    })
+    if (nonFemaleEnglish) {
+      this.preferredVoice = nonFemaleEnglish
+      return
+    }
+
+    // 4. Last resort: default voice
+    this.preferredVoice = voices[0]
   }
 
-  play(text, { pitch = 0.85, rate = 0.88, volume = 1.0, onStart, onEnd, onError } = {}) {
+  play(text, { pitch = 0.82, rate = 0.88, volume = 1.0, onStart, onEnd, onError } = {}) {
     if (!this.isSupported || !this.synth) {
       if (onStart) onStart()
       if (onEnd) onEnd()

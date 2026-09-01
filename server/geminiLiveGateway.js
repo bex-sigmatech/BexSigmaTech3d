@@ -168,7 +168,7 @@ function setupGeminiLiveGateway(server) {
                 speechConfig: {
                   voiceConfig: {
                     prebuiltVoiceConfig: {
-                      voiceName: 'Puck' // Natural, crisp voice
+                      voiceName: 'Charon' // Deep, authoritative, sophisticated male AI voice
                     }
                   }
                 }
