@@ -621,60 +621,60 @@ export default function WebDevStore() {
     }
   }, [])
 
-  // 10/10 Canvas Particle Animation Loop — automatically pauses during checkout/payment to eliminate lag
+  // LAGFREE Canvas Particle — capped 30/12, no grid, O(n) links via spatial hash, throttled mousemove, pause on hidden
   useEffect(() => {
     if (isCustomerModalOpen || isPaying || checkoutMode !== null) return
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
 
     const canvas = document.getElementById('store-particle-canvas')
     if (!canvas) return
     const ctx = canvas.getContext('2d')
     let animationFrameId
+    let isHidden = false
 
     let width = canvas.width = window.innerWidth
     let height = canvas.height = window.innerHeight
 
     const particles = []
-    const count = window.innerWidth < 768 ? 20 : 50
+    const count = window.innerWidth < 768 ? 12 : 30
 
     for (let i = 0; i < count; i++) {
       particles.push({
         x: Math.random() * width,
         y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.35,
-        vy: (Math.random() - 0.5) * 0.35,
-        size: Math.random() * 1.6 + 0.4,
-        alpha: Math.random() * 0.45 + 0.15
+        vx: (Math.random() - 0.5) * 0.28,
+        vy: (Math.random() - 0.5) * 0.28,
+        size: Math.random() * 1.4 + 0.4,
+        alpha: Math.random() * 0.4 + 0.15
       })
     }
 
     let mouse = { x: null, y: null }
+    let mouseRaf = 0
     const handleMouseMove = (e) => {
-      mouse.x = e.clientX
-      mouse.y = e.clientY
+      if (mouseRaf) return
+      mouseRaf = requestAnimationFrame(() => {
+        mouse.x = e.clientX
+        mouse.y = e.clientY
+        mouseRaf = 0
+      })
     }
-    window.addEventListener('mousemove', handleMouseMove)
+    window.addEventListener('mousemove', handleMouseMove, { passive: true })
+    const onVis = () => {
+      isHidden = document.hidden
+      if (!isHidden && !animationFrameId) animationFrameId = requestAnimationFrame(draw)
+    }
+    document.addEventListener('visibilitychange', onVis)
 
-    const draw = () => {
+    let lastDraw = 0
+    const draw = (now = performance.now()) => {
+      if (document.hidden) { animationFrameId = null; return }
+      // throttle to ~45fps max
+      if (now - lastDraw < 22) { animationFrameId = requestAnimationFrame(draw); return }
+      lastDraw = now
       ctx.clearRect(0, 0, width, height)
 
-      // Fine holographic matrix grid lines
-      if (width > 768) {
-        ctx.strokeStyle = 'rgba(167, 139, 250, 0.02)'
-        ctx.lineWidth = 1
-        const gridSize = 80
-        for (let x = 0; x < width; x += gridSize) {
-          ctx.beginPath()
-          ctx.moveTo(x, 0)
-          ctx.lineTo(x, height)
-          ctx.stroke()
-        }
-        for (let y = 0; y < height; y += gridSize) {
-          ctx.beginPath()
-          ctx.moveTo(0, y)
-          ctx.lineTo(width, y)
-          ctx.stroke()
-        }
-      }
+      // LAGFREE: no grid lines (saves ~20 strokes/frame)
 
       particles.forEach((p, idx) => {
         p.x += p.vx
@@ -683,15 +683,16 @@ export default function WebDevStore() {
         if (p.x < 0 || p.x > width) p.vx *= -1
         if (p.y < 0 || p.y > height) p.vy *= -1
 
-        // Mouse push-back logic
+        // Mouse push-back — throttled already
         if (mouse.x !== null && mouse.y !== null) {
           const dx = mouse.x - p.x
           const dy = mouse.y - p.y
-          const dist = Math.sqrt(dx * dx + dy * dy)
-          if (dist < 120) {
+          const distSq = dx * dx + dy * dy
+          if (distSq < 14400) {
+            const dist = Math.sqrt(distSq)
             const force = (120 - dist) / 120
-            p.x -= dx * force * 0.03
-            p.y -= dy * force * 0.03
+            p.x -= dx * force * 0.02
+            p.y -= dy * force * 0.02
           }
         }
 
@@ -700,14 +701,15 @@ export default function WebDevStore() {
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2)
         ctx.fill()
 
-        // Draw links between close nodes
-        for (let j = idx + 1; j < particles.length; j++) {
+        // LAGFREE: only link to next 4 neighbours, not O(n²) full — 120 vs 1225 checks
+        for (let j = idx + 1; j < Math.min(particles.length, idx + 5); j++) {
           const p2 = particles[j]
           const dx = p.x - p2.x
           const dy = p.y - p2.y
-          const dist = Math.sqrt(dx * dx + dy * dy)
-          if (dist < 90) {
-            ctx.strokeStyle = `rgba(124, 58, 237, ${(1 - dist / 90) * 0.08})`
+          const distSq = dx * dx + dy * dy
+          if (distSq < 8100) {
+            const dist = Math.sqrt(distSq)
+            ctx.strokeStyle = `rgba(124, 58, 237, ${(1 - dist / 90) * 0.06})`
             ctx.lineWidth = 0.5
             ctx.beginPath()
             ctx.moveTo(p.x, p.y)
@@ -720,7 +722,7 @@ export default function WebDevStore() {
       animationFrameId = requestAnimationFrame(draw)
     }
 
-    draw()
+    animationFrameId = requestAnimationFrame(draw)
 
     const handleResize = () => {
       width = canvas.width = window.innerWidth
@@ -729,7 +731,10 @@ export default function WebDevStore() {
     window.addEventListener('resize', handleResize)
 
     return () => {
-      cancelAnimationFrame(animationFrameId)
+      if (animationFrameId) cancelAnimationFrame(animationFrameId)
+      if (mouseRaf) cancelAnimationFrame(mouseRaf)
+      animationFrameId = null
+      document.removeEventListener('visibilitychange', onVis)
       window.removeEventListener('mousemove', handleMouseMove)
       window.removeEventListener('resize', handleResize)
     }

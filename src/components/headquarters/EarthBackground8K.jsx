@@ -204,20 +204,35 @@ export default function EarthBackground8K({ viewMode = 'orbit' }) {
     img.src = '/earth_map.png'
 
     let animId
+    let isVisible = true
+    let lastW = 0, lastH = 0, lastDpr = 0
     const startTime = performance.now()
 
-    // ── Render Loop ──
+    const onVis = () => {
+      isVisible = !document.hidden
+      if (isVisible && !animId) animId = requestAnimationFrame(render)
+    }
+    document.addEventListener('visibilitychange', onVis)
+    const onResize = () => { /* handled in render loop */ }
+
+    // ── Render Loop — LAGFREE: DPR capped 1.5, pause on hidden, throttle resize ──
     const render = () => {
-      const dpr = Math.min(window.devicePixelRatio || 1, 2)
+      if (document.hidden) { animId = null; return }
+      const isLow = window.innerWidth <= 768 || (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4)
+      const dpr = Math.min(window.devicePixelRatio || 1, isLow ? 1.25 : 1.5)
       const width = window.innerWidth
       const height = window.innerHeight
       const dw = Math.floor(width * dpr)
       const dh = Math.floor(height * dpr)
 
-      if (canvas.width !== dw || canvas.height !== dh) {
-        canvas.width = dw
-        canvas.height = dh
-        gl.viewport(0, 0, dw, dh)
+      if (canvas.width !== dw || canvas.height !== dh || dpr !== lastDpr) {
+        // throttle: only resize if diff > 1px or dpr changed
+        if (Math.abs(width - lastW) > 1 || Math.abs(height - lastH) > 1 || dpr !== lastDpr) {
+          canvas.width = dw
+          canvas.height = dh
+          gl.viewport(0, 0, dw, dh)
+          lastW = width; lastH = height; lastDpr = dpr
+        }
       }
 
       const elapsed = (performance.now() - startTime) * 0.001
@@ -254,7 +269,9 @@ export default function EarthBackground8K({ viewMode = 'orbit' }) {
     animId = requestAnimationFrame(render)
 
     return () => {
-      cancelAnimationFrame(animId)
+      document.removeEventListener('visibilitychange', onVis)
+      if (animId) cancelAnimationFrame(animId)
+      animId = null
       gl.deleteBuffer(buffer)
       gl.deleteTexture(texture)
       gl.deleteProgram(program)

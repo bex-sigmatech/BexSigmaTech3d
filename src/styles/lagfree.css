@@ -1,0 +1,81 @@
+/* ==========================================================================
+   BEX SIGMA TECH — LAGFREE OVERRIDES (10/10 Performance)
+   Reduces GPU cost: backdrop-filter, box-shadow, animations, content-visibility
+   ========================================================================== */
+
+/* 1. Content-visibility for offscreen sections — huge paint savings */
+.webdev-store-container, .apps-store-container, .client-projects-container, .mission-control-container {
+  content-visibility: auto;
+  contain-intrinsic-size: 800px;
+}
+
+/* 2. Mobile: drastically reduce backdrop-filter (biggest GPU bottleneck) */
+@media (max-width: 768px) {
+  * {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+  /* keep subtle blur only where essential, capped at 8px */
+  .jarvis-dept-panel, .nolan-hq-header, .webdev-glass-panel, .apps-glass-panel {
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+  }
+  /* kill expensive box-shadows on mobile */
+  .dashboard-card, .jarvis-capsule-pattern, .webdev-product-card, .apps-card {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3) !important;
+  }
+}
+
+/* 3. Low-end / reduced-motion: kill infinite animations that wake CPU */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* 4. Global: reduce animation count — pause offscreen infinite anims */
+@media (max-width: 768px) {
+  .holoScan, .glowRingPulse, .gradientShift, .hologramGlow {
+    animation: none !important;
+  }
+}
+
+/* 5. Images: force async decode, lazy hint (complements loading=lazy) */
+img {
+  content-visibility: auto;
+}
+img[loading="lazy"] {
+  contain-intrinsic-size: 300px 200px;
+}
+
+/* 6. Canvas: promote to own layer but limit DPR (handled in JS too) — hint browser */
+canvas {
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+/* 7. Scrollbar and compositor hints */
+html {
+  scrollbar-gutter: stable;
+}
+body {
+  text-rendering: optimizeSpeed;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 8. Reduce filter blur on large glows */
+.logo-glow, .particle-canvas, .scanline-overlay {
+  filter: none !important;
+}
+
+/* 9. Hide particle canvases on very low-memory devices (optional via JS class) */
+.low-power canvas[id*="particle"], .low-power .particle-canvas, .low-power #store-particle-canvas {
+  display: none !important;
+}
+
+/* 10. Three.js canvas: ensure not creating extra layers */
+.hq-3d-canvas-wrapper canvas, .cinematic-fullbg {
+  will-change: transform;
+}

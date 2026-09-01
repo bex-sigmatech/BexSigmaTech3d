@@ -72,18 +72,24 @@ export const useStore = create((set, get) => {
       set({ scene: 'ai_core' })
     },
 
+    _identityTimer: null,
     submitIdentity: (name) => {
+      // LAGFREE: clear previous timer to prevent stale race on double submit/skip
+      if (get()._identityTimer) { clearTimeout(get()._identityTimer) }
       cinemaAudio.playAccessGrantedChime()
       cinemaAudio.setAmbientVolume(0.7, 0.8)
       cinemaAudio.setScene('ai_response')
       set({ userName: name, scene: 'ai_response' })
 
-      const delay = isMobileDevice ? 3800 : 5000 // Enough time for Welcome typewriter to complete (fixes BX/elccme clipping)
-      setTimeout(() => {
+      const delay = isMobileDevice ? 3800 : 5000
+      const t = setTimeout(() => {
+        // guard: only transition if still in ai_response (not skipped/reset)
+        if (get().scene !== 'ai_response') return
         cinemaAudio.setAmbientVolume(0.3, 2.5)
         cinemaAudio.setScene('headquarters')
         set({ scene: 'headquarters' })
       }, delay)
+      set({ _identityTimer: t })
     },
 
     openMissionBriefing: (mission) => {
@@ -148,8 +154,9 @@ export const useStore = create((set, get) => {
     },
 
     skipIntro: () => {
-      const { isIntroSkipped } = get()
-      if (isIntroSkipped) return // guard against double-fire
+      const { isIntroSkipped, _identityTimer } = get()
+      if (isIntroSkipped) return
+      if (_identityTimer) { clearTimeout(_identityTimer); set({ _identityTimer: null }) }
 
       // Stop any in-progress voice/audio
       aiVoice.stop()
@@ -199,15 +206,19 @@ export const useStore = create((set, get) => {
     },
 
     resetSession: () => {
+      const t = get()._identityTimer
+      if (t) clearTimeout(t)
       voiceEmitter.emit('LOGOUT')
       cinemaAudio.stopAll()
+      liveVoiceClient.disconnect()
       set({
         scene: 'boot',
         loadingProgress: 0,
         userName: '',
         activeMission: null,
         scrollPosition: 0,
-        isIntroSkipped: false
+        isIntroSkipped: false,
+        _identityTimer: null
       })
     }
   }

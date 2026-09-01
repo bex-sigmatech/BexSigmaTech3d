@@ -955,8 +955,8 @@ app.get('/api/admin/orders', requireAdminAuth, (req, res) => {
 /* ── POST: Gemini AI Chat Assistant Endpoint — 10/10 ultra-low latency ── */
 // In-memory prompt cache — instant replay for repeated queries (3 min TTL)
 const _aiChatCache = new Map()
-const AI_CACHE_TTL_MS = 3 * 60 * 1000
-const AI_CACHE_MAX = 200
+const AI_CACHE_TTL_MS = 15 * 60 * 1000
+const AI_CACHE_MAX = 300
 function _getCachedAi(prompt, userName) {
   const key = `${(prompt || '').toLowerCase().trim()}::${(userName || 'Operator').toLowerCase().trim()}`
   const ent = _aiChatCache.get(key)

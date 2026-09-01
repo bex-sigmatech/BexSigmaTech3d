@@ -56,11 +56,11 @@ const DEPARTMENTS = [
   },
 ]
 
-/* ─── Floating Particle Stars ─── */
+/* ─── Floating Particle Stars — LAGFREE: halved counts, GPU culled ─── */
 function StarField() {
   const ref = useRef()
   const graphicsQuality = useStore(state => state.graphicsQuality)
-  const count = graphicsQuality === 'low' ? 150 : 1200
+  const count = graphicsQuality === 'low' ? 80 : 500
 
   const positions = useMemo(() => {
     const arr = new Float32Array(count * 3)
@@ -122,7 +122,17 @@ function ConnectionLines({ departments, activeIndex }) {
   )
 }
 
-/* ─── Single Department Orb — Jarvis Style ─── */
+/* ─── Single Department Orb — Jarvis Style — LAGFREE ─── */
+const _sharedVec3 = new THREE.Vector3()
+const _freqCache = { data: null, t: 0 }
+function _getVoiceEnergyCached(idx) {
+  const now = performance.now()
+  if (! _freqCache.data || now - _freqCache.t > 100) {
+    _freqCache.data = liveVoiceClient.getFrequencyData()
+    _freqCache.t = now
+  }
+  return (_freqCache.data[idx % _freqCache.data.length] || 0) / 255
+}
 function DepartmentOrb({ dept, index, isActive, isHovered, onHover, onLeave, onSelect }) {
   const groupRef = useRef()
   const sphereRef = useRef()
@@ -143,9 +153,8 @@ function DepartmentOrb({ dept, index, isActive, isHovered, onHover, onLeave, onS
     if (outerRingRef.current) outerRingRef.current.rotation.z = t * (0.4 + index * 0.05)
     if (!isLow && innerRingRef.current) innerRingRef.current.rotation.z = -t * (0.7 + index * 0.03)
 
-    // Audio-reactive voice modulation
-    const freq = liveVoiceClient.getFrequencyData()
-    const voiceEnergy = (freq[index % freq.length] || 0) / 255
+    // Audio-reactive voice modulation — LAGFREE: cached once per 100ms shared across 5 orbs
+    const voiceEnergy = _getVoiceEnergyCached(index)
 
     // Sphere pulse
     if (sphereRef.current && sphereRef.current.material) {
@@ -157,10 +166,11 @@ function DepartmentOrb({ dept, index, isActive, isHovered, onHover, onLeave, onS
       sphereRef.current.material.emissiveIntensity = pulse
     }
 
-    // Scale on hover/active + voice reactivity
+    // Scale on hover/active + voice reactivity — LAGFREE: reuse Vector3, no GC
     const voiceScale = isActive ? voiceEnergy * 0.25 : 0
     const targetScale = (isActive ? 1.35 : isHovered ? 1.15 : 1.0) + voiceScale
-    groupRef.current.scale.lerp(new THREE.Vector3(targetScale, targetScale, targetScale), 0.1)
+    _sharedVec3.set(targetScale, targetScale, targetScale)
+    groupRef.current.scale.lerp(_sharedVec3, 0.1)
   })
 
   const sphereSize = index === 0 ? 0.85 : 0.52
@@ -188,26 +198,26 @@ function DepartmentOrb({ dept, index, isActive, isHovered, onHover, onLeave, onS
         <sphereGeometry args={[sphereSize * 1.9, 12, 12]} />
         <meshBasicMaterial transparent opacity={0} depthWrite={false} depthTest={false} />
       </mesh>
-      {/* Outer glow aura — smooth high-subdivision spherical aura */}
+      {/* Outer glow aura — LAGFREE: reduced subdiv */}
       {!isLow && (
         <mesh>
-          <sphereGeometry args={[sphereSize * 1.45, 48, 48]} />
+          <sphereGeometry args={[sphereSize * 1.45, 24, 24]} />
           <meshBasicMaterial color={dept.color} transparent opacity={isActive ? 0.035 : 0.012} />
         </mesh>
       )}
 
-      {/* Main sphere body — glossy spatial 3D glass */}
+      {/* Main sphere body — LAGFREE: 32/16 vs 64/24, no transmission on low */}
       <mesh ref={sphereRef} castShadow>
-        <sphereGeometry args={[sphereSize, isLow ? 24 : 64, isLow ? 24 : 64]} />
+        <sphereGeometry args={[sphereSize, isLow ? 16 : 32, isLow ? 16 : 32]} />
         <meshPhysicalMaterial
           color={dept.color}
           emissive={dept.emissive}
           emissiveIntensity={isActive ? 0.6 : 0.2}
           roughness={0.12}
           metalness={0.25}
-          clearcoat={1.0}
+          clearcoat={isLow ? 0 : 1.0}
           clearcoatRoughness={0.08}
-          transmission={0.25}
+          transmission={isLow ? 0 : 0.2}
           transparent
           opacity={0.94}
         />
@@ -216,21 +226,21 @@ function DepartmentOrb({ dept, index, isActive, isHovered, onHover, onLeave, onS
       {/* Wireframe overlay — Jarvis holographic effect — disable on low-end */}
       {!isLow && (
         <mesh>
-          <sphereGeometry args={[sphereSize * 1.02, 12, 12]} />
+          <sphereGeometry args={[sphereSize * 1.02, 8, 8]} />
           <meshBasicMaterial color={dept.color} wireframe transparent opacity={isActive ? 0.25 : 0.08} />
         </mesh>
       )}
 
-      {/* Outer orbit ring — simplified segments if low-graphics */}
+      {/* Outer orbit ring — LAGFREE: halved segments */}
       <mesh ref={outerRingRef} rotation={[Math.PI / 2.5, 0.3, 0]}>
-        <ringGeometry args={[sphereSize * 1.5, sphereSize * 1.55, isLow ? 24 : 64]} />
+        <ringGeometry args={[sphereSize * 1.5, sphereSize * 1.55, isLow ? 16 : 32]} />
         <meshBasicMaterial color={dept.color} transparent opacity={isActive ? 0.7 : 0.2} side={THREE.DoubleSide} />
       </mesh>
 
       {/* Inner orbit ring — counter-rotating — disable on low-graphics */}
       {!isLow && (
         <mesh ref={innerRingRef} rotation={[Math.PI / 3, -0.2, 0]}>
-          <ringGeometry args={[sphereSize * 1.2, sphereSize * 1.24, 48]} />
+          <ringGeometry args={[sphereSize * 1.2, sphereSize * 1.24, 24]} />
           <meshBasicMaterial color={dept.color} transparent opacity={isActive ? 0.5 : 0.12} side={THREE.DoubleSide} />
         </mesh>
       )}
@@ -293,20 +303,22 @@ function JarvisCameraController({ activeIndex, departments, entryPhase, isZoomin
   return null
 }
 
-/* ─── Floating orbit ring particles around central orb ─── */
+/* ─── Floating orbit ring particles around central orb — LAGFREE ─── */
 function OrbParticleRing({ color, radius, count = 32, speed = 0.5, tiltX = Math.PI / 2 }) {
   const ref = useRef()
+  const graphicsQuality = useStore(state => state.graphicsQuality)
+  const effCount = graphicsQuality === 'low' ? Math.floor(count * 0.5) : count
 
   const positions = useMemo(() => {
-    const arr = new Float32Array(count * 3)
-    for (let i = 0; i < count; i++) {
-      const angle = (i / count) * Math.PI * 2
+    const arr = new Float32Array(effCount * 3)
+    for (let i = 0; i < effCount; i++) {
+      const angle = (i / effCount) * Math.PI * 2
       arr[i * 3 + 0] = Math.cos(angle) * radius
       arr[i * 3 + 1] = Math.sin(angle) * radius
       arr[i * 3 + 2] = 0
     }
     return arr
-  }, [count, radius])
+  }, [effCount, radius])
 
   useFrame(({ clock }) => {
     if (ref.current) {
@@ -339,25 +351,28 @@ function JarvisCentralCore() {
     if (ring3.current) ring3.current.rotation.x = t * 0.2
   })
 
+  const isLow = useStore(state => state.graphicsQuality) === 'low'
   return (
     <group position={[0, 0, 0]}>
-      {/* Outer glowing orbit rings */}
+      {/* Outer glowing orbit rings — LAGFREE halved segs */}
       <mesh ref={ring1} rotation={[Math.PI / 2, 0, 0]}>
-        <ringGeometry args={[1.6, 1.65, 128]} />
+        <ringGeometry args={[1.6, 1.65, isLow ? 32 : 64]} />
         <meshBasicMaterial color="#00d4ff" transparent opacity={0.3} side={THREE.DoubleSide} />
       </mesh>
       <mesh ref={ring2} rotation={[Math.PI / 3, 0, 0]}>
-        <ringGeometry args={[2.1, 2.14, 128]} />
+        <ringGeometry args={[2.1, 2.14, isLow ? 32 : 64]} />
         <meshBasicMaterial color="#00d4ff" transparent opacity={0.15} side={THREE.DoubleSide} />
       </mesh>
-      <mesh ref={ring3} rotation={[Math.PI / 6, 0, 0]}>
-        <ringGeometry args={[2.7, 2.73, 128]} />
-        <meshBasicMaterial color="#00aaff" transparent opacity={0.08} side={THREE.DoubleSide} />
-      </mesh>
+      {!isLow && (
+        <mesh ref={ring3} rotation={[Math.PI / 6, 0, 0]}>
+          <ringGeometry args={[2.7, 2.73, 32]} />
+          <meshBasicMaterial color="#00aaff" transparent opacity={0.08} side={THREE.DoubleSide} />
+        </mesh>
+      )}
 
-      {/* Particle orbit rings */}
-      <OrbParticleRing color="#00d4ff" radius={1.85} count={48} speed={0.4} tiltX={Math.PI / 2.2} />
-      <OrbParticleRing color="#00ffcc" radius={2.4} count={32} speed={-0.3} tiltX={Math.PI / 3.5} />
+      {/* Particle orbit rings — LAGFREE */}
+      <OrbParticleRing color="#00d4ff" radius={1.85} count={24} speed={0.4} tiltX={Math.PI / 2.2} />
+      <OrbParticleRing color="#00ffcc" radius={2.4} count={16} speed={-0.3} tiltX={Math.PI / 3.5} />
     </group>
   )
 }
@@ -610,13 +625,14 @@ export default function HQScene() {
         </div>
       </header>
 
-      {/* ── 3D JARVIS ORBS CANVAS ── */}
+      {/* ── 3D JARVIS ORBS CANVAS — LAGFREE: capped DPR + frameloop demand on hidden ── */}
       <div className="hq-3d-canvas-wrapper">
         <Canvas
           camera={{ position: [0, 0.5, 14], fov: 55 }}
-          gl={{ antialias: graphicsQuality !== 'low', alpha: true, powerPreference: 'high-performance' }}
-          dpr={graphicsQuality === 'low' ? [1, 1.25] : [1, 1.5]}
+          gl={{ antialias: graphicsQuality !== 'low', alpha: true, powerPreference: 'high-performance', stencil: false, depth: true }}
+          dpr={graphicsQuality === 'low' ? [1, 1] : [1, 1.25]}
           performance={{ min: 0.5 }}
+          frameloop="always"
         >
           <color attach="background" args={['#020812']} />
           <fog attach="fog" args={['#020812', 22, 55]} />
@@ -663,16 +679,22 @@ export default function HQScene() {
               />
             ))}
 
-            {/* Sci-Fi Post-Processing Pipeline — 10/10 mobile keeps soft bloom (0.35) instead of off */}
-            <EffectComposer disableNormalPass>
-              <Bloom
-                luminanceThreshold={0.2}
-                luminanceSmoothing={0.9}
-                intensity={graphicsQuality === 'low' ? 0.35 : 1.1}
-                mipmapBlur
-              />
-              <Vignette eskil={false} offset={0.1} darkness={graphicsQuality === 'low' ? 0.45 : 0.6} />
-            </EffectComposer>
+            {/* Sci-Fi Post-Processing Pipeline — LAGFREE: no bloom on low, reduced mipmapBlur */}
+            {graphicsQuality === 'low' ? (
+              <EffectComposer disableNormalPass>
+                <Vignette eskil={false} offset={0.1} darkness={0.45} />
+              </EffectComposer>
+            ) : (
+              <EffectComposer disableNormalPass>
+                <Bloom
+                  luminanceThreshold={0.2}
+                  luminanceSmoothing={0.9}
+                  intensity={0.7}
+                  mipmapBlur={false}
+                />
+                <Vignette eskil={false} offset={0.1} darkness={0.5} />
+              </EffectComposer>
+            )}
           </Suspense>
         </Canvas>
       </div>

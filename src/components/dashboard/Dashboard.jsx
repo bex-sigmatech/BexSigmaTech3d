@@ -24,7 +24,7 @@ export default function Dashboard() {
     }
   }, [logs])
 
-  // Periodic scrolling dashboard logs
+  // Periodic scrolling dashboard logs — LAGFREE: capped 120, pause on hidden, auto-scroll only when visible
   useEffect(() => {
     const diagnosticLines = [
       'NET: Firewall verification clean - SSL verified.',
@@ -35,10 +35,15 @@ export default function Dashboard() {
       'SEC: Memory address clearance stable.'
     ]
     let index = 0
+    const MAX_LOGS = 120
     const interval = setInterval(() => {
+      if (document.hidden) return
       const timestamp = new Date().toLocaleTimeString()
-      setLogs(prev => [...prev, `[${timestamp}] ${diagnosticLines[index % diagnosticLines.length]}`])
-      index++
+      setLogs(prev => {
+        const next = [...prev, `[${timestamp}] ${diagnosticLines[index % diagnosticLines.length]}`]
+        index++
+        return next.length > MAX_LOGS ? next.slice(-MAX_LOGS) : next
+      })
     }, 4000)
 
     return () => clearInterval(interval)
@@ -46,12 +51,15 @@ export default function Dashboard() {
 
   const triggerDiagnostic = () => {
     const timestamp = new Date().toLocaleTimeString()
-    setLogs(prev => [
-      ...prev,
-      `[${timestamp}] CMD: Executing diagnostic sync check...`,
-      `[${timestamp}] SYS: Ping latency: 8ms. Database healthy.`,
-      `[${timestamp}] SYS: Diagnostic verification SUCCESS.`
-    ])
+    setLogs(prev => {
+      const next = [
+        ...prev,
+        `[${timestamp}] CMD: Executing diagnostic sync check...`,
+        `[${timestamp}] SYS: Ping latency: 8ms. Database healthy.`,
+        `[${timestamp}] SYS: Diagnostic verification SUCCESS.`
+      ]
+      return next.length > 120 ? next.slice(-120) : next
+    })
   }
 
   return (

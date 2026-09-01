@@ -7,26 +7,33 @@ import { voiceEmitter, aiVoice } from '../../audio/AIVoiceEngine'
    Biometric 3D Scanner · Typewriter AI Dialogue · Live Telemetry Matrix
    ========================================================================== */
 
-/* ─── Typewriter text component — fixed for clipped chars (BX/elccme) ─── */
+/* ─── Typewriter text component — LAGFREE: rAF instead of setInterval churn ─── */
 function TypewriterText({ text, speed = 35 }) {
   const [displayedText, setDisplayedText] = useState('')
 
   useEffect(() => {
     setDisplayedText('')
+    if (!text) return
     let idx = 0
-    const timer = setInterval(() => {
-      // Slice ensures no char is skipped even if interval drifts
-      idx++
-      setDisplayedText(text.slice(0, idx))
-      if (idx >= text.length) clearInterval(timer)
-    }, speed)
-    return () => clearInterval(timer)
+    let last = performance.now()
+    let raf = 0
+    const tick = (now) => {
+      if (now - last >= speed) {
+        idx++
+        setDisplayedText(text.slice(0, idx))
+        last = now
+        if (idx >= text.length) return
+      }
+      raf = requestAnimationFrame(tick)
+    }
+    raf = requestAnimationFrame(tick)
+    return () => cancelAnimationFrame(raf)
   }, [text, speed])
 
   return <span style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}>{displayedText}</span>
 }
 
-/* ─── Procedural 3D Particle Field ─── */
+/* ─── Procedural 3D Particle Field — LAGFREE: no scale-accumulate, pause on hidden ─── */
 function ParticleField3D({ count = 70 }) {
   const canvasRef = useRef(null)
 
@@ -34,8 +41,9 @@ function ParticleField3D({ count = 70 }) {
     const canvas = canvasRef.current
     if (!canvas) return
     const ctx = canvas.getContext('2d')
+    const effCount = window.innerWidth <= 768 ? Math.min(count, 25) : count
 
-    const particles = Array.from({ length: count }, () => ({
+    const particles = Array.from({ length: effCount }, () => ({
       x: Math.random(),
       y: Math.random(),
       z: Math.random(),
@@ -46,14 +54,24 @@ function ParticleField3D({ count = 70 }) {
     }))
 
     let animId
+    let isHidden = false
+    const onVis = () => {
+      isHidden = document.hidden
+      if (!isHidden && !animId) animId = requestAnimationFrame(render)
+    }
+    document.addEventListener('visibilitychange', onVis)
     const render = () => {
-      const dpr = Math.min(window.devicePixelRatio || 1, 2)
+      if (document.hidden) { animId = null; return }
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.5)
       const w = window.innerWidth
       const h = window.innerHeight
-      if (canvas.width !== w * dpr || canvas.height !== h * dpr) {
+      const needResize = canvas.width !== w * dpr || canvas.height !== h * dpr
+      if (needResize) {
         canvas.width = w * dpr
         canvas.height = h * dpr
-        ctx.scale(dpr, dpr)
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
+      } else {
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
       }
       ctx.clearRect(0, 0, w, h)
 
@@ -72,7 +90,7 @@ function ParticleField3D({ count = 70 }) {
       animId = requestAnimationFrame(render)
     }
     animId = requestAnimationFrame(render)
-    return () => cancelAnimationFrame(animId)
+    return () => { document.removeEventListener('visibilitychange', onVis); if (animId) cancelAnimationFrame(animId); animId = null }
   }, [count])
 
   return (
@@ -116,19 +134,26 @@ function HUDCorners() {
   )
 }
 
-/* ─── Biometric Scanner overlay ─── */
+/* ─── Biometric Scanner overlay — LAGFREE: rAF throttled 300ms ─── */
 function BiometricScannerOverlay({ zoomPhase }) {
   const [matchPercent, setMatchPercent] = useState(94.2)
 
   useEffect(() => {
     if (zoomPhase < 2) return
-    const interval = setInterval(() => {
-      setMatchPercent((prev) => {
-        const next = prev + (Math.random() - 0.48) * 0.5
-        return Math.min(Math.max(next, 97.5), 99.8)
-      })
-    }, 150)
-    return () => clearInterval(interval)
+    let raf = 0
+    let last = performance.now()
+    const tick = (now) => {
+      if (now - last >= 300) {
+        setMatchPercent((prev) => {
+          const next = prev + (Math.random() - 0.48) * 0.5
+          return Math.min(Math.max(next, 97.5), 99.8)
+        })
+        last = now
+      }
+      raf = requestAnimationFrame(tick)
+    }
+    raf = requestAnimationFrame(tick)
+    return () => cancelAnimationFrame(raf)
   }, [zoomPhase])
 
   if (zoomPhase < 2) return null
@@ -390,25 +415,36 @@ export default function AICore() {
   const [aiCustomReply, setAiCustomReply] = useState('')
   const [fpMatch, setFpMatch] = useState(94.2)
 
-  // Live biometric match ticker (mobile credential card)
+  // Live biometric match ticker — LAGFREE: pause when hidden
   useEffect(() => {
-    const t = setInterval(() => {
-      setFpMatch((p) => Math.min(Math.max(p + (Math.random() - 0.45) * 0.4, 94), 99.6))
-    }, 900)
-    return () => clearInterval(t)
+    let raf = 0
+    let last = performance.now()
+    const tick = (now) => {
+      if (document.hidden) { raf = requestAnimationFrame(tick); return }
+      if (now - last >= 900) {
+        setFpMatch((p) => Math.min(Math.max(p + (Math.random() - 0.45) * 0.4, 94), 99.6))
+        last = now
+      }
+      raf = requestAnimationFrame(tick)
+    }
+    raf = requestAnimationFrame(tick)
+    return () => cancelAnimationFrame(raf)
   }, [])
 
-  // 3D Parallax Tilt state
+  // 3D Parallax Tilt state — LAGFREE throttled
   const [tilt, setTilt] = useState({ x: 0, y: 0 })
+  const tiltRef = useRef({ x: 0, y: 0 })
+  const tiltRaf = useRef(0)
 
   useEffect(() => {
     if (typeof window === 'undefined') return
-    const interval = setInterval(() => {
-      if (window.speechSynthesis) {
-        setIsSpeaking(window.speechSynthesis.speaking)
-      }
-    }, 100)
-    return () => clearInterval(interval)
+    let raf = 0
+    const check = () => {
+      if (!document.hidden && window.speechSynthesis) setIsSpeaking(window.speechSynthesis.speaking)
+      raf = requestAnimationFrame(() => setTimeout(check, 250))
+    }
+    raf = requestAnimationFrame(check)
+    return () => cancelAnimationFrame(raf)
   }, [])
 
   const cameraStartTriggered = useRef(false)
@@ -530,16 +566,23 @@ export default function AICore() {
     }
   }
 
-  // 3D Card Hover Tilt logic
+  // 3D Card Hover Tilt — LAGFREE: rAF throttled, no per-pixel setState
   const handleMouseMove = (e) => {
-    const el = e.currentTarget
-    const rect = el.getBoundingClientRect()
-    const x = ((e.clientX - rect.left) / rect.width - 0.5) * 16 // degrees
-    const y = ((e.clientY - rect.top) / rect.height - 0.5) * -16
-    setTilt({ x, y })
+    if (tiltRaf.current) return
+    tiltRaf.current = requestAnimationFrame(() => {
+      const el = e.currentTarget
+      const rect = el.getBoundingClientRect()
+      const x = ((e.clientX - rect.left) / rect.width - 0.5) * 16
+      const y = ((e.clientY - rect.top) / rect.height - 0.5) * -16
+      tiltRef.current = { x, y }
+      setTilt({ x, y })
+      tiltRaf.current = 0
+    })
   }
 
   const handleMouseLeave = () => {
+    if (tiltRaf.current) { cancelAnimationFrame(tiltRaf.current); tiltRaf.current = 0 }
+    tiltRef.current = { x: 0, y: 0 }
     setTilt({ x: 0, y: 0 })
   }
 

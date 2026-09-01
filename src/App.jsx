@@ -3,12 +3,15 @@ import { useStore } from './store/useStore'
 import BootScreen from './components/boot/BootScreen'
 import AccessGranted from './components/boot/AccessGranted'
 import WelcomeScreen from './components/boot/WelcomeScreen'
-import AICore from './components/ai/AICore'
-import HQScene from './components/headquarters/HQScene'
-import MissionControl from './components/mission/MissionControl'
-import Dashboard from './components/dashboard/Dashboard'
 import LiveVoiceHUD from './components/ai/LiveVoiceHUD'
 import './styles/app.css'
+import './styles/lagfree.css'
+
+// LAGFREE: heavy 3D + AI scenes lazy-split — initial boot bundle ~200KB vs 1.1MB
+const AICore = lazy(() => import('./components/ai/AICore'))
+const HQScene = lazy(() => import('./components/headquarters/HQScene'))
+const MissionControl = lazy(() => import('./components/mission/MissionControl'))
+const Dashboard = lazy(() => import('./components/dashboard/Dashboard'))
 
 const WebDevStore = lazy(() => import('./components/webdev/WebDevStore'))
 const AppsStore = lazy(() => import('./components/apps/AppsStore'))
@@ -48,16 +51,20 @@ export default function App() {
       {/* Scene 3: Welcome screen */}
       {scene === 'welcome' && <WelcomeScreen />}
 
-      {/* Scene 4 & 5: Holographic AI Core console interface */}
-      {(scene === 'ai_core' || scene === 'ai_response') && <AICore />}
+      {/* Scene 4 & 5: Holographic AI Core — lazy */}
+      {(scene === 'ai_core' || scene === 'ai_response') && (
+        <Suspense fallback={<div style={{ display:'flex', alignItems:'center', justifyContent:'center', height:'100vh', background:'#000', color:'#00d4ff', fontFamily:'Orbitron', letterSpacing:'0.2em' }}>SYNCING NEURAL CORE...</div>}>
+          <AICore />
+        </Suspense>
+      )}
 
-      {/* Scene 6, 7 & 8: HQ Jarvis orbs, briefings and analytics dashboard */}
+      {/* Scene 6,7,8: HQ Jarvis orbs, briefings and analytics — lazy */}
       {(scene === 'headquarters' || scene === 'mission_briefing' || scene === 'dashboard') && (
-        <>
+        <Suspense fallback={<div style={{ display:'flex', alignItems:'center', justifyContent:'center', height:'100vh', background:'#020812', color:'#00d4ff', fontFamily:'Orbitron' }}>LOADING ORBITAL SYSTEMS...</div>}>
           <HQScene />
           {scene === 'mission_briefing' && <MissionControl />}
           {scene === 'dashboard' && <Dashboard />}
-        </>
+        </Suspense>
       )}
 
       {/* Scene 9: Web Development Products Store with Cashfree — lazy for 10/10 perf */}

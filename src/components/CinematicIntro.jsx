@@ -95,7 +95,7 @@ function speakAIVoice() {
   return
 }
 
-/* ─── Particle Canvas ─── */
+/* ─── Particle Canvas — LAGFREE: single glow, DPR capped, pause on hidden ─── */
 function ParticleField({ count = 120, active }) {
   const canvasRef = useRef(null)
 
@@ -107,54 +107,63 @@ function ParticleField({ count = 120, active }) {
     let particles = []
 
     const resize = () => {
-      canvas.width = window.innerWidth
-      canvas.height = window.innerHeight
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.5)
+      canvas.width = window.innerWidth * dpr
+      canvas.height = window.innerHeight * dpr
+      canvas.style.width = window.innerWidth + 'px'
+      canvas.style.height = window.innerHeight + 'px'
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
     }
     resize()
     window.addEventListener('resize', resize)
+    const onVis = () => { if (!document.hidden && !animId) animId = requestAnimationFrame(draw) }
+    document.addEventListener('visibilitychange', onVis)
 
-    const actualCount = window.innerWidth < 768 ? Math.min(count, 40) : count
+    const actualCount = window.innerWidth < 768 ? Math.min(count, 30) : Math.min(count, 80)
     particles = Array.from({ length: actualCount }, () => ({
-      x: Math.random() * canvas.width,
-      y: Math.random() * canvas.height,
-      vx: (Math.random() - 0.5) * 0.3,
-      vy: (Math.random() - 0.5) * 0.3,
-      size: Math.random() * 2 + 0.5,
+      x: Math.random() * window.innerWidth,
+      y: Math.random() * window.innerHeight,
+      vx: (Math.random() - 0.5) * 0.25,
+      vy: (Math.random() - 0.5) * 0.25,
+      size: Math.random() * 1.8 + 0.5,
       opacity: 0,
-      targetOpacity: Math.random() * 0.6 + 0.2,
+      targetOpacity: Math.random() * 0.5 + 0.2,
       hue: Math.random() > 0.5 ? 195 : 270,
     }))
 
-    const draw = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height)
+    let last = 0
+    const draw = (now = performance.now()) => {
+      if (document.hidden) { animId = null; return }
+      if (now - last < 32) { animId = requestAnimationFrame(draw); return }
+      last = now
+      ctx.clearRect(0, 0, window.innerWidth, window.innerHeight)
       particles.forEach(p => {
         if (active) {
           p.opacity += (p.targetOpacity - p.opacity) * 0.02
         }
         p.x += p.vx
         p.y += p.vy
-        if (p.x < 0) p.x = canvas.width
-        if (p.x > canvas.width) p.x = 0
-        if (p.y < 0) p.y = canvas.height
-        if (p.y > canvas.height) p.y = 0
+        if (p.x < 0) p.x = window.innerWidth
+        if (p.x > window.innerWidth) p.x = 0
+        if (p.y < 0) p.y = window.innerHeight
+        if (p.y > window.innerHeight) p.y = 0
 
         ctx.beginPath()
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2)
         ctx.fillStyle = `hsla(${p.hue}, 100%, 70%, ${p.opacity})`
         ctx.fill()
 
-        ctx.beginPath()
-        ctx.arc(p.x, p.y, p.size * 3, 0, Math.PI * 2)
-        ctx.fillStyle = `hsla(${p.hue}, 100%, 70%, ${p.opacity * 0.15})`
-        ctx.fill()
+        // LAGFREE: single glow pass removed — was double arc per particle
       })
       animId = requestAnimationFrame(draw)
     }
-    draw()
+    animId = requestAnimationFrame(draw)
 
     return () => {
-      cancelAnimationFrame(animId)
+      if (animId) cancelAnimationFrame(animId)
+      animId = null
       window.removeEventListener('resize', resize)
+      document.removeEventListener('visibilitychange', onVis)
     }
   }, [count, active])
 

@@ -75,14 +75,20 @@ export default function LiveVoiceHUD({ onNavigateSector, onTriggerScan }) {
     }
   }, [onNavigateSector, onTriggerScan])
 
-  // Waveform Visualizer Loop
+  // Waveform Visualizer — LAGFREE: only when panel open + connected, throttled 30fps
   useEffect(() => {
+    if (!isOpen) return
+    if (voiceState === 'DISCONNECTED') return
     let animId
+    let last = 0
     const canvas = canvasRef.current
     if (!canvas) return
     const ctx = canvas.getContext('2d')
 
-    const render = () => {
+    const render = (now) => {
+      if (now - last < 33) { animId = requestAnimationFrame(render); return }
+      last = now
+      if (document.hidden) { animId = requestAnimationFrame(render); return }
       const freq = liveVoiceClient.getFrequencyData()
       ctx.clearRect(0, 0, canvas.width, canvas.height)
 
@@ -115,9 +121,9 @@ export default function LiveVoiceHUD({ onNavigateSector, onTriggerScan }) {
       animId = requestAnimationFrame(render)
     }
 
-    render()
+    animId = requestAnimationFrame(render)
     return () => cancelAnimationFrame(animId)
-  }, [voiceState])
+  }, [voiceState, isOpen])
 
   const toggleConnection = async () => {
     if (voiceState === 'DISCONNECTED') {
