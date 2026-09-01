@@ -150,10 +150,10 @@ function DepartmentOrb({ dept, index, isActive, isHovered, onHover, onLeave, onS
     // Sphere pulse
     if (sphereRef.current && sphereRef.current.material) {
       const pulse = isActive
-        ? 1.8 + Math.sin(t * 3) * 0.6 + voiceEnergy * 1.5
+        ? 0.75 + Math.sin(t * 3) * 0.25 + voiceEnergy * 0.8
         : isHovered
-          ? 1.2 + Math.sin(t * 2.5) * 0.3 + voiceEnergy * 0.8
-          : 0.5 + Math.sin(t * 1.5 + index) * 0.2 + voiceEnergy * 0.4
+          ? 0.5 + Math.sin(t * 2.5) * 0.15 + voiceEnergy * 0.5
+          : 0.25 + Math.sin(t * 1.5 + index) * 0.1 + voiceEnergy * 0.2
       sphereRef.current.material.emissiveIntensity = pulse
     }
 
@@ -188,25 +188,28 @@ function DepartmentOrb({ dept, index, isActive, isHovered, onHover, onLeave, onS
         <sphereGeometry args={[sphereSize * 1.9, 12, 12]} />
         <meshBasicMaterial transparent opacity={0} depthWrite={false} depthTest={false} />
       </mesh>
-      {/* Outer glow aura — disable on low-end */}
+      {/* Outer glow aura — smooth high-subdivision spherical aura */}
       {!isLow && (
         <mesh>
-          <sphereGeometry args={[sphereSize * 1.9, 16, 16]} />
-          <meshBasicMaterial color={dept.color} transparent opacity={isActive ? 0.06 : 0.025} />
+          <sphereGeometry args={[sphereSize * 1.45, 48, 48]} />
+          <meshBasicMaterial color={dept.color} transparent opacity={isActive ? 0.035 : 0.012} />
         </mesh>
       )}
 
-      {/* Main sphere body — lower resolution if low-graphics */}
+      {/* Main sphere body — glossy spatial 3D glass */}
       <mesh ref={sphereRef} castShadow>
-        <sphereGeometry args={[sphereSize, isLow ? 16 : 48, isLow ? 16 : 48]} />
-        <meshStandardMaterial
+        <sphereGeometry args={[sphereSize, isLow ? 24 : 64, isLow ? 24 : 64]} />
+        <meshPhysicalMaterial
           color={dept.color}
           emissive={dept.emissive}
-          emissiveIntensity={0.8}
-          roughness={0.05}
-          metalness={0.15}
+          emissiveIntensity={isActive ? 0.6 : 0.2}
+          roughness={0.12}
+          metalness={0.25}
+          clearcoat={1.0}
+          clearcoatRoughness={0.08}
+          transmission={0.25}
           transparent
-          opacity={0.9}
+          opacity={0.94}
         />
       </mesh>
 
@@ -251,12 +254,12 @@ function JarvisCameraController({ activeIndex, departments, entryPhase, isZoomin
     const dept = departments[activeIndex]
     const [px, py, pz] = dept.pos
 
-    // Camera zooms in to be 3.5 units away from orb normally, or 0.35 when engaging
+    // Desktop: 5.6 units distance gives deep perspective with full orbital visibility; Mobile: 3.6
     const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768
-    const dist = isZooming ? 0.35 : (isMobile ? 3.6 : 3.5)
+    const dist = isZooming ? 0.35 : (isMobile ? 3.6 : 5.6)
     targetRef.current = {
       x: px * (isMobile ? 0.15 : 0.35),
-      y: py * 0.25 + (isMobile ? -0.2 : 0.5),
+      y: py * 0.25 + (isMobile ? -0.2 : 0.25),
       z: pz + dist,
       lx: px,
       ly: py + (isMobile ? 0.4 : 0),
@@ -597,7 +600,7 @@ export default function HQScene() {
       {/* Header */}
       <header className="nolan-hq-header">
         <div className="nolan-hq-brand">
-          <span className="nolan-brand-title">BEX SIGMA TECH</span>
+          <span className="nolan-brand-title">BEx Sigma Tech</span>
           <span className="nolan-brand-sub">ORBITAL RESEARCH HEADQUARTERS</span>
         </div>
         <div className="nolan-hq-operator">

@@ -466,47 +466,61 @@ body {
 
 /* Letterbox Top Bar */
 .nolan-hq-header {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  height: 68px;
-  z-index: 20;
+  height: 72px;
+  z-index: 50;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 42px;
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8) 0%, transparent 100%);
+  padding: 0 36px;
+  background: linear-gradient(180deg, rgba(2, 6, 16, 0.85) 0%, rgba(2, 6, 16, 0.4) 70%, transparent 100%);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   pointer-events: none;
 }
 
 .nolan-hq-brand {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 3px;
+  pointer-events: auto;
 }
 
 .nolan-brand-title {
   font-family: 'Orbitron', sans-serif;
-  font-size: 0.82rem;
-  font-weight: 700;
-  letter-spacing: 0.35em;
+  font-size: 0.88rem;
+  font-weight: 800;
+  letter-spacing: 0.25em;
   color: #fff;
+  text-shadow: 0 0 16px rgba(0, 212, 255, 0.4);
 }
 
 .nolan-brand-sub {
-  font-size: 0.62rem;
-  letter-spacing: 0.28em;
-  color: rgba(255, 255, 255, 0.55);
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.52rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  color: rgba(0, 212, 255, 0.7);
 }
 
 .nolan-hq-operator {
   display: flex;
   align-items: center;
   gap: 12px;
-  font-size: 0.68rem;
-  letter-spacing: 0.22em;
-  color: rgba(255, 255, 255, 0.85);
+  font-family: 'Orbitron', monospace;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  color: rgba(255, 255, 255, 0.9);
+  background: rgba(6, 14, 30, 0.75);
+  border: 1px solid rgba(0, 212, 255, 0.25);
+  border-radius: 999px;
+  padding: 6px 16px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.6), 0 0 15px rgba(0, 212, 255, 0.12);
+  pointer-events: auto;
 }
 
 .nolan-status-dot {
@@ -518,10 +532,12 @@ body {
 }
 
 .nolan-sector-badge {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  padding: 4px 10px;
-  border-radius: 4px;
+  background: rgba(0, 212, 255, 0.15);
+  border: 1px solid rgba(0, 212, 255, 0.4);
+  color: #00d4ff;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-weight: 800;
 }
 
 /* Department HUD overlay panel */
@@ -1917,45 +1933,54 @@ body {
 
 /* ─── Cyber HUD Floating Capsule Pattern (Dynamic Island Dock) ─── */
 .jarvis-capsule-pattern {
+  position: fixed !important;
+  bottom: 32px !important;
+  left: 36px !important;
+  top: auto !important;
+  right: auto !important;
+  z-index: 60 !important;
   display: flex !important;
   align-items: center !important;
   gap: 12px !important;
-  background: linear-gradient(135deg, rgba(6, 14, 30, 0.6) 0%, rgba(2, 6, 16, 0.75) 100%) !important;
-  border: 1px solid rgba(255, 255, 255, 0.12) !important;
-  border-top-color: var(--dept-color, #00d4ff) !important;
+  min-width: 360px !important;
+  max-width: 480px !important;
+  background: linear-gradient(135deg, rgba(8, 16, 32, 0.90) 0%, rgba(3, 8, 18, 0.95) 100%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  border-top: 2px solid var(--dept-color, #00d4ff) !important;
   border-radius: 20px !important;
-  padding: 10px 14px !important;
+  padding: 11px 16px !important;
   backdrop-filter: blur(24px) !important;
   -webkit-backdrop-filter: blur(24px) !important;
-  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6), 0 0 20px rgba(0, 212, 255, 0.08) !important;
-  position: relative !important;
+  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.8), 0 0 25px rgba(0, 212, 255, 0.12) !important;
   pointer-events: auto !important;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
 .jarvis-capsule-nav-btn {
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: rgba(255, 255, 255, 0.7);
-  width: 26px;
-  height: 26px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.8);
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.1rem;
+  font-size: 1.15rem;
   line-height: 1;
   cursor: pointer;
   flex-shrink: 0;
   transition: all 0.2s ease;
   padding: 0;
+  outline: none;
 }
 
 .jarvis-capsule-nav-btn:hover {
-  background: rgba(0, 212, 255, 0.2);
+  background: rgba(0, 212, 255, 0.25);
   border-color: #00d4ff;
   color: #fff;
   transform: scale(1.1);
+  box-shadow: 0 0 12px rgba(0, 212, 255, 0.4);
 }
 
 .jarvis-capsule-orb-wrap {
@@ -2001,7 +2026,7 @@ body {
 .jarvis-capsule-eyebrow {
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 6px;
   font-family: 'Orbitron', monospace;
   font-size: 0.54rem;
   font-weight: 800;
@@ -2010,32 +2035,32 @@ body {
 }
 
 .jarvis-capsule-status-dot {
-  width: 4px;
-  height: 4px;
+  width: 5px;
+  height: 5px;
   border-radius: 50%;
   animation: pulse 1.2s infinite;
 }
 
 .jarvis-capsule-protocol {
-  color: rgba(255, 255, 255, 0.45);
+  color: rgba(255, 255, 255, 0.5);
   font-size: 0.48rem;
 }
 
 .jarvis-capsule-title {
   font-family: 'Orbitron', monospace;
-  font-size: 0.94rem;
+  font-size: 0.96rem;
   font-weight: 800;
   margin: 0;
   line-height: 1.2;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.03em;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .jarvis-capsule-subtitle {
-  font-size: 0.60rem;
-  color: rgba(255, 255, 255, 0.65);
+  font-size: 0.62rem;
+  color: rgba(255, 255, 255, 0.7);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -2046,69 +2071,78 @@ body {
 .jarvis-capsule-engage-btn {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
+  gap: 6px;
   color: #000;
   font-family: 'Orbitron', monospace;
-  font-size: 0.66rem;
+  font-size: 0.68rem;
   font-weight: 900;
-  letter-spacing: 0.08em;
-  padding: 7px 13px;
+  letter-spacing: 0.1em;
+  padding: 8px 16px;
   border-radius: 20px;
   border: none;
   cursor: pointer;
   flex-shrink: 0;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  outline: none;
 }
 
 .jarvis-capsule-engage-btn:hover {
-  transform: translateY(-2px) scale(1.04);
-  filter: brightness(1.15);
-  box-shadow: 0 6px 20px rgba(0, 212, 255, 0.4);
+  transform: translateY(-2px) scale(1.05);
+  filter: brightness(1.18);
+  box-shadow: 0 6px 22px rgba(0, 212, 255, 0.5);
 }
 
 .jarvis-capsule-btn-arrow {
   font-size: 0.72rem;
 }
 
-.jarvis-minimap-num {
-  font-family: 'Orbitron', monospace;
-  font-size: 0.54rem;
-  font-weight: 700;
-  color: rgba(255, 255, 255, 0.5);
-  display: none;
-}
-
 /* ─── Orb Mini-Map — right sidebar ─── */
 .jarvis-orb-minimap {
-  position: absolute;
-  top: 50%;
-  right: 32px;
-  transform: translateY(-50%);
-  z-index: 20;
-  display: flex;
-  flex-direction: column;
-  gap: 7px;
-  background: rgba(4, 8, 18, 0.72);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 12px;
-  padding: 14px 18px;
-  pointer-events: auto;
+  position: fixed !important;
+  top: 50% !important;
+  right: 32px !important;
+  transform: translateY(-50%) !important;
+  z-index: 60 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 8px !important;
+  background: rgba(4, 10, 24, 0.85) !important;
+  backdrop-filter: blur(24px) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
+  border: 1px solid rgba(0, 212, 255, 0.22) !important;
+  border-radius: 16px !important;
+  padding: 14px 16px !important;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.8), 0 0 25px rgba(0, 212, 255, 0.1) !important;
+  pointer-events: auto !important;
 }
 
 .jarvis-minimap-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  opacity: 0.4;
-  transition: all 0.25s ease;
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  background: rgba(255, 255, 255, 0.04) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 8px !important;
+  padding: 8px 14px !important;
+  cursor: pointer !important;
+  color: #ffffff !important;
+  font-family: 'Rajdhani', sans-serif !important;
+  font-weight: 600 !important;
+  font-size: 0.80rem !important;
+  letter-spacing: 0.06em !important;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  outline: none !important;
+  opacity: 0.65;
 }
 
 .jarvis-minimap-item:hover,
 .jarvis-minimap-item.active {
-  opacity: 1;
+  background: rgba(0, 212, 255, 0.15) !important;
+  border-color: rgba(0, 212, 255, 0.5) !important;
+  box-shadow: 0 0 16px rgba(0, 212, 255, 0.25) !important;
+  transform: translateX(-3px) !important;
+  opacity: 1 !important;
 }
 
 .jarvis-minimap-dot {
@@ -2119,32 +2153,41 @@ body {
   transition: all 0.35s ease;
 }
 
+.jarvis-minimap-num {
+  display: inline-block !important;
+  font-family: 'Orbitron', monospace !important;
+  font-size: 0.60rem !important;
+  font-weight: 700 !important;
+  color: rgba(0, 212, 255, 0.8) !important;
+}
+
 .jarvis-minimap-label {
-  font-size: 0.68rem;
-  font-weight: 500;
-  letter-spacing: 0.06em;
-  color: rgba(255, 255, 255, 0.88);
-  white-space: nowrap;
+  font-size: 0.78rem !important;
+  font-weight: 600 !important;
+  color: rgba(255, 255, 255, 0.95) !important;
+  white-space: nowrap !important;
 }
 
 /* ─── Scroll Hint ─── */
 .jarvis-scroll-hint {
-  position: absolute;
-  bottom: 18px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 20;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  pointer-events: none;
+  position: fixed !important;
+  bottom: 22px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  z-index: 50 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 6px !important;
+  pointer-events: none !important;
 }
 
 .jarvis-scroll-hint span {
-  font-size: 0.6rem;
-  letter-spacing: 0.32em;
-  color: rgba(255, 255, 255, 0.35);
+  font-size: 0.60rem !important;
+  font-family: 'Orbitron', sans-serif !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.28em !important;
+  color: rgba(255, 255, 255, 0.55) !important;
 }
 
 /* ─── HQ Bottom Dock Container (Desktop: unwrapped) ─── */
