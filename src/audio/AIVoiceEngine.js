@@ -228,7 +228,7 @@ class VoicePlayer {
     this.preferredVoice = voices[0]
   }
 
-  play(text, { pitch = 0.82, rate = 0.88, volume = 1.0, onStart, onEnd, onError } = {}) {
+  play(text, { pitch = 0.78, rate = 0.88, volume = 1.0, onStart, onEnd, onError } = {}) {
     if (!this.isSupported || !this.synth) {
       if (onStart) onStart()
       if (onEnd) onEnd()
@@ -236,11 +236,22 @@ class VoicePlayer {
     }
     try {
       if (this.synth.speaking) this.synth.cancel()
+
+      // Dynamically re-check and select the best male voice if not set
+      if (!this.preferredVoice) {
+        const currentVoices = this.synth.getVoices()
+        if (currentVoices && currentVoices.length > 0) {
+          this._selectBestVoice(currentVoices)
+        }
+      }
+
       const utter = new SpeechSynthesisUtterance(text)
+      if (this.preferredVoice) {
+        utter.voice = this.preferredVoice
+      }
       utter.pitch = pitch
       utter.rate = rate
       utter.volume = volume
-      if (this.preferredVoice) utter.voice = this.preferredVoice
       utter.onstart = () => { if (onStart) onStart() }
       utter.onend = () => { if (onEnd) onEnd() }
       utter.onerror = (e) => { if (onError) onError(e); else if (onEnd) onEnd() }
@@ -454,6 +465,35 @@ class VoiceManager {
   speakCustomText(text) {
     if (!text) return
     this.queue.add('CUSTOM_SPEECH', { priority: 3, cooldown: 0 }, text)
+  }
+
+  speak(text, onEnd) {
+    if (!text) {
+      if (onEnd) onEnd()
+      return
+    }
+    this.queue.clear()
+    this.player.play(text, {
+      pitch: 0.78,
+      rate: 0.90,
+      onStart: () => {
+        cinemaAudio.setAmbientVolume(0.10, 0.4)
+        cinemaAudio.playRadioSquelchIn()
+        cinemaAudio.startRadioTransmissionHum()
+      },
+      onEnd: () => {
+        cinemaAudio.stopRadioTransmissionHum()
+        cinemaAudio.playRadioSquelchOut()
+        cinemaAudio.setAmbientVolume(0.3, 0.8)
+        if (onEnd) onEnd()
+      },
+      onError: () => {
+        cinemaAudio.stopRadioTransmissionHum()
+        cinemaAudio.playRadioSquelchOut()
+        cinemaAudio.setAmbientVolume(0.3, 0.8)
+        if (onEnd) onEnd()
+      }
+    })
   }
 
   startSpeechRecognition(onResult, onError, onEnd) {
