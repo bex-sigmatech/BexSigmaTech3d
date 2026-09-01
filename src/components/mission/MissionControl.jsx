@@ -322,13 +322,6 @@ export default function MissionControl() {
                     <h2 className="mc-ceo-name">Hariharan.D</h2>
                     <p className="mc-ceo-tagline">Visionary Architect & Full-Stack Pioneer · BEX Sigma Tech</p>
 
-                    {/* Specialization Pills */}
-                    <div className="mc-ceo-skills-row">
-                      <span className="mc-ceo-skill-pill">⚡ 3D Spatial Engines</span>
-                      <span className="mc-ceo-skill-pill">🧠 Autonomous AI</span>
-                      <span className="mc-ceo-skill-pill">🛡️ Core Architecture</span>
-                    </div>
-
                     {/* Direct Contact Action Button */}
                     <div className="mc-ceo-action-row">
                       <a
@@ -342,22 +335,29 @@ export default function MissionControl() {
                       </a>
                     </div>
                   </div>
-
-                  {/* 3-Segment KPI Metrics */}
-                  {article.stats && (
-                    <div className="mc-stats-grid mc-ceo-stats">
-                      {article.stats.map((s, i) => (
-                        <div key={i} className="mc-stat-item">
-                          <div className="mc-stat-item-bar" />
-                          <div className="mc-stat-item-val">
-                            <AnimatedCounter value={s.value} duration={1200 + i * 200} />
-                          </div>
-                          <div className="mc-stat-item-lbl">{s.label}</div>
-                        </div>
-                      ))}
-                    </div>
-                  )}
                 </div>
+
+                {/* Specialization Pills — Full Width Row */}
+                <div className="mc-ceo-skills-row">
+                  <span className="mc-ceo-skill-pill">⚡ 3D Spatial Engines</span>
+                  <span className="mc-ceo-skill-pill">🧠 Autonomous AI</span>
+                  <span className="mc-ceo-skill-pill">🛡️ Core Architecture</span>
+                </div>
+
+                {/* 3-Segment KPI Metrics — Full Width Grid */}
+                {article.stats && (
+                  <div className="mc-stats-grid mc-ceo-stats">
+                    {article.stats.map((s, i) => (
+                      <div key={i} className="mc-stat-item">
+                        <div className="mc-stat-item-bar" />
+                        <div className="mc-stat-item-val">
+                          <AnimatedCounter value={s.value} duration={1200 + i * 200} />
+                        </div>
+                        <div className="mc-stat-item-lbl">{s.label}</div>
+                      </div>
+                    ))}
+                  </div>
+                )}
 
                 {/* Holographic Manifesto Transmission */}
                 <div className="mc-ceo-quote">
