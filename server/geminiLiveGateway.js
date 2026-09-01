@@ -92,7 +92,7 @@ function setupGeminiLiveGateway(server) {
           const dynamicInstruction = buildSystemInstruction(clientContext)
           const setupMessage = {
             setup: {
-              model: 'models/gemini-2.0-flash-exp',
+              model: 'models/gemini-2.5-flash-native-audio-latest',
               generationConfig: {
                 responseModalities: ['AUDIO'],
                 temperature: 0.6,
@@ -112,7 +112,7 @@ function setupGeminiLiveGateway(server) {
           }
 
           upstreamWs.send(JSON.stringify(setupMessage))
-          clientWs.send(JSON.stringify({ type: 'STATUS', status: 'CONNECTED', model: 'Gemini 2.0 Live' }))
+          clientWs.send(JSON.stringify({ type: 'STATUS', status: 'CONNECTED', model: 'Gemini 2.5 Live' }))
         })
 
         upstreamWs.on('message', (data) => {
@@ -231,12 +231,10 @@ function setupGeminiLiveGateway(server) {
           if (upstreamWs && upstreamWs.readyState === WebSocket.OPEN) {
             upstreamWs.send(JSON.stringify({
               realtimeInput: {
-                mediaChunks: [
-                  {
-                    mimeType: 'audio/pcm;rate=16000',
-                    data: payload.audioData
-                  }
-                ]
+                audio: {
+                  mimeType: 'audio/pcm;rate=16000',
+                  data: payload.audioData
+                }
               }
             }))
           }
