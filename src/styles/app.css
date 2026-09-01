@@ -9223,9 +9223,49 @@ body {
   animation: mcAudioPulse 1.5s infinite;
 }
 
-@keyframes mcAudioPulse {
-  0%, 100% { box-shadow: 0 0 10px rgba(244,63,94,0.4); }
-  50% { box-shadow: 0 0 25px rgba(244,63,94,0.8); }
+/* ==========================================================================
+   LIVE VOICE COMMAND HUD — DESKTOP BASE & GLOBAL HOVER EFFECTS
+   ========================================================================== */
+.live-voice-hud-wrap {
+  position: fixed !important;
+  bottom: 28px !important;
+  right: 32px !important;
+  z-index: 99999 !important;
+  display: flex !important;
+  align-items: center !important;
+  pointer-events: auto !important;
+}
+
+.live-voice-hud-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  padding: 11px 22px !important;
+  font-family: 'Orbitron', -apple-system, sans-serif !important;
+  font-size: 0.74rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+  cursor: pointer !important;
+  outline: none !important;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  user-select: none !important;
+}
+
+.live-voice-hud-btn:hover {
+  transform: translateY(-2px) scale(1.04) !important;
+  box-shadow: 0 0 30px rgba(0, 212, 255, 0.6), inset 0 0 15px rgba(0, 212, 255, 0.4) !important;
+}
+
+.live-voice-matrix-panel {
+  position: fixed !important;
+  bottom: 88px !important;
+  right: 32px !important;
+  width: 360px !important;
+  max-width: calc(100vw - 40px) !important;
+  z-index: 99998 !important;
 }
 
 /* Mission Control styles modularized in src/styles/missionControl.css */
