@@ -676,24 +676,24 @@ export default function AICore() {
                 </span>
               </div>
 
-              {/* AI Transmission Block — spelling corrected */}
+              {/* AI Transmission Block — clean typography */}
               <div className="id-dialogue-block cl-dialogue">
                 {scene !== 'ai_response' ? (
                   <>
                     <p className="cl-dialogue-main">
-                      "<TypewriterText text="BEX SIGMA TECH · AEROSPACE AI INFRASTRUCTURE" speed={35} />"
+                      <TypewriterText text="BEX SIGMA TECH · AEROSPACE AI INFRASTRUCTURE" speed={35} />
                     </p>
                     <p className="cl-dialogue-sub">
-                      "<TypewriterText text="Operator authorisation required. Please synchronise your unique callsign to proceed." speed={20} />"
+                      <TypewriterText text="Operator authorisation required. Please synchronise your unique callsign to proceed." speed={20} />
                     </p>
                   </>
                 ) : (
                   <>
                     <p className="cl-dialogue-main cl-granted">
-                      "<TypewriterText text={`Welcome, ${userName ? userName.charAt(0).toUpperCase() + userName.slice(1) : 'Operator'}.`} speed={35} />"
+                      <TypewriterText text={`Welcome, ${userName ? userName.charAt(0).toUpperCase() + userName.slice(1) : 'Operator'}.`} speed={35} />
                     </p>
                     <p className="cl-dialogue-sub">
-                      "<TypewriterText text="Operator credentials verified. Synchronising observatory database..." speed={20} />"
+                      <TypewriterText text="Operator credentials verified. Synchronising observatory database..." speed={20} />
                     </p>
                   </>
                 )}
@@ -720,7 +720,11 @@ export default function AICore() {
                       title="Speak via Microphone"
                       aria-label={isListening ? 'Listening for voice' : 'Speak callsign via microphone'}
                     >
-                      🎙️
+                      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="cl-mic-svg">
+                        <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z" />
+                        <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+                        <line x1="12" y1="19" x2="12" y2="22" />
+                      </svg>
                     </button>
                   </div>
                   <button type="submit" className="cl-sync-btn interactive" aria-label="Sync credentials and enter station">
