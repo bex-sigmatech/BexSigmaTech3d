@@ -8781,6 +8781,37 @@ body {
     text-shadow: 0 0 6px rgba(34, 211, 238, 0.35);
   }
 
+  /* ── LIVE VOICE HUD (Mobile: floats safely above bottom dock) ── */
+  .live-voice-hud-wrap {
+    position: fixed !important;
+    bottom: calc(134px + env(safe-area-inset-bottom)) !important;
+    right: 14px !important;
+    left: auto !important;
+    top: auto !important;
+    z-index: 9999 !important;
+  }
+
+  .live-voice-hud-btn {
+    padding: 7px 13px !important;
+    font-size: 0.64rem !important;
+    letter-spacing: 0.08em !important;
+    gap: 7px !important;
+    border-radius: 999px !important;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.7), 0 0 16px rgba(0, 212, 255, 0.35) !important;
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
+  }
+
+  .live-voice-matrix-panel {
+    position: fixed !important;
+    bottom: calc(180px + env(safe-area-inset-bottom)) !important;
+    right: 14px !important;
+    left: 14px !important;
+    width: auto !important;
+    max-width: 380px !important;
+    margin: 0 auto !important;
+  }
+
   /* HQ mobile dock: horizontal pill, thumb-zone */
   .hq-bottom-dock {
     position: fixed !important;
@@ -8791,23 +8822,68 @@ body {
     transform: none !important;
     display: flex !important;
     flex-direction: column !important;
-    gap: 10px !important;
+    gap: 8px !important;
     z-index: 25 !important;
+    pointer-events: none !important;
   }
   .jarvis-orb-minimap {
     flex-direction: row !important;
     overflow-x: auto;
     scrollbar-width: none;
     gap: 8px !important;
-    padding: 10px 12px !important;
+    padding: 8px 12px !important;
     border-radius: 999px !important;
+    pointer-events: auto !important;
   }
   .jarvis-orb-minimap::-webkit-scrollbar { display: none; }
   .jarvis-minimap-item { flex-shrink: 0; }
   .jarvis-dept-panel {
-    border-radius: 14px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 8px !important;
+    width: 100% !important;
+    border-radius: 16px !important;
     padding: 8px 12px !important;
-    background: rgba(6, 12, 24, 0.88) !important;
+    background: linear-gradient(135deg, rgba(6, 14, 30, 0.88) 0%, rgba(2, 6, 16, 0.94) 100%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.14) !important;
+    border-top: 1.5px solid var(--dept-color, #00d4ff) !important;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.85), 0 0 20px rgba(0, 212, 255, 0.1) !important;
+    pointer-events: auto !important;
+    box-sizing: border-box !important;
+  }
+
+  .jarvis-capsule-info {
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 1px !important;
+  }
+
+  .jarvis-capsule-title {
+    font-size: clamp(0.78rem, 2.6vw, 0.92rem) !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  .jarvis-capsule-subtitle {
+    font-size: clamp(0.52rem, 1.6vw, 0.6rem) !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    color: rgba(203, 213, 225, 0.75) !important;
+  }
+
+  .jarvis-capsule-engage-btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+    padding: 6px 12px !important;
+    font-size: 0.62rem !important;
+    border-radius: 999px !important;
+    flex-shrink: 0 !important;
   }
   /* Store mobile: thumb-friendly */
   .webdev-slider-viewport { height: 440px !important; }

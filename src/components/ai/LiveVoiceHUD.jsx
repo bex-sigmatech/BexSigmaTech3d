@@ -130,19 +130,10 @@ export default function LiveVoiceHUD({ onNavigateSector, onTriggerScan }) {
 
   return (
     <>
-      {/* Floating Orbital Voice Toggle Button (Always visible on bottom right) */}
-      <div
-        style={{
-          position: 'fixed',
-          bottom: '28px',
-          right: '28px',
-          zIndex: 9999,
-          display: 'flex',
-          alignItems: 'center',
-          gap: '12px',
-        }}
-      >
+      {/* Floating Orbital Voice Toggle Button */}
+      <div className="live-voice-hud-wrap">
         <button
+          className="live-voice-hud-btn"
           aria-label={voiceState !== 'DISCONNECTED' ? 'Close Sigma voice panel, live comms active' : 'Open and connect to Sigma voice assistant'}
           aria-pressed={isOpen}
           onClick={() => {
@@ -163,31 +154,26 @@ export default function LiveVoiceHUD({ onNavigateSector, onTriggerScan }) {
               ? '0 0 25px rgba(0, 212, 255, 0.5), inset 0 0 15px rgba(0, 212, 255, 0.3)'
               : '0 4px 20px rgba(0, 0, 0, 0.6)',
             borderRadius: '50px',
-            padding: '12px 20px',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '10px',
-            cursor: 'pointer',
-            fontWeight: 700,
-            fontSize: '13px',
-            letterSpacing: '1px',
-            backdropFilter: 'blur(12px)',
-            transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
             transform: isOpen ? 'scale(1.05)' : 'scale(1)',
           }}
         >
           <span
             aria-hidden="true"
+            className="live-voice-status-dot"
             style={{
-              width: '10px',
-              height: '10px',
+              width: '8px',
+              height: '8px',
               borderRadius: '50%',
               backgroundColor: voiceState === 'SPEAKING' ? '#38bdf8' : voiceState === 'LISTENING' ? '#10b981' : '#64748b',
               boxShadow: voiceState !== 'DISCONNECTED' ? '0 0 10px currentColor' : 'none',
               animation: voiceState !== 'DISCONNECTED' ? 'pulse 1.5s infinite' : 'none',
             }}
           />
-          <FaBroadcastTower aria-hidden="true" style={{ fontSize: '15px' }} />
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z" />
+            <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+            <line x1="12" y1="19" x2="12" y2="22" />
+          </svg>
           <span>{voiceState !== 'DISCONNECTED' ? 'LIVE COMS ACTIVE' : 'TALK TO SIGMA'}</span>
         </button>
       </div>
@@ -195,11 +181,8 @@ export default function LiveVoiceHUD({ onNavigateSector, onTriggerScan }) {
       {/* Expanded Cyberpunk Voice Matrix Panel */}
       {isOpen && (
         <div
+          className="live-voice-matrix-panel"
           style={{
-            position: 'fixed',
-            bottom: '88px',
-            right: '28px',
-            width: '360px',
             background: 'linear-gradient(180deg, rgba(8, 14, 26, 0.95), rgba(4, 8, 15, 0.98))',
             border: '1px solid rgba(0, 212, 255, 0.4)',
             borderRadius: '16px',

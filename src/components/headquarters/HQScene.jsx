@@ -252,13 +252,14 @@ function JarvisCameraController({ activeIndex, departments, entryPhase, isZoomin
     const [px, py, pz] = dept.pos
 
     // Camera zooms in to be 3.5 units away from orb normally, or 0.35 when engaging
-    const dist = isZooming ? 0.35 : 3.5
+    const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768
+    const dist = isZooming ? 0.35 : (isMobile ? 3.6 : 3.5)
     targetRef.current = {
-      x: px * 0.35,
-      y: py * 0.25 + 0.5,
+      x: px * (isMobile ? 0.15 : 0.35),
+      y: py * 0.25 + (isMobile ? -0.2 : 0.5),
       z: pz + dist,
       lx: px,
-      ly: py,
+      ly: py + (isMobile ? 0.4 : 0),
       lz: pz,
     }
   }, [activeIndex, departments, isZooming])
@@ -455,10 +456,10 @@ export default function HQScene() {
   }, [handleEngage])
 
 
-  // Cinematic entry — camera flies in from far
+  // Cinematic entry — camera flies in from far smoothly
   useEffect(() => {
     let start = null
-    const duration = 2800
+    const duration = 1200
     const tick = (now) => {
       if (!start) start = now
       const progress = Math.min((now - start) / duration, 1)
@@ -609,7 +610,7 @@ export default function HQScene() {
       {/* ── 3D JARVIS ORBS CANVAS ── */}
       <div className="hq-3d-canvas-wrapper">
         <Canvas
-          camera={{ position: [0, 0, 20], fov: 55 }}
+          camera={{ position: [0, 0.5, 14], fov: 55 }}
           gl={{ antialias: graphicsQuality !== 'low', alpha: true, powerPreference: 'high-performance' }}
           dpr={graphicsQuality === 'low' ? [1, 1.25] : [1, 1.5]}
           performance={{ min: 0.5 }}
