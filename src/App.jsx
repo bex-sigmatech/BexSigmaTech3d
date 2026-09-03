@@ -58,12 +58,24 @@ export default function App() {
         </Suspense>
       )}
 
-      {/* Scene 6,7,8: HQ Jarvis orbs, briefings and analytics — lazy */}
-      {(scene === 'headquarters' || scene === 'mission_briefing' || scene === 'dashboard') && (
+      {/* Scene 6: HQ Jarvis 3D Planetary Systems — lazy */}
+      {scene === 'headquarters' && (
         <Suspense fallback={<div style={{ display:'flex', alignItems:'center', justifyContent:'center', height:'100vh', background:'#020812', color:'#00d4ff', fontFamily:'Orbitron' }}>LOADING ORBITAL SYSTEMS...</div>}>
           <HQScene />
-          {scene === 'mission_briefing' && <MissionControl />}
-          {scene === 'dashboard' && <Dashboard />}
+        </Suspense>
+      )}
+
+      {/* Scene 7: Mission Control Center & Capability Matrix — lazy */}
+      {scene === 'mission_briefing' && (
+        <Suspense fallback={<div style={{ display:'flex', alignItems:'center', justifyContent:'center', height:'100vh', background:'#020812', color:'#00d4ff', fontFamily:'Orbitron' }}>INITIALIZING MISSION CONTROL...</div>}>
+          <MissionControl />
+        </Suspense>
+      )}
+
+      {/* Scene 8: Sigma Core Analytics Dashboard — lazy */}
+      {scene === 'dashboard' && (
+        <Suspense fallback={<div style={{ display:'flex', alignItems:'center', justifyContent:'center', height:'100vh', background:'#020812', color:'#00d4ff', fontFamily:'Orbitron' }}>LOADING COMMAND METRICS...</div>}>
+          <Dashboard />
         </Suspense>
       )}
 

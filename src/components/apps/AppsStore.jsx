@@ -124,7 +124,7 @@ export default function AppsStore() {
     setInquirySent(true)
     const mailSubject = encodeURIComponent(`Custom App Build Inquiry: ${customAppPlatform}`)
     const mailBody = encodeURIComponent(
-      `Hi Hariharan,\n\nI want to build a custom application with BEx Sigma Tech.\n\n` +
+      `Hi BEx Sigma Tech Team,\n\nI want to build a custom application with BEx Sigma Tech.\n\n` +
       `Platform: ${customAppPlatform}\n` +
       `Target Scale & Timeline: ${customAppScale}\n` +
       `User Email: ${customAppEmail}\n\n` +
@@ -384,7 +384,7 @@ export default function AppsStore() {
           <div className="apps-inquiry-box">
             <h3 className="apps-inquiry-title">Start Your App Development Sprint</h3>
             <p className="apps-inquiry-desc">
-              Select your specifications below to connect directly with Founder & CEO Hariharan.D for architecture planning and an instant delivery estimate.
+              Select your specifications below to connect directly with BEx Sigma Tech for architecture planning and an instant delivery estimate.
             </p>
 
             <form onSubmit={handleInquirySubmit} className="apps-inquiry-form">
@@ -399,51 +399,52 @@ export default function AppsStore() {
                     <option>Cross-Platform (iOS & Android)</option>
                     <option>iOS Native (Swift / SwiftUI)</option>
                     <option>Android Native (Kotlin / Jetpack)</option>
-                    <option>Full Ecosystem (Mobile + Desktop + Web PWA)</option>
+                    <option>Progressive Web App (PWA)</option>
+                    <option>Enterprise Cloud Backend + API</option>
                   </select>
                 </div>
 
                 <div className="apps-form-group">
-                  <label>DEVELOPMENT SCALE & TIMELINE</label>
+                  <label>TARGET SCALE & TIMELINE</label>
                   <select
                     value={customAppScale}
                     onChange={(e) => setCustomAppScale(e.target.value)}
                     className="apps-select interactive"
                   >
-                    <option>Mark I Rapid MVP (2 Weeks Sprint)</option>
-                    <option>Mark II Commercial App (4 - 6 Weeks)</option>
-                    <option>Mark III Enterprise Platform (Dedicated Pod)</option>
+                    <option>Sprint MVP (1-2 Weeks · ₹30,000 - ₹50,000)</option>
+                    <option>Production App (2-4 Weeks · ₹50,000 - ₹1,20,000)</option>
+                    <option>Custom Enterprise Ecosystem (Dedicated Engineering)</option>
                   </select>
                 </div>
               </div>
 
-              <div className="apps-form-group" style={{ marginTop: 12 }}>
-                <label>YOUR EMAIL / CONTACT DETAILS</label>
+              <div className="apps-form-group full-width">
+                <label>YOUR CONTACT EMAIL</label>
                 <input
                   type="email"
-                  required
-                  placeholder="e.g. founder@company.com or WhatsApp number"
+                  placeholder="founder@company.com"
                   value={customAppEmail}
                   onChange={(e) => setCustomAppEmail(e.target.value)}
+                  required
                   className="apps-input interactive"
                 />
               </div>
 
-              <div className="apps-form-group" style={{ marginTop: 12 }}>
-                <label>DESCRIBE YOUR APP CONCEPT OR REQUIRED FEATURES</label>
+              <div className="apps-form-group full-width">
+                <label>DESCRIBE YOUR APP CONCEPT & CORE FEATURES</label>
                 <textarea
                   rows={3}
-                  required
-                  placeholder="Tell us what you want to build (e.g. e-commerce mobile app, AI fitness coach, booking tool, custom CRM)..."
+                  placeholder="e.g. An AI-powered productivity workspace with real-time sync, auth, and automated billing..."
                   value={customAppDesc}
                   onChange={(e) => setCustomAppDesc(e.target.value)}
+                  required
                   className="apps-textarea interactive"
                 />
               </div>
 
               <div className="apps-form-submit-row">
                 <button type="submit" className="apps-submit-btn interactive">
-                  ⚡ TRANSMIT APP BLUEPRINT TO CEO
+                  ⚡ TRANSMIT APP BLUEPRINT TO BEX SIGMA TECH
                 </button>
                 <a
                   href="mailto:bexsigmatech@gmail.com?subject=Direct%20App%20Development%20Inquiry"
@@ -455,7 +456,7 @@ export default function AppsStore() {
 
               {inquirySent && (
                 <div className="apps-success-banner">
-                  ✓ Transmission Prepared! Opening your email client to send directly to Hariharan.D.
+                  ✓ Transmission Prepared! Opening your email client to send directly to BEx Sigma Tech.
                 </div>
               )}
             </form>
@@ -555,7 +556,7 @@ export default function AppsStore() {
                     <span>Production Architecture · Custom Deployment & White-Label Available</span>
                   </div>
                   <a
-                    href={`mailto:bexsigmatech@gmail.com?subject=${encodeURIComponent(`Inquiry Regarding ${selectedAppModal.name} Platform`)}&body=${encodeURIComponent(`Hi Hariharan,\n\nI am interested in the ${selectedAppModal.name} platform and custom application engineering with BEx Sigma Tech.\n\nLooking forward to connecting!`)}`}
+                    href={`mailto:bexsigmatech@gmail.com?subject=${encodeURIComponent(`Inquiry Regarding ${selectedAppModal.name} Platform`)}&body=${encodeURIComponent(`Hi BEx Sigma Tech Team,\n\nI am interested in the ${selectedAppModal.name} platform and custom application engineering with BEx Sigma Tech.\n\nLooking forward to connecting!`)}`}
                     className="apps-modal-inquire-btn interactive"
                   >
                     ✉ INQUIRE ABOUT THIS PLATFORM →

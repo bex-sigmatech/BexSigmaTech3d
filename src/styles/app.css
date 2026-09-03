@@ -457,6 +457,16 @@ body {
   z-index: 1;
 }
 
+.hq-fullscreen-container {
+  position: absolute;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  z-index: 10;
+}
+
 .hq-3d-canvas-wrapper {
   position: absolute;
   inset: 0;

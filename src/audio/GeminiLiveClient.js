@@ -11,6 +11,9 @@ import { cinemaAudio } from './CinematicAudioEngine'
    - 10/10 collapse: Live and pre-recorded never speak together (mutual exclusion)
    ========================================================================== */
 
+const _STATIC_EMPTY_FREQ = new Uint8Array(32)
+let _staticFreqBuffer = null
+
 class GeminiLiveClient {
   constructor() {
     this.ws = null
@@ -342,12 +345,14 @@ class GeminiLiveClient {
     }))
   }
 
-  // 3D Audio Visualizer Frequency Spectrum Hook
+  // 3D Audio Visualizer Frequency Spectrum Hook — ZERO GC ALLOCATION
   getFrequencyData() {
-    if (!this.analyser) return new Uint8Array(32)
-    const data = new Uint8Array(this.analyser.frequencyBinCount)
-    this.analyser.getByteFrequencyData(data)
-    return data
+    if (!this.analyser) return _STATIC_EMPTY_FREQ
+    if (!_staticFreqBuffer || _staticFreqBuffer.length !== this.analyser.frequencyBinCount) {
+      _staticFreqBuffer = new Uint8Array(this.analyser.frequencyBinCount)
+    }
+    this.analyser.getByteFrequencyData(_staticFreqBuffer)
+    return _staticFreqBuffer
   }
 
   // Utility: ArrayBuffer to Base64

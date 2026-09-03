@@ -1,7 +1,6 @@
 import React, { useRef, useMemo } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { OrbitControls, Float, Environment } from '@react-three/drei'
-import { EffectComposer, Bloom, Vignette } from '@react-three/postprocessing'
 import * as THREE from 'three'
 
 /* ==========================================================================
@@ -866,17 +865,6 @@ export default function MissionHoloModel({
           )}
           <UnibeamDischarge active={scanTrigger} color={theme.accent} />
         </Float>
-
-        {/* ─── POST-PROCESSING: Bloom for glowing eyes ─── */}
-        <EffectComposer>
-          <Bloom
-            luminanceThreshold={0.9}
-            luminanceSmoothing={0.4}
-            intensity={1.8}
-            mipmapBlur
-          />
-          <Vignette offset={0.3} darkness={0.65} />
-        </EffectComposer>
       </Canvas>
     </div>
   )

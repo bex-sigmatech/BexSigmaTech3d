@@ -15,10 +15,35 @@ const ALL_SECTORS = [
   { id: 'web_dev', name: 'Web Development', icon: '🌐', badge: 'SIGMA 3D', theme: 'jarvis' },
   { id: 'cloud', name: 'Autonomous Applications', icon: '📱', badge: 'APP MATRIX', theme: 'jarvis' },
   { id: 'client_projects', name: 'Our Client Projects', icon: '🚀', badge: 'CLIENT SUCCESS', theme: 'quantum' },
-  { id: 'ai_auto', name: 'AI Automation', icon: '🤖', badge: 'NANO AGENTS', theme: 'emerald' },
 ]
 
 const SERVICE_ICONS = ['⬡', '◈', '⬢', '✦', '⚡', '🦾', '🛡️', '⚙️']
+
+const PILLAR_MONOGRAMS = {
+  'Software': { letter: 'S', label: 'SOFTWARE', color: '#00d4ff', glow: 'rgba(0,212,255,0.3)', border: 'rgba(0,212,255,0.5)' },
+  'Application': { letter: 'A', label: 'APPLICATION', color: '#38bdf8', glow: 'rgba(56,189,248,0.3)', border: 'rgba(56,189,248,0.5)' },
+  'Website': { letter: 'W', label: 'WEBSITE', color: '#7c3aed', glow: 'rgba(124,58,237,0.3)', border: 'rgba(124,58,237,0.5)' },
+  '3D Website': { letter: '3D', label: '3D WEBSITE', color: '#e879f9', glow: 'rgba(232,121,249,0.3)', border: 'rgba(232,121,249,0.5)' },
+  'Digital Marketing': { letter: 'M', label: 'MARKETING', color: '#f59e0b', glow: 'rgba(245,158,11,0.3)', border: 'rgba(245,158,11,0.5)' },
+  'Content': { letter: 'C', label: 'CONTENT', color: '#ef4444', glow: 'rgba(239,68,68,0.3)', border: 'rgba(239,68,68,0.5)' },
+  'AI Automation': { letter: 'AI', label: 'AI AGENTS', color: '#00ff88', glow: 'rgba(0,255,136,0.3)', border: 'rgba(0,255,136,0.5)' },
+  'Generate Notes': { letter: 'N', label: 'GENERATE NOTES', color: '#a78bfa', glow: 'rgba(167,139,250,0.3)', border: 'rgba(167,139,250,0.5)' },
+}
+
+function getPillarInfo(title = '', originalIndex = 0) {
+  if (PILLAR_MONOGRAMS[title]) return PILLAR_MONOGRAMS[title]
+  for (const [key, val] of Object.entries(PILLAR_MONOGRAMS)) {
+    if (title.toLowerCase().includes(key.toLowerCase())) return val
+  }
+  const defaultPalette = ACCENT_PALETTES[originalIndex % ACCENT_PALETTES.length]
+  return {
+    letter: title.slice(0, 1).toUpperCase() || '✦',
+    label: title.toUpperCase(),
+    color: defaultPalette.color,
+    glow: defaultPalette.glow,
+    border: defaultPalette.border,
+  }
+}
 
 const ACCENT_PALETTES = [
   { color: '#00d4ff', glow: 'rgba(0,212,255,0.25)', border: 'rgba(0,212,255,0.45)' },
@@ -324,12 +349,12 @@ export default function MissionControl() {
                     {/* Direct Contact Action Button */}
                     <div className="mc-ceo-action-row">
                       <a
-                        href="mailto:bexsigmatech@gmail.com"
+                        href="mailto:bexsigmatech@gmail.com?subject=Project%20Inquiry%20-%20BEx%20Sigma%20Tech"
                         className="mc-ceo-email interactive"
-                        title="Direct Line to Founder & CEO"
+                        title="Contact BEx Sigma Tech"
                       >
                         <span className="mc-ceo-email-icon">✉</span>
-                        <span>bexsigmatech@gmail.com</span>
+                        <span>CONTACT BEX SIGMA TECH · bexsigmatech@gmail.com</span>
                         <span className="mc-ceo-email-arrow">⚡</span>
                       </a>
                     </div>
@@ -461,37 +486,40 @@ export default function MissionControl() {
                     })
                     .map((svc, idx) => {
                       const originalIndex = article.services.findIndex((s) => s.title === svc.title)
-                      const palette = ACCENT_PALETTES[originalIndex % ACCENT_PALETTES.length]
+                      const pillarInfo = getPillarInfo(svc.title, originalIndex)
                       return (
                         <div
                           key={svc.title}
                           className="mc-smooth-card interactive"
                           style={{
-                            '--card-accent': palette.color,
-                            '--card-glow': palette.glow,
-                            '--card-border': palette.border,
+                            '--card-accent': pillarInfo.color,
+                            '--card-glow': pillarInfo.glow,
+                            '--card-border': pillarInfo.border,
                           }}
                           onClick={() => {
                             cinemaAudio.playOrbSelect()
-                            setSelectedServiceDetail({ ...svc, index: originalIndex, palette })
+                            setSelectedServiceDetail({ ...svc, index: originalIndex, pillarInfo })
                           }}
                         >
-                        {/* Left Side: Sleek Holographic Thumbnail */}
-                        <div className="mc-smooth-img-wrap">
-                          {svc.image ? (
-                            <img
-                              src={svc.image}
-                              alt={svc.title}
-                              className="mc-smooth-img"
-                              loading="lazy"
-                            />
-                          ) : (
-                            <div className="mc-smooth-img-placeholder">
-                              {SERVICE_ICONS[originalIndex % SERVICE_ICONS.length]}
-                            </div>
-                          )}
-                          <div className="mc-smooth-img-overlay" />
-                          <div className="mc-smooth-img-scanline" />
+                        {/* Left Side: Minimalist Glowing Letter Monogram (e.g. S for Software) */}
+                        <div
+                          className="mc-smooth-letter-wrap"
+                          style={{
+                            '--pillar-color': pillarInfo.color,
+                            '--pillar-glow': pillarInfo.glow,
+                            '--pillar-border': pillarInfo.border,
+                          }}
+                        >
+                          <div className="mc-letter-box">
+                            <span className="mc-pillar-letter">{pillarInfo.letter}</span>
+                            <span className="mc-pillar-label">{svc.title}</span>
+                            <div className="mc-letter-corner tl" />
+                            <div className="mc-letter-corner tr" />
+                            <div className="mc-letter-corner bl" />
+                            <div className="mc-letter-corner br" />
+                          </div>
+                          <div className="mc-letter-overlay" />
+                          <div className="mc-letter-scanline" />
                           
                           <div className="mc-smooth-img-top">
                             <span className="mc-smooth-index">0{originalIndex + 1}</span>
@@ -499,8 +527,8 @@ export default function MissionControl() {
                               <span
                                 className="mc-smooth-badge"
                                 style={{
-                                  color: palette.color,
-                                  borderColor: palette.border,
+                                  color: pillarInfo.color,
+                                  borderColor: pillarInfo.border,
                                 }}
                               >
                                 {svc.badge}
@@ -514,12 +542,12 @@ export default function MissionControl() {
                           <div>
                             <div className="mc-smooth-title-row">
                               <h4 className="mc-smooth-title">{svc.title}</h4>
-                              <div className="mc-smooth-icon" style={{ color: palette.color }}>
+                              <div className="mc-smooth-icon" style={{ color: pillarInfo.color }}>
                                 {SERVICE_ICONS[originalIndex % SERVICE_ICONS.length]}
                               </div>
                             </div>
                             {svc.subtitle && (
-                              <div className="mc-smooth-subtitle" style={{ color: palette.color }}>
+                              <div className="mc-smooth-subtitle" style={{ color: pillarInfo.color }}>
                                 {svc.subtitle}
                               </div>
                             )}
@@ -572,10 +600,10 @@ export default function MissionControl() {
                   </button>
                 )}
                 <a
-                  href="mailto:bexsigmatech@gmail.com?subject=Project%20Inquiry%20-%20Bex%20Sigma%20Tech"
+                  href="mailto:bexsigmatech@gmail.com?subject=Project%20Inquiry%20-%20BEx%20Sigma%20Tech"
                   className="mc-btn-ceo-contact interactive"
                 >
-                  ✉ CONTACT CEO HARIHARAN.D
+                  ✉ CONTACT BEX SIGMA TECH
                 </a>
                 <button className="mc-btn-secondary interactive" onClick={handleClose}>
                   ← RETURN TO HQ OBSERVATORY
@@ -594,48 +622,57 @@ export default function MissionControl() {
       </div>
 
       {/* ── Interactive Capability Detail Blueprint Modal ── */}
-      {selectedServiceDetail && (
-        <div className="mc-blueprint-overlay" onClick={() => setSelectedServiceDetail(null)}>
-          <div
-            className="mc-blueprint-box interactive"
-            onClick={(e) => e.stopPropagation()}
-            style={{
-              '--modal-border': selectedServiceDetail.palette?.border,
-              '--modal-glow': selectedServiceDetail.palette?.glow,
-            }}
-          >
-            <div className="mc-blueprint-header">
-              <span
-                className="mc-blueprint-badge"
-                style={{ color: selectedServiceDetail.palette?.color }}
-              >
-                {selectedServiceDetail.badge || article.badge} · TECHNICAL BLUEPRINT
-              </span>
-              <button
-                className="mc-blueprint-close interactive"
-                onClick={() => setSelectedServiceDetail(null)}
-              >
-                ×
-              </button>
-            </div>
+      {selectedServiceDetail && (() => {
+        const modalPillar = selectedServiceDetail.pillarInfo || getPillarInfo(selectedServiceDetail.title, selectedServiceDetail.index || 0)
+        return (
+          <div className="mc-blueprint-overlay" onClick={() => setSelectedServiceDetail(null)}>
+            <div
+              className="mc-blueprint-box interactive"
+              onClick={(e) => e.stopPropagation()}
+              style={{
+                '--modal-border': modalPillar.border,
+                '--modal-glow': modalPillar.glow,
+              }}
+            >
+              <div className="mc-blueprint-header">
+                <span
+                  className="mc-blueprint-badge"
+                  style={{ color: modalPillar.color }}
+                >
+                  {selectedServiceDetail.badge || article.badge} · TECHNICAL BLUEPRINT
+                </span>
+                <button
+                  className="mc-blueprint-close interactive"
+                  onClick={() => setSelectedServiceDetail(null)}
+                >
+                  ×
+                </button>
+              </div>
 
-            <div className="mc-blueprint-body">
-              {selectedServiceDetail.image && (
-                <div className="mc-blueprint-hero-wrap">
-                  <img
-                    src={selectedServiceDetail.image}
-                    alt={selectedServiceDetail.title}
-                    className="mc-blueprint-hero-img"
-                  />
+              <div className="mc-blueprint-body">
+                {/* Minimalist Glowing Letter Hero Monogram */}
+                <div
+                  className="mc-blueprint-letter-hero"
+                  style={{
+                    '--pillar-color': modalPillar.color,
+                    '--pillar-glow': modalPillar.glow,
+                    '--pillar-border': modalPillar.border,
+                  }}
+                >
+                  <div className="mc-blueprint-letter-box">
+                    <span className="mc-blueprint-big-letter">{modalPillar.letter}</span>
+                    <span className="mc-blueprint-letter-title">{selectedServiceDetail.title}</span>
+                    <div className="mc-letter-corner tl" />
+                    <div className="mc-letter-corner tr" />
+                    <div className="mc-letter-corner bl" />
+                    <div className="mc-letter-corner br" />
+                  </div>
                   <div className="mc-blueprint-hero-overlay" />
                   <div className="mc-blueprint-hero-tag">
-                    <span className="mc-live-dot" />
+                    <span className="mc-live-dot" style={{ background: modalPillar.color }} />
                     <span>SYSTEM NODE: {selectedServiceDetail.title.toUpperCase()}</span>
                   </div>
                 </div>
-              )}
-
-              <h3 className="mc-blueprint-title">{selectedServiceDetail.title}</h3>
               {selectedServiceDetail.subtitle && (
                 <h4 className="mc-blueprint-subtitle" style={{ color: selectedServiceDetail.palette?.color }}>
                   {selectedServiceDetail.subtitle}
@@ -687,7 +724,8 @@ export default function MissionControl() {
             </div>
           </div>
         </div>
-      )}
+      )
+    })()}
     </div>
   )
 }

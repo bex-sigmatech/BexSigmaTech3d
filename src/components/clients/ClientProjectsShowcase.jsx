@@ -354,7 +354,7 @@ export default function ClientProjectsShowcase() {
                 <div className="cp-form-success">
                   <div className="cp-success-icon">🚀</div>
                   <h4>INQUIRY DISPATCHED</h4>
-                  <p>Transmitted to Founder Hariharan.D. We'll schedule your blueprint call within 24h.</p>
+                  <p>Transmitted to BEx Sigma Tech. We'll schedule your blueprint call within 24h.</p>
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="cp-form">
@@ -383,7 +383,7 @@ export default function ClientProjectsShowcase() {
                   <label>PROJECT SCOPE</label>
                   <textarea rows={3} placeholder="Describe your goals, target audience, features..." value={formData.scope} onChange={e => setFormData({...formData, scope: e.target.value})} required className="interactive" />
 
-                  <button type="submit" className="cp-submit interactive">⚡ TRANSMIT TO HARIHARAN.D</button>
+                  <button type="submit" className="cp-submit interactive">⚡ CONTACT BEX SIGMA TECH</button>
                   <div className="cp-form-note">🔒 Direct to bexsigmatech@gmail.com</div>
                 </form>
               )}

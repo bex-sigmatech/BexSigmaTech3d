@@ -1,6 +1,5 @@
 import React, { useRef, useEffect, useState, Suspense, useMemo, useCallback } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
-import { EffectComposer, Bloom, ChromaticAberration, Vignette } from '@react-three/postprocessing'
 import * as THREE from 'three'
 import { useStore } from '../../store/useStore'
 import { cinemaAudio } from '../../audio/CinematicAudioEngine'
@@ -28,7 +27,7 @@ const DEPARTMENTS = [
     subtitle: 'Quantum Spatial Web & Next-Gen Interfaces',
     desc: 'Ultra-low latency web architectures engineered for zero-gravity computing and spatial Apple Vision frameworks.',
     tech: ['Spatial Web', 'Zero-Latency Core', 'React Advanced'],
-    color: '#7c3aed', emissive: '#4c1d95', pos: [5.5, 1.2, -3]
+    color: '#7c3aed', emissive: '#4c1d95', pos: [3.4, 1.2, -2.5]
   },
   {
     id: 'cloud',
@@ -36,7 +35,7 @@ const DEPARTMENTS = [
     subtitle: 'Autonomous Application Matrix · Mobile & Desktop Software',
     desc: 'Flagship consumer & enterprise mobile apps engineered for speed, privacy, and seamless cross-platform performance.',
     tech: ['React Native', 'Flutter', 'Future Path AI', 'UrDay ESBI'],
-    color: '#38bdf8', emissive: '#0369a1', pos: [4.0, -2.5, -6]
+    color: '#38bdf8', emissive: '#0369a1', pos: [2.5, -1.8, -4.0]
   },
   {
     id: 'client_projects',
@@ -44,23 +43,15 @@ const DEPARTMENTS = [
     subtitle: 'Proven Case Studies, Enterprise Deployments & Client Success',
     desc: 'Explore real-world client platforms, AI workflow deployments, and high-impact digital solutions architected by BEX Sigma Tech.',
     tech: ['Enterprise Web', '3D WebGL', 'AI Agents', 'Cloud Systems'],
-    color: '#f59e0b', emissive: '#b45309', pos: [-5.2, 2.0, -4]
-  },
-  {
-    id: 'ai_auto',
-    title: 'AI Automation',
-    subtitle: 'Autonomous Multimodal Agent Matrix',
-    desc: 'Self-evolving cognitive systems automating planetary infrastructure and mission synthesis.',
-    tech: ['Agentic Cognitive AI', 'Neural Synthesis', 'LLM Automation'],
-    color: '#00ff88', emissive: '#00aa55', pos: [-4.2, -1.8, -7]
-  },
+    color: '#f59e0b', emissive: '#b45309', pos: [-3.2, 1.6, -3.0]
+  }
 ]
 
 /* ─── Floating Particle Stars — LAGFREE: halved counts, GPU culled ─── */
 function StarField() {
   const ref = useRef()
   const graphicsQuality = useStore(state => state.graphicsQuality)
-  const count = graphicsQuality === 'low' ? 80 : 500
+  const count = graphicsQuality === 'low' ? 50 : 180
 
   const positions = useMemo(() => {
     const arr = new Float32Array(count * 3)
@@ -74,7 +65,7 @@ function StarField() {
 
   useFrame(({ clock }) => {
     if (ref.current) {
-      ref.current.rotation.y = clock.getElapsedTime() * 0.008
+      ref.current.rotation.y = clock.getElapsedTime() * 0.006
     }
   })
 
@@ -83,7 +74,7 @@ function StarField() {
       <bufferGeometry>
         <bufferAttribute attach="attributes-position" args={[positions, 3]} />
       </bufferGeometry>
-      <pointsMaterial size={0.06} color="#a8d8ff" transparent opacity={0.65} sizeAttenuation />
+      <pointsMaterial size={0.055} color="#a8d8ff" transparent opacity={0.65} sizeAttenuation />
     </points>
   )
 }
@@ -105,7 +96,7 @@ function ConnectionLines({ departments, activeIndex }) {
 
   useFrame(({ clock }) => {
     if (ref.current && ref.current.material) {
-      ref.current.material.opacity = 0.08 + Math.sin(clock.getElapsedTime() * 0.8) * 0.04
+      ref.current.material.opacity = 0.18 + Math.sin(clock.getElapsedTime() * 0.8) * 0.08
     }
   })
 
@@ -117,7 +108,7 @@ function ConnectionLines({ departments, activeIndex }) {
       <bufferGeometry>
         <bufferAttribute attach="attributes-position" args={[linePositions, 3]} />
       </bufferGeometry>
-      <lineBasicMaterial color="#00d4ff" transparent opacity={0.1} />
+      <lineBasicMaterial color="#00d4ff" transparent opacity={0.18} />
     </lineSegments>
   )
 }
@@ -127,7 +118,7 @@ const _sharedVec3 = new THREE.Vector3()
 const _freqCache = { data: null, t: 0 }
 function _getVoiceEnergyCached(idx) {
   const now = performance.now()
-  if (! _freqCache.data || now - _freqCache.t > 100) {
+  if (! _freqCache.data || now - _freqCache.t > 150) {
     _freqCache.data = liveVoiceClient.getFrequencyData()
     _freqCache.t = now
   }
@@ -146,29 +137,29 @@ function DepartmentOrb({ dept, index, isActive, isHovered, onHover, onLeave, onS
     if (!groupRef.current) return
 
     // Gentle floating idle animation
-    groupRef.current.position.y = dept.pos[1] + Math.sin(t * 0.7 + index * 1.2) * 0.18
-    groupRef.current.position.x = dept.pos[0] + Math.sin(t * 0.5 + index * 0.9) * 0.08
+    groupRef.current.position.y = dept.pos[1] + Math.sin(t * 0.7 + index * 1.2) * 0.14
+    groupRef.current.position.x = dept.pos[0] + Math.sin(t * 0.5 + index * 0.9) * 0.05
 
-    // Rings spin (if rendered)
-    if (outerRingRef.current) outerRingRef.current.rotation.z = t * (0.4 + index * 0.05)
-    if (!isLow && innerRingRef.current) innerRingRef.current.rotation.z = -t * (0.7 + index * 0.03)
+    // Smooth continuous ring rotation
+    if (outerRingRef.current) outerRingRef.current.rotation.z = t * (0.3 + index * 0.03)
+    if (!isLow && innerRingRef.current) innerRingRef.current.rotation.z = -t * (0.45 + index * 0.02)
 
-    // Audio-reactive voice modulation — LAGFREE: cached once per 100ms shared across 5 orbs
-    const voiceEnergy = _getVoiceEnergyCached(index)
+    // Audio-reactive voice modulation
+    const voiceEnergy = (isActive || isHovered) ? _getVoiceEnergyCached(index) : 0
 
-    // Sphere pulse
+    // Sphere pulse — subtle, clean, elegant
     if (sphereRef.current && sphereRef.current.material) {
       const pulse = isActive
-        ? 0.75 + Math.sin(t * 3) * 0.25 + voiceEnergy * 0.8
+        ? 0.55 + Math.sin(t * 2.8) * 0.15 + voiceEnergy * 0.4
         : isHovered
-          ? 0.5 + Math.sin(t * 2.5) * 0.15 + voiceEnergy * 0.5
-          : 0.25 + Math.sin(t * 1.5 + index) * 0.1 + voiceEnergy * 0.2
+          ? 0.38 + Math.sin(t * 2.2) * 0.1 + voiceEnergy * 0.25
+          : 0.22 + Math.sin(t * 1.2 + index) * 0.05
       sphereRef.current.material.emissiveIntensity = pulse
     }
 
-    // Scale on hover/active + voice reactivity — LAGFREE: reuse Vector3, no GC
-    const voiceScale = isActive ? voiceEnergy * 0.25 : 0
-    const targetScale = (isActive ? 1.35 : isHovered ? 1.15 : 1.0) + voiceScale
+    // Scale on hover/active + voice reactivity
+    const voiceScale = isActive ? voiceEnergy * 0.18 : 0
+    const targetScale = (isActive ? 1.28 : isHovered ? 1.12 : 1.0) + voiceScale
     _sharedVec3.set(targetScale, targetScale, targetScale)
     groupRef.current.scale.lerp(_sharedVec3, 0.1)
   })
@@ -193,109 +184,114 @@ function DepartmentOrb({ dept, index, isActive, isHovered, onHover, onLeave, onS
       }}
       onPointerMissed={() => onLeave()}
     >
-      {/* Invisible larger hit sphere — makes orb click reliable even while floating/camera lerps */}
+      {/* Invisible hit sphere for easy clicks */}
       <mesh>
-        <sphereGeometry args={[sphereSize * 1.9, 12, 12]} />
+        <sphereGeometry args={[sphereSize * 1.8, 10, 10]} />
         <meshBasicMaterial transparent opacity={0} depthWrite={false} depthTest={false} />
       </mesh>
-      {/* Outer glow aura — LAGFREE: reduced subdiv */}
-      {!isLow && (
-        <mesh>
-          <sphereGeometry args={[sphereSize * 1.45, 24, 24]} />
-          <meshBasicMaterial color={dept.color} transparent opacity={isActive ? 0.035 : 0.012} />
-        </mesh>
-      )}
 
-      {/* Main sphere body — LAGFREE: 32/16 vs 64/24, no transmission on low */}
-      <mesh ref={sphereRef} castShadow>
-        <sphereGeometry args={[sphereSize, isLow ? 16 : 32, isLow ? 16 : 32]} />
-        <meshPhysicalMaterial
+      {/* Main sleek planetary sphere body — FEATHERLIGHT Lambert shading (0ms PBR cost) */}
+      <mesh ref={sphereRef} castShadow={false}>
+        <sphereGeometry args={[
+          sphereSize,
+          index === 0 ? (isLow ? 20 : 32) : (isLow ? 16 : 24),
+          index === 0 ? (isLow ? 20 : 32) : (isLow ? 16 : 24)
+        ]} />
+        <meshLambertMaterial
           color={dept.color}
           emissive={dept.emissive}
-          emissiveIntensity={isActive ? 0.6 : 0.2}
-          roughness={0.12}
-          metalness={0.25}
-          clearcoat={isLow ? 0 : 1.0}
-          clearcoatRoughness={0.08}
-          transmission={isLow ? 0 : 0.2}
+          emissiveIntensity={isActive ? 0.65 : 0.28}
           transparent
-          opacity={0.94}
+          opacity={0.92}
         />
       </mesh>
 
-      {/* Wireframe overlay — Jarvis holographic effect — disable on low-end */}
+      {/* Holographic sci-fi grid wireframe overlay */}
       {!isLow && (
         <mesh>
-          <sphereGeometry args={[sphereSize * 1.02, 8, 8]} />
+          <sphereGeometry args={[sphereSize * 1.015, 16, 16]} />
           <meshBasicMaterial color={dept.color} wireframe transparent opacity={isActive ? 0.25 : 0.08} />
         </mesh>
       )}
 
-      {/* Outer orbit ring — LAGFREE: halved segments */}
-      <mesh ref={outerRingRef} rotation={[Math.PI / 2.5, 0.3, 0]}>
-        <ringGeometry args={[sphereSize * 1.5, sphereSize * 1.55, isLow ? 16 : 32]} />
-        <meshBasicMaterial color={dept.color} transparent opacity={isActive ? 0.7 : 0.2} side={THREE.DoubleSide} />
+      {/* Ultra-smooth 3D Neon Orbit Ring 1 (Smooth, thin fiber-optic glowing ring) */}
+      <mesh ref={outerRingRef} rotation={[Math.PI / 2.6, 0.25, 0]}>
+        <torusGeometry args={[sphereSize * 1.38, 0.0055, 6, isLow ? 32 : 64]} />
+        <meshBasicMaterial
+          color={dept.color}
+          transparent
+          opacity={isActive ? 0.8 : 0.3}
+        />
       </mesh>
 
-      {/* Inner orbit ring — counter-rotating — disable on low-graphics */}
+      {/* Ultra-smooth Counter-Rotating Neon Ring 2 */}
       {!isLow && (
-        <mesh ref={innerRingRef} rotation={[Math.PI / 3, -0.2, 0]}>
-          <ringGeometry args={[sphereSize * 1.2, sphereSize * 1.24, 24]} />
-          <meshBasicMaterial color={dept.color} transparent opacity={isActive ? 0.5 : 0.12} side={THREE.DoubleSide} />
+        <mesh ref={innerRingRef} rotation={[Math.PI / 3.2, -0.2, 0]}>
+          <torusGeometry args={[sphereSize * 1.18, 0.004, 6, 48]} />
+          <meshBasicMaterial
+            color={dept.color}
+            transparent
+            opacity={isActive ? 0.55 : 0.15}
+          />
         </mesh>
       )}
-
-      {/* Point light emanating from orb */}
-      <pointLight
-        color={dept.color}
-        intensity={isActive ? 3.5 : isHovered ? 1.8 : 0.6}
-        distance={isActive ? 7 : 4}
-      />
     </group>
   )
 }
 
 /* ─── JARVIS Camera Controller — smooth zoom into active orb ─── */
-function JarvisCameraController({ activeIndex, departments, entryPhase, isZooming }) {
+function JarvisCameraController({ activeIndex, departments, entryPhase = 1, isZooming }) {
   const { camera } = useThree()
-  const targetRef = useRef({ x: 0, y: 0, z: 20, lx: 0, ly: 0, lz: 0 })
+  const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768
+  const isOverview = activeIndex === 0
+  const dept = departments[activeIndex] || departments[0]
+  const [px, py, pz] = dept.pos
+
+  const baseDist = isMobile ? (isOverview ? 6.4 : 4.8) : (isOverview ? 5.6 : 5.0)
+  const dist = isZooming ? baseDist * 0.75 : baseDist
+
+  const targetRef = useRef({
+    x: px * (isMobile ? 0.08 : 0.35),
+    y: isMobile ? (isOverview ? 0.85 : py * 0.15 + 0.85) : (py * 0.25 + 0.25),
+    z: pz + dist,
+    lx: px,
+    ly: isMobile ? (isOverview ? -0.3 : py - 0.45) : py,
+    lz: pz,
+  })
 
   useEffect(() => {
-    const dept = departments[activeIndex]
-    const [px, py, pz] = dept.pos
+    const d = departments[activeIndex] || departments[0]
+    const [dpx, dpy, dpz] = d.pos
+    const dIsOverview = activeIndex === 0
+    const dBaseDist = isMobile ? (dIsOverview ? 6.4 : 4.8) : (dIsOverview ? 5.6 : 5.0)
+    const dDist = isZooming ? dBaseDist * 0.75 : dBaseDist
 
-    // Desktop: 5.6 units distance gives deep perspective with full orbital visibility; Mobile: 3.6
-    const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768
-    const dist = isZooming ? 0.35 : (isMobile ? 3.6 : 5.6)
     targetRef.current = {
-      x: px * (isMobile ? 0.15 : 0.35),
-      y: py * 0.25 + (isMobile ? -0.2 : 0.25),
-      z: pz + dist,
-      lx: px,
-      ly: py + (isMobile ? 0.4 : 0),
-      lz: pz,
+      x: dpx * (isMobile ? 0.08 : 0.35),
+      y: isMobile ? (dIsOverview ? 0.85 : dpy * 0.15 + 0.85) : (dpy * 0.25 + 0.25),
+      z: dpz + dDist,
+      lx: dpx,
+      ly: isMobile ? (dIsOverview ? -0.3 : dpy - 0.45) : dpy,
+      lz: dpz,
     }
-  }, [activeIndex, departments, isZooming])
+  }, [activeIndex, departments, isZooming, isMobile])
 
   useFrame(({ clock }) => {
     const t = clock.getElapsedTime()
     const tgt = targetRef.current
 
-    // Cinematic entry: start far back, ease forward
     let entryOffset = 0
     if (entryPhase < 1) {
-      entryOffset = (1 - entryPhase) * 8
+      entryOffset = (1 - entryPhase) * 6
     }
 
-    // Smooth camera lerp - speed up slightly during engaging zoom
-    const lerpSpeed = isZooming ? 0.085 : 0.055
+    const lerpSpeed = isZooming ? 0.09 : 0.07
     camera.position.x += (tgt.x - camera.position.x) * lerpSpeed
     camera.position.y += (tgt.y - camera.position.y) * lerpSpeed
     camera.position.z += (tgt.z + entryOffset - camera.position.z) * lerpSpeed
 
-    // Gentle camera drift for life
-    camera.position.x += Math.sin(t * 0.25) * 0.006
-    camera.position.y += Math.cos(t * 0.18) * 0.005
+    camera.position.x += Math.sin(t * 0.25) * 0.005
+    camera.position.y += Math.cos(t * 0.18) * 0.004
 
     camera.lookAt(tgt.lx, tgt.ly, tgt.lz)
   })
@@ -303,8 +299,8 @@ function JarvisCameraController({ activeIndex, departments, entryPhase, isZoomin
   return null
 }
 
-/* ─── Floating orbit ring particles around central orb — LAGFREE ─── */
-function OrbParticleRing({ color, radius, count = 32, speed = 0.5, tiltX = Math.PI / 2 }) {
+/* ─── Floating orbit ring particles around central orb — Clean & Light ─── */
+function OrbParticleRing({ color, radius, count = 24, speed = 0.4, tiltX = Math.PI / 2 }) {
   const ref = useRef()
   const graphicsQuality = useStore(state => state.graphicsQuality)
   const effCount = graphicsQuality === 'low' ? Math.floor(count * 0.5) : count
@@ -332,47 +328,46 @@ function OrbParticleRing({ color, radius, count = 32, speed = 0.5, tiltX = Math.
       <bufferGeometry>
         <bufferAttribute attach="attributes-position" args={[positions, 3]} />
       </bufferGeometry>
-      <pointsMaterial size={0.045} color={color} transparent opacity={0.7} sizeAttenuation />
+      <pointsMaterial size={0.035} color={color} transparent opacity={0.6} sizeAttenuation />
     </points>
   )
 }
 
-/* ─── Central JARVIS Core — the main mission control orb decorations ─── */
+/* ─── Central JARVIS Core — Smooth, Light, and Clean 3D Neon Torus Matrix ─── */
 function JarvisCentralCore() {
-  const ref = useRef()
   const ring1 = useRef()
   const ring2 = useRef()
   const ring3 = useRef()
 
   useFrame(({ clock }) => {
     const t = clock.getElapsedTime()
-    if (ring1.current) ring1.current.rotation.z = t * 0.3
-    if (ring2.current) ring2.current.rotation.z = -t * 0.5
-    if (ring3.current) ring3.current.rotation.x = t * 0.2
+    if (ring1.current) ring1.current.rotation.z = t * 0.25
+    if (ring2.current) ring2.current.rotation.z = -t * 0.35
+    if (ring3.current) ring3.current.rotation.x = t * 0.15
   })
 
   const isLow = useStore(state => state.graphicsQuality) === 'low'
   return (
     <group position={[0, 0, 0]}>
-      {/* Outer glowing orbit rings — LAGFREE halved segs */}
-      <mesh ref={ring1} rotation={[Math.PI / 2, 0, 0]}>
-        <ringGeometry args={[1.6, 1.65, isLow ? 32 : 64]} />
-        <meshBasicMaterial color="#00d4ff" transparent opacity={0.3} side={THREE.DoubleSide} />
+      {/* Clean glowing 3D neon fiber rings — perfectly smooth, zero clipping */}
+      <mesh ref={ring1} rotation={[Math.PI / 2.2, 0.2, 0]}>
+        <torusGeometry args={[1.65, 0.005, 6, isLow ? 36 : 64]} />
+        <meshBasicMaterial color="#00d4ff" transparent opacity={0.35} />
       </mesh>
-      <mesh ref={ring2} rotation={[Math.PI / 3, 0, 0]}>
-        <ringGeometry args={[2.1, 2.14, isLow ? 32 : 64]} />
-        <meshBasicMaterial color="#00d4ff" transparent opacity={0.15} side={THREE.DoubleSide} />
+      <mesh ref={ring2} rotation={[Math.PI / 3.2, -0.25, 0]}>
+        <torusGeometry args={[2.15, 0.004, 6, isLow ? 36 : 64]} />
+        <meshBasicMaterial color="#00d4ff" transparent opacity={0.2} />
       </mesh>
       {!isLow && (
-        <mesh ref={ring3} rotation={[Math.PI / 6, 0, 0]}>
-          <ringGeometry args={[2.7, 2.73, 32]} />
-          <meshBasicMaterial color="#00aaff" transparent opacity={0.08} side={THREE.DoubleSide} />
+        <mesh ref={ring3} rotation={[Math.PI / 5.5, 0.15, 0]}>
+          <torusGeometry args={[2.65, 0.0035, 6, 48]} />
+          <meshBasicMaterial color="#00d4ff" transparent opacity={0.12} />
         </mesh>
       )}
 
-      {/* Particle orbit rings — LAGFREE */}
-      <OrbParticleRing color="#00d4ff" radius={1.85} count={24} speed={0.4} tiltX={Math.PI / 2.2} />
-      <OrbParticleRing color="#00ffcc" radius={2.4} count={16} speed={-0.3} tiltX={Math.PI / 3.5} />
+      {/* Gentle micro-dust orbit trails */}
+      <OrbParticleRing color="#00d4ff" radius={1.85} count={20} speed={0.35} tiltX={Math.PI / 2.2} />
+      <OrbParticleRing color="#38bdf8" radius={2.35} count={14} speed={-0.25} tiltX={Math.PI / 3.2} />
     </group>
   )
 }
@@ -381,12 +376,21 @@ function JarvisCentralCore() {
    MAIN HQ SCENE EXPORT
    ═══════════════════════════════════════════════════════════════ */
 export default function HQScene() {
-  const { userName, openMissionBriefing, graphicsQuality, scene } = useStore()
+  const { userName, openMissionBriefing, graphicsQuality, setGraphicsQuality, scene } = useStore()
   const [activeIndex, setActiveIndex] = useState(0)
   const [hoveredIndex, setHoveredIndex] = useState(null)
-  const [entryPhase, setEntryPhase] = useState(0)
+  const [entryPhase] = useState(1)
   const [isZooming, setIsZooming] = useState(false)
+  const [isTabVisible, setIsTabVisible] = useState(typeof document !== 'undefined' ? document.visibilityState === 'visible' : true)
   const hqVoiceSpokenRef = useRef(false)
+
+  // Listen to tab visibility — pauses 3D loop completely when user switches tabs (saves 100% CPU/battery)
+  useEffect(() => {
+    const handleVis = () => setIsTabVisible(document.visibilityState === 'visible')
+    document.addEventListener('visibilitychange', handleVis)
+    return () => document.removeEventListener('visibilitychange', handleVis)
+  }, [])
+
   // Ref mirror to avoid stale closure in listeners (fixes "sometimes not working")
   const isZoomingRef = useRef(false)
   const activeIndexRef = useRef(0)
@@ -395,15 +399,12 @@ export default function HQScene() {
 
   const handleEngage = useCallback((dept) => {
     if (!dept) return
-    if (isZoomingRef.current) {
-      console.debug('[HQScene] engage blocked — still zooming', dept.id)
-      return
-    }
+    if (isZoomingRef.current) return
     isZoomingRef.current = true
     setIsZooming(true)
-    try { cinemaAudio.playOrbSelect() } catch (e) { console.warn('playOrbSelect failed', e) }
+    try { cinemaAudio.playOrbSelect() } catch (e) {}
     try { voiceEmitter.emit('SERVICE_CLICK', { sectorId: dept.id }) } catch {}
-    const delay = 700 // reduced from 900 for snappier feel
+
     setTimeout(() => {
       try {
         if (dept.id === 'web_dev') {
@@ -419,28 +420,18 @@ export default function HQScene() {
           openMissionBriefing(dept)
         }
       } finally {
-        // keep zoom lock until transition finishes, but release ref after scene settles
         setTimeout(() => {
           isZoomingRef.current = false
           setIsZooming(false)
-        }, 400)
+        }, 150)
       }
-    }, delay)
+    }, 220)
   }, [openMissionBriefing])
 
-  // Reset zoom when returning to headquarters from briefing/dashboard
+  // Immediately reset zoom when returning to headquarters from briefing/dashboard
   useEffect(() => {
-    if (scene === 'headquarters') {
-      const t = setTimeout(() => {
-        isZoomingRef.current = false
-        setIsZooming(false)
-      }, 300)
-      return () => clearTimeout(t)
-    } else {
-      // when leaving HQ (e.g. mission_briefing) immediately release lock so reopen is not blocked
-      isZoomingRef.current = false
-      setIsZooming(false)
-    }
+    isZoomingRef.current = false
+    setIsZooming(false)
   }, [scene])
 
   // Voice Navigation listener — stable, no stale isZooming
@@ -472,21 +463,6 @@ export default function HQScene() {
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [handleEngage])
-
-
-  // Cinematic entry — camera flies in from far smoothly
-  useEffect(() => {
-    let start = null
-    const duration = 1200
-    const tick = (now) => {
-      if (!start) start = now
-      const progress = Math.min((now - start) / duration, 1)
-      const ease = 1 - Math.pow(1 - progress, 3)
-      setEntryPhase(ease)
-      if (progress < 1) requestAnimationFrame(tick)
-    }
-    requestAnimationFrame(tick)
-  }, [])
 
   // "You are now entering Sigma Command Station."
   useEffect(() => {
@@ -604,32 +580,75 @@ export default function HQScene() {
     }
   }, [])
 
+  // Auto welcome audio on HQ entrance — once per session
+  useEffect(() => {
+    if (scene === 'headquarters' && !hqVoiceSpokenRef.current) {
+      hqVoiceSpokenRef.current = true
+      const timer = setTimeout(() => {
+        try {
+          voiceEmitter.emit('HQ_SCENE_ACTIVE')
+          aiVoice.speak(
+            `Welcome to BEx Sigma Tech Headquarters. Core orbital systems are nominal. Select an active division to initiate protocol.`
+          )
+        } catch {}
+      }, 900)
+      return () => clearTimeout(timer)
+    }
+  }, [scene])
 
-  const currentDept = DEPARTMENTS[activeIndex]
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKey = (e) => {
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+        setActiveIndex((prev) => (prev + 1) % DEPARTMENTS.length)
+        cinemaAudio.playSectorTransition()
+      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+        setActiveIndex((prev) => (prev - 1 + DEPARTMENTS.length) % DEPARTMENTS.length)
+        cinemaAudio.playSectorTransition()
+      } else if (e.key === 'Enter') {
+        handleEngage(DEPARTMENTS[activeIndexRef.current])
+      }
+    }
+    window.addEventListener('keydown', handleKey)
+    return () => window.removeEventListener('keydown', handleKey)
+  }, [handleEngage])
+
+  const currentDept = DEPARTMENTS[activeIndex] || DEPARTMENTS[0]
+  const activeDept = currentDept
 
   return (
-    <div className="hq-cinematic-container">
-      {/* Deep space background */}
-      <div className="jarvis-space-bg" />
-
-      {/* Header */}
+    <div className="hq-fullscreen-container">
+      {/* ── TOP SCI-FI STATUS BAR ── */}
       <header className="nolan-hq-header">
-        <div className="nolan-hq-brand">
-          <span className="nolan-brand-title">BEx Sigma Tech</span>
-          <span className="nolan-brand-sub">ORBITAL RESEARCH HEADQUARTERS</span>
+        <div className="hq-header-left">
+          <div className="hq-brand-title">BEx Sigma Tech</div>
+          <div className="hq-brand-sub">ORBITAL RESEARCH HEADQUARTERS</div>
         </div>
-        <div className="nolan-hq-operator">
-          <span className="nolan-status-dot" />
-          <span>OPERATOR: {userName || 'COMMANDER'}</span>
-          <span className="nolan-sector-badge">{String(activeIndex + 1).padStart(2, '0')} / {DEPARTMENTS.length}</span>
+
+        <div className="hq-header-right">
+          <div className="hq-operator-pill">
+            <span className="hq-operator-dot" />
+            <span className="hq-operator-label">OPERATOR:</span>
+            <span className="hq-operator-name">{userName || 'GUEST'}</span>
+          </div>
+
+          <div className="hq-sector-counter">
+            0{activeIndex + 1} / 0{DEPARTMENTS.length}
+          </div>
         </div>
       </header>
 
-      {/* ── 3D JARVIS ORBS CANVAS — LAGFREE: capped DPR + frameloop demand on hidden ── */}
+      {/* ── 3D JARVIS ORBS CANVAS — ULTRA-SMOOTH: capped DPR, zero MSAA ── */}
       <div className="hq-3d-canvas-wrapper">
         <Canvas
-          camera={{ position: [0, 0.5, 14], fov: 55 }}
-          gl={{ antialias: graphicsQuality !== 'low', alpha: true, powerPreference: 'high-performance', stencil: false, depth: true }}
+          camera={{ position: [0, 0.5, 6], fov: 55 }}
+          gl={{
+            antialias: false,
+            alpha: true,
+            powerPreference: 'high-performance',
+            stencil: false,
+            depth: true,
+          }}
           dpr={graphicsQuality === 'low' ? [1, 1] : [1, 1.25]}
           performance={{ min: 0.5 }}
           frameloop="always"
@@ -637,11 +656,10 @@ export default function HQScene() {
           <color attach="background" args={['#020812']} />
           <fog attach="fog" args={['#020812', 22, 55]} />
 
-          {/* Ambient + key lighting */}
-          <ambientLight intensity={0.15} color="#0a1530" />
-          <pointLight position={[0, 8, 5]} color="#00d4ff" intensity={2.5} distance={30} />
-          <pointLight position={[-10, -5, -5]} color="#7c3aed" intensity={1.5} distance={25} />
-          <pointLight position={[10, 5, -8]} color="#00ff88" intensity={1.2} distance={20} />
+          {/* Featherlight Sci-Fi Lighting: Zero-Overhead Ambient + Directional */}
+          <ambientLight intensity={0.45} color="#0c1e3a" />
+          <directionalLight position={[5, 8, 8]} intensity={0.65} color="#00d4ff" />
+          <directionalLight position={[-6, -4, -4]} intensity={0.35} color="#7c3aed" />
 
           <Suspense fallback={null}>
             <JarvisCameraController
@@ -678,25 +696,10 @@ export default function HQScene() {
                 }}
               />
             ))}
-
-            {/* Sci-Fi Post-Processing Pipeline — LAGFREE: no bloom on low, reduced mipmapBlur */}
-            {graphicsQuality === 'low' ? (
-              <EffectComposer disableNormalPass>
-                <Vignette eskil={false} offset={0.1} darkness={0.45} />
-              </EffectComposer>
-            ) : (
-              <EffectComposer disableNormalPass>
-                <Bloom
-                  luminanceThreshold={0.2}
-                  luminanceSmoothing={0.9}
-                  intensity={0.7}
-                  mipmapBlur={false}
-                />
-                <Vignette eskil={false} offset={0.1} darkness={0.5} />
-              </EffectComposer>
-            )}
           </Suspense>
         </Canvas>
+        {/* Hardware-accelerated CSS Vignette Overlay (0ms GPU, 0 WebGL crash risk) */}
+        <div className="hq-vignette-overlay" />
       </div>
 
       {/* ── RESPONSIVE CYBER HUD CAPSULE DOCK ── */}
