@@ -1,0 +1,612 @@
+/* ==========================================================================
+   BEX SIGMA TECH — INTERACTIVE GUIDED TOUR (GAME-STYLE ARROW POINTERS)
+   Animated arrows + pulsing highlights + glassmorphism tooltip cards
+   ========================================================================== */
+
+/* ── GUIDE OVERLAY — covers entire screen, passes clicks through except on tooltips ── */
+.guide-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+}
+
+.guide-overlay.active {
+  opacity: 1;
+}
+
+.guide-overlay.exiting {
+  opacity: 0;
+}
+
+/* ── SPOTLIGHT VIGNETTE — darkens everything except target area ── */
+.guide-spotlight-mask {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  transition: opacity 0.4s ease;
+}
+
+.guide-spotlight-mask.active {
+  opacity: 1;
+}
+
+/* ── ARROW POINTER — Animated bouncing arrow that points to target elements ── */
+.guide-arrow {
+  position: fixed;
+  z-index: 10001;
+  pointer-events: none;
+  filter: drop-shadow(0 0 12px rgba(0, 212, 255, 0.6))
+          drop-shadow(0 0 24px rgba(0, 212, 255, 0.3));
+  transition: top 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+              left 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+              opacity 0.3s ease;
+}
+
+/* Arrow SVG icon styling */
+.guide-arrow-svg {
+  width: 48px;
+  height: 48px;
+  color: #00d4ff;
+  animation: guideArrowBounce 1s ease-in-out infinite;
+}
+
+/* Different arrow directions */
+.guide-arrow.arrow-down .guide-arrow-svg {
+  transform: rotate(0deg);
+  animation: guideArrowBounceDown 1s ease-in-out infinite;
+}
+
+.guide-arrow.arrow-up .guide-arrow-svg {
+  transform: rotate(180deg);
+  animation: guideArrowBounceUp 1s ease-in-out infinite;
+}
+
+.guide-arrow.arrow-left .guide-arrow-svg {
+  transform: rotate(90deg);
+  animation: guideArrowBounceLeft 1s ease-in-out infinite;
+}
+
+.guide-arrow.arrow-right .guide-arrow-svg {
+  transform: rotate(-90deg);
+  animation: guideArrowBounceRight 1s ease-in-out infinite;
+}
+
+@keyframes guideArrowBounceDown {
+  0%, 100% { transform: rotate(0deg) translateY(0); }
+  50% { transform: rotate(0deg) translateY(14px); }
+}
+
+@keyframes guideArrowBounceUp {
+  0%, 100% { transform: rotate(180deg) translateY(0); }
+  50% { transform: rotate(180deg) translateY(-14px); }
+}
+
+@keyframes guideArrowBounceLeft {
+  0%, 100% { transform: rotate(90deg) translateX(0); }
+  50% { transform: rotate(90deg) translateX(-14px); }
+}
+
+@keyframes guideArrowBounceRight {
+  0%, 100% { transform: rotate(-90deg) translateX(0); }
+  50% { transform: rotate(-90deg) translateX(14px); }
+}
+
+/* ── PULSING RING — highlights the target element ── */
+.guide-pulse-ring {
+  position: fixed;
+  z-index: 10000;
+  border: 2px solid rgba(0, 212, 255, 0.7);
+  border-radius: 12px;
+  pointer-events: none;
+  animation: guidePulseRing 1.6s ease-in-out infinite;
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.3),
+              inset 0 0 20px rgba(0, 212, 255, 0.05);
+  transition: top 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+              left 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+              width 0.5s ease,
+              height 0.5s ease;
+}
+
+.guide-pulse-ring::before,
+.guide-pulse-ring::after {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  border-radius: 16px;
+  animation: guidePulseExpand 1.6s ease-out infinite;
+}
+
+.guide-pulse-ring::after {
+  animation-delay: 0.6s;
+}
+
+@keyframes guidePulseRing {
+  0%, 100% { border-color: rgba(0, 212, 255, 0.7); box-shadow: 0 0 20px rgba(0, 212, 255, 0.3); }
+  50% { border-color: rgba(0, 212, 255, 1); box-shadow: 0 0 35px rgba(0, 212, 255, 0.6), 0 0 60px rgba(0, 212, 255, 0.2); }
+}
+
+@keyframes guidePulseExpand {
+  0% { inset: -6px; opacity: 0.6; }
+  100% { inset: -20px; opacity: 0; }
+}
+
+/* ── TOOLTIP CARD — Glassmorphism info card near the arrow ── */
+.guide-tooltip {
+  position: fixed;
+  z-index: 10002;
+  pointer-events: auto;
+  width: 320px;
+  max-width: calc(100vw - 32px);
+  background: linear-gradient(135deg,
+    rgba(2, 8, 18, 0.92) 0%,
+    rgba(0, 30, 60, 0.88) 50%,
+    rgba(2, 8, 18, 0.95) 100%);
+  backdrop-filter: blur(20px) saturate(1.4);
+  -webkit-backdrop-filter: blur(20px) saturate(1.4);
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  border-radius: 16px;
+  padding: 20px 22px 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5),
+              0 0 40px rgba(0, 212, 255, 0.1),
+              inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  animation: guideTooltipEntry 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  transition: top 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+              left 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes guideTooltipEntry {
+  0% { opacity: 0; transform: translateY(12px) scale(0.92); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Tooltip Header */
+.guide-tooltip-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.guide-tooltip-step-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #00d4ff, #0088cc);
+  color: #020812;
+  font-family: 'Orbitron', monospace;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  box-shadow: 0 0 12px rgba(0, 212, 255, 0.4);
+}
+
+.guide-tooltip-label {
+  font-family: 'Orbitron', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  color: rgba(0, 212, 255, 0.7);
+  text-transform: uppercase;
+}
+
+/* Tooltip Title */
+.guide-tooltip-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  margin: 0 0 8px;
+  letter-spacing: 0.04em;
+  line-height: 1.3;
+}
+
+/* Tooltip Description */
+.guide-tooltip-desc {
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+  font-size: 0.82rem;
+  color: rgba(168, 216, 255, 0.8);
+  line-height: 1.55;
+  margin-bottom: 16px;
+}
+
+/* ── TOOLTIP ACTION BUTTONS ── */
+.guide-tooltip-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: space-between;
+}
+
+.guide-tooltip-btn {
+  font-family: 'Orbitron', monospace;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  padding: 8px 18px;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  cursor: pointer;
+  transition: all 0.25s ease;
+  text-transform: uppercase;
+  pointer-events: auto;
+}
+
+.guide-tooltip-btn.btn-next {
+  background: linear-gradient(135deg, #00d4ff, #0088cc);
+  color: #020812;
+  border-color: #00d4ff;
+  box-shadow: 0 0 16px rgba(0, 212, 255, 0.3);
+}
+
+.guide-tooltip-btn.btn-next:hover {
+  background: linear-gradient(135deg, #33e0ff, #00aadd);
+  box-shadow: 0 0 24px rgba(0, 212, 255, 0.5);
+  transform: translateY(-1px);
+}
+
+.guide-tooltip-btn.btn-skip {
+  background: transparent;
+  color: rgba(168, 216, 255, 0.5);
+  border-color: rgba(168, 216, 255, 0.15);
+}
+
+.guide-tooltip-btn.btn-skip:hover {
+  color: rgba(168, 216, 255, 0.8);
+  border-color: rgba(168, 216, 255, 0.3);
+  background: rgba(168, 216, 255, 0.05);
+}
+
+.guide-tooltip-btn.btn-prev {
+  background: transparent;
+  color: rgba(0, 212, 255, 0.6);
+  border-color: rgba(0, 212, 255, 0.2);
+}
+
+.guide-tooltip-btn.btn-prev:hover {
+  color: rgba(0, 212, 255, 0.9);
+  border-color: rgba(0, 212, 255, 0.4);
+  background: rgba(0, 212, 255, 0.05);
+}
+
+/* ── STEP PROGRESS BAR ── */
+.guide-progress-bar {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 14px;
+}
+
+.guide-progress-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(168, 216, 255, 0.15);
+  transition: all 0.3s ease;
+}
+
+.guide-progress-dot.completed {
+  background: rgba(0, 212, 255, 0.5);
+  box-shadow: 0 0 6px rgba(0, 212, 255, 0.3);
+}
+
+.guide-progress-dot.active {
+  background: #00d4ff;
+  box-shadow: 0 0 10px rgba(0, 212, 255, 0.6);
+  transform: scale(1.3);
+}
+
+/* ── GUIDE START/TRIGGER BUTTON — floating "?" icon in header ── */
+.guide-trigger-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.15), rgba(0, 212, 255, 0.05));
+  border: 1px solid rgba(0, 212, 255, 0.35);
+  color: #00d4ff;
+  font-family: 'Orbitron', monospace;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-left: 10px;
+  pointer-events: auto;
+  box-shadow: 0 0 12px rgba(0, 212, 255, 0.15);
+}
+
+.guide-trigger-btn:hover {
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.3), rgba(0, 212, 255, 0.1));
+  border-color: rgba(0, 212, 255, 0.6);
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+  transform: scale(1.08);
+}
+
+/* First-time pulsing beacon on the guide button */
+.guide-trigger-btn.first-time::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 2px solid rgba(0, 212, 255, 0.5);
+  animation: guideBeaconPulse 1.5s ease-out infinite;
+}
+
+@keyframes guideBeaconPulse {
+  0% { inset: -4px; opacity: 0.8; }
+  100% { inset: -18px; opacity: 0; }
+}
+
+/* ── WELCOME SPLASH — shown before first step ── */
+.guide-welcome-splash {
+  position: fixed;
+  inset: 0;
+  z-index: 10003;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(ellipse at center, rgba(0, 30, 60, 0.6) 0%, rgba(2, 8, 18, 0.92) 100%);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  animation: guideSplashIn 0.5s ease both;
+  pointer-events: auto;
+}
+
+@keyframes guideSplashIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.guide-welcome-card {
+  text-align: center;
+  max-width: 440px;
+  padding: 40px 36px;
+  background: linear-gradient(145deg,
+    rgba(2, 12, 28, 0.95) 0%,
+    rgba(0, 40, 70, 0.85) 50%,
+    rgba(2, 12, 28, 0.95) 100%);
+  border: 1px solid rgba(0, 212, 255, 0.25);
+  border-radius: 24px;
+  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.5),
+              0 0 60px rgba(0, 212, 255, 0.08);
+  animation: guideCardPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.15s both;
+}
+
+@keyframes guideCardPop {
+  0% { opacity: 0; transform: scale(0.88) translateY(20px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.guide-welcome-icon {
+  font-size: 3rem;
+  margin-bottom: 16px;
+  display: block;
+  filter: drop-shadow(0 0 16px rgba(0, 212, 255, 0.5));
+  animation: guideIconFloat 2.5s ease-in-out infinite;
+}
+
+@keyframes guideIconFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.guide-welcome-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 8px;
+  letter-spacing: 0.06em;
+}
+
+.guide-welcome-subtitle {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.88rem;
+  color: rgba(168, 216, 255, 0.7);
+  line-height: 1.6;
+  margin-bottom: 28px;
+}
+
+.guide-welcome-start-btn {
+  font-family: 'Orbitron', monospace;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  padding: 14px 36px;
+  border-radius: 12px;
+  border: none;
+  background: linear-gradient(135deg, #00d4ff, #0066cc);
+  color: #020812;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(0, 212, 255, 0.35);
+  text-transform: uppercase;
+}
+
+.guide-welcome-start-btn:hover {
+  background: linear-gradient(135deg, #33e0ff, #0088dd);
+  box-shadow: 0 6px 28px rgba(0, 212, 255, 0.5);
+  transform: translateY(-2px);
+}
+
+.guide-welcome-dismiss {
+  display: block;
+  margin-top: 14px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem;
+  color: rgba(168, 216, 255, 0.35);
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.guide-welcome-dismiss:hover {
+  color: rgba(168, 216, 255, 0.6);
+}
+
+/* ── COMPLETION CARD ── */
+.guide-complete-card {
+  text-align: center;
+  max-width: 440px;
+  padding: 40px 36px;
+  background: linear-gradient(145deg,
+    rgba(2, 12, 28, 0.95) 0%,
+    rgba(0, 60, 40, 0.3) 50%,
+    rgba(2, 12, 28, 0.95) 100%);
+  border: 1px solid rgba(0, 255, 136, 0.3);
+  border-radius: 24px;
+  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.5),
+              0 0 60px rgba(0, 255, 136, 0.08);
+  animation: guideCardPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.15s both;
+}
+
+.guide-complete-icon {
+  font-size: 3rem;
+  margin-bottom: 16px;
+  display: block;
+  filter: drop-shadow(0 0 16px rgba(0, 255, 136, 0.5));
+  animation: guideIconFloat 2.5s ease-in-out infinite;
+}
+
+.guide-complete-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #00ff88;
+  margin: 0 0 8px;
+  letter-spacing: 0.06em;
+}
+
+.guide-complete-subtitle {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.88rem;
+  color: rgba(168, 216, 255, 0.7);
+  line-height: 1.6;
+  margin-bottom: 28px;
+}
+
+.guide-complete-close-btn {
+  font-family: 'Orbitron', monospace;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  padding: 14px 36px;
+  border-radius: 12px;
+  border: none;
+  background: linear-gradient(135deg, #00ff88, #00cc66);
+  color: #020812;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(0, 255, 136, 0.35);
+  text-transform: uppercase;
+}
+
+.guide-complete-close-btn:hover {
+  background: linear-gradient(135deg, #33ffaa, #00dd77);
+  box-shadow: 0 6px 28px rgba(0, 255, 136, 0.5);
+  transform: translateY(-2px);
+}
+
+/* ── SCROLL ARROW INDICATOR — shown when user needs to scroll ── */
+.guide-scroll-arrow {
+  position: fixed;
+  z-index: 10001;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  pointer-events: none;
+  animation: guideScrollPulse 1.2s ease-in-out infinite;
+}
+
+.guide-scroll-arrow-icon {
+  width: 32px;
+  height: 32px;
+  color: #00d4ff;
+  filter: drop-shadow(0 0 8px rgba(0, 212, 255, 0.5));
+}
+
+.guide-scroll-label {
+  font-family: 'Orbitron', monospace;
+  font-size: 0.55rem;
+  letter-spacing: 0.15em;
+  color: rgba(0, 212, 255, 0.7);
+  text-transform: uppercase;
+}
+
+@keyframes guideScrollPulse {
+  0%, 100% { opacity: 0.5; transform: translateY(0); }
+  50% { opacity: 1; transform: translateY(6px); }
+}
+
+/* ── CLICK INDICATOR — animated hand/finger icon ── */
+.guide-click-indicator {
+  position: fixed;
+  z-index: 10001;
+  pointer-events: none;
+  animation: guideClickPulse 1.2s ease-in-out infinite;
+}
+
+.guide-click-icon {
+  font-size: 2rem;
+  filter: drop-shadow(0 0 12px rgba(0, 212, 255, 0.5));
+}
+
+@keyframes guideClickPulse {
+  0%, 100% { transform: scale(1); opacity: 0.7; }
+  50% { transform: scale(1.15); opacity: 1; }
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .guide-tooltip {
+    width: 280px;
+    padding: 16px 18px 14px;
+  }
+
+  .guide-tooltip-title {
+    font-size: 0.88rem;
+  }
+
+  .guide-tooltip-desc {
+    font-size: 0.76rem;
+  }
+
+  .guide-arrow-svg {
+    width: 38px;
+    height: 38px;
+  }
+
+  .guide-welcome-card,
+  .guide-complete-card {
+    max-width: 92vw;
+    padding: 28px 22px;
+    margin: 0 16px;
+  }
+
+  .guide-welcome-title,
+  .guide-complete-title {
+    font-size: 1.1rem;
+  }
+
+  .guide-trigger-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 0.7rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .guide-tooltip {
+    width: 260px;
+    padding: 14px 14px 12px;
+  }
+}

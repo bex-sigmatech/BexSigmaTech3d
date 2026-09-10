@@ -5,6 +5,7 @@ import { useStore } from '../../store/useStore'
 import { cinemaAudio } from '../../audio/CinematicAudioEngine'
 import { voiceEmitter } from '../../audio/AIVoiceEngine'
 import { liveVoiceClient } from '../../audio/GeminiLiveClient'
+import InteractiveGuide from './InteractiveGuide'
 
 /* ==========================================================================
    BEX SIGMA TECH — JARVIS ORBITAL SPHERE INTERFACE
@@ -118,7 +119,7 @@ const _sharedVec3 = new THREE.Vector3()
 const _freqCache = { data: null, t: 0 }
 function _getVoiceEnergyCached(idx) {
   const now = performance.now()
-  if (! _freqCache.data || now - _freqCache.t > 150) {
+  if (!_freqCache.data || now - _freqCache.t > 150) {
     _freqCache.data = liveVoiceClient.getFrequencyData()
     _freqCache.t = now
   }
@@ -176,7 +177,7 @@ function DepartmentOrb({ dept, index, isActive, isHovered, onHover, onLeave, onS
         e.stopPropagation()
         document.body.style.cursor = 'pointer'
         onHover(index)
-        try { cinemaAudio.playOrbHover() } catch {}
+        try { cinemaAudio.playOrbHover() } catch { }
       }}
       onPointerOut={() => {
         document.body.style.cursor = ''
@@ -384,6 +385,12 @@ export default function HQScene() {
   const [isTabVisible, setIsTabVisible] = useState(typeof document !== 'undefined' ? document.visibilityState === 'visible' : true)
   const hqVoiceSpokenRef = useRef(false)
 
+  // ── INTERACTIVE GUIDE STATE ──
+  const [guideActive, setGuideActive] = useState(false)
+  const isFirstTimeUser = useCallback(() => {
+    try { return !localStorage.getItem('bex_guide_completed') } catch { return false }
+  }, [])
+
   // Listen to tab visibility — pauses 3D loop completely when user switches tabs (saves 100% CPU/battery)
   useEffect(() => {
     const handleVis = () => setIsTabVisible(document.visibilityState === 'visible')
@@ -402,8 +409,8 @@ export default function HQScene() {
     if (isZoomingRef.current) return
     isZoomingRef.current = true
     setIsZooming(true)
-    try { cinemaAudio.playOrbSelect() } catch (e) {}
-    try { voiceEmitter.emit('SERVICE_CLICK', { sectorId: dept.id }) } catch {}
+    try { cinemaAudio.playOrbSelect() } catch (e) { }
+    try { voiceEmitter.emit('SERVICE_CLICK', { sectorId: dept.id }) } catch { }
 
     setTimeout(() => {
       try {
@@ -503,13 +510,13 @@ export default function HQScene() {
         if (e.deltaY > 0) {
           setActiveIndex(prev => {
             const next = Math.min(prev + 1, DEPARTMENTS.length - 1)
-            if (next !== prev) try { cinemaAudio.playScrollTransition() } catch {}
+            if (next !== prev) try { cinemaAudio.playScrollTransition() } catch { }
             return next
           })
         } else {
           setActiveIndex(prev => {
             const next = Math.max(prev - 1, 0)
-            if (next !== prev) try { cinemaAudio.playScrollTransition() } catch {}
+            if (next !== prev) try { cinemaAudio.playScrollTransition() } catch { }
             return next
           })
         }
@@ -558,14 +565,14 @@ export default function HQScene() {
           // Swipe up or left → next department
           setActiveIndex(prev => {
             const next = Math.min(prev + 1, DEPARTMENTS.length - 1)
-            if (next !== prev) try { cinemaAudio.playScrollTransition() } catch {}
+            if (next !== prev) try { cinemaAudio.playScrollTransition() } catch { }
             return next
           })
         } else {
           // Swipe down or right → previous department
           setActiveIndex(prev => {
             const next = Math.max(prev - 1, 0)
-            if (next !== prev) try { cinemaAudio.playScrollTransition() } catch {}
+            if (next !== prev) try { cinemaAudio.playScrollTransition() } catch { }
             return next
           })
         }
@@ -590,7 +597,7 @@ export default function HQScene() {
           aiVoice.speak(
             `Welcome to BEx Sigma Tech Headquarters. Core orbital systems are nominal. Select an active division to initiate protocol.`
           )
-        } catch {}
+        } catch { }
       }, 900)
       return () => clearTimeout(timer)
     }
@@ -635,6 +642,16 @@ export default function HQScene() {
           <div className="hq-sector-counter">
             0{activeIndex + 1} / 0{DEPARTMENTS.length}
           </div>
+
+          {/* ── GUIDE TRIGGER BUTTON ── */}
+          <button
+            className={`guide-trigger-btn${isFirstTimeUser() ? ' first-time' : ''}`}
+            onClick={() => setGuideActive(true)}
+            title="Station Orientation Guide"
+            aria-label="Open interactive guide"
+          >
+            ?
+          </button>
         </div>
       </header>
 
@@ -823,6 +840,13 @@ export default function HQScene() {
         <span className="scroll-hint-desktop">SCROLL TO NAVIGATE ORBITAL SYSTEMS</span>
         <span className="scroll-hint-mobile">SWIPE TO NAVIGATE ORBITAL SYSTEMS</span>
       </div>
+
+      {/* ── INTERACTIVE GAME-STYLE GUIDE ── */}
+      <InteractiveGuide
+        isActive={guideActive}
+        onClose={() => setGuideActive(false)}
+        onTriggerFirstTime={() => setGuideActive(true)}
+      />
     </div>
   )
 }
