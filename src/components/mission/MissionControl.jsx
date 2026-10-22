@@ -177,7 +177,7 @@ export default function MissionControl() {
             <div className="mc-header-titles">
               <div className="mc-dept-label">
                 <span className="mc-badge-pill">SECTOR {String((ALL_SECTORS.findIndex(s => s.id === currentSectorId) + 1) || 1).padStart(2, '0')}</span>
-                <span className="mc-user-tag">OPERATOR: {userName || 'COMMANDER'}</span>
+                <span className="mc-user-tag">OPERATOR: {userName || 'GUEST'}</span>
               </div>
               <h1 className="mc-page-title">{article.title}</h1>
               <p className="mc-page-subtitle">{article.subtitle}</p>

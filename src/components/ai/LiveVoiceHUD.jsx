@@ -291,7 +291,7 @@ export default function LiveVoiceHUD({ onNavigateSector, onTriggerScan }) {
                 'Navigate to Web Development Store',
                 'Show me Marketing dashboard pricing',
                 'Add Sales Dashboard to cart',
-                'Initiate biometric scan for Commander Alex',
+                'Initiate biometric scan for Alex',
                 'Open checkout for HR KPI Dashboard'
               ].map((cmd, idx) => (
                 <button

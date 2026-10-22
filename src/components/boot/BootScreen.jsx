@@ -129,7 +129,14 @@ export default function BootScreen() {
 
                 <div className="mb-brand-typography">
                   <h1 className="mb-brand-title">BEx Sigma Tech</h1>
-                  <p className="mb-brand-subtitle">NEXT-GENERATION AEROSPACE &amp; AI SYSTEMS</p>
+                  <p className="mb-brand-subtitle">NEXT-GENERATION DIGITAL EXPERIENCES</p>
+                  <p className="mb-brand-services">Premium SaaS & Digital Marketing Solutions</p>
+                  <div className="boot-service-pills">
+                    <span className="boot-pill">Web Development</span>
+                    <span className="boot-pill">Meta Ads</span>
+                    <span className="boot-pill">AI Dashboards</span>
+                    <span className="boot-pill">Mobile Apps</span>
+                  </div>
                 </div>
               </div>
 
@@ -139,6 +146,24 @@ export default function BootScreen() {
                   <span className="cta-glass-sheen" />
                   <span className="cta-glass-text">ENTER CINEMATIC EXPERIENCE</span>
                   <span className="cta-glass-arrow">→</span>
+                </button>
+
+                <button
+                  className="boot-quickview-btn mb-quickview-btn interactive"
+                  onClick={() => {
+                    setStarted(true)
+                    useStore.setState({ bootStarted: true })
+                    unlockAudioContext()
+                    useStore.setState({
+                      scene: 'headquarters',
+                      loadingProgress: 100,
+                      audioContextUnlocked: true,
+                      isIntroSkipped: true,
+                      userName: 'Guest'
+                    })
+                  }}
+                >
+                  QUICK EXPLORE →
                 </button>
 
                 <div className="mb-apple-segmented-toggle">
@@ -209,8 +234,39 @@ export default function BootScreen() {
         <div className="desktop-boot-wrapper">
           {!started ? (
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px' }}>
+              {/* Service context for new users */}
+              <div className="boot-hero-context">
+                <h2 className="boot-hero-tagline">Premium SaaS & Digital Marketing Solutions</h2>
+                <div className="boot-service-pills">
+                  <span className="boot-pill">Web Development</span>
+                  <span className="boot-pill">Meta Ads</span>
+                  <span className="boot-pill">Excel Dashboards</span>
+                  <span className="boot-pill">Mobile Apps</span>
+                  <span className="boot-pill">AI Automation</span>
+                </div>
+              </div>
+
               <button className="nolan-start-btn interactive" onClick={handleStart}>
                 ENTER CINEMATIC EXPERIENCE
+              </button>
+
+              <button
+                className="boot-quickview-btn interactive"
+                onClick={() => {
+                  setStarted(true)
+                  useStore.setState({ bootStarted: true })
+                  unlockAudioContext()
+                  // Skip directly to HQ
+                  useStore.setState({
+                    scene: 'headquarters',
+                    loadingProgress: 100,
+                    audioContextUnlocked: true,
+                    isIntroSkipped: true,
+                    userName: 'Guest'
+                  })
+                }}
+              >
+                QUICK EXPLORE →
               </button>
 
               <div className="graphics-mode-selector">

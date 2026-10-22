@@ -35,28 +35,18 @@ const GUIDE_STEPS = [
     id: 'header',
     target: '.nolan-hq-header',
     arrowDirection: 'down',
-    title: 'Station Control Bar',
-    description: 'This is your command header. It shows your operator name, current sector number, and station branding. Always visible for quick reference.',
+    title: 'BEx Sigma Tech Command Bar',
+    description: 'Header shows your active session. BEx Sigma Tech builds SaaS products, high-ROAS Meta Ads, and full-stack web solutions.',
     action: 'look',
     arrowOffset: { x: 0, y: -55 },
     tooltipPosition: 'below',
   },
   {
-    id: 'operator',
-    target: '.hq-operator-pill',
-    arrowDirection: 'down',
-    title: 'Your Identity',
-    description: 'Your operator callsign is displayed here. This was set during the AI credential sync when you first entered the station.',
-    action: 'look',
-    arrowOffset: { x: 0, y: -55 },
-    tooltipPosition: 'below-left',
-  },
-  {
     id: '3d-canvas',
     target: '.hq-3d-canvas-wrapper',
     arrowDirection: 'down',
-    title: '3D Orbital View',
-    description: 'This is the main 3D space! You can see glowing orbs — each represents a department. The camera automatically moves to focus on the active sector.',
+    title: '3D Service Sectors',
+    description: 'Each floating orb represents a division: Products Store (Excel Dashboards from ₹256), Mobile Apps Matrix, Client Case Studies, and Company Hub.',
     action: 'look',
     arrowOffset: { x: 0, y: -55 },
     tooltipPosition: 'center',
@@ -65,19 +55,9 @@ const GUIDE_STEPS = [
     id: 'scroll-nav',
     target: '.jarvis-scroll-hint',
     arrowDirection: 'up',
-    title: 'Scroll to Navigate',
-    description: 'Use your mouse scroll wheel (or swipe on mobile) to move between departments. Each scroll cycles to the next orbital sector.',
+    title: 'Scroll / Swipe to Rotate',
+    description: 'Use your mouse scroll wheel or swipe on mobile to rotate the orbital camera and switch between service sectors.',
     action: 'scroll',
-    arrowOffset: { x: 0, y: 55 },
-    tooltipPosition: 'above',
-  },
-  {
-    id: 'minimap',
-    target: '.jarvis-orb-minimap',
-    arrowDirection: 'up',
-    title: 'Quick Sector Navigation',
-    description: 'Click any sector dot here to instantly jump to that department. The active sector glows with its unique color.',
-    action: 'click',
     arrowOffset: { x: 0, y: 55 },
     tooltipPosition: 'above',
   },
@@ -85,28 +65,18 @@ const GUIDE_STEPS = [
     id: 'dept-panel',
     target: '.jarvis-dept-panel',
     arrowDirection: 'up',
-    title: 'Department Info Capsule',
-    description: 'This HUD capsule shows the currently selected department\'s name, status, and sector number. Use the arrow buttons on the sides to switch departments.',
+    title: 'Service Info Capsule',
+    description: 'This capsule highlights the selected service, products available, and pricing tags. Use the ‹ and › buttons to cycle sectors.',
     action: 'look',
     arrowOffset: { x: 0, y: 55 },
     tooltipPosition: 'above',
   },
   {
-    id: 'nav-arrows',
-    target: '.jarvis-capsule-nav-btn.prev',
-    arrowDirection: 'right',
-    title: 'Previous & Next Buttons',
-    description: 'Click the ‹ and › arrows on the capsule sides to move between departments one at a time. Keyboard arrows (← →) also work!',
-    action: 'click',
-    arrowOffset: { x: -55, y: 0 },
-    tooltipPosition: 'right',
-  },
-  {
     id: 'engage-btn',
     target: '.jarvis-capsule-engage-btn',
     arrowDirection: 'down',
-    title: 'ENTER — Open Department',
-    description: 'This is the most important button! Click "ENTER" to dive into the selected department — Mission Control, Web Dev, Apps, or Client Projects.',
+    title: 'Click ENTER to Open Division',
+    description: 'Click ENTER (or press Enter key) to open the store, browse dashboard products, see client case studies, or place an order.',
     action: 'click',
     arrowOffset: { x: 0, y: -55 },
     tooltipPosition: 'above',
@@ -350,18 +320,22 @@ export default function InteractiveGuide({ isActive, onClose, onTriggerFirstTime
         {phase === 'welcome' && (
           <div className="guide-welcome-splash">
             <div className="guide-welcome-card">
-              <span className="guide-welcome-icon">🛸</span>
-              <h2 className="guide-welcome-title">STATION ORIENTATION</h2>
+              <span className="guide-welcome-icon">🪐</span>
+              <h2 className="guide-welcome-title">WELCOME TO BEX SIGMA TECH</h2>
               <p className="guide-welcome-subtitle">
-                Welcome aboard, Operator! This quick interactive guide will show you
-                how to navigate the Orbital Research Headquarters. Follow the arrows
-                to learn each control.
+                Explore our web development services, Excel business dashboards, mobile apps, and client case studies inside this interactive 3D command station.
               </p>
+              <div className="guide-welcome-service-tags">
+                <span className="guide-service-tag">🛒 Excel Dashboards Store</span>
+                <span className="guide-service-tag">💻 Custom Web & 3D Design</span>
+                <span className="guide-service-tag">📱 Mobile Apps</span>
+                <span className="guide-service-tag">📈 Meta Ads</span>
+              </div>
               <button className="guide-welcome-start-btn" onClick={handleStartTour}>
-                BEGIN ORIENTATION ▸
+                QUICK 30-SEC TOUR ▸
               </button>
               <button className="guide-welcome-dismiss" onClick={handleSkip}>
-                I already know how to navigate
+                I already know how to explore
               </button>
             </div>
           </div>

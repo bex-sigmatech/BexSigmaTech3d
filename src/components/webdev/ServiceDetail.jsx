@@ -157,7 +157,7 @@ export default function ServiceDetail({ serviceId, onClose }) {
             <div className="custom-form-wrap" style={{ borderColor: accent + '35', background: `linear-gradient(135deg, ${accent}08, transparent)` }}>
               <button onClick={() => setShowContact(false)} style={{ background: 'transparent', border: 'none', color: accent, fontFamily: 'Orbitron', fontSize: '0.70rem', fontWeight: 700, letterSpacing: '0.10em', cursor: 'pointer', marginBottom: 12 }}>← Back to details</button>
               <h3 className="custom-form-title" style={{ color: accent }}>Contact Us — {detail.title}</h3>
-              <p className="custom-form-desc">Enter your credentials and message below. This will be sent directly to <strong>bexsigmatech@gmail.com</strong> and we’ll reply within 24 hours.</p>
+              <p className="custom-form-desc">Enter your name, email, and message below. This will be sent directly to <strong>bexsigmatech@gmail.com</strong> and we’ll reply within 24 hours.</p>
               <p style={{ fontSize: '0.72rem', color: 'rgba(255,255,255,0.55)', margin: '0 0 10px 0' }}>Subject: <strong style={{ color: '#fff' }}>{contactSubject}</strong></p>
               <form onSubmit={handleContactSubmit} className="custom-form">
                 <div className="custom-form-row">

@@ -334,7 +334,7 @@ const WORKS = [
     subtitle: 'High-Performance Corporate & Conversion Portals',
     meta: '01 / 04 · ESSENTIAL WEB',
     desc: 'Clean, fast, and mobile-ready websites for businesses and personal brands. SEO-optimized, easy to manage, and engineered to convert — landing pages, portfolios, and corporate hubs that load in under a second.',
-    image: '/sector_website.jpg',
+    image: '/pathway_normal_website.jpg',
     models: 'Frontend Static vs Full Stack Dynamic CMS',
     timeline: '3-5 Days Delivery',
     specs: ['< 1.2s Page Load', '100% Mobile & Tablet Responsive', 'SEO Core Integrated', 'Custom CMS & Lead Capture'],
@@ -350,7 +350,7 @@ const WORKS = [
     subtitle: 'Spatial WebGL & Cinematic Storytelling',
     meta: '02 / 04 · 3D SPATIAL WEB',
     desc: 'Immersive 3D spatial web experiences with Three.js, WebGL, and cinematic scroll. Premium interactive visual journeys — 3D product visualizers and Apple Vision-style interfaces that make your brand unforgettable.',
-    image: '/sector_3d_website.jpg',
+    image: '/pathway_3d_website.jpg',
     models: 'Normal 3D Showcase vs Full Stack 3D',
     timeline: '7-14 Days Delivery',
     specs: ['60 FPS WebGL Engine', 'Draco 3D Mesh Compression', 'Spatial Camera Rigs', 'Hardware Accelerated'],
@@ -366,7 +366,7 @@ const WORKS = [
     subtitle: 'Enterprise SaaS, Dashboards & Microservices',
     meta: '03 / 04 · SAAS & SOFTWARE',
     desc: 'Tailored web applications, administrative dashboards, portals, and SaaS tools. From initial concept to cloud deployment — secure, scalable, and engineered around your exact workflow.',
-    image: '/sector_software.jpg',
+    image: '/pathway_software.jpg',
     models: 'Custom Portal vs Multi-Tenant SaaS',
     timeline: '1-3 Weeks Sprint',
     specs: ['REST / GraphQL APIs', 'Post-Quantum Auth & Storage', 'Real-Time WebSockets', 'Automated CI/CD Pipelines'],
@@ -382,7 +382,7 @@ const WORKS = [
     subtitle: 'Bespoke R&D, AI Agents & First-of-Kind Products',
     meta: '04 / 04 · BESPOKE INNOVATION',
     desc: 'Have a breakthrough vision or unique concept? Share your idea and our engineering pod architects it into reality. Experimental builds, custom AI pipelines, and uncharted digital platforms.',
-    image: '/sector_ai_automation.jpg',
+    image: '/pathway_bespoke_idea.jpg',
     models: 'Concept Prototype to Full Production',
     timeline: 'Bespoke Engineering Sprint',
     specs: ['Dedicated Engineering Pod', 'Weekly Milestone Demos', '100% Custom IP', 'Direct CEO Architecture'],
@@ -867,7 +867,7 @@ export default function WebDevStore() {
             <span className="webdev-dept-label">WEB DEVELOPMENT DEPARTMENT</span>
             <h1 className="webdev-store-title">Secure Product Matrix</h1>
             <p className="webdev-store-sub">
-              Operator: <strong style={{ color: '#a78bfa' }}>{userName || 'COMMANDER'}</strong> · 10/10 SaaS Blueprints
+              Operator: <strong style={{ color: '#a78bfa' }}>{userName || 'Guest'}</strong> · 10/10 SaaS Blueprints
             </p>
           </div>
         </div>

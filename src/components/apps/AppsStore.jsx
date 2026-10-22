@@ -151,7 +151,7 @@ export default function AppsStore() {
             </span>
             <h1 className="webdev-store-title">Autonomous Application Matrix</h1>
             <p className="webdev-store-sub">
-              Operator: <strong style={{ color: '#00d4ff' }}>{userName || 'COMMANDER'}</strong> · Native & Cross-Platform Software
+              Operator: <strong style={{ color: '#00d4ff' }}>{userName || 'Guest'}</strong> · Native & Cross-Platform Software
             </p>
           </div>
         </div>

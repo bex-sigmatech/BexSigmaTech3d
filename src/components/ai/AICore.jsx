@@ -496,7 +496,7 @@ export default function AICore() {
   // Real-time Voice Trigger Scan listener
   useEffect(() => {
     const handleTriggerScan = (e) => {
-      const callsign = e.detail || 'COMMANDER'
+      const callsign = e.detail || 'Guest'
       setInputName(callsign)
       setTimeout(() => {
         voiceEmitter.emit('NAME_SUBMITTED', { userName: callsign })
@@ -526,9 +526,15 @@ export default function AICore() {
     )
   }
 
+  const handleQuickSelect = (roleName) => {
+    setInputName(roleName)
+    voiceEmitter.emit('NAME_SUBMITTED', { userName: roleName })
+    submitIdentity(roleName)
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault()
-    const callsign = inputName.trim() || 'COMMANDER'
+    const callsign = inputName.trim() || 'Guest'
 
     // Immediate transition trigger
     voiceEmitter.emit('NAME_SUBMITTED', { userName: callsign })
@@ -595,191 +601,85 @@ export default function AICore() {
   }, [])
 
   return (
-    <div style={{ position: 'absolute', inset: 0, width: '100vw', height: '100vh', overflow: 'hidden', background: '#000' }}>
+    <div style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', overflow: 'hidden', background: '#000' }}>
       {isMobileScreen ? (
-        /* ── MOBILE 10/10 AI SENTINEL ROBOT CORE INTERFACE ── */
-        <div className="mobile-aicore-wrapper">
+        /* ── MOBILE CLEAN MINIMALIST ENTRY PORTAL ── */
+        <div className="mobile-clean-portal-wrapper">
+          {/* Subtle Ambient Cosmic Glow */}
+          <div className="mcp-ambient-glow" />
 
-          {/* Ambient Background Effects */}
-          <div className="cl-bg-mesh" />
-          <div className="cl-scanlines" />
+          {/* Top Skip Pill */}
+          {!isIntroSkipped && (
+            <button type="button" className="mcp-skip-btn interactive" onClick={skipIntro}>
+              SKIP ▸▸
+            </button>
+          )}
 
-          {/* ── TOP: Status Bar ── */}
-          <header className="cl-topbar">
-            <div className="cl-topbar-left">
-              <span className="cl-live-dot" />
-              <span className="cl-topbar-os">NEURAL LINK ACTIVE</span>
-            </div>
-            {!isIntroSkipped && (
-              <button type="button" className="cl-skip-pill interactive" onClick={skipIntro}>
-                SKIP ▸▸
-              </button>
-            )}
-          </header>
-
-          {/* ── CENTER: 3D Realistic AI Robot Background + Credential Card ── */}
-          <div className="cl-hero-section" style={{ margin: '0', width: '100%', maxWidth: '420px' }}>
-
-            {/* ── Cinematic Robot Stage — IDEA A: Biometric Arc + Bottom Sheet ── */}
-            <div className="cl-3d-robot-bg cl-idea-a-hero">
-              <div className="cl-robot-glowfield" />
-
-              <img
-                src="/robot_face.png"
-                alt="AI Sentinel"
-                draggable={false}
-                className="cl-robot-img"
-              />
-              <div className="cl-robot-fade" />
-
-              {/* Orbital rings */}
-              <div className="cl-orbit r1" />
-              <div className="cl-orbit r2" />
-
-              {/* IDEA A: Biometric Arc Scanner — 180° sweep */}
-              <svg className="cl-arc-scanner" viewBox="0 0 200 110" preserveAspectRatio="none" aria-hidden="true">
-                <defs>
-                  <linearGradient id="arcGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" stopColor="transparent" />
-                    <stop offset="45%" stopColor="rgba(34,211,238,0)" />
-                    <stop offset="50%" stopColor="rgba(34,211,238,0.9)" />
-                    <stop offset="55%" stopColor="rgba(34,211,238,0)" />
-                    <stop offset="100%" stopColor="transparent" />
-                  </linearGradient>
-                </defs>
-                <path d="M 10 100 A 90 90 0 0 1 190 100" fill="none" stroke="url(#arcGrad)" strokeWidth="2.5" strokeLinecap="round" className="cl-arc-path" />
-                <path d="M 10 100 A 90 90 0 0 1 190 100" fill="none" stroke="rgba(56,189,248,0.08)" strokeWidth="1" strokeDasharray="3 6" />
-              </svg>
-              <div className="cl-arc-glow" />
-
-              {/* Scanning beam */}
-              <div className="cl-robot-scan-beam" />
-
-              {/* Floating HUD chips */}
-              <div className="cl-chip chip-tl"><b>SYS</b><span>87.4%</span></div>
-              <div className="cl-chip chip-tr"><b>NEURAL</b><span>SYNC OK</span></div>
-              <div className="cl-chip chip-bl"><b>CORE</b><span>STABLE</span></div>
-              <div className="cl-chip chip-br"><b>MATCH</b><span>{fpMatch.toFixed(1)}%</span></div>
+          {/* Centered Minimalist Card */}
+          <div className="mcp-card">
+            {/* Top Brand Logo: Atom/Orbital Icon + BEx Sigma Tech */}
+            <div className="mcp-brand">
+              <div className="mcp-brand-icon" aria-hidden="true">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="12" cy="12" r="2.8" />
+                  <ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(30 12 12)" />
+                  <ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(90 12 12)" />
+                  <ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(150 12 12)" />
+                </svg>
+              </div>
+              <span className="mcp-brand-text">BEx Sigma Tech</span>
             </div>
 
-            <div className="cl-signal-tag">
-              <span className="cl-signal-dot" />
-              <span>{isSpeaking ? 'AI VOICE TRANSMITTING' : 'AI SENTINEL ONLINE · BIOMETRIC READY'}</span>
+            {/* Heading & Subtitle */}
+            <div className="mcp-headings">
+              <h1 className="mcp-title">Welcome</h1>
+              <p className="mcp-subtitle">Please enter your name to continue</p>
             </div>
 
-            {/* IDEA A: Bottom Sheet Credential Card — clean impressive */}
-            <div className="cl-card cl-bottom-sheet">
-              <div className="cl-sheet-handle" aria-hidden="true" />
-              <div className="cl-glass-sheen" />
-              {/* Stepper 01—02—03 */}
-              <div className="cl-stepper" aria-label="Progress: biometric, callsign, sync">
-                <div className={`cl-step ${fpMatch > 96 ? 'done' : 'active'}`}><span>01</span><b>BIOMETRIC</b></div>
-                <div className="cl-step-line" />
-                <div className={`cl-step ${inputName.length > 0 ? 'done' : ''} ${fpMatch > 96 && inputName.length === 0 ? 'active' : ''}`}><span>02</span><b>CALLSIGN</b></div>
-                <div className="cl-step-line" />
-                <div className={`cl-step ${scene === 'ai_response' ? 'done' : ''}`}><span>03</span><b>SYNC</b></div>
-              </div>
-
-              <div className="cl-card-header">
-                <div className="cl-logo-tile">XΣ</div>
-                <div className="cl-title-stack">
-                  <span className="cl-title-brand">BEx Sigma Tech</span>
-                  <span className="cl-card-title">AI COMMAND PORTAL</span>
-                </div>
-                <span className={`cl-header-status ${scene === 'ai_response' ? 'ok' : ''}`}>
-                  <span className="status-dot" />
-                  {scene === 'ai_response' ? '100% MATCH' : `${fpMatch.toFixed(1)}% MATCH`}
-                </span>
-              </div>
-
-              {/* AI Transmission Block — clean typography */}
-              <div className="id-dialogue-block cl-dialogue">
-                {scene !== 'ai_response' ? (
-                  <>
-                    <p className="cl-dialogue-main">
-                      <TypewriterText text="BEx Sigma Tech · Aerospace AI Infrastructure" speed={35} />
-                    </p>
-                    <p className="cl-dialogue-sub">
-                      <TypewriterText text="Operator authorisation required. Please synchronise your unique callsign to proceed." speed={20} />
-                    </p>
-                  </>
-                ) : (
-                  <>
-                    <p className="cl-dialogue-main cl-granted">
-                      <TypewriterText text={`Welcome, ${userName ? userName.charAt(0).toUpperCase() + userName.slice(1) : 'Operator'}.`} speed={35} />
-                    </p>
-                    <p className="cl-dialogue-sub">
-                      <TypewriterText text="Operator credentials verified. Synchronising observatory database..." speed={20} />
-                    </p>
-                  </>
-                )}
-              </div>
-
-              {/* Input Form & Action — IDEA A: mic inside input, clean */}
-              {scene !== 'ai_response' ? (
-                <form onSubmit={handleSubmit} className="cl-form">
-                  <div className="cl-input-row cl-idea-a-input-row">
-                    <input
-                      type="text"
-                      className="cl-input interactive"
-                      placeholder="Enter operator callsign..."
-                      value={inputName}
-                      onChange={(e) => setInputName(e.target.value)}
-                      aria-label="Operator callsign"
-                      autoComplete="off"
-                      autoCorrect="off"
-                    />
-                    <button
-                      type="button"
-                      onClick={handleMicClick}
-                      className={`cl-mic cl-mic-inside interactive ${isListening ? 'listening' : ''}`}
-                      title="Speak via Microphone"
-                      aria-label={isListening ? 'Listening for voice' : 'Speak callsign via microphone'}
-                    >
-                      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="cl-mic-svg">
-                        <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z" />
-                        <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
-                        <line x1="12" y1="19" x2="12" y2="22" />
-                      </svg>
-                    </button>
-                  </div>
-                  <button type="submit" className="cl-sync-btn interactive" aria-label="Sync credentials and enter station">
-                    {isListening ? (
-                      <span className="cl-sync-spinner" aria-hidden="true" />
-                    ) : null}
-                    <span className="m-sync-btn-text">{isListening ? 'LISTENING...' : 'SYNC CREDENTIALS'}</span>
-                    <span className="m-sync-btn-arrow">{isListening ? '●' : '→'}</span>
+            {/* Input Form & Action */}
+            {scene !== 'ai_response' ? (
+              <form onSubmit={handleSubmit} className="mcp-form">
+                <div className="mcp-input-wrap">
+                  <input
+                    type="text"
+                    className="mcp-input interactive"
+                    placeholder="Enter your name..."
+                    value={inputName}
+                    onChange={(e) => setInputName(e.target.value)}
+                    aria-label="Enter your name"
+                    autoComplete="off"
+                    autoCorrect="off"
+                  />
+                  <button
+                    type="button"
+                    onClick={handleMicClick}
+                    className={`mcp-mic-btn interactive ${isListening ? 'listening' : ''}`}
+                    title="Speak via Microphone"
+                    aria-label={isListening ? 'Listening for voice' : 'Speak name via microphone'}
+                  >
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z" />
+                      <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+                      <line x1="12" y1="19" x2="12" y2="22" />
+                    </svg>
                   </button>
-                </form>
-              ) : (
-                <div className="cl-access-banner">
-                  <span className="cl-access-icon">✓</span>
-                  <span className="cl-access-text">CLEARANCE VERIFIED · ACCESS GRANTED</span>
                 </div>
-              )}
-            </div>
-          </div>
 
-          {/* ── BOTTOM: Diagnostics Strip ── */}
-          <div className="cl-hud-footer">
-            <div className="cl-hud-cell">
-              <span className="cl-hud-key">AI SYNC</span>
-              <span className="cl-hud-val green">97.4%</span>
-            </div>
-            <div className="cl-hud-cell">
-              <span className="cl-hud-key">BIOMETRIC</span>
-              <span className="cl-hud-val green">99.8%</span>
-            </div>
-            <div className="cl-hud-cell">
-              <span className="cl-hud-key">NETWORK</span>
-              <span className="cl-hud-val cyan">82.1ms</span>
-            </div>
-            <div className="cl-hud-cell">
-              <span className="cl-hud-key">POWER</span>
-              <span className="cl-hud-val cyan">99.2%</span>
-            </div>
+                <button type="submit" className="mcp-submit-btn interactive" aria-label="Enter station">
+                  <span>{isListening ? 'LISTENING...' : 'ENTER'}</span>
+                  <span className="mcp-btn-arrow">→</span>
+                </button>
+              </form>
+            ) : (
+              <div className="mcp-access-granted">
+                <div className="mcp-granted-icon">✓</div>
+                <div className="mcp-granted-title">
+                  Welcome, {userName ? userName.charAt(0).toUpperCase() + userName.slice(1) : 'Guest'}.
+                </div>
+                <div className="mcp-granted-sub">Entering orbital station...</div>
+              </div>
+            )}
           </div>
-
         </div>
       ) : (
         /* ── DESKTOP AI CORE INTERFACE (UNCHANGED) ── */
@@ -915,7 +815,7 @@ export default function AICore() {
                     <span className="scan-phase-label">
                       {zoomPhase === 0 && 'INITIALIZING CORE...'}
                       {zoomPhase === 1 && 'BIOMETRIC VERIFICATION...'}
-                      {zoomPhase === 2 && 'CREDENTIAL CHECK COMPLETE ✓'}
+                      {zoomPhase === 2 && 'IDENTITY VERIFIED ✓'}
                     </span>
                   </div>
                 )}
@@ -932,24 +832,24 @@ export default function AICore() {
                   </div>
                 )}
 
-                {/* AI Dialogue with typewriter effect — spelling corrected */}
+                {/* AI Dialogue with typewriter effect */}
                 <div className="id-dialogue-block">
                   {scene !== 'ai_response' ? (
                     <>
                       <p className="id-line-main" style={{ fontSize: 'clamp(0.95rem, 1.8vw, 1.3rem)' }}>
-                        “<TypewriterText text="BEx Sigma Tech is a premium SaaS software company." speed={35} />”
+                        “<TypewriterText text="Welcome to BEx Sigma Tech · Your Digital Partner" speed={35} />”
                       </p>
                       <p className="id-line-sub" style={{ fontSize: 'clamp(0.72rem, 1.3vw, 0.85rem)', color: 'rgba(0, 212, 255, 0.75)' }}>
-                        “<TypewriterText text="We provide digital marketing, run Meta Ads campaigns, create content, and offer financial systems support. Please synchronise your callsign to enter." speed={20} />”
+                        “<TypewriterText text="Please enter your name below to personalize your station access, or type 'Guest' to explore." speed={20} />”
                       </p>
                     </>
                   ) : (
                     <>
                       <p className="id-line-main id-granted">
-                        “<TypewriterText text={`Welcome, ${userName ? userName.charAt(0).toUpperCase() + userName.slice(1) : 'Operator'}.`} speed={35} />”
+                        “<TypewriterText text={`Welcome aboard, ${userName ? userName.charAt(0).toUpperCase() + userName.slice(1) : 'Guest'}.`} speed={35} />”
                       </p>
                       <p className="id-line-sub" style={{ fontSize: 'clamp(0.72rem, 1.3vw, 0.85rem)' }}>
-                        “<TypewriterText text="Operator credentials verified. Synchronising observatory database..." speed={20} />”
+                        “<TypewriterText text="Identity verified. Synchronizing observatory database..." speed={20} />”
                       </p>
                       <div className="access-granted-bars">
                         {Array.from({ length: 14 }).map((_, i) => (
@@ -960,18 +860,18 @@ export default function AICore() {
                   )}
                 </div>
 
-                {/* Callsign Input Form */}
+                {/* Name Input Form */}
                 {scene !== 'ai_response' && (
                   <form onSubmit={handleSubmit} className="id-form-block">
                     <label className="id-form-label">
-                      ENTER CREDENTIAL CALLSIGN / VOICE COMMAND
+                      ENTER YOUR NAME
                       {isListening && <span style={{ color: '#00d4ff', marginLeft: '10px' }}>🎙️ LISTENING...</span>}
                     </label>
                     <div className="id-form-row" style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
                       <input
                         type="text"
                         className="id-form-input interactive"
-                        placeholder="e.g. COMMANDER"
+                        placeholder="Enter your name (or type Guest)..."
                         value={inputName}
                         onChange={(e) => setInputName(e.target.value)}
                         autoFocus
@@ -981,12 +881,44 @@ export default function AICore() {
                         type="button"
                         onClick={handleMicClick}
                         className={`id-form-btn interactive ${isListening ? 'listening-pulse' : ''}`}
-                        title="Speak credential via Microphone"
+                        title="Speak name via Microphone"
                         style={{ background: isListening ? '#00d4ff' : 'rgba(0, 212, 255, 0.15)', color: isListening ? '#000' : '#00d4ff', width: '44px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
                       >
                         🎙️
                       </button>
-                      <button type="submit" className="id-form-btn interactive">SYNC</button>
+                      <button type="submit" className="id-form-btn interactive">CONTINUE →</button>
+                    </div>
+
+                    {/* Quick Role Selection Chips on Desktop */}
+                    <div className="cl-quick-options" style={{ marginTop: '12px', alignItems: 'flex-start' }}>
+                      <span className="cl-quick-hint">Or click to quick-enter:</span>
+                      <div className="cl-quick-chips">
+                        <button
+                          type="button"
+                          className="cl-quick-chip interactive"
+                          onClick={() => handleQuickSelect('Guest')}
+                          title="Enter directly as Guest"
+                        >
+                          🚀 Guest Explorer
+                        </button>
+                        <button
+                          type="button"
+                          className="cl-quick-chip interactive"
+                          onClick={() => handleQuickSelect('Client')}
+                          title="Enter as Client"
+                        >
+                          💼 Business / Client
+                        </button>
+                        <button
+                          type="button"
+                          className="cl-quick-chip interactive"
+                          onClick={() => handleQuickSelect('Partner')}
+                          title="Enter as Partner"
+                        >
+                          🤝 Partner
+                        </button>
+                      </div>
+                      <p className="cl-quick-note">✨ No password required · Instant access</p>
                     </div>
                   </form>
                 )}

@@ -18,6 +18,7 @@ const DEPARTMENTS = [
     id: 'mission_control',
     title: 'Mission Control',
     subtitle: 'BEx Sigma Tech — Core Command & Company Hub',
+    plainLabel: 'About Us · Our Services',
     desc: 'Central hub of BEx Sigma Tech — we build software, websites, 3D websites, applications, digital marketing, content creation, AI automation and custom generated notes. Your idea, our end-to-end execution.',
     tech: ['Software', 'Websites', '3D Web', 'AI Automation', 'Digital Marketing', 'Content'],
     color: '#00d4ff', emissive: '#0088cc', pos: [0, 0, 0]
@@ -25,15 +26,17 @@ const DEPARTMENTS = [
   {
     id: 'web_dev',
     title: 'Web Development',
-    subtitle: 'Quantum Spatial Web & Next-Gen Interfaces',
-    desc: 'Ultra-low latency web architectures engineered for zero-gravity computing and spatial Apple Vision frameworks.',
-    tech: ['Spatial Web', 'Zero-Latency Core', 'React Advanced'],
+    subtitle: 'Products & Pricing · Excel Dashboards',
+    plainLabel: 'Buy Dashboards · Web Services',
+    desc: 'Browse and purchase our premium Excel dashboard products, or explore our full-stack web development services for your business.',
+    tech: ['Excel Dashboards', 'React Websites', '3D Web', 'E-Commerce'],
     color: '#7c3aed', emissive: '#4c1d95', pos: [3.4, 1.2, -2.5]
   },
   {
     id: 'cloud',
-    title: 'Autonomous Applications',
-    subtitle: 'Autonomous Application Matrix · Mobile & Desktop Software',
+    title: 'Apps & Software',
+    subtitle: 'Mobile Apps · Desktop Software · AI Tools',
+    plainLabel: 'Future Path · UrDay · Custom Apps',
     desc: 'Flagship consumer & enterprise mobile apps engineered for speed, privacy, and seamless cross-platform performance.',
     tech: ['React Native', 'Flutter', 'Future Path AI', 'UrDay ESBI'],
     color: '#38bdf8', emissive: '#0369a1', pos: [2.5, -1.8, -4.0]
@@ -41,7 +44,8 @@ const DEPARTMENTS = [
   {
     id: 'client_projects',
     title: 'Our Client Projects',
-    subtitle: 'Proven Case Studies, Enterprise Deployments & Client Success',
+    subtitle: 'Case Studies · Portfolio · Client Success Stories',
+    plainLabel: 'Real Projects · FinexHub · Enterprise',
     desc: 'Explore real-world client platforms, AI workflow deployments, and high-impact digital solutions architected by BEX Sigma Tech.',
     tech: ['Enterprise Web', '3D WebGL', 'AI Agents', 'Cloud Systems'],
     color: '#f59e0b', emissive: '#b45309', pos: [-3.2, 1.6, -3.0]
@@ -240,41 +244,81 @@ function DepartmentOrb({ dept, index, isActive, isHovered, onHover, onLeave, onS
   )
 }
 
+/* ─── Helper to compute camera target position & lookAt point ─── */
+function getCameraTarget(dept, isOverview, isMobile, isZooming) {
+  const [px, py, pz] = dept.pos
+
+  if (isMobile) {
+    if (isOverview) {
+      const dist = isZooming ? 4.8 : 6.4
+      return {
+        x: 0,
+        y: 0.85,
+        z: pz + dist,
+        lx: 0,
+        ly: -0.3,
+        lz: pz,
+      }
+    }
+    // Mobile Sector Focus (Apps & Software / Web Dev / Client Projects):
+    // Center camera directly on the sector orb along X and frame it above the bottom dock,
+    // ensuring no other sector worlds (Web Dev / Mission Control) occlude or cut across line of sight.
+    const dist = isZooming ? 3.3 : 4.4
+    return {
+      x: px,
+      y: py + 0.45,
+      z: pz + dist,
+      lx: px,
+      ly: py - 0.25,
+      lz: pz,
+    }
+  }
+
+  // Desktop (unchanged — preserving original framing exactly)
+  const baseDist = isOverview ? 5.6 : 5.0
+  const dist = isZooming ? baseDist * 0.75 : baseDist
+  return {
+    x: px * 0.35,
+    y: py * 0.25 + 0.25,
+    z: pz + dist,
+    lx: px,
+    ly: py,
+    lz: pz,
+  }
+}
+
 /* ─── JARVIS Camera Controller — smooth zoom into active orb ─── */
 function JarvisCameraController({ activeIndex, departments, entryPhase = 1, isZooming }) {
   const { camera } = useThree()
-  const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768
+  const [isMobile, setIsMobile] = useState(
+    () => typeof window !== 'undefined' && window.innerWidth <= 768
+  )
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 768)
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
+
   const isOverview = activeIndex === 0
   const dept = departments[activeIndex] || departments[0]
-  const [px, py, pz] = dept.pos
 
-  const baseDist = isMobile ? (isOverview ? 6.4 : 4.8) : (isOverview ? 5.6 : 5.0)
-  const dist = isZooming ? baseDist * 0.75 : baseDist
+  const initialTgt = useMemo(
+    () => getCameraTarget(dept, isOverview, isMobile, isZooming),
+    [] // eslint-disable-line react-hooks/exhaustive-deps
+  )
 
-  const targetRef = useRef({
-    x: px * (isMobile ? 0.08 : 0.35),
-    y: isMobile ? (isOverview ? 0.85 : py * 0.15 + 0.85) : (py * 0.25 + 0.25),
-    z: pz + dist,
-    lx: px,
-    ly: isMobile ? (isOverview ? -0.3 : py - 0.45) : py,
-    lz: pz,
+  const targetRef = useRef(initialTgt)
+  const currentLookAt = useRef({
+    x: initialTgt.lx,
+    y: initialTgt.ly,
+    z: initialTgt.lz,
   })
 
   useEffect(() => {
     const d = departments[activeIndex] || departments[0]
-    const [dpx, dpy, dpz] = d.pos
     const dIsOverview = activeIndex === 0
-    const dBaseDist = isMobile ? (dIsOverview ? 6.4 : 4.8) : (dIsOverview ? 5.6 : 5.0)
-    const dDist = isZooming ? dBaseDist * 0.75 : dBaseDist
-
-    targetRef.current = {
-      x: dpx * (isMobile ? 0.08 : 0.35),
-      y: isMobile ? (dIsOverview ? 0.85 : dpy * 0.15 + 0.85) : (dpy * 0.25 + 0.25),
-      z: dpz + dDist,
-      lx: dpx,
-      ly: isMobile ? (dIsOverview ? -0.3 : dpy - 0.45) : dpy,
-      lz: dpz,
-    }
+    targetRef.current = getCameraTarget(d, dIsOverview, isMobile, isZooming)
   }, [activeIndex, departments, isZooming, isMobile])
 
   useFrame(({ clock }) => {
@@ -294,7 +338,15 @@ function JarvisCameraController({ activeIndex, departments, entryPhase = 1, isZo
     camera.position.x += Math.sin(t * 0.25) * 0.005
     camera.position.y += Math.cos(t * 0.18) * 0.004
 
-    camera.lookAt(tgt.lx, tgt.ly, tgt.lz)
+    currentLookAt.current.x += (tgt.lx - currentLookAt.current.x) * lerpSpeed
+    currentLookAt.current.y += (tgt.ly - currentLookAt.current.y) * lerpSpeed
+    currentLookAt.current.z += (tgt.lz - currentLookAt.current.z) * lerpSpeed
+
+    camera.lookAt(
+      currentLookAt.current.x,
+      currentLookAt.current.y,
+      currentLookAt.current.z
+    )
   })
 
   return null
@@ -794,6 +846,9 @@ export default function HQScene() {
               {currentDept.title}
             </h2>
             <div className="jarvis-capsule-subtitle">{currentDept.subtitle}</div>
+            {currentDept.plainLabel && (
+              <div className="jarvis-capsule-plain-label">{currentDept.plainLabel}</div>
+            )}
           </div>
 
           {/* Quick Engage Button */}

@@ -104,7 +104,7 @@ export default function ClientProjectsShowcase() {
         </div>
         <div className="cp-topbar-operator">
           <span className="cp-operator-dot" />
-          <span>{userName || 'COMMANDER'}</span>
+          <span>{userName || 'GUEST'}</span>
         </div>
       </header>
 

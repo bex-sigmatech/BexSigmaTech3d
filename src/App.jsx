@@ -4,6 +4,7 @@ import BootScreen from './components/boot/BootScreen'
 import AccessGranted from './components/boot/AccessGranted'
 import WelcomeScreen from './components/boot/WelcomeScreen'
 import LiveVoiceHUD from './components/ai/LiveVoiceHUD'
+import QuickNavHUD from './components/common/QuickNavHUD'
 import './styles/app.css'
 import './styles/lagfree.css'
 
@@ -35,12 +36,17 @@ export default function App() {
 
   return (
     <div className="app-container">
-      {/* ── Real-Time Gemini 2.0 Live Voice HUD — hidden on mobile credential to avoid covering SYNC (user report) ── */}
+      {/* ── Real-Time Gemini 2.0 Live Voice HUD — hidden on mobile to avoid covering input ── */}
       {bootStarted && !(typeof window !== 'undefined' && window.innerWidth <= 768 && (scene === 'ai_core' || scene === 'ai_response')) && (
         <LiveVoiceHUD
           onNavigateSector={(sector) => navigateToSector(sector)}
-          onTriggerScan={(callsign) => submitIdentity(callsign || 'COMMANDER')}
+          onTriggerScan={(callsign) => submitIdentity(callsign || 'Guest')}
         />
+      )}
+
+      {/* ── Global Quick Navigation & About BEx HUD ── */}
+      {bootStarted && !['boot', 'access_granted', 'welcome'].includes(scene) && (
+        <QuickNavHUD />
       )}
       {/* Scene 1: Boot Decrypt loader */}
       {scene === 'boot' && <BootScreen />}
@@ -108,8 +114,8 @@ export default function App() {
             e.stopPropagation()
             skipIntro()
           }}
-          title="Skip to credential input"
-          aria-label="Skip intro to credential input"
+          title="Skip to name input"
+          aria-label="Skip intro to name input"
         >
           SKIP ▸▸
         </button>
