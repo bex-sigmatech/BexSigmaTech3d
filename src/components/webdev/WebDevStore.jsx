@@ -864,7 +864,7 @@ export default function WebDevStore() {
             ← BACK TO HQ
           </button>
           <div className="webdev-header-titles">
-            <span className="webdev-dept-label">WEB DEVELOPMENT DEPARTMENT</span>
+            <span className="webdev-dept-label">OUR PRODUCTS</span>
             <h1 className="webdev-store-title">Secure Product Matrix</h1>
             <p className="webdev-store-sub">
               Operator: <strong style={{ color: '#a78bfa' }}>{userName || 'Guest'}</strong> · 10/10 SaaS Blueprints

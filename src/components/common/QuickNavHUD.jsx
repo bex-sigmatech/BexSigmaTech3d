@@ -22,9 +22,9 @@ const SECTOR_LINKS = [
     id: 'webdev_store',
     sectorId: 'web_dev',
     icon: '🛒',
-    title: 'Products & Web Store',
+    title: 'Our Products Store',
     badge: 'STORE',
-    desc: 'Excel Dashboards (₹256–₹349) & Web Dev services',
+    desc: 'Excel Dashboards (₹256–₹349) & Digital Products',
     color: '#7c3aed',
   },
   {
@@ -230,7 +230,7 @@ export default function QuickNavHUD() {
                   <strong>AI Automation</strong>.
                 </p>
                 <div className="quicknav-pill-row">
-                  <span className="quicknav-pill">🌐 Web Development</span>
+                  <span className="quicknav-pill">🌐 Our Products</span>
                   <span className="quicknav-pill">📈 Meta Ads</span>
                   <span className="quicknav-pill">📊 Excel Dashboards</span>
                   <span className="quicknav-pill">📱 Mobile Apps</span>

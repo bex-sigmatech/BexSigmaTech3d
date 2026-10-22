@@ -73,7 +73,7 @@ export const VoiceLibrary = {
     text: (data) => {
       const names = {
         'mission_control': 'Mission Control.',
-        'web_dev': 'Web Development Division.',
+        'web_dev': 'Our Products Division.',
         'cloud': 'Autonomous Application Matrix.',
         'client_projects': 'Our Client Projects Showcase.',
         'ai_auto': 'AI Automation Division.'
@@ -87,7 +87,7 @@ export const VoiceLibrary = {
     text: (data) => {
       const entries = {
         'mission_control': 'Entering Mission Control. Central command for all operations and project coordination.',
-        'web_dev': 'Entering Web Development Division. We build premium websites, web applications, and e-commerce platforms.',
+        'web_dev': 'Entering Our Products Division. Explore our production Excel business dashboards and bespoke digital solutions.',
         'cloud': 'Entering Autonomous Application Matrix. Explore production-ready mobile apps and custom application engineering.',
         'client_projects': 'Entering Our Client Projects. Explore real-world deployments and enterprise client success stories.',
         'ai_auto': 'Entering AI Automation Division. We deploy intelligent agents and workflow automation systems.'

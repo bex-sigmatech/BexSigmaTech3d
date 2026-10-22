@@ -25,10 +25,10 @@ const DEPARTMENTS = [
   },
   {
     id: 'web_dev',
-    title: 'Web Development',
-    subtitle: 'Products & Pricing · Excel Dashboards',
-    plainLabel: 'Buy Dashboards · Web Services',
-    desc: 'Browse and purchase our premium Excel dashboard products, or explore our full-stack web development services for your business.',
+    title: 'Our Products',
+    subtitle: 'Excel Dashboards · Business Tools · Web Services',
+    plainLabel: 'Buy Dashboards · Digital Products',
+    desc: 'Browse and purchase our premium Excel dashboard products, or explore our digital products and full-stack solutions for your business.',
     tech: ['Excel Dashboards', 'React Websites', '3D Web', 'E-Commerce'],
     color: '#7c3aed', emissive: '#4c1d95', pos: [3.4, 1.2, -2.5]
   },
@@ -468,7 +468,7 @@ export default function HQScene() {
       try {
         if (dept.id === 'web_dev') {
           cinemaAudio.setScene('webdev_store')
-          useStore.setState({ scene: 'webdev_store', activeMission: { id: 'web_dev', title: 'Web Development' } })
+          useStore.setState({ scene: 'webdev_store', activeMission: { id: 'web_dev', title: 'Our Products' } })
         } else if (dept.id === 'cloud' || dept.id === 'apps') {
           cinemaAudio.setScene('apps_store')
           useStore.setState({ scene: 'apps_store', activeMission: { id: 'cloud', title: 'Autonomous Applications' } })

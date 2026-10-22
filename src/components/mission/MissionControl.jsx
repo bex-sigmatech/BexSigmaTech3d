@@ -12,7 +12,7 @@ import '../../styles/missionControl.css'
 
 const ALL_SECTORS = [
   { id: 'mission_control', name: 'Mission Control', icon: '⚡', badge: 'SIGMA CORE', theme: 'classic' },
-  { id: 'web_dev', name: 'Web Development', icon: '🌐', badge: 'SIGMA 3D', theme: 'jarvis' },
+  { id: 'web_dev', name: 'Our Products', icon: '🌐', badge: 'PRODUCTS', theme: 'jarvis' },
   { id: 'cloud', name: 'Autonomous Applications', icon: '📱', badge: 'APP MATRIX', theme: 'jarvis' },
   { id: 'client_projects', name: 'Our Client Projects', icon: '🚀', badge: 'CLIENT SUCCESS', theme: 'quantum' },
 ]

@@ -132,7 +132,7 @@ export default function BootScreen() {
                   <p className="mb-brand-subtitle">NEXT-GENERATION DIGITAL EXPERIENCES</p>
                   <p className="mb-brand-services">Premium SaaS & Digital Marketing Solutions</p>
                   <div className="boot-service-pills">
-                    <span className="boot-pill">Web Development</span>
+                    <span className="boot-pill">Our Products</span>
                     <span className="boot-pill">Meta Ads</span>
                     <span className="boot-pill">AI Dashboards</span>
                     <span className="boot-pill">Mobile Apps</span>
@@ -238,7 +238,7 @@ export default function BootScreen() {
               <div className="boot-hero-context">
                 <h2 className="boot-hero-tagline">Premium SaaS & Digital Marketing Solutions</h2>
                 <div className="boot-service-pills">
-                  <span className="boot-pill">Web Development</span>
+                  <span className="boot-pill">Our Products</span>
                   <span className="boot-pill">Meta Ads</span>
                   <span className="boot-pill">Excel Dashboards</span>
                   <span className="boot-pill">Mobile Apps</span>

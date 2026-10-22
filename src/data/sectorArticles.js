@@ -148,9 +148,9 @@ export const SECTOR_ARTICLES = {
 
   web_dev: {
     id: 'web_dev',
-    title: 'Web Development',
-    subtitle: 'Quantum Spatial Web & Next-Gen Interfaces',
-    badge: 'WEB DIVISION',
+    title: 'Our Products',
+    subtitle: 'Excel Dashboards, Digital Products & Spatial Web',
+    badge: 'PRODUCTS MATRIX',
     overview: `Web Development at BEx Sigma Tech builds fast, secure and scalable websites that work flawlessly on every device. Whether you need a corporate site, a custom web application or a complete e-commerce store, we engineer for speed, SEO and future growth. Every build is responsive, accessible and optimized for real-world business results — not just good looks.`,
     services: [
       { title: 'Corporate & Landing Websites', subtitle: 'Conversion-Focused Architecture', desc: 'Clean, high-performance websites that communicate trust and convert visitors into customers.', image: '/sector_website.jpg', badge: 'WEB CORE' },

@@ -186,7 +186,7 @@ export const useStore = create((set, get) => {
       cinemaAudio.playSectorTransition()
       if (sectorId === 'web_dev' || sectorId === 'store' || sectorId === 'products') {
         cinemaAudio.setScene('webdev_store')
-        set({ scene: 'webdev_store', activeMission: { id: 'web_dev', name: 'Sector 9 Web Dev Store' } })
+        set({ scene: 'webdev_store', activeMission: { id: 'web_dev', name: 'Our Products Store' } })
       } else if (sectorId === 'cloud' || sectorId === 'apps' || sectorId === 'apps_store') {
         cinemaAudio.setScene('headquarters')
         set({ scene: 'apps_store', activeMission: { id: 'cloud', name: 'Apps Division' } })

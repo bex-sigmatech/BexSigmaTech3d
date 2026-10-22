@@ -156,7 +156,7 @@ export default function MissionBriefing() {
 
         <div className="nolan-briefing-actions">
           <button className="nolan-btn-primary interactive" onClick={handleStartMission}>
-            {article.id === 'web_dev' ? 'ENTER WEB STORE' : 'INITIATE DEPARTMENT MAINFRAME'}
+            {article.id === 'web_dev' ? 'ENTER PRODUCTS STORE' : 'INITIATE DEPARTMENT MAINFRAME'}
           </button>
           <button className="nolan-btn-secondary interactive" onClick={handleClose}>
             RETURN TO OBSERVATORY
