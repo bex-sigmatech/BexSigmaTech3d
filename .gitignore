@@ -24,7 +24,7 @@ Thumbs.db
 npm-debug.log*
 
 # Audio test files
-*.m4a
+/hello.m4a
 
 # Runtime data — contains customer PII (emails, tokens)
 server/data/database.json

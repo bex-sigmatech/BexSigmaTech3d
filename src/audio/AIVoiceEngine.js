@@ -114,6 +114,7 @@ class VoicePlayer {
     this.preferredVoice = null
     this.voicesLoaded = false
     this._voiceLoadPromise = null
+    this.currentAudio = null
   }
 
   init() {
@@ -224,11 +225,64 @@ class VoicePlayer {
       return
     }
 
-    // 4. Last resort: default voice
-    this.preferredVoice = voices[0]
+    // 4. Last resort: default voice (non-female if possible)
+    const anyNonFemale = voices.find(v => {
+      const vName = (v.name || '').toLowerCase()
+      return !femaleBlacklist.some(f => vName.includes(f))
+    })
+    this.preferredVoice = anyNonFemale || voices[0]
   }
 
-  play(text, { pitch = 0.78, rate = 0.88, volume = 1.0, onStart, onEnd, onError } = {}) {
+  play(text, { audioKey = null, pitch = 0.76, rate = 0.88, volume = 1.0, onStart, onEnd, onError } = {}) {
+    // 1. Try to play pre-rendered male studio voice asset first (guarantees male voice everywhere, even iPhones)
+    if (audioKey && typeof window !== 'undefined') {
+      const audioUrl = `/audio/voice/${audioKey}.m4a`
+      try {
+        if (this.currentAudio) {
+          try { this.currentAudio.pause(); this.currentAudio.currentTime = 0; } catch (e) {}
+          this.currentAudio = null
+        }
+        if (this.synth && this.synth.speaking) {
+          try { this.synth.cancel() } catch (e) {}
+        }
+
+        const audio = new Audio(audioUrl)
+        audio.volume = volume
+        this.currentAudio = audio
+
+        let hasStarted = false
+        audio.onplay = () => {
+          hasStarted = true
+          if (onStart) onStart()
+        }
+        audio.onended = () => {
+          this.currentAudio = null
+          if (onEnd) onEnd()
+        }
+        audio.onerror = () => {
+          this.currentAudio = null
+          // Fall back to TTS if file missing
+          this._playTTS(text, { pitch, rate, volume, onStart: hasStarted ? null : onStart, onEnd, onError })
+        }
+
+        const p = audio.play()
+        if (p && typeof p.then === 'function') {
+          p.catch(() => {
+            this.currentAudio = null
+            this._playTTS(text, { pitch, rate, volume, onStart: hasStarted ? null : onStart, onEnd, onError })
+          })
+        }
+        return
+      } catch (err) {
+        // Fallback to TTS
+      }
+    }
+
+    // 2. Fallback to SpeechSynthesis
+    this._playTTS(text, { pitch, rate, volume, onStart, onEnd, onError })
+  }
+
+  _playTTS(text, { pitch = 0.76, rate = 0.88, volume = 1.0, onStart, onEnd, onError } = {}) {
     if (!this.isSupported || !this.synth) {
       if (onStart) onStart()
       if (onEnd) onEnd()
@@ -263,6 +317,10 @@ class VoicePlayer {
   }
 
   stop() {
+    if (this.currentAudio) {
+      try { this.currentAudio.pause(); this.currentAudio.currentTime = 0; } catch (e) {}
+      this.currentAudio = null
+    }
     if (this.synth) {
       try {
         this.synth.cancel()
@@ -271,6 +329,9 @@ class VoicePlayer {
   }
 
   pause() {
+    if (this.currentAudio) {
+      try { this.currentAudio.pause() } catch (e) {}
+    }
     if (this.synth) {
       try {
         this.synth.pause()
@@ -279,6 +340,9 @@ class VoicePlayer {
   }
 
   resume() {
+    if (this.currentAudio) {
+      try { this.currentAudio.play() } catch (e) {}
+    }
     if (this.synth) {
       try {
         this.synth.resume()
@@ -296,7 +360,7 @@ class AudioQueue {
     this.cooldowns = {}
   }
 
-  add(eventKey, config, resolvedText) {
+  add(eventKey, config, resolvedText, audioKey = null) {
     const now = Date.now()
 
     // 10/10 collapse: never play pre-recorded while Live is speaking/listening (avoid two voices at once)
@@ -324,6 +388,7 @@ class AudioQueue {
 
     const queueItem = {
       eventKey,
+      audioKey: audioKey || eventKey,
       config,
       text: resolvedText,
       priority: config.priority || 1,
@@ -362,6 +427,7 @@ class AudioQueue {
     const preDuckVol = cinemaAudio.masterGain ? cinemaAudio.masterGain.gain.value : 0.3
 
     this.player.play(item.text, {
+      audioKey: item.audioKey || item.eventKey,
       onStart: () => {
         cinemaAudio.setAmbientVolume(0.12, 0.4)
         cinemaAudio.playRadioSquelchIn()
@@ -418,6 +484,12 @@ class VoiceManager {
 
   unlock() {
     if (typeof window === 'undefined') return
+    // Pre-unlock HTML5 Audio for iOS Safari / Mobile
+    try {
+      const dummy = new Audio()
+      dummy.src = 'data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA'
+      dummy.play().catch(() => {})
+    } catch (e) {}
     if (this.player && this.player.synth) {
       try {
         this.player.synth.cancel()
@@ -444,7 +516,13 @@ class VoiceManager {
         }
 
         if (resolvedText) {
-          this.queue.add(eventKey, config, resolvedText)
+          let audioKey = eventKey
+          if (eventKey === 'SERVICE_CLICK' && data && data.sectorId) {
+            audioKey = `SERVICE_CLICK_${data.sectorId}`
+          } else if (eventKey === 'SERVICE_HOVER' && data && data.sectorId) {
+            audioKey = `SERVICE_HOVER_${data.sectorId}`
+          }
+          this.queue.add(eventKey, config, resolvedText, audioKey)
         }
       })
     })
