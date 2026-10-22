@@ -434,7 +434,7 @@ async function sendReceiptEmail({ customerEmail, customerName, product, download
 
   // Build email body: ONLY secure single-use server link (file-only, no Drive folder exposed — 10/10)
   const secureLinkBtn = downloadUrl ? `<a href="${downloadUrl}" style="display:inline-block; margin-top:10px; background:linear-gradient(135deg,#00d4ff,#0284c7); color:#fff; padding:14px 26px; border-radius:8px; text-decoration:none; font-weight:bold; font-size:14px; box-shadow:0 4px 15px rgba(0,212,255,0.3);">⬇️ Download Your File — Single Use</a>` : ''
-  const driveLinkBtn = '' // Drive folder hidden for 10/10 — file served directly from secure server, not Drive
+  const driveLinkBtn = product.driveUrl ? `<a href="${product.driveUrl}" target="_blank" style="display:inline-block; margin-top:12px; background:#1e293b; color:#38bdf8; border:1px solid rgba(56,189,248,0.5); padding:13px 24px; border-radius:8px; text-decoration:none; font-weight:bold; font-size:14px; box-shadow:0 4px 15px rgba(56,189,248,0.2);">📂 Access Your ${product.name} Google Drive Folder</a>` : ''
   const attachmentBlock = fileExists && attachmentInfo
     ? `<div style="margin-top: 15px; padding: 16px; background: rgba(16, 185, 129, 0.1); border: 1px dashed rgba(16, 185, 129, 0.4); border-radius: 8px;">
             <p style="margin: 0 0 5px 0; color: #10b981; font-size: 14px; font-weight: bold;">📁 Attached ZIP:</p>
