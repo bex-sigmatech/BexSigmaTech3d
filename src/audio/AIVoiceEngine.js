@@ -87,7 +87,7 @@ export const VoiceLibrary = {
     text: (data) => {
       const entries = {
         'mission_control': 'Entering Mission Control. Central command for all operations and project coordination.',
-        'web_dev': 'Entering Our Products Division. Explore our production Excel business dashboards and bespoke digital solutions.',
+        'web_dev': 'Entering Our Products Division. Explore the flagship aIn Excel All-in-One Master Suite with over one thousand business templates for just one hundred and ninety nine rupees.',
         'cloud': 'Entering Autonomous Application Matrix. Explore production-ready mobile apps and custom application engineering.',
         'client_projects': 'Entering Our Client Projects. Explore real-world deployments and enterprise client success stories.',
         'ai_auto': 'Entering AI Automation Division. We deploy intelligent agents and workflow automation systems.'

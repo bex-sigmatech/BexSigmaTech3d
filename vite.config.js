@@ -10,7 +10,7 @@ export default defineConfig({
     allowedHosts: true,
   },
   build: {
-    chunkSizeWarningLimit: 600,
+    chunkSizeWarningLimit: 1200,
     cssCodeSplit: true,
     minify: 'esbuild',
     target: 'es2018',
@@ -20,8 +20,9 @@ export default defineConfig({
       output: {
         manualChunks: {
           react: ['react', 'react-dom', 'react-router-dom', 'zustand'],
-          three: ['three', '@react-three/fiber', '@react-three/drei', '@react-three/postprocessing'],
-          ui: ['framer-motion', 'gsap', 'react-icons/fa'],
+          three: ['three'],
+          r3f: ['@react-three/fiber', '@react-three/drei'],
+          ui: ['framer-motion', 'react-icons/fa'],
         },
       },
     },

@@ -113,6 +113,14 @@ const BIOSYNC_DRIVE_LINK = process.env.DRIVE_LINK_BIOSYNC || MASTER_BUNDLE_LINK
 
 /* ── Product Catalog with Specific Product Drive Links ── */
 const PRODUCTS = {
+  'ain-excel-pack': {
+    id: 'ain-excel-pack',
+    name: 'aIn — Excel All-in-One Master Suite',
+    price: 19900,      // ₹199 in paise
+    currency: 'INR',
+    description: 'Flagship Excel All-In-One Master Suite (.xlsx templates & automated BI dashboards).',
+    driveUrl: MASTER_BUNDLE_LINK,
+  },
   'marketing-dashboard': {
     id: 'marketing-dashboard',
     name: 'Marketing Performance Excel Dashboard',
@@ -329,9 +337,9 @@ const nodemailer = require('nodemailer')
 
 const DOWNLOAD_TOKEN_SECRET = process.env.DOWNLOAD_TOKEN_SECRET
 if (!DOWNLOAD_TOKEN_SECRET) {
-  console.warn('⚠️ DOWNLOAD_TOKEN_SECRET not set — using ephemeral fallback. Set DOWNLOAD_TOKEN_SECRET in Render dashboard > Environment for persistent tokens.')
+  console.warn('⚠️ DOWNLOAD_TOKEN_SECRET not set — generating cryptographically secure ephemeral secret.')
 }
-const EFFECTIVE_DOWNLOAD_SECRET = DOWNLOAD_TOKEN_SECRET || `bex_sigma_fallback_${process.env.PORT || '5001'}_ephemeral_2026`
+const EFFECTIVE_DOWNLOAD_SECRET = DOWNLOAD_TOKEN_SECRET || crypto.randomBytes(32).toString('hex')
 
 /* ── Email Transporter Setup ── */
 const transporter = nodemailer.createTransport({
@@ -505,7 +513,8 @@ app.post('/api/verify-payment', paymentLimiter, async (req, res) => {
 
     let isPaid = false
     let paymentId = `pay_${Date.now()}`
-    const allowSandboxAuto = process.env.ALLOW_SANDBOX_AUTO_VERIFY === 'true' || (process.env.CASHFREE_ENV || 'SANDBOX') === 'SANDBOX'
+    const isProduction = process.env.NODE_ENV === 'production' || (process.env.CASHFREE_ENV || 'SANDBOX') === 'PRODUCTION'
+    const allowSandboxAuto = !isProduction && process.env.ALLOW_SANDBOX_AUTO_VERIFY === 'true'
 
     try {
       const response = await Cashfree.PGFetchOrder("2022-09-01", order_id)
@@ -910,10 +919,42 @@ app.post('/api/contact', contactLimiter, async (req, res) => {
   }
 })
 
+/* ── GET: Customer Order Lookup by Email ── */
+app.get('/api/orders/lookup', paymentLimiter, (req, res) => {
+  try {
+    const email = (req.query.email || '').trim().toLowerCase()
+    if (!email || !email.includes('@')) {
+      return res.status(400).json({ success: false, error: 'Valid email is required to lookup orders' })
+    }
+    const allOrders = db.getOrders()
+    const userOrders = allOrders
+      .filter((o) => (o.customerEmail || '').toLowerCase() === email && o.status === 'PAID')
+      .map((o) => ({
+        order_id: o.order_id,
+        created_at: o.created_at,
+        product: o.product || PRODUCTS[o.productId] || { name: 'Excel Dashboard Suite', id: o.productId },
+        downloadUrl: o.downloadUrl,
+        downloadUrls: o.downloadUrls || [],
+        driveUrl: (PRODUCTS[o.productId] && PRODUCTS[o.productId].driveUrl) ? PRODUCTS[o.productId].driveUrl : undefined
+      }))
+
+    res.json({
+      success: true,
+      email,
+      count: userOrders.length,
+      orders: userOrders
+    })
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message })
+  }
+})
+
 /* ── Middleware: Admin auth for /api/admin/* ── */
 function requireAdminAuth(req, res, next) {
   const adminKey = process.env.ADMIN_API_KEY
-  if (!adminKey) return next() // open if not configured (dev mode)
+  if (!adminKey) {
+    return res.status(503).json({ success: false, error: 'Admin access disabled: ADMIN_API_KEY is not configured on server' })
+  }
   const authHeader = req.headers['authorization'] || req.headers['x-admin-token'] || ''
   const token = authHeader.startsWith('Bearer ') ? authHeader.slice(7) : authHeader
   if (token !== adminKey) {
@@ -1033,12 +1074,12 @@ app.post('/api/ai/chat', async (req, res) => {
     const _shouldTryGemini = !!(apiKey && apiKey !== 'your_gemini_api_key_here' && (!_isInstantLocal || _forceGemini))
     if (_shouldTryGemini) {
       // Product-aware system prompt — makes Gemini as business-accurate as local fallback (10/10 quality)
-      const catalogHint = 'Products: Marketing ₹299, Business ₹349, Finance ₹319, Sales ₹281, HR KPI ₹295, KPI ₹295, One Dashboard ₹256, plus SaaS OmniCoder/Quantum/SpaceMesh/Vision/BioSync. One-sentence price answers when asked. Secure single-use ZIP via Gmail.'
+      const catalogHint = 'Exclusive Flagship Product: aIn — Excel All-in-One Master Suite (1,000+ templates, 10 categories, 5 bonuses) for ₹199 only. One-sentence price answers when asked. Secure single-use ZIP via Gmail.'
       const geminiPrompt = `You are SIGMA, the BEX SIGMA TECH AI Core — senior executive, charismatic, concise (1-2 sentences max, futuristic). Operator: ${operator}. ${catalogHint} User says: "${prompt || 'System status check'}" — respond instantly, helpfully, no preamble.`
 
       // 10/10: parallel race with aggressive 3.2s per-model timeout, fastest wins — worst 3.2s not 24s
-      // Order by reliability: 3.1-lite fastest+stable, preview second, 3.6 last (known 10s hang)
-      const GEMINI_MODELS = ['gemini-3.1-flash-lite', 'gemini-3-flash-preview', 'gemini-3.6-flash']
+      // Valid, high-performance Gemini models
+      const GEMINI_MODELS = ['gemini-2.0-flash', 'gemini-1.5-flash', 'gemini-2.0-flash-lite']
       const TIMEOUT_MS = _forceGemini ? 3200 : 2200
 
       // True Promise.any race — first success resolves instantly without waiting for stragglers
@@ -1107,6 +1148,18 @@ app.post('/api/ai/chat', async (req, res) => {
   }
 })
 
+/* ── Serve Static Assets & SPA Fallback in Production ── */
+const distPath = path.join(__dirname, '../dist')
+if (fs.existsSync(distPath)) {
+  app.use(express.static(distPath))
+  app.use((req, res, next) => {
+    if (req.method === 'GET' && !req.path.startsWith('/api') && !req.path.startsWith('/ws')) {
+      return res.sendFile(path.join(distPath, 'index.html'))
+    }
+    next()
+  })
+}
+
 /* ── Start Server ── */
 server.listen(PORT, '0.0.0.0', () => {
   console.log(`\n🚀 BEX Sigma Tech Payment & Live Voice API running on http://localhost:${PORT}`)
@@ -1133,7 +1186,7 @@ server.listen(PORT, '0.0.0.0', () => {
         try {
           const catalogHint = 'Products: Marketing ₹299, Business ₹349, Finance ₹319, Sales ₹281, HR KPI ₹295, KPI ₹295, One Dashboard ₹256. '
           const geminiPrompt = `You are SIGMA, BEx Sigma Tech senior AI executive, concise 1-2 sentences. Operator: ${w.userName}. ${catalogHint} User says: "${w.prompt}"`
-          const res = await _fetchGeminiWithTimeout('gemini-3.1-flash-lite', process.env.GEMINI_API_KEY, geminiPrompt, 3500)
+          const res = await _fetchGeminiWithTimeout('gemini-2.0-flash', process.env.GEMINI_API_KEY, geminiPrompt, 3500)
           if (res.ok) {
             _setCachedAi(w.prompt, w.userName, `${res.model} (Gemini)`, res.text)
             console.log(`🔥 Pre-warmed cache: "${w.prompt}" via ${res.model} in ${res.latency}ms`)

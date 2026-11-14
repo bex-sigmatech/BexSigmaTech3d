@@ -1,0 +1,1897 @@
+/* ==========================================================================
+   BEX SIGMA TECH — WALL POSTER EXHIBITION & GALLERY DESIGN SYSTEM
+   Authentic Framed Wall Posters · Museum Wall Plaques · Gallery Spotlights
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+/* ── Gallery Room Container ── */
+.poster-gallery-container {
+  width: 100%;
+  max-width: 1360px;
+  margin: 0 auto 120px auto;
+  padding: 0 24px;
+  position: relative;
+  z-index: 10;
+  box-sizing: border-box;
+}
+
+/* ── Gallery Banner / Header ── */
+.poster-gallery-marquee {
+  text-align: center;
+  margin-bottom: 50px;
+  position: relative;
+}
+
+.poster-gallery-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 18px;
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  border-radius: 100px;
+  color: #34d399;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+  box-shadow: 0 0 25px rgba(16, 185, 129, 0.15);
+}
+
+.poster-gallery-badge .pulse-dot {
+  width: 7px;
+  height: 7px;
+  background: #10b981;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #10b981;
+  animation: posterDotPulse 2s infinite ease-in-out;
+}
+
+@keyframes posterDotPulse {
+  0%, 100% { opacity: 0.6; transform: scale(0.9); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+
+.poster-gallery-headline {
+  font-family: 'Inter', sans-serif;
+  font-size: 2.8rem;
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  margin: 0 0 12px 0;
+}
+
+.poster-gallery-headline span {
+  background: linear-gradient(135deg, #10b981 0%, #38bdf8 50%, #a78bfa 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.poster-gallery-subline {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.05rem;
+  color: #94a3b8;
+  max-width: 680px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   FLAGSHIP EXHIBITION WALL — MAIN FRAMED POSTER + WALL PLAQUE
+   ══════════════════════════════════════════════════════════════════════════ */
+.poster-exhibition-wall {
+  position: relative;
+  background: radial-gradient(ellipse at 35% 20%, rgba(16, 185, 129, 0.08) 0%, transparent 60%),
+              radial-gradient(ellipse at 70% 80%, rgba(56, 189, 248, 0.06) 0%, transparent 60%),
+              linear-gradient(180deg, #0a0f1d 0%, #060913 100%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 32px;
+  padding: 60px 50px;
+  box-shadow: 0 30px 100px rgba(0, 0, 0, 0.8), 0 0 60px rgba(16, 185, 129, 0.08);
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 50px;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* Subtle gallery wall top accent */
+.poster-exhibition-wall::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent 0%, #10b981 30%, #38bdf8 70%, transparent 100%);
+}
+
+/* ── Left Stage: The Framed Wall Poster ── */
+.poster-frame-stage {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  perspective: 1200px;
+}
+
+/* Wall Picture Lamp (Mounted Above Poster) */
+.poster-wall-lamp {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+  position: relative;
+  z-index: 3;
+}
+
+.poster-lamp-mount {
+  width: 44px;
+  height: 8px;
+  background: #334155;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.6);
+}
+
+.poster-lamp-arms {
+  display: flex;
+  gap: 80px;
+  margin-top: -2px;
+}
+
+.poster-lamp-arm {
+  width: 3px;
+  height: 18px;
+  background: linear-gradient(180deg, #475569, #1e293b);
+}
+
+.poster-lamp-bar {
+  width: 240px;
+  height: 12px;
+  background: linear-gradient(90deg, #1e293b 0%, #64748b 30%, #94a3b8 50%, #64748b 70%, #1e293b 100%);
+  border-radius: 6px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.7), 0 0 20px rgba(16, 185, 129, 0.3);
+  position: relative;
+}
+
+/* Realistic Downlight Cone */
+.poster-light-cone {
+  position: absolute;
+  top: 36px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 380px;
+  height: 520px;
+  background: radial-gradient(ellipse at 50% 0%, rgba(255, 255, 255, 0.12) 0%, rgba(16, 185, 129, 0.08) 35%, transparent 70%);
+  pointer-events: none;
+  z-index: 2;
+  filter: blur(12px);
+}
+
+/* The Authentic Picture Frame */
+.poster-picture-frame {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 50%, #020617 100%);
+  padding: 16px;
+  border-radius: 12px;
+  box-shadow:
+    0 25px 60px rgba(0, 0, 0, 0.9),
+    0 40px 100px rgba(0, 0, 0, 0.7),
+    0 0 50px rgba(16, 185, 129, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+  cursor: pointer;
+  z-index: 3;
+}
+
+.poster-picture-frame:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow:
+    0 35px 80px rgba(0, 0, 0, 0.95),
+    0 50px 120px rgba(0, 0, 0, 0.8),
+    0 0 70px rgba(16, 185, 129, 0.3);
+}
+
+/* Inner Matting (Passe-partout) */
+.poster-frame-matting {
+  background: #080d1a;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Corner Frame Brackets (Brass/Metal detail) */
+.poster-frame-corner {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #fbbf24;
+  opacity: 0.7;
+  z-index: 5;
+  pointer-events: none;
+}
+.poster-frame-corner.tl { top: 6px; left: 6px; border-right: none; border-bottom: none; }
+.poster-frame-corner.tr { top: 6px; right: 6px; border-left: none; border-bottom: none; }
+.poster-frame-corner.bl { bottom: 6px; left: 6px; border-right: none; border-top: none; }
+.poster-frame-corner.br { bottom: 6px; right: 6px; border-left: none; border-top: none; }
+
+/* The Poster Canvas Image */
+.poster-canvas-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 0.8;
+  border-radius: 4px;
+  overflow: hidden;
+  background: #000;
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.8);
+}
+
+.poster-canvas-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.poster-picture-frame:hover .poster-canvas-img {
+  transform: scale(1.03);
+}
+
+/* Glass Sheen Reflection Overlay */
+.poster-glass-sheen {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.03) 30%, transparent 60%);
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* Poster Hover Overlay Button */
+.poster-hover-inspect {
+  position: absolute;
+  inset: 0;
+  background: rgba(4, 8, 16, 0.6);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 4;
+}
+
+.poster-picture-frame:hover .poster-hover-inspect {
+  opacity: 1;
+}
+
+.poster-inspect-btn {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: #ffffff;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 100px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 8px 25px rgba(16, 185, 129, 0.5);
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.poster-inspect-btn:hover {
+  transform: scale(1.05);
+}
+
+.poster-inspect-hint {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.72rem;
+  color: #e2e8f0;
+  letter-spacing: 0.05em;
+}
+
+/* Corner Ribbon on Poster */
+.poster-deal-ribbon {
+  position: absolute;
+  top: 14px;
+  right: -30px;
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  color: #fff;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  padding: 4px 34px;
+  transform: rotate(45deg);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  z-index: 5;
+  text-transform: uppercase;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   RIGHT STAGE: MUSEUM EXHIBITION WALL PLAQUE
+   ══════════════════════════════════════════════════════════════════════════ */
+.poster-wall-plaque {
+  background: linear-gradient(145deg, rgba(15, 23, 42, 0.95) 0%, rgba(8, 14, 28, 0.98) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow:
+    0 20px 50px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  position: relative;
+}
+
+/* Beveled Plaque Screws on 4 corners */
+.plaque-screw {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: radial-gradient(circle, #94a3b8 30%, #475569 80%);
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.4), 0 1px 3px rgba(0, 0, 0, 0.8);
+}
+.plaque-screw::after {
+  content: '';
+  position: absolute;
+  top: 4px;
+  left: 2px;
+  right: 2px;
+  height: 1px;
+  background: #1e293b;
+}
+.plaque-screw.tl { top: 14px; left: 14px; }
+.plaque-screw.tr { top: 14px; right: 14px; }
+.plaque-screw.bl { bottom: 14px; left: 14px; }
+.plaque-screw.br { bottom: 14px; right: 14px; }
+
+/* Plaque Header & Title */
+.plaque-catalog-num {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #10b981;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.plaque-catalog-tag {
+  color: #10b981;
+}
+
+.plaque-rating-tag {
+  color: #fbbf24;
+  background: rgba(245, 158, 11, 0.12);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+}
+
+.plaque-artwork-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 2.1rem;
+  font-weight: 900;
+  color: #ffffff;
+  line-height: 1.15;
+  margin: 0 0 4px 0;
+  letter-spacing: -0.02em;
+}
+
+.plaque-artwork-subtitle {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.86rem;
+  color: #34d399;
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+
+.plaque-curator-line {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.84rem;
+  color: #94a3b8;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.plaque-curator-line strong {
+  color: #fbbf24;
+}
+
+.plaque-ms-tag {
+  background: rgba(56, 189, 248, 0.12);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  color: #38bdf8;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+}
+
+/* Plaque Artwork Description */
+.plaque-description {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  color: #cbd5e1;
+  line-height: 1.6;
+  margin: 0 0 20px 0;
+}
+
+/* Plaque Price Tag */
+.plaque-price-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 20px;
+  background: rgba(16, 185, 129, 0.06);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  border-radius: 14px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.plaque-price-left {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.plaque-price-main {
+  font-family: 'Inter', sans-serif;
+  font-size: 2.6rem;
+  font-weight: 900;
+  color: #10b981;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.plaque-price-orig {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.05rem;
+  color: #64748b;
+  text-decoration: line-through;
+}
+
+.plaque-price-deal {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #022c22;
+  background: #34d399;
+  padding: 5px 12px;
+  border-radius: 100px;
+  letter-spacing: 0.05em;
+}
+
+/* Plaque Action Buttons */
+.plaque-actions {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 22px;
+}
+
+.plaque-btn-primary {
+  flex: 1.5;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 16px 22px;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  border: none;
+  border-radius: 12px;
+  color: #ffffff;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.92rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 20px rgba(16, 185, 129, 0.4);
+  letter-spacing: 0.02em;
+}
+
+.plaque-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(16, 185, 129, 0.55);
+  background: linear-gradient(135deg, #34d399 0%, #10b981 100%);
+}
+
+.plaque-btn-secondary {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 16px 18px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  color: #e2e8f0;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.plaque-btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+/* ── 4 Structured Value Cards ── */
+.plaque-value-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.plaque-value-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 10px;
+  transition: all 0.2s ease;
+}
+
+.plaque-value-card:hover {
+  background: rgba(16, 185, 129, 0.06);
+  border-color: rgba(16, 185, 129, 0.3);
+  transform: translateY(-1px);
+}
+
+.plaque-value-icon {
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+.plaque-value-text strong {
+  display: block;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 2px;
+}
+
+.plaque-value-text span {
+  display: block;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.68rem;
+  color: #94a3b8;
+  line-height: 1.3;
+}
+
+/* ── Integrated Structured Bonus Vault Inside Museum Plaque ── */
+.plaque-bonus-vault {
+  margin: 20px 0;
+  padding: 16px;
+  background: rgba(16, 185, 129, 0.06);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  border-radius: 14px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.plaque-bonus-vault-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.plaque-bonus-vault-header-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.plaque-bonus-vault-icon {
+  font-size: 1.05rem;
+}
+
+.plaque-bonus-vault-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: #34d399;
+  text-transform: uppercase;
+}
+
+.plaque-bonus-vault-badge {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.64rem;
+  font-weight: 800;
+  color: #022c22;
+  background: #34d399;
+  padding: 3px 10px;
+  border-radius: 100px;
+  letter-spacing: 0.05em;
+}
+
+.plaque-bonus-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.plaque-bonus-card {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(16, 185, 129, 0.15);
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.plaque-bonus-card:hover {
+  background: rgba(16, 185, 129, 0.1);
+  border-color: rgba(16, 185, 129, 0.35);
+  transform: translateY(-1px);
+}
+
+.plaque-bonus-card.full-span {
+  grid-column: 1 / -1;
+}
+
+.plaque-bonus-icon {
+  font-size: 1.05rem;
+  flex-shrink: 0;
+}
+
+.plaque-bonus-text strong {
+  display: block;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: #e2e8f0;
+}
+
+.plaque-bonus-text span {
+  display: block;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.65rem;
+  color: #94a3b8;
+}
+
+/* ── Structured Trust Grid ── */
+.plaque-trust-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-top: 18px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.plaque-trust-card {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.72rem;
+  color: #94a3b8;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 7px 10px;
+  border-radius: 8px;
+  justify-content: center;
+  text-align: center;
+}
+
+.plaque-trust-icon {
+  font-size: 0.85rem;
+}
+
+/* Touch Zoom Pill on Mobile */
+.poster-mobile-zoom-pill {
+  display: none;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   GALLERY CORRIDOR — ROW OF FRAMED EXHIBITION POSTERS
+   ══════════════════════════════════════════════════════════════════════════ */
+.poster-corridor-section {
+  margin-top: 80px;
+}
+
+.poster-corridor-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.poster-corridor-eyebrow {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  color: #38bdf8;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.poster-corridor-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0 0 10px 0;
+  letter-spacing: -0.02em;
+}
+
+.poster-corridor-sub {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  color: #94a3b8;
+  max-width: 620px;
+  margin: 0 auto;
+}
+
+/* Grid of Framed Wall Posters */
+.poster-wall-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+/* Individual Framed Poster Item */
+.poster-wall-item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Hanging Wire */
+.poster-hanging-wire {
+  width: 100%;
+  height: 28px;
+  position: relative;
+}
+
+.poster-wire-hook {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 14px;
+  height: 8px;
+  background: #fbbf24;
+  border-radius: 2px 2px 4px 4px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.8);
+}
+
+.poster-wire-line {
+  position: absolute;
+  top: 4px;
+  bottom: 0;
+  width: 1px;
+  background: rgba(255, 255, 255, 0.25);
+}
+.poster-wire-line.left { left: 24%; transform: rotate(18deg); }
+.poster-wire-line.right { right: 24%; transform: rotate(-18deg); }
+
+/* The Framed Mini Poster Card */
+.poster-mini-frame {
+  width: 100%;
+  background: linear-gradient(145deg, #1e293b 0%, #0f172a 100%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  padding: 12px;
+  box-shadow:
+    0 15px 40px rgba(0, 0, 0, 0.8),
+    0 0 30px rgba(16, 185, 129, 0.05);
+  cursor: pointer;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.poster-mini-frame:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow:
+    0 25px 60px rgba(0, 0, 0, 0.9),
+    0 0 40px rgba(56, 189, 248, 0.2);
+  border-color: rgba(56, 189, 248, 0.4);
+}
+
+.poster-mini-canvas {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #020617;
+}
+
+.poster-mini-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.poster-mini-frame:hover .poster-mini-img {
+  transform: scale(1.05);
+}
+
+.poster-mini-tag {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background: rgba(10, 15, 26, 0.85);
+  border: 1px solid rgba(16, 185, 129, 0.4);
+  color: #34d399;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.62rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 4px;
+  letter-spacing: 0.05em;
+  z-index: 2;
+}
+
+/* Plaque Plate Under Mini Poster */
+.poster-mini-plaque {
+  padding: 12px 6px 4px 6px;
+  text-align: center;
+}
+
+.poster-mini-num {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: #94a3b8;
+  text-transform: uppercase;
+}
+
+.poster-mini-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 4px 0 2px 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.poster-mini-desc {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.72rem;
+  color: #64748b;
+  margin: 0;
+}
+
+.poster-mini-included {
+  display: inline-block;
+  margin-top: 6px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.62rem;
+  font-weight: 700;
+  color: #10b981;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   STICKY FLOATING GALLERY DOCK (BOTTOM)
+   ══════════════════════════════════════════════════════════════════════════ */
+.poster-floating-dock {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(10, 16, 28, 0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  border-radius: 100px;
+  padding: 8px 12px 8px 20px;
+  box-shadow:
+    0 15px 40px rgba(0, 0, 0, 0.8),
+    0 0 30px rgba(16, 185, 129, 0.2);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  z-index: 999;
+  max-width: 92vw;
+  animation: posterDockSlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes posterDockSlideUp {
+  from { opacity: 0; transform: translate(-50%, 30px); }
+  to { opacity: 1; transform: translate(-50%, 0); }
+}
+
+.poster-dock-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.poster-dock-thumb {
+  width: 36px;
+  height: 36px;
+  border-radius: 6px;
+  object-fit: cover;
+  border: 1px solid rgba(16, 185, 129, 0.4);
+}
+
+.poster-dock-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.poster-dock-name {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #ffffff;
+  white-space: nowrap;
+}
+
+.poster-dock-price {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #10b981;
+}
+
+.poster-dock-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.poster-dock-buy-btn {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: #ffffff;
+  border: none;
+  border-radius: 100px;
+  padding: 10px 20px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 800;
+  cursor: pointer;
+  white-space: nowrap;
+  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+  transition: all 0.2s ease;
+}
+
+.poster-dock-buy-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.6);
+}
+
+.poster-dock-cart-btn {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  border-radius: 100px;
+  padding: 10px 16px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.poster-dock-cart-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   FULLSCREEN POSTER LIGHTBOX MODAL
+   ══════════════════════════════════════════════════════════════════════════ */
+.poster-lightbox-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(2, 6, 14, 0.94);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  z-index: 10001;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  animation: posterLightboxFade 0.25s ease;
+}
+
+@keyframes posterLightboxFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.poster-lightbox-bar {
+  width: 100%;
+  max-width: 900px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.poster-lightbox-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.poster-lightbox-close {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.poster-lightbox-close:hover {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: #ef4444;
+  color: #ef4444;
+}
+
+.poster-lightbox-content {
+  max-width: 900px;
+  max-height: 80vh;
+  overflow: auto;
+  border-radius: 12px;
+  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.poster-lightbox-img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.poster-lightbox-actions {
+  display: flex;
+  gap: 14px;
+  margin-top: 18px;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   RESPONSIVE WALL POSTER GALLERY
+   ══════════════════════════════════════════════════════════════════════════ */
+@media (max-width: 1024px) {
+  .poster-exhibition-wall {
+    grid-template-columns: 1fr;
+    padding: 40px 30px;
+    gap: 40px;
+  }
+  .poster-picture-frame {
+    max-width: 440px;
+  }
+  .poster-wall-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 680px) {
+  .poster-gallery-container {
+    padding: 0 12px;
+  }
+  .poster-gallery-marquee {
+    margin-bottom: 24px;
+  }
+  .poster-gallery-badge {
+    font-size: 0.65rem;
+    padding: 3px 10px;
+  }
+  .poster-gallery-headline {
+    font-size: 1.55rem;
+    line-height: 1.22;
+    letter-spacing: -0.02em;
+    word-break: break-word;
+  }
+  .poster-gallery-subline {
+    font-size: 0.84rem;
+    line-height: 1.5;
+  }
+  .poster-exhibition-wall {
+    padding: 18px 10px;
+    border-radius: 18px;
+    gap: 20px;
+  }
+  .poster-picture-frame {
+    max-width: 100%;
+    padding: 8px;
+    border-radius: 14px;
+  }
+  .poster-canvas-img {
+    max-height: 360px;
+    object-fit: contain;
+  }
+  .poster-mobile-zoom-pill {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    background: rgba(16, 185, 129, 0.9);
+    color: #ffffff;
+    padding: 6px 12px;
+    border-radius: 100px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 800;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+    z-index: 5;
+    pointer-events: none;
+  }
+  .poster-deal-ribbon {
+    font-size: 0.62rem;
+    padding: 3px 8px;
+    top: 10px;
+    right: 10px;
+  }
+  .poster-wall-lamp {
+    display: none; /* Hide lamp fixture on small screens */
+  }
+  .poster-wall-plaque {
+    padding: 18px 12px;
+    border-radius: 16px;
+  }
+  .plaque-catalog-num {
+    gap: 6px;
+    margin-bottom: 8px;
+  }
+  .plaque-catalog-tag {
+    font-size: 0.65rem;
+  }
+  .plaque-rating-tag {
+    font-size: 0.62rem;
+    padding: 2px 6px;
+  }
+  .plaque-artwork-title {
+    font-size: 1.45rem;
+    line-height: 1.2;
+    word-break: break-word;
+    margin-bottom: 4px;
+  }
+  .plaque-artwork-subtitle {
+    font-size: 0.76rem;
+    line-height: 1.4;
+    margin-bottom: 10px;
+  }
+  .plaque-curator-line {
+    font-size: 0.74rem;
+    gap: 6px;
+    margin-bottom: 12px;
+  }
+  .plaque-ms-tag {
+    font-size: 0.6rem;
+    padding: 2px 6px;
+  }
+  .plaque-description {
+    font-size: 0.82rem;
+    line-height: 1.5;
+    margin-bottom: 14px;
+  }
+  .plaque-price-row {
+    padding: 12px 14px;
+    flex-wrap: wrap;
+    gap: 6px 12px;
+    margin-bottom: 14px;
+  }
+  .plaque-price-main {
+    font-size: 2.1rem;
+  }
+  .plaque-price-orig {
+    font-size: 0.95rem;
+  }
+  .plaque-price-deal {
+    font-size: 0.64rem;
+    padding: 3px 8px;
+  }
+  .plaque-actions {
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+  .plaque-btn-primary,
+  .plaque-btn-secondary {
+    width: 100%;
+    padding: 14px 16px;
+    font-size: 0.88rem;
+    min-height: 48px;
+  }
+  .plaque-value-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    margin-bottom: 16px;
+  }
+  .plaque-value-card {
+    padding: 8px 10px;
+    gap: 8px;
+  }
+  .plaque-value-icon {
+    font-size: 1.1rem;
+  }
+  .plaque-value-text strong {
+    font-size: 0.74rem;
+  }
+  .plaque-value-text span {
+    font-size: 0.64rem;
+  }
+  .plaque-bonus-vault {
+    padding: 12px 10px;
+    margin: 14px 0;
+    border-radius: 12px;
+  }
+  .plaque-bonus-vault-header {
+    gap: 6px;
+    margin-bottom: 10px;
+  }
+  .plaque-bonus-vault-title {
+    font-size: 0.68rem;
+  }
+  .plaque-bonus-vault-badge {
+    font-size: 0.6rem;
+    padding: 2px 6px;
+  }
+  .plaque-bonus-grid {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+  .plaque-bonus-card {
+    padding: 8px 10px;
+    gap: 8px;
+  }
+  .plaque-bonus-icon {
+    font-size: 1rem;
+  }
+  .plaque-bonus-text strong {
+    font-size: 0.74rem;
+  }
+  .plaque-bonus-text span {
+    font-size: 0.64rem;
+  }
+  .plaque-trust-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    margin-top: 14px;
+    padding-top: 14px;
+  }
+  .plaque-trust-card {
+    font-size: 0.68rem;
+    padding: 6px 8px;
+    gap: 4px;
+  }
+  .poster-wall-grid {
+    grid-template-columns: 1fr;
+  }
+  .poster-floating-dock {
+    width: calc(100% - 20px);
+    max-width: 420px;
+    bottom: 12px;
+    padding: 6px 10px;
+    border-radius: 14px;
+    gap: 8px;
+  }
+  .poster-dock-thumb {
+    width: 32px;
+    height: 32px;
+  }
+  .poster-dock-name {
+    font-size: 0.72rem;
+    max-width: 95px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .poster-dock-price {
+    font-size: 0.66rem;
+  }
+  .poster-dock-buy-btn {
+    padding: 8px 12px;
+    font-size: 0.76rem;
+    min-height: 40px;
+  }
+  .poster-dock-cart-btn {
+    padding: 8px 10px;
+    font-size: 0.72rem;
+    min-height: 40px;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   OUR SERVICES — FRAMED BLUEPRINTS EXHIBITION WALL
+   ══════════════════════════════════════════════════════════════════════════ */
+.services-poster-wall-section {
+  width: 100%;
+  max-width: 1360px;
+  margin: 90px auto 120px auto;
+  padding: 0 24px;
+  position: relative;
+  z-index: 10;
+  box-sizing: border-box;
+}
+
+/* Header */
+.services-wall-header {
+  text-align: center;
+  margin-bottom: 50px;
+  position: relative;
+}
+
+.services-wall-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 18px;
+  background: rgba(56, 189, 248, 0.1);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  border-radius: 100px;
+  color: #38bdf8;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+  box-shadow: 0 0 25px rgba(56, 189, 248, 0.15);
+}
+
+.services-wall-dot {
+  width: 7px;
+  height: 7px;
+  background: #38bdf8;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #38bdf8;
+  animation: posterDotPulse 2s infinite ease-in-out;
+}
+
+.services-wall-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 2.8rem;
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  margin: 0 0 12px 0;
+}
+
+.services-wall-title span {
+  background: linear-gradient(135deg, #38bdf8 0%, #818cf8 50%, #34d399 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.services-wall-sub {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.02rem;
+  color: #94a3b8;
+  max-width: 700px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* Exhibition Wall Background Surface */
+.services-wall-surface {
+  position: relative;
+  background:
+    radial-gradient(ellipse at 25% 15%, rgba(56, 189, 248, 0.08) 0%, transparent 55%),
+    radial-gradient(ellipse at 75% 15%, rgba(167, 139, 250, 0.08) 0%, transparent 55%),
+    linear-gradient(180deg, #090e1c 0%, #050812 100%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 32px;
+  padding: 50px 40px;
+  box-shadow:
+    0 30px 100px rgba(0, 0, 0, 0.85),
+    0 0 60px rgba(56, 189, 248, 0.05);
+  overflow: hidden;
+}
+
+/* Top Museum Wall Rail */
+.services-wall-rail {
+  width: 100%;
+  height: 8px;
+  background: linear-gradient(180deg, #334155 0%, #1e293b 100%);
+  border-radius: 4px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.7);
+  margin-bottom: 24px;
+  position: relative;
+}
+
+.services-wall-rail::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* 4-Column Poster Wall Grid */
+.services-wall-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 28px;
+  align-items: stretch;
+}
+
+/* Poster Item Container */
+.services-poster-item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Hanging Wire & Wall Hook */
+.services-hanging-wire {
+  width: 100%;
+  height: 32px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.services-wire-hook {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 14px;
+  height: 9px;
+  background: linear-gradient(180deg, #fde047 0%, #ca8a04 100%);
+  border-radius: 2px 2px 4px 4px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.8);
+  z-index: 2;
+}
+
+.services-wire-line {
+  position: absolute;
+  top: 5px;
+  bottom: 0;
+  width: 1px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.15));
+}
+
+.services-wire-line.left {
+  left: 22%;
+  transform: rotate(20deg);
+  transform-origin: top center;
+}
+
+.services-wire-line.right {
+  right: 22%;
+  transform: rotate(-20deg);
+  transform-origin: top center;
+}
+
+/* Framed Picture Card */
+.services-picture-frame {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(165deg, #111827 0%, #080d19 100%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 18px;
+  padding: 14px;
+  box-shadow:
+    0 18px 45px rgba(0, 0, 0, 0.8),
+    0 0 30px var(--service-glow, rgba(56, 189, 248, 0.05));
+  position: relative;
+  cursor: pointer;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  box-sizing: border-box;
+}
+
+.services-picture-frame:hover {
+  transform: translateY(-8px) scale(1.02);
+  border-color: var(--service-accent, #38bdf8);
+  box-shadow:
+    0 28px 70px rgba(0, 0, 0, 0.92),
+    0 0 45px var(--service-glow, rgba(56, 189, 248, 0.3));
+}
+
+/* Corner Frame Accents */
+.services-frame-corner {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border: 2px solid var(--service-accent, #38bdf8);
+  pointer-events: none;
+  opacity: 0.6;
+  transition: opacity 0.3s ease;
+  z-index: 4;
+}
+
+.services-picture-frame:hover .services-frame-corner {
+  opacity: 1;
+}
+
+.services-frame-corner.tl { top: 7px; left: 7px; border-right: none; border-bottom: none; }
+.services-frame-corner.tr { top: 7px; right: 7px; border-left: none; border-bottom: none; }
+.services-frame-corner.bl { bottom: 7px; left: 7px; border-right: none; border-top: none; }
+.services-frame-corner.br { bottom: 7px; right: 7px; border-left: none; border-top: none; }
+
+/* Poster Artwork Canvas */
+.services-poster-canvas {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #02050c;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.services-poster-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+
+.services-picture-frame:hover .services-poster-img {
+  transform: scale(1.06);
+}
+
+.services-poster-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: rgba(5, 10, 20, 0.9);
+  border: 1px solid var(--service-accent, #38bdf8);
+  color: var(--service-accent, #38bdf8);
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 5px;
+  letter-spacing: 0.06em;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 2;
+}
+
+.services-poster-hover-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(3, 7, 18, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  z-index: 3;
+}
+
+.services-picture-frame:hover .services-poster-hover-overlay {
+  opacity: 1;
+}
+
+.services-hover-pill {
+  background: var(--service-accent, #38bdf8);
+  color: #030712;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  padding: 6px 14px;
+  border-radius: 100px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+  transform: translateY(4px);
+  transition: transform 0.25s ease;
+}
+
+.services-picture-frame:hover .services-hover-pill {
+  transform: translateY(0);
+}
+
+/* Museum Plaque Mounted Below Poster */
+.services-plaque {
+  padding: 16px 6px 6px 6px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.services-plaque-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.services-plaque-num {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--service-accent, #38bdf8);
+  text-transform: uppercase;
+}
+
+.services-plaque-timeline {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.66rem;
+  font-weight: 600;
+  color: #94a3b8;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 2px 7px;
+  border-radius: 4px;
+}
+
+.services-plaque-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0 0 4px 0;
+  line-height: 1.25;
+}
+
+.services-plaque-sub {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.78rem;
+  color: #94a3b8;
+  margin: 0 0 12px 0;
+  line-height: 1.45;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Specs Chips */
+.services-plaque-chips {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 16px;
+  margin-top: auto;
+}
+
+.services-plaque-chip {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 6px;
+  padding: 5px 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.72rem;
+  color: #cbd5e1;
+}
+
+.services-chip-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--service-accent, #38bdf8);
+  box-shadow: 0 0 6px var(--service-accent, #38bdf8);
+  flex-shrink: 0;
+}
+
+/* Plaque Action Buttons */
+.services-plaque-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.services-btn-inspect {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 14px;
+  background: var(--service-accent, #38bdf8);
+  color: #030712;
+  border: none;
+  border-radius: 8px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.services-btn-inspect:hover {
+  filter: brightness(1.15);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px var(--service-glow, rgba(56, 189, 248, 0.35));
+}
+
+.services-btn-lightbox {
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  color: #ffffff;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.services-btn-lightbox:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .services-wall-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+}
+
+@media (max-width: 680px) {
+  .services-poster-wall-section {
+    padding: 0 12px;
+    margin: 45px auto 65px auto;
+  }
+  .services-wall-header {
+    margin-bottom: 24px;
+  }
+  .services-wall-eyebrow {
+    font-size: 0.65rem;
+  }
+  .services-wall-title {
+    font-size: 1.55rem;
+    line-height: 1.2;
+    word-break: break-word;
+  }
+  .services-wall-sub {
+    font-size: 0.84rem;
+    line-height: 1.5;
+    margin-bottom: 14px;
+  }
+  .services-wall-surface {
+    padding: 18px 10px;
+    border-radius: 18px;
+  }
+  .services-wall-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .services-hanging-wire {
+    height: 18px;
+    margin-bottom: 4px;
+  }
+  .services-picture-frame {
+    padding: 10px 8px;
+    border-radius: 14px;
+  }
+  .services-poster-canvas {
+    border-radius: 10px;
+  }
+  .services-poster-badge {
+    font-size: 0.62rem;
+    padding: 3px 8px;
+  }
+  .services-plaque {
+    padding: 14px 12px;
+    border-radius: 12px;
+    margin-top: 10px;
+  }
+  .services-plaque-top {
+    font-size: 0.64rem;
+    margin-bottom: 4px;
+  }
+  .services-plaque-title {
+    font-size: 1.1rem;
+    margin-bottom: 4px;
+  }
+  .services-plaque-sub {
+    font-size: 0.74rem;
+    line-height: 1.4;
+    margin-bottom: 10px;
+  }
+  .services-plaque-chips {
+    gap: 4px;
+    margin-bottom: 12px;
+  }
+  .services-plaque-chip {
+    font-size: 0.64rem;
+    padding: 3px 6px;
+  }
+  .services-plaque-actions {
+    display: flex;
+    gap: 8px;
+    width: 100%;
+  }
+  .services-btn-inspect {
+    flex: 1;
+    padding: 10px;
+    font-size: 0.78rem;
+    border-radius: 8px;
+    min-height: 42px;
+  }
+  .services-btn-lightbox {
+    padding: 10px 14px;
+    font-size: 0.85rem;
+    border-radius: 8px;
+    min-height: 42px;
+  }
+
+  /* 4K Fullscreen Lightbox Mobile */
+  .poster-lightbox-overlay {
+    padding: 8px;
+  }
+  .poster-lightbox-bar {
+    padding: 10px 14px;
+    font-size: 0.8rem;
+  }
+  .poster-lightbox-actions {
+    padding: 10px 12px;
+  }
+  .poster-lightbox-actions .plaque-btn-primary {
+    width: 100%;
+    font-size: 0.82rem;
+    padding: 12px;
+    min-height: 44px;
+  }
+}
+

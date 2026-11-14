@@ -19,13 +19,22 @@ const SECTOR_LINKS = [
     color: '#00d4ff',
   },
   {
+    id: 'mission_briefing',
+    sectorId: 'mission_control',
+    icon: '⚡',
+    title: 'Mission Control Hub',
+    badge: 'SERVICES',
+    desc: 'Core command, full capabilities & enterprise execution',
+    color: '#00d4ff',
+  },
+  {
     id: 'webdev_store',
     sectorId: 'web_dev',
     icon: '🛒',
     title: 'Our Products Store',
     badge: 'STORE',
-    desc: 'Excel Dashboards (₹256–₹349) & Digital Products',
-    color: '#7c3aed',
+    desc: 'aIn Excel All-in-One Pack (₹199 Only)',
+    color: '#10b981',
   },
   {
     id: 'apps_store',
@@ -246,18 +255,18 @@ export default function QuickNavHUD() {
                 <div className="quicknav-service-card">
                   <div className="quicknav-service-header">
                     <span className="quicknav-service-icon">🛒</span>
-                    <h3>Excel Dashboards Store</h3>
+                    <h3>aIn — Excel All-in-One Pack</h3>
                   </div>
                   <p>
-                    Ready-to-use business intelligence spreadsheets (Sales, Finance, Inventory, HR) starting from{' '}
-                    <strong>₹256 to ₹349</strong> with instant download.
+                    1,000+ ready-to-use business spreadsheets (.xlsx) for only{' '}
+                    <strong>₹199</strong> with instant download.
                   </p>
                   <button
                     type="button"
                     className="quicknav-service-action interactive"
                     onClick={() => handleSelectSector('web_dev')}
                   >
-                    View Dashboards Store →
+                    View aIn Excel Pack →
                   </button>
                 </div>
 

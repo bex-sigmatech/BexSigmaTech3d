@@ -11,17 +11,40 @@ const isMobileDevice = typeof window !== 'undefined' && (
 
 const savedGraphics = typeof window !== 'undefined' ? localStorage.getItem('bex_graphics_quality') : null
 
+function getInitialRouteState() {
+  if (typeof window === 'undefined') return { scene: 'boot', bootStarted: false, isIntroSkipped: false, activeMission: null }
+  const path = window.location.pathname
+  if (path === '/store' || path === '/products') {
+    return { scene: 'webdev_store', bootStarted: true, isIntroSkipped: true, activeMission: { id: 'web_dev', name: 'Our Products Store' } }
+  }
+  if (path === '/apps') {
+    return { scene: 'apps_store', bootStarted: true, isIntroSkipped: true, activeMission: { id: 'cloud', name: 'Apps Division' } }
+  }
+  if (path === '/clients' || path === '/projects' || path === '/portfolio') {
+    return { scene: 'client_projects_showcase', bootStarted: true, isIntroSkipped: true, activeMission: { id: 'client_projects', name: 'Our Client Projects' } }
+  }
+  if (path === '/dashboard') {
+    return { scene: 'dashboard', bootStarted: true, isIntroSkipped: true, activeMission: null }
+  }
+  if (path === '/mission') {
+    return { scene: 'mission_briefing', bootStarted: true, isIntroSkipped: true, activeMission: { id: 'mission_control', title: 'Mission Control', name: 'Mission Control Hub' } }
+  }
+  return { scene: 'boot', bootStarted: false, isIntroSkipped: false, activeMission: null }
+}
+
+const initialRoute = getInitialRouteState()
+
 export const useStore = create((set, get) => {
   return {
-    scene: 'boot', // 'boot' | 'access_granted' | 'welcome' | 'ai_core' | 'ai_response' | 'headquarters' | 'mission_briefing' | 'dashboard' | 'webdev_store'
-    loadingProgress: 0,
-    userName: '',
-    activeMission: null,
+    scene: initialRoute.scene, // 'boot' | 'access_granted' | 'welcome' | 'ai_core' | 'ai_response' | 'headquarters' | 'mission_briefing' | 'dashboard' | 'webdev_store'
+    loadingProgress: initialRoute.bootStarted ? 100 : 0,
+    userName: typeof window !== 'undefined' ? (localStorage.getItem('bex_userName') || '') : '',
+    activeMission: initialRoute.activeMission,
     scrollPosition: 0,
     audioContextUnlocked: false,
     graphicsQuality: savedGraphics || 'high', // High graphics preset as default preference
-    isIntroSkipped: false,
-    bootStarted: false, // true once user clicks ENTER CINEMATIC EXPERIENCE
+    isIntroSkipped: initialRoute.isIntroSkipped,
+    bootStarted: initialRoute.bootStarted, // true once user clicks ENTER or lands directly on deep link
 
     setGraphicsQuality: (quality) => {
       if (typeof window !== 'undefined') {
@@ -199,6 +222,9 @@ export const useStore = create((set, get) => {
       } else if (sectorId === 'ai_core') {
         cinemaAudio.setScene('ai_core')
         set({ scene: 'ai_core' })
+      } else if (sectorId === 'mission_control' || sectorId === 'mission') {
+        cinemaAudio.setScene('mission_briefing')
+        set({ scene: 'mission_briefing', activeMission: { id: 'mission_control', title: 'Mission Control', name: 'Mission Control Hub' } })
       } else {
         cinemaAudio.setScene('headquarters')
         set({ scene: 'headquarters' })

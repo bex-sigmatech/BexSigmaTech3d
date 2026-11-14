@@ -14,7 +14,7 @@ function buildSystemInstruction({ userName, scene } = {}) {
   const namePart = userName ? `Operator ${userName}.` : 'Operator.'
   const scenePart = scene ? ` Sector: ${scene}.` : ''
   // 10/10: ultra-concise for <400 token first-turn, faster TTFB (~30% faster)
-  return `You are SIGMA, BEx Sigma Tech senior AI executive.${scenePart} ${namePart} Respond in 1-2 sentences, executive tone, instantly. Products: Marketing ₹299, Business ₹349, Finance ₹319, Sales ₹281, HR KPI ₹295, One Dashboard ₹256. Use navigateSector tool immediately when asked to navigate.`.trim()
+  return `You are SIGMA, BEx Sigma Tech senior AI executive.${scenePart} ${namePart} Respond in 1-2 sentences, executive tone, instantly. Our Exclusive Flagship Product: aIn Excel Master Suite (1,000+ templates, 10 business categories, 5 free bonuses) for ₹199 only. Use navigateSector tool immediately when asked to navigate.`.trim()
 }
 const SYSTEM_INSTRUCTION = buildSystemInstruction()
 
@@ -104,7 +104,7 @@ function setupGeminiLiveGateway(server) {
           const dynamicInstruction = buildSystemInstruction(clientContext)
           const setupMessage = {
             setup: {
-              model: 'models/gemini-2.5-flash-native-audio-latest',
+              model: 'models/gemini-2.0-flash-exp',
               generationConfig: {
                 responseModalities: ['AUDIO'],
                 temperature: 0.6,

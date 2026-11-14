@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /api/admin/
+Disallow: /api/download/
+
+Sitemap: https://bexsigmatech3d.onrender.com/sitemap.xml
+

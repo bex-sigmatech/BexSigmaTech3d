@@ -12,7 +12,8 @@ export default function BootScreen() {
     startLoading,
     triggerAccessGranted,
     graphicsQuality,
-    setGraphicsQuality
+    setGraphicsQuality,
+    navigateToSector
   } = useStore()
   const [started, setStarted] = useState(false)
   const voice25Ref = useRef(false)
@@ -130,21 +131,45 @@ export default function BootScreen() {
                 <div className="mb-brand-typography">
                   <h1 className="mb-brand-title">BEx Sigma Tech</h1>
                   <p className="mb-brand-subtitle">NEXT-GENERATION DIGITAL EXPERIENCES</p>
-                  <p className="mb-brand-services">Premium SaaS & Digital Marketing Solutions</p>
-                  <div className="boot-service-pills">
-                    <span className="boot-pill">Our Products</span>
-                    <span className="boot-pill">Meta Ads</span>
-                    <span className="boot-pill">AI Dashboards</span>
-                    <span className="boot-pill">Mobile Apps</span>
-                  </div>
                 </div>
               </div>
 
               {/* Lower Controls: Apple VisionOS Spatial Glassmorphism */}
               <div className="mb-controls-group">
+                <button
+                  className="interactive"
+                  style={{
+                    background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.95), rgba(5, 150, 105, 0.95))',
+                    color: '#ffffff',
+                    border: '1px solid rgba(16, 185, 129, 0.6)',
+                    padding: '12px 18px',
+                    borderRadius: '12px',
+                    fontWeight: 700,
+                    fontSize: '0.84rem',
+                    fontFamily: 'Orbitron, sans-serif',
+                    letterSpacing: '0.04em',
+                    cursor: 'pointer',
+                    boxShadow: '0 4px 20px rgba(16, 185, 129, 0.4)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '8px',
+                    width: '100%',
+                    boxSizing: 'border-box'
+                  }}
+                  onClick={() => {
+                    setStarted(true)
+                    useStore.setState({ bootStarted: true, isIntroSkipped: true })
+                    navigateToSector('web_dev')
+                  }}
+                >
+                  <span>🛒</span>
+                  <span>GO TO EXCEL TEMPLATE</span>
+                </button>
+
                 <button className="mb-apple-glass-cta interactive" onClick={handleStart}>
                   <span className="cta-glass-sheen" />
-                  <span className="cta-glass-text">ENTER CINEMATIC EXPERIENCE</span>
+                  <span className="cta-glass-text">NEXT</span>
                   <span className="cta-glass-arrow">→</span>
                 </button>
 
@@ -234,20 +259,38 @@ export default function BootScreen() {
         <div className="desktop-boot-wrapper">
           {!started ? (
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px' }}>
-              {/* Service context for new users */}
-              <div className="boot-hero-context">
-                <h2 className="boot-hero-tagline">Premium SaaS & Digital Marketing Solutions</h2>
-                <div className="boot-service-pills">
-                  <span className="boot-pill">Our Products</span>
-                  <span className="boot-pill">Meta Ads</span>
-                  <span className="boot-pill">Excel Dashboards</span>
-                  <span className="boot-pill">Mobile Apps</span>
-                  <span className="boot-pill">AI Automation</span>
-                </div>
-              </div>
+              <div className="nolan-logo" style={{ marginBottom: '6px' }}>BEx Sigma Tech</div>
+
+              <button
+                className="interactive"
+                style={{
+                  background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.95), rgba(5, 150, 105, 0.95))',
+                  color: '#ffffff',
+                  border: '1px solid rgba(16, 185, 129, 0.7)',
+                  padding: '14px 28px',
+                  borderRadius: '10px',
+                  fontWeight: 700,
+                  fontSize: '0.92rem',
+                  fontFamily: 'Orbitron, sans-serif',
+                  letterSpacing: '0.06em',
+                  cursor: 'pointer',
+                  boxShadow: '0 4px 25px rgba(16, 185, 129, 0.45)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '10px'
+                }}
+                onClick={() => {
+                  setStarted(true)
+                  useStore.setState({ bootStarted: true, isIntroSkipped: true })
+                  navigateToSector('web_dev')
+                }}
+              >
+                <span>🛒</span>
+                <span>GO TO EXCEL TEMPLATE</span>
+              </button>
 
               <button className="nolan-start-btn interactive" onClick={handleStart}>
-                ENTER CINEMATIC EXPERIENCE
+                NEXT →
               </button>
 
               <button

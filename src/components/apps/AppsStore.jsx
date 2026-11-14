@@ -4,6 +4,11 @@ import { cinemaAudio } from '../../audio/CinematicAudioEngine'
 import { voiceEmitter } from '../../audio/AIVoiceEngine'
 import '../../styles/appsStore.css'
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL
+  || (typeof window !== 'undefined' && window.location.hostname === 'localhost'
+    ? 'http://localhost:5001'
+    : 'https://bexsigmatech3d.onrender.com')
+
 /* ==========================================================================
    BEX SIGMA TECH — APPS & MOBILE PRODUCTS STORE
    Featuring Future Path & UrDay + Custom App Development Advertisement
@@ -118,20 +123,40 @@ export default function AppsStore() {
   }, [])
 
   // Handle Custom App Inquiry Submission
-  const handleInquirySubmit = (e) => {
+  const handleInquirySubmit = async (e) => {
     e.preventDefault()
     cinemaAudio.playAccessGrantedChime()
     setInquirySent(true)
-    const mailSubject = encodeURIComponent(`Custom App Build Inquiry: ${customAppPlatform}`)
-    const mailBody = encodeURIComponent(
-      `Hi BEx Sigma Tech Team,\n\nI want to build a custom application with BEx Sigma Tech.\n\n` +
-      `Platform: ${customAppPlatform}\n` +
-      `Target Scale & Timeline: ${customAppScale}\n` +
-      `User Email: ${customAppEmail}\n\n` +
-      `Project Scope:\n${customAppDesc}\n\n` +
-      `Looking forward to connecting!`
-    )
-    window.location.href = `mailto:bexsigmatech@gmail.com?subject=${mailSubject}&body=${mailBody}`
+
+    try {
+      const res = await fetch(`${BACKEND_URL}/api/contact`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: 'App Lead',
+          email: customAppEmail,
+          message: `Platform: ${customAppPlatform}\nScale & Timeline: ${customAppScale}\nScope:\n${customAppDesc}`,
+          subject: `Custom App Build Inquiry: ${customAppPlatform}`,
+          service: 'Custom App Development'
+        })
+      })
+      const data = await res.json().catch(() => null)
+      if (!res.ok || (data && !data.success)) {
+        throw new Error(data?.error || 'Failed to submit inquiry')
+      }
+    } catch (err) {
+      console.warn('API contact submission fallback to mailto:', err.message)
+      const mailSubject = encodeURIComponent(`Custom App Build Inquiry: ${customAppPlatform}`)
+      const mailBody = encodeURIComponent(
+        `Hi BEx Sigma Tech Team,\n\nI want to build a custom application with BEx Sigma Tech.\n\n` +
+        `Platform: ${customAppPlatform}\n` +
+        `Target Scale & Timeline: ${customAppScale}\n` +
+        `User Email: ${customAppEmail}\n\n` +
+        `Project Scope:\n${customAppDesc}\n\n` +
+        `Looking forward to connecting!`
+      )
+      window.location.href = `mailto:bexsigmatech@gmail.com?subject=${mailSubject}&body=${mailBody}`
+    }
   }
 
   return (

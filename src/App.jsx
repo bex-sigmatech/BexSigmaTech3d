@@ -18,8 +18,49 @@ const WebDevStore = lazy(() => import('./components/webdev/WebDevStore'))
 const AppsStore = lazy(() => import('./components/apps/AppsStore'))
 const ClientProjectsShowcase = lazy(() => import('./components/clients/ClientProjectsShowcase'))
 
-export default function App() {
+export default function App({ initialSector = 'boot' }) {
   const { scene, skipIntro, bootStarted, isIntroSkipped, navigateToSector, submitIdentity, userName } = useStore()
+
+  // Initial deep link / direct route handling
+  React.useEffect(() => {
+    if (initialSector && initialSector !== 'boot') {
+      useStore.setState({ bootStarted: true, isIntroSkipped: true })
+      navigateToSector(initialSector)
+    }
+  }, [initialSector])
+
+  // Sync current scene to browser URL for sharing & bookmarking
+  React.useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const sceneToPath = {
+        webdev_store: '/store',
+        apps_store: '/apps',
+        client_projects_showcase: '/projects',
+        dashboard: '/dashboard',
+        mission_briefing: '/mission',
+        headquarters: '/',
+      }
+      const targetPath = sceneToPath[scene]
+      if (targetPath && window.location.pathname !== targetPath && bootStarted) {
+        window.history.pushState({ scene }, '', targetPath)
+      }
+    }
+  }, [scene, bootStarted])
+
+  // Handle browser Back / Forward history navigation
+  React.useEffect(() => {
+    const handlePopState = () => {
+      const path = window.location.pathname
+      if (path === '/store' || path === '/products') navigateToSector('web_dev')
+      else if (path === '/apps') navigateToSector('cloud')
+      else if (path === '/clients' || path === '/projects' || path === '/portfolio') navigateToSector('client_projects')
+      else if (path === '/dashboard') navigateToSector('dashboard')
+      else if (path === '/mission') navigateToSector('mission_control')
+      else if (path === '/') navigateToSector('headquarters')
+    }
+    window.addEventListener('popstate', handlePopState)
+    return () => window.removeEventListener('popstate', handlePopState)
+  }, [navigateToSector])
 
   // Expose dynamic context for Gemini Live voice (10/10 per-scene instruction)
   React.useEffect(() => {
@@ -106,19 +147,33 @@ export default function App() {
         </Suspense>
       )}
 
-      {/* ── Skip Intro Button ── */}
+      {/* ── Skip Intro Controls ── */}
       {showSkip && (
-        <button
-          className="skip-intro-btn interactive"
-          onClick={(e) => {
-            e.stopPropagation()
-            skipIntro()
-          }}
-          title="Skip to name input"
-          aria-label="Skip intro to name input"
-        >
-          SKIP ▸▸
-        </button>
+        <div style={{ position: 'fixed', top: '24px', right: '24px', display: 'flex', gap: '8px', zIndex: 9999 }}>
+          <button
+            className="skip-intro-btn interactive"
+            onClick={(e) => {
+              e.stopPropagation()
+              useStore.setState({ bootStarted: true, isIntroSkipped: true })
+              navigateToSector('web_dev')
+            }}
+            style={{ background: 'rgba(16, 185, 129, 0.25)', border: '1px solid #10b981', color: '#10b981' }}
+            title="Jump directly to Store"
+          >
+            🛒 STORE ▸▸
+          </button>
+          <button
+            className="skip-intro-btn interactive"
+            onClick={(e) => {
+              e.stopPropagation()
+              skipIntro()
+            }}
+            title="Skip intro to name input"
+            aria-label="Skip intro to name input"
+          >
+            SKIP ▸▸
+          </button>
+        </div>
       )}
     </div>
   )

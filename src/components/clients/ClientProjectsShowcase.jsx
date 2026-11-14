@@ -4,6 +4,11 @@ import { cinemaAudio } from '../../audio/CinematicAudioEngine'
 import { voiceEmitter } from '../../audio/AIVoiceEngine'
 import '../../styles/clientProjects.css'
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL
+  || (typeof window !== 'undefined' && window.location.hostname === 'localhost'
+    ? 'http://localhost:5001'
+    : 'https://bexsigmatech3d.onrender.com')
+
 /* ==========================================================================
    BEX SIGMA TECH — CLIENT DOSSIER INTELLIGENCE BOARD
    A unique "case file" portfolio — each client is a classified dossier
@@ -80,15 +85,47 @@ export default function ClientProjectsShowcase() {
     setActiveDossier(null)
   }
 
-  const handleSubmit = (e) => {
+  const [submitting, setSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState('')
+
+  const handleSubmit = async (e) => {
     e.preventDefault()
+    if (!formData.email || !formData.email.includes('@')) {
+      setSubmitError('Please enter a valid email address.')
+      return
+    }
+    setSubmitting(true)
+    setSubmitError('')
     cinemaAudio.playAccessGrantedChime()
-    setSent(true)
-    const s = encodeURIComponent(`Client Inquiry: ${formData.name || 'New Project'}`)
-    const b = encodeURIComponent(
-      `Project: ${formData.name}\nService: ${formData.service}\nBudget: ${formData.budget}\nEmail: ${formData.email}\n\nScope:\n${formData.scope}`
-    )
-    window.location.href = `mailto:bexsigmatech@gmail.com?subject=${s}&body=${b}`
+
+    try {
+      const res = await fetch(`${BACKEND_URL}/api/contact`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: formData.name || 'Anonymous Client',
+          email: formData.email,
+          message: `Service: ${formData.service}\nBudget: ${formData.budget}\nScope:\n${formData.scope}`,
+          subject: `Client Inquiry: ${formData.name || 'New Project'}`,
+          service: formData.service
+        })
+      })
+      const data = await res.json().catch(() => null)
+      if (!res.ok || (data && !data.success)) {
+        throw new Error(data?.error || 'Failed to submit inquiry')
+      }
+      setSent(true)
+    } catch (err) {
+      console.warn('API contact submission fallback to mailto:', err.message)
+      setSent(true)
+      const s = encodeURIComponent(`Client Inquiry: ${formData.name || 'New Project'}`)
+      const b = encodeURIComponent(
+        `Project: ${formData.name}\nService: ${formData.service}\nBudget: ${formData.budget}\nEmail: ${formData.email}\n\nScope:\n${formData.scope}`
+      )
+      window.location.href = `mailto:bexsigmatech@gmail.com?subject=${s}&body=${b}`
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   return (

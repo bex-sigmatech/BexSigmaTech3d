@@ -26,11 +26,11 @@ const DEPARTMENTS = [
   {
     id: 'web_dev',
     title: 'Our Products',
-    subtitle: 'Excel Dashboards · Business Tools · Web Services',
-    plainLabel: 'Buy Dashboards · Digital Products',
-    desc: 'Browse and purchase our premium Excel dashboard products, or explore our digital products and full-stack solutions for your business.',
-    tech: ['Excel Dashboards', 'React Websites', '3D Web', 'E-Commerce'],
-    color: '#7c3aed', emissive: '#4c1d95', pos: [3.4, 1.2, -2.5]
+    subtitle: 'aIn Excel Master Suite · 1,000+ Ready Templates',
+    plainLabel: 'aIn Excel Pack (₹199 Only)',
+    desc: 'Browse and purchase the flagship aIn — Excel All-in-One Master Suite (₹199) with 1,000+ ready templates across 10 business categories and 5 free bonuses.',
+    tech: ['1,000+ Templates', '10 Categories', '5 Free Bonuses', '₹199 Only'],
+    color: '#10b981', emissive: '#059669', pos: [3.4, 1.2, -2.5]
   },
   {
     id: 'cloud',

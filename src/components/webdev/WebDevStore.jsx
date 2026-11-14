@@ -3,10 +3,12 @@ import { useStore } from '../../store/useStore'
 import { cinemaAudio } from '../../audio/CinematicAudioEngine'
 import { voiceEmitter } from '../../audio/AIVoiceEngine'
 import ServiceDetail from './ServiceDetail'
+import '../../styles/ainExcelStore.css'
+import '../../styles/wallPosterGallery.css'
 
 /* ==========================================================================
-   BEX SIGMA TECH — WEB DEVELOPMENT PRODUCTS STORE
-   5 Premium SaaS Products + Cart Drawer + Sandbox Checkout + Portfolio
+   BEX SIGMA TECH — EXCEL ALL-IN-ONE (aIn) & DIGITAL PRODUCTS STORE
+   Flagship "aIn" Pack (₹199) + Excel Academy + Microsoft Verified Manager Hari
    ========================================================================== */
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL
@@ -16,320 +18,44 @@ const BACKEND_URL = import.meta.env.VITE_BACKEND_URL
 
 const PRODUCTS = [
   {
-    id: 'omnicoder-ai',
-    badge: '🤖 RECOMMENDED',
-    name: 'OmniCoder AI Agent',
-    tagline: 'Autonomous Repository Developer Hub',
-    price: 299,
-    priceDisplay: '₹299',
-    originalPrice: '₹599',
-    currency: 'INR',
-    color: '#7c3aed',
-    glowColor: 'rgba(124, 58, 237, 0.25)',
-    image: '/habit_tracker.png',
-    features: [
-      'Multi-Agent Collaborative Coding',
-      'Automated Test & Build Integrity Guard',
-      'Git Integration (GitHub/GitLab)',
-      'Natural Language Code Manipulation',
-      'Semantic Codebase Indexing',
-      '1 Month Free Support',
-    ],
-    tech: ['Multi-Agent AI', 'Git Hooks', 'NodeJS', 'React'],
-    deliveryDays: 7,
-    popular: true,
-  },
-  {
-    id: 'quantum-shield',
-    badge: '🛡️ SECURITY 10/10',
-    name: 'QuantumShield Crypt Vault',
-    tagline: 'Post-Quantum Shield & Telemetry Armor',
-    price: 291,
-    priceDisplay: '₹291',
-    originalPrice: '₹582',
-    currency: 'INR',
-    color: '#f43f5e',
-    glowColor: 'rgba(244, 63, 94, 0.25)',
-    image: '/campaign_pro.jpg',
-    imageFit: 'contain',
-    imageBg: '#ffffff',
-    features: [
-      'NIST-Approved Post-Quantum Cryptography',
-      'End-to-End Encrypted Telemetry',
-      'Zero-Trust Biometric Access Controls',
-      'Real-time Threat Sentinel Node',
-      'Tamper-proof Observability Logs',
-      '3 Months Priority Support',
-    ],
-    tech: ['Kyber / Dilithium', 'Zero-Trust', 'Rust Core'],
-    deliveryDays: 12,
-    popular: false,
-  },
-  {
-    id: 'spacemesh-iot',
-    badge: '🛰️ REAL-TIME DATA',
-    name: 'SpaceMesh IoT Gateway',
-    tagline: 'Planetary Device Telemetry Aggregator',
-    price: 359,
-    priceDisplay: '₹359',
-    originalPrice: '₹718',
-    currency: 'INR',
-    color: '#38bdf8',
-    glowColor: 'rgba(56, 189, 248, 0.25)',
-    image: '/net_worth_dashboard.jpg',
-    imageFit: 'cover',
-    imagePosition: 'center',
-    features: [
-      'Zero-Latency Planetary Sync',
-      'High-Throughput Timescale Database',
-      'MQTT / WebSockets Broker Protocol',
-      'Automated Hardware Sensor Failover',
-      'Interactive 3D Telemetry Canvas',
-      '3 Months Tech Assistance',
-    ],
-    tech: ['IoT Mesh', 'WebSockets', 'Go', 'TimescaleDB'],
-    deliveryDays: 10,
-    popular: false,
-  },
-  {
-    id: 'vision-spatial',
-    badge: '🕶️ SPATIAL WEB',
-    name: 'VisionSpatial Designer',
-    tagline: 'Apple Vision Pro Web UI Canvas',
-    price: 289,
-    priceDisplay: '₹289',
-    originalPrice: '₹578',
-    currency: 'INR',
-    color: '#e879f9',
-    glowColor: 'rgba(232, 121, 249, 0.25)',
-    image: '/project_scorecard.jpg',
-    imageFit: 'contain',
-    imageBg: '#ffffff',
-    features: [
-      'Interactive WebXR Sandbox Creator',
-      'Depth-Based UI Layout Engines',
-      'Framer Spatial Motion Core',
-      'Optimized 3D Model Assets Loader',
-      'Glassmorphic Style Tokens Exporter',
-      '6 Months Premium Support',
-    ],
-    tech: ['Three.js', 'React Three Fiber', 'WebXR'],
-    deliveryDays: 14,
-    popular: false,
-  },
-  {
-    id: 'biosync-health',
-    badge: '🩺 HEALTHCARE NODE',
-    name: 'BioSync Telehealth Engine',
-    tagline: 'Decentralized Clinical Matrix Console',
-    price: 291,
-    priceDisplay: '₹291',
-    originalPrice: '₹582',
-    currency: 'INR',
-    color: '#34d399',
-    glowColor: 'rgba(52, 211, 153, 0.25)',
-    image: '/hr_roi.jpg',
-    imageFit: 'contain',
-    imageBg: '#ffffff',
-    features: [
-      'HIPAA Compliant Patient Telemetry',
-      'Distributed Node Consultation Logs',
-      'Real-Time Biosignals Streaming',
-      'Automated Emergency Alert Triggers',
-      'Integrative Diagnostic Interface',
-      '1 Month Operational Sync',
-    ],
-    tech: ['React Native', 'WebRTC', 'HIPAA Shield'],
-    deliveryDays: 5,
-    popular: false,
-  },
-  {
-    id: 'marketing-dashboard',
-    badge: '🎯 MARKETING EXCEL NODE',
-    name: 'Marketing Performance Excel Dashboard',
-    tagline: 'Automated Campaign ROI, Lead Funnel & Marketing Analytics Sheet',
-    price: 299,
-    priceDisplay: '₹299',
-    originalPrice: '₹599',
-    currency: 'INR',
-    color: '#f59e0b',
-    glowColor: 'rgba(245, 158, 11, 0.25)',
-    image: '/campaign_pro.jpg',
-    imageFit: 'contain',
-    imageBg: '#ffffff',
-    features: [
-      'Automated Campaign ROI & Ad Spend Tracker',
-      'Multi-Channel Lead Funnel & Conversion Analytics',
-      'Interactive Marketing Attribution Heatmaps',
-      'Delivered directly to Customer Email via Google Drive',
-      'Fully Editable Microsoft Excel (.xlsx) Format',
-      'Lifetime Drive Access & Template Updates',
-    ],
-    tech: ['Excel .xlsx', 'Google Drive', 'ROI Analytics', 'Marketing ML'],
-    deliveryDays: 0,
-    popular: true,
-  },
-  {
-    id: 'business-dashboard',
-    badge: '💼 BUSINESS EXCEL NODE',
-    name: 'Business Executive Analytics Excel Dashboard',
-    tagline: 'Unified Business Operations, Revenue & Strategy Sheet',
-    price: 349,
-    priceDisplay: '₹349',
-    originalPrice: '₹699',
-    currency: 'INR',
-    color: '#38bdf8',
-    glowColor: 'rgba(56, 189, 248, 0.25)',
-    image: '/net_worth_dashboard.jpg',
-    imageFit: 'cover',
-    imagePosition: 'center',
-    features: [
-      'Executive KPI & Business Operations Telemetry',
-      'Revenue Projections & Cashflow Modeling Sheets',
-      'Interactive Strategy & Performance Dashboards',
-      'Delivered directly to Customer Email via Google Drive',
-      'Fully Editable Microsoft Excel (.xlsx) Format',
-      'Commercial Use License Included',
-    ],
-    tech: ['Excel .xlsx', 'Google Drive', 'Business KPI'],
-    deliveryDays: 0,
-    popular: true,
-  },
-  {
-    id: 'finance-trend',
-    badge: '📈 EXCEL FINANCIAL NODE',
-    name: 'Financial Trend Analytic Excel Dashboard',
-    tagline: 'Predictive Financial & Yield Analytics Excel Template',
-    price: 319,
-    priceDisplay: '₹319',
-    originalPrice: '₹638',
+    id: 'ain-excel-pack',
+    badge: '🔥 1,000+ EXCEL TEMPLATES — ₹199 ONLY',
+    name: 'aIn — Excel All-in-One Master Suite',
+    category: 'BI',
+    tagline: 'From Manual To Smart Work — Pro Dashboards, Auto Calculation & Business Templates (.xlsx)',
+    price: 199,
+    priceDisplay: '₹199',
+    originalPrice: '₹999',
     currency: 'INR',
     color: '#10b981',
-    glowColor: 'rgba(16, 185, 129, 0.25)',
-    image: '/financial_trend.jpg',
-    imageFit: 'contain',
-    imageBg: '#ffffff',
-    features: [
-      'Real-Time Portfolio Yield & Revenue Modeling',
-      'Multi-Currency Trend Analytics & Pivot Tables',
-      'Automated Financial Heatmaps & Risk Projections',
-      'Instant Access via Google Drive Email Link',
-      'Fully Editable Microsoft Excel (.xlsx) Format',
-      'Lifetime Drive Access & Template Updates',
-    ],
-    tech: ['Excel .xlsx', 'Google Drive', 'Pivot Tables', 'Financial ML'],
-    deliveryDays: 0,
-    popular: false,
-  },
-  {
-    id: 'sales-dashboard',
-    badge: '📊 EXCEL SALES NODE',
-    name: 'Sales Performance Excel Dashboard',
-    tagline: 'Real-Time Revenue & Conversion Optimization Excel Engine',
-    price: 281,
-    priceDisplay: '₹281',
-    originalPrice: '₹562',
-    currency: 'INR',
-    color: '#0284c7',
-    glowColor: 'rgba(2, 132, 199, 0.25)',
-    image: '/sales_dashboard.jpg',
+    glowColor: 'rgba(16, 185, 129, 0.4)',
+    image: '/ain_excel_pack.jpg',
     imageFit: 'cover',
-    imagePosition: 'center',
     features: [
-      'Live Revenue & Deal Funnel Analytics Sheets',
-      'Automated Conversion Rate Optimization Charts',
-      'Interactive Sales Forecasting Heatmaps',
-      'Instant Email Delivery with Google Drive Link',
-      'Fully Editable Excel (.xlsx) & Google Sheets Ready',
-      '1 Month Priority Assistance Support',
+      '1,000+ Ready-to-Use Business Excel Templates for 100+ Industries',
+      'Sales Dashboard, Financial Analysis & Expense Tracker',
+      'Inventory Tracker, Project Tracker & HR KPI Dashboard',
+      'Advanced Dynamic Charts, MIS Reports & Client Reporting Systems',
+      'Free Bonus: Attendance Tracker, Habit Tracker & Daily Planner',
+      'Free Bonus: Excel Keyboard Shortcuts & Professional Resume Templates',
+      'Automated Formulas (XLOOKUP, Dynamic Arrays, Auto Calculation)',
+      '100% Fully Editable Microsoft Excel (.xlsx) & Google Sheets Ready',
+      'Delivered instantly to your email with Lifetime Google Drive Access',
     ],
-    tech: ['Excel .xlsx', 'Google Drive', 'Charts & Formulas'],
-    deliveryDays: 0,
-    popular: false,
-  },
-  {
-    id: 'hr-kpi',
-    badge: '👥 EXCEL HR NODE',
-    name: 'HR KPI Performance Excel Dashboard',
-    tagline: 'Workforce Performance, Retention & KPI Analytics Sheet',
-    price: 295,
-    priceDisplay: '₹295',
-    originalPrice: '₹590',
-    currency: 'INR',
-    color: '#2563eb',
-    glowColor: 'rgba(37, 99, 235, 0.25)',
-    image: '/hr_kpi.jpg',
-    imageFit: 'cover',
-    imagePosition: 'center',
-    features: [
-      'Workforce KPI & Productivity Tracking',
-      'Employee Retention & Turnover Modeling',
-      'Automated Performance Review Dashboards',
-      'Sent Directly to Customer Email via Google Drive',
-      'Editable Microsoft Excel (.xlsx) Format',
-      'Real-Time Organizational Health Metrics',
-    ],
-    tech: ['Excel .xlsx', 'Google Drive', 'KPI Metrics'],
-    deliveryDays: 0,
-    popular: false,
-  },
-  {
-    id: 'dashboard-suite',
-    badge: '📊 EXCEL ALL-IN-ONE BUNDLE',
-    name: 'One Dashboard BI Suite (Excel Bundle)',
-    tagline: 'Unified Business Intelligence & Executive Analytics Master Drive',
-    price: 256,
-    priceDisplay: '₹256',
-    originalPrice: '₹512',
-    currency: 'INR',
-    color: '#8b5cf6',
-    glowColor: 'rgba(139, 92, 246, 0.25)',
-    image: '/one_dashboard_suite.jpg',
-    imageFit: 'contain',
-    imageBg: '#ffffff',
-    features: [
-      'Master Access to All Excel Dashboard Templates',
-      'Sales, HR, Financial & Project Management Sheets',
-      'Instant Automated Email Delivery with Drive Folder',
-      'Interactive Data Drill-down & Pivot Tables',
-      'Lifetime Google Drive Folder Sync & Free Updates',
-      'Commercial License Included',
-    ],
-    tech: ['Excel .xlsx', 'Google Drive Master Folder', 'Financial ML'],
+    tech: ['Microsoft Excel .xlsx', 'Google Drive Master Folder', 'VBA & Dynamic Formulas', 'Microsoft Verified Standards'],
     deliveryDays: 0,
     popular: true,
-  },
-  {
-    id: 'kpi-dashboard',
-    badge: '📈 KPI EXCEL NODE',
-    name: 'KPI Performance Excel Dashboard',
-    tagline: 'Dedicated KPI Metrics & Performance Analytics Sheet',
-    price: 295,
-    priceDisplay: '₹295',
-    originalPrice: '₹590',
-    currency: 'INR',
-    color: '#0ea5e9',
-    glowColor: 'rgba(14, 165, 233, 0.25)',
-    image: '/hr_kpi.jpg',
-    imageFit: 'cover',
-    imagePosition: 'center',
-    features: [
-      'Dedicated KPI Tracking & Benchmark Sheets',
-      'Automated Performance Scoring & Heatmaps',
-      'Interactive Drill-down & Trend Analytics',
-      'Instant Email Delivery with Google Drive Link',
-      'Fully Editable Excel (.xlsx) Format',
-      'Real-Time KPI Health Metrics',
-    ],
-    tech: ['Excel .xlsx', 'Google Drive', 'KPI Metrics'],
-    deliveryDays: 0,
-    popular: false,
   },
 ]
 
 const WORKS = [
   {
     id: 'normal',
+    code: 'HUB-01',
+    coord: '37.77° N, 122.41° W',
+    region: 'Silicon Valley, USA',
+    mapX: 20,
+    mapY: 38,
     title: 'Normal Business Website',
     subtitle: 'High-Performance Corporate & Conversion Portals',
     meta: '01 / 04 · ESSENTIAL WEB',
@@ -346,6 +72,11 @@ const WORKS = [
   },
   {
     id: 'threed',
+    code: 'HUB-02',
+    coord: '51.50° N, 0.12° W',
+    region: 'London, UK',
+    mapX: 47,
+    mapY: 28,
     title: '3D Interactive Website',
     subtitle: 'Spatial WebGL & Cinematic Storytelling',
     meta: '02 / 04 · 3D SPATIAL WEB',
@@ -362,6 +93,11 @@ const WORKS = [
   },
   {
     id: 'software',
+    code: 'HUB-03',
+    coord: '35.67° N, 139.65° E',
+    region: 'Tokyo, Japan',
+    mapX: 84,
+    mapY: 36,
     title: 'Custom Software Application',
     subtitle: 'Enterprise SaaS, Dashboards & Microservices',
     meta: '03 / 04 · SAAS & SOFTWARE',
@@ -378,6 +114,11 @@ const WORKS = [
   },
   {
     id: 'custom',
+    code: 'HUB-04',
+    coord: '12.97° N, 77.59° E',
+    region: 'Bengaluru, India (HQ)',
+    mapX: 68,
+    mapY: 56,
     title: 'Your Unique Idea — We Build It',
     subtitle: 'Bespoke R&D, AI Agents & First-of-Kind Products',
     meta: '04 / 04 · BESPOKE INNOVATION',
@@ -385,39 +126,12 @@ const WORKS = [
     image: '/pathway_bespoke_idea.jpg',
     models: 'Concept Prototype to Full Production',
     timeline: 'Bespoke Engineering Sprint',
-    specs: ['Dedicated Engineering Pod', 'Weekly Milestone Demos', '100% Custom IP', 'Direct CEO Architecture'],
-    tags: ['Custom Build', 'AI Pipelines', 'Rapid Prototype', 'Direct CEO Line'],
+    specs: ['Dedicated Engineering Pod', 'Weekly Milestone Demos', '100% Custom IP', 'Direct Architecture Line'],
+    tags: ['Custom Build', 'AI Pipelines', 'Rapid Prototype', 'Direct Line'],
     accent: '#f59e0b',
     glow: 'rgba(245,158,11,0.35)',
     icon: '✦',
     num: '04'
-  }
-]
-
-const CLIENTS = [
-  {
-    title: 'Atlas Global Logistics',
-    meta: 'SLA: 99.99%',
-    desc: 'Coordinating live operations of over 10,000 active freight nodes across land, sea, and atmospheric routes.',
-    tags: ['Mapbox API', 'GeoJSON', 'Rust Server']
-  },
-  {
-    title: 'Helix Genomic Nodes',
-    meta: 'SLA: 99.9%',
-    desc: 'High-availability DNA sequence mapping pipeline utilizing clustered GPU compute nodes for instantaneous analysis.',
-    tags: ['Clustered GPU', 'AWS Lambda', 'Python Core']
-  },
-  {
-    title: 'Elysium Virtual Reality',
-    meta: 'SLA: 99.95%',
-    desc: 'Serving interactive 3D virtual home walkthroughs rendering at 90fps directly inside desktop and mobile web browsers.',
-    tags: ['Three.js', 'React UI', 'PBR Materials']
-  },
-  {
-    title: 'Krypton Power Grid',
-    meta: 'SLA: 99.99%',
-    desc: 'Live telemetry processing dashboard tracking planetary electricity flow and trigger protection relays instantly.',
-    tags: ['IoT Gateway', 'InfluxDB', 'Grafana API']
   }
 ]
 
@@ -460,12 +174,16 @@ async function initiateCashfreePayment(product, customerName, customerEmail, cus
     }
 
     if (data.simulated) {
-      if (data._cashfreeError) console.warn('Order was simulated due to Cashfree error:', data._cashfreeError)
-      await runVerification()
+      onError('Payment gateway is currently simulated. Please try again with live payment credentials.')
       return
     }
     if (data._cashfreeError) {
       console.warn('Cashfree order warning (proceeding):', data._cashfreeError)
+    }
+
+    if (typeof window.Cashfree !== 'function') {
+      onError('Cashfree payment SDK is still loading or blocked by a browser extension. Please refresh the page and try again.')
+      return
     }
 
     // Initialize Cashfree JS SDK — env-driven (VITE_CASHFREE_ENV=PRODUCTION for live)
@@ -481,28 +199,19 @@ async function initiateCashfreePayment(product, customerName, customerEmail, cus
 
     if (result.error) {
       console.error('Cashfree checkout error:', result.error)
-      // Common sandbox fallbacks: simulated session or expired session
-      if (result.error.code === 'payment_session_id_invalid' || result.error.message?.includes('payment_session_id')) {
-        console.warn('⚠️ Cashfree Sandbox session invalid — completing as test order:', result.error)
-        await runVerification()
-        return
-      }
-      // Cashfree sandbox shows "temporary issue" when using real cards — guide user to test cards
       const msg = result.error.message || ''
       if (msg.toLowerCase().includes('temporary') || msg.toLowerCase().includes('try again') || msg.toLowerCase().includes('bank')) {
-        onError(`${msg} — Note: You are in SANDBOX (TEST) mode. Use Cashfree test card 4111 1111 1111 1111, expiry 12/30, CVV 123. Real cards only work in PRODUCTION (VITE_CASHFREE_ENV=PRODUCTION + live keys).`)
+        onError(`${msg} — Note: In Sandbox mode, use Cashfree test card 4111 1111 1111 1111, expiry 12/30, CVV 123.`)
         return
       }
-      onError(result.error.message || 'Payment failed. If this is Sandbox, use test card 4111 1111 1111 1111.')
+      onError(result.error.message || 'Payment was not completed. Please try again.')
       return
     }
 
     if (result.paymentDetails) {
       await runVerification()
-    } else if (!result.error) {
-      // No error but no paymentDetails — could be user closed modal
-      console.warn('Cashfree checkout closed without paymentDetails', result)
-      onError('Payment not completed — checkout closed. For Sandbox testing, it will auto-verify on next retry.')
+    } else {
+      onError('Payment checkout window was closed before completing payment.')
     }
   } catch (err) {
     onError(err.message)
@@ -512,9 +221,8 @@ async function initiateCashfreePayment(product, customerName, customerEmail, cus
 export default function WebDevStore() {
   const { userName, exitWebDevStore } = useStore()
 
-  // Service detail modal & Active Pathway
+  // Service detail modal
   const [selectedService, setSelectedService] = useState(null)
-  const [activePathwayIndex, setActivePathwayIndex] = useState(0)
 
   // Cart & Sidebar States
   const [cart, setCart] = useState([])
@@ -522,8 +230,6 @@ export default function WebDevStore() {
 
 
   const [currency, setCurrency] = useState('INR') // 'INR' | 'USD'
-  const [searchQuery, setSearchQuery] = useState('')
-  const [selectedCategory, setSelectedCategory] = useState('ALL') // 'ALL' | 'AI' | 'BI' | 'SECURITY' | 'IOT'
 
   // Checkout States
   const [checkoutMode, setCheckoutMode] = useState(null) // 'cashfree' | 'sandbox' | null
@@ -535,56 +241,30 @@ export default function WebDevStore() {
   const [isCustomerModalOpen, setIsCustomerModalOpen] = useState(false)
   const [targetProduct, setTargetProduct] = useState(null)
   const [custName, setCustName] = useState(userName || '')
-  const [custEmail, setCustEmail] = useState('')
-  const [custPhone, setCustPhone] = useState('')
+  const [custEmail, setCustEmail] = useState(() => {
+    try { return localStorage.getItem('bex_customer_email') || '' } catch { return '' }
+  })
+  const [custPhone, setCustPhone] = useState(() => {
+    try { return localStorage.getItem('bex_customer_phone') || '' } catch { return '' }
+  })
   const [isPaying, setIsPaying] = useState(false)
   const [toast, setToast] = useState(null) // {msg, type} for 10/10 no-alert UI
   const showToast = (msg, type = 'error') => { setToast({ msg, type }); setTimeout(() => setToast(null), 4000) }
 
-  // 3D Cylinder Carousel States
-  const [currentIndex, setCurrentIndex] = useState(0)
-  const [isPaused, setIsPaused] = useState(false)
-  const [radius, setRadius] = useState(400)
+  // Lightbox & Dock States
+  const [activeLightboxPoster, setActiveLightboxPoster] = useState(null)
+  const [isDockVisible, setIsDockVisible] = useState(false)
 
-  // Track the active modulo index
-  const activeModuloIndex = ((currentIndex % PRODUCTS.length) + PRODUCTS.length) % PRODUCTS.length
-
-  // 3D Auto-slide trigger (paused during modal or payment)
   useEffect(() => {
-    if (isPaused || isCustomerModalOpen || isPaying || checkoutMode !== null) return
-
-    const interval = setInterval(() => {
-      setCurrentIndex((prev) => prev + 1)
-    }, 4500) // Spin every 4.5s
-
-    return () => clearInterval(interval)
-  }, [isPaused, isCustomerModalOpen, isPaying, checkoutMode])
-
-  // Responsive 3D radius adjustment
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth < 640) {
-        setRadius(230)
-      } else if (window.innerWidth < 1024) {
-        setRadius(300)
-      } else {
-        setRadius(370)
-      }
+    const handleScroll = () => {
+      setIsDockVisible(window.scrollY > 400)
     }
-    handleResize()
-    window.addEventListener('resize', handleResize)
-    return () => window.removeEventListener('resize', handleResize)
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  const nextSlide = () => {
-    cinemaAudio.playScrollTransition()
-    setCurrentIndex(prev => prev + 1)
-  }
 
-  const prevSlide = () => {
-    cinemaAudio.playScrollTransition()
-    setCurrentIndex(prev => prev - 1)
-  }
+
 
   useEffect(() => {
     voiceEmitter.emit('PRICING_VISIBLE')
@@ -597,7 +277,7 @@ export default function WebDevStore() {
       const p = PRODUCTS.find((x) => x.id === productId)
       if (p) {
         for (let i = 0; i < (quantity || 1); i++) addToCart(p)
-        setCurrentIndex(PRODUCTS.findIndex((x) => x.id === productId))
+        // product activated
       }
     }
     const onOpen = (e) => {
@@ -608,7 +288,7 @@ export default function WebDevStore() {
     const onShow = (e) => {
       const pid = e.detail
       const idx = PRODUCTS.findIndex((x) => x.id === pid)
-      if (idx >= 0) setCurrentIndex(idx)
+      // product shown
     }
     window.addEventListener('ADD_TO_CART', onAdd)
     window.addEventListener('OPEN_CHECKOUT', onOpen)
@@ -696,7 +376,7 @@ export default function WebDevStore() {
           }
         }
 
-        ctx.fillStyle = `rgba(167, 139, 250, ${p.alpha})`
+        ctx.fillStyle = `rgba(52, 211, 153, ${p.alpha})`
         ctx.beginPath()
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2)
         ctx.fill()
@@ -709,7 +389,7 @@ export default function WebDevStore() {
           const distSq = dx * dx + dy * dy
           if (distSq < 8100) {
             const dist = Math.sqrt(distSq)
-            ctx.strokeStyle = `rgba(124, 58, 237, ${(1 - dist / 90) * 0.06})`
+            ctx.strokeStyle = `rgba(16, 185, 129, ${(1 - dist / 90) * 0.08})`
             ctx.lineWidth = 0.5
             ctx.beginPath()
             ctx.moveTo(p.x, p.y)
@@ -836,6 +516,7 @@ export default function WebDevStore() {
         setSandboxMsg(`🎉 Payment Verified! Your Excel Dashboard access link has been sent to ${custEmail}`)
         cinemaAudio.playAccessGrantedChime()
         voiceEmitter.emit('PAYMENT_SUCCESS')
+        try { localStorage.setItem('bex_customer_email', custEmail) } catch {}
         if (cart.length > 0) setCart([])
       },
       (err) => {
@@ -864,39 +545,28 @@ export default function WebDevStore() {
             ← BACK TO HQ
           </button>
           <div className="webdev-header-titles">
-            <span className="webdev-dept-label">OUR PRODUCTS</span>
-            <h1 className="webdev-store-title">Secure Product Matrix</h1>
+            <span className="webdev-dept-label">OUR PRODUCTS · EXCEL ECOSYSTEM</span>
+            <h1 className="webdev-store-title">Excel Master Hub & Store</h1>
             <p className="webdev-store-sub">
-              Operator: <strong style={{ color: '#a78bfa' }}>{userName || 'Guest'}</strong> · 10/10 SaaS Blueprints
+              Operator: <strong style={{ color: '#10b981' }}>{userName || 'Guest'}</strong> · Flagship "aIn" Pack & Live Excel Academy
             </p>
           </div>
         </div>
 
-        <div className="webdev-header-right" style={{ display: 'flex', gap: '15px', alignItems: 'center', flexWrap: 'wrap' }}>
-          {/* Currency Switcher — 10/10: shows USD estimate but charges INR via Cashfree */}
+        <div className="webdev-store-header-right webdev-header-right">
+          {/* Currency Switcher */}
           <button
             aria-label={`Switch currency, currently ${currency}`}
-            className="interactive"
+            className="webdev-currency-btn interactive"
             onClick={() => setCurrency(currency === 'INR' ? 'USD' : 'INR')}
             title={currency === 'INR' ? 'Show USD estimate (charge is still INR via Cashfree)' : 'Show INR (actual charge)'}
-            style={{
-              background: 'rgba(0, 212, 255, 0.12)',
-              border: '1px solid rgba(0, 212, 255, 0.4)',
-              color: '#00d4ff',
-              padding: '6px 14px',
-              borderRadius: '4px',
-              fontFamily: 'Orbitron, sans-serif',
-              fontSize: '0.75rem',
-              cursor: 'pointer',
-              fontWeight: 'bold'
-            }}
           >
-            💱 CURRENCY: {currency === 'INR' ? '₹ INR (charged)' : '$ USD (est.)'}
+            💱 {currency === 'INR' ? '₹ INR' : '$ USD'}
           </button>
 
           {/* Cart trigger button */}
           <div role="button" tabIndex={0} aria-label={`Open cart, ${cart.reduce((s, i) => s + i.quantity, 0)} items`} className="webdev-cart-trigger interactive" onClick={() => setIsCartOpen(true)} onKeyDown={(e) => e.key === 'Enter' && setIsCartOpen(true)}>
-            <span>🛒 OBSERVATORY CART</span>
+            <span>🛒 CART</span>
             {cart.length > 0 && <span className="webdev-cart-badge" aria-live="polite">{cart.reduce((sum, item) => sum + item.quantity, 0)}</span>}
           </div>
 
@@ -912,666 +582,650 @@ export default function WebDevStore() {
 
 
 
-      {/* Slider controls row */}
-      <div className="webdev-slider-controls-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', maxWidth: '1200px', margin: '15px auto 5px auto', padding: '0 20px', zIndex: 10, position: 'relative' }}>
-        <h2 style={{ fontFamily: 'Orbitron, sans-serif', fontSize: '0.8rem', color: 'rgba(255,255,255,0.6)', letterSpacing: '0.15em' }}>
-          SELECT DEPLOYMENT LAYER (Active Node: {activeModuloIndex + 1} / {PRODUCTS.length})
-        </h2>
-        <div style={{ display: 'flex', gap: '12px' }}>
-          <button
-            className="webdev-slider-btn interactive"
-            onClick={prevSlide}
-            style={{
-              background: 'rgba(255, 255, 255, 0.03)',
-              border: '1px solid rgba(255, 255, 255, 0.1)',
-              color: '#00d4ff',
-              padding: '8px 18px',
-              fontFamily: 'Orbitron, sans-serif',
-              fontSize: '0.85rem',
-              borderRadius: '4px',
-              cursor: 'pointer',
-              transition: 'all 0.3s ease',
-              boxShadow: '0 0 10px rgba(0, 212, 255, 0.15)'
-            }}
-          >
-            ◀ PREV
-          </button>
-          <button
-            className="webdev-slider-btn interactive"
-            onClick={nextSlide}
-            style={{
-              background: 'rgba(255, 255, 255, 0.03)',
-              border: '1px solid rgba(255, 255, 255, 0.1)',
-              color: '#a78bfa',
-              padding: '8px 18px',
-              fontFamily: 'Orbitron, sans-serif',
-              fontSize: '0.85rem',
-              borderRadius: '4px',
-              cursor: 'pointer',
-              transition: 'all 0.3s ease',
-              boxShadow: '0 0 10px rgba(167, 139, 250, 0.15)'
-            }}
-          >
-            NEXT ▶
-          </button>
+      {/* ── WALL POSTER EXHIBITION GALLERY ── */}
+      <section className="poster-gallery-container">
+        
+        {/* Gallery Exhibition Marquee */}
+        <div className="poster-gallery-marquee">
+          <div className="poster-gallery-badge">
+            <span className="pulse-dot" />
+            <span>EXHIBITION · OFFICIAL VISUAL BLUEPRINTS</span>
+          </div>
+          <h1 className="poster-gallery-headline">
+            From Manual To Smart Work — <span>Excel Master</span> Suite
+          </h1>
+          <p className="poster-gallery-subline">
+            Experience our flagship Excel systems as framed high-definition blueprints. Designed for high-impact decision making, automated reporting, and executive clarity.
+          </p>
         </div>
-      </div>
 
-      {/* 3D Round Tunnel Slider */}
-      <div
-        className="webdev-slider-viewport"
-        onMouseEnter={() => setIsPaused(true)}
-        onMouseLeave={() => setIsPaused(false)}
-      >
-        <div
-          className="webdev-slider-track"
-          style={{
-            transform: `rotateY(${-currentIndex * (360 / PRODUCTS.length)}deg)`
-          }}
-        >
-          {PRODUCTS.map((product, idx) => {
-            const stepAngle = 360 / PRODUCTS.length
-            const angle = idx * stepAngle
-            const diff = Math.abs(activeModuloIndex - idx)
-            const minDiff = Math.min(diff, PRODUCTS.length - diff)
-            const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768
+        {/* ═══ FLAGSHIP EXHIBITION WALL (Framed Centerpiece + Museum Plaque) ═══ */}
+        <div className="poster-exhibition-wall">
+          
+          {/* Left: The Grand Framed Wall Poster */}
+          <div className="poster-frame-stage">
+            {/* Overhead Gallery Picture Lamp Fixture */}
+            <div className="poster-wall-lamp">
+              <div className="poster-lamp-mount" />
+              <div className="poster-lamp-arms">
+                <div className="poster-lamp-arm" />
+                <div className="poster-lamp-arm" />
+              </div>
+              <div className="poster-lamp-bar" />
+              <div className="poster-light-cone" />
+            </div>
 
-            // On mobile, skip distant cards to drastically boost GPU FPS
-            if (isMobile && minDiff > 1) {
-              return null
-            }
+            {/* The Framed Poster */}
+            <div
+              className="poster-picture-frame interactive"
+              onClick={() => setActiveLightboxPoster({
+                title: 'BEx Sigma Tech — Learn Practice Excel: From Manual To Smart Work',
+                image: '/ain_excel_pack.jpg',
+                tag: 'Master Flagship Roadmap'
+              })}
+              title="Click to inspect poster in 4K Fullscreen"
+            >
+              {/* Corner Frame Brackets */}
+              <div className="poster-frame-corner tl" />
+              <div className="poster-frame-corner tr" />
+              <div className="poster-frame-corner bl" />
+              <div className="poster-frame-corner br" />
 
-            // Highlight active nodes, dim others for holographic look
-            let opacity = 0.12
-            let pointerEvents = 'none'
-            let scale = 0.55
-            let zOffset = -40
-            let zIndex = 1
+              {/* Deal Ribbon */}
+              <div className="poster-deal-ribbon">₹199 Deal</div>
 
-            if (minDiff === 0) {
-              opacity = 1.0
-              pointerEvents = 'auto'
-              scale = isMobile ? 0.88 : 0.82
-              zOffset = isMobile ? 65 : 45 // Float active card 65px forward in 3D space
-              zIndex = 100
-            } else if (minDiff === 1) {
-              opacity = isMobile ? 0.32 : 0.45
-              pointerEvents = 'none'
-              scale = isMobile ? 0.56 : 0.68
-              zOffset = isMobile ? -30 : -10
-              zIndex = 10
-            }
+              {/* Inner Matting */}
+              <div className="poster-frame-matting">
+                <div className="poster-canvas-wrap">
+                  <img
+                    src="/ain_excel_pack.jpg"
+                    alt="BEx Sigma Tech — Learn Practice Excel From Manual To Smart Work"
+                    className="poster-canvas-img"
+                    loading="lazy"
+                  />
+                  <div className="poster-glass-sheen" />
+                  
+                  {/* Hover Inspect Overlay (Desktop) */}
+                  <div className="poster-hover-inspect">
+                    <button className="poster-inspect-btn interactive">
+                      <span>🔍</span>
+                      <span>Inspect Blueprint Fullscreen</span>
+                    </button>
+                    <span className="poster-inspect-hint">Click for ultra-sharp HD zoom</span>
+                  </div>
 
-            return (
-              <div
-                key={product.id}
-                className={`webdev-product-card ${product.popular ? 'popular' : ''}`}
-                style={{
-                  '--card-color': product.color,
-                  '--card-glow': product.glowColor,
-                  borderColor: product.popular ? product.color : 'rgba(255,255,255,0.08)',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'space-between',
-                  transform: `rotateY(${angle}deg) translateZ(${radius + zOffset}px) scale(${scale})`,
-                  zIndex,
-                  opacity,
-                  pointerEvents
-                }}
+                  {/* Touch Zoom Pill (Mobile) */}
+                  <div className="poster-mobile-zoom-pill">
+                    <span>🔍 Tap to Zoom in 4K</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Right: Museum Exhibition Wall Plaque */}
+          <div className="poster-wall-plaque">
+            {/* Plaque Screws */}
+            <div className="plaque-screw tl" />
+            <div className="plaque-screw tr" />
+            <div className="plaque-screw bl" />
+            <div className="plaque-screw br" />
+
+            <div className="plaque-catalog-num">
+              <span className="plaque-catalog-tag">🏛️ EXHIBIT #01 · MASTER ROADMAP</span>
+              <span className="plaque-rating-tag">⭐ 4.9/5 (500+ BUYERS)</span>
+            </div>
+
+            <h2 className="plaque-artwork-title">
+              From Manual To Smart Work
+            </h2>
+            <div className="plaque-artwork-subtitle">
+              aIn — Excel All-in-One Master Suite · 1,000+ Business Templates (.xlsx)
+            </div>
+
+            <div className="plaque-curator-line">
+              <span className="plaque-ms-tag">✓ MICROSOFT VERIFIED ARCHITECT</span>
+              <span>Curated by <strong>Hariharan.D</strong></span>
+            </div>
+
+            <p className="plaque-description">
+              The definitive master blueprint transforming spreadsheets into automated executive command centers. Master Step 1 through Step 5 — featuring 10 enterprise dashboards and 5 bonus daily productivity suites.
+            </p>
+
+            {/* Price Tag Plaque */}
+            <div className="plaque-price-row">
+              <div className="plaque-price-left">
+                <span className="plaque-price-main">{currency === 'INR' ? '₹199' : '$2.49'}</span>
+                <span className="plaque-price-orig">{currency === 'INR' ? '₹999' : '$12.99'}</span>
+              </div>
+              <span className="plaque-price-deal">80% OFF · INSTANT ACCESS</span>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="plaque-actions">
+              <button
+                className="plaque-btn-primary interactive"
+                onClick={() => handleOpenCheckoutModal(PRODUCTS[0])}
               >
-                {product.image ? (
-                  /* ── Image-based card — FULL FILL model ── */
-                  <div
-                    className="ht-image-container"
-                    style={{
-                      position: 'absolute',
-                      inset: 0,
-                      borderRadius: 'inherit',
-                      overflow: 'hidden',
-                      cursor: 'pointer',
-                    }}
-                    onMouseMove={(e) => {
-                      const rect = e.currentTarget.getBoundingClientRect()
-                      const x = (e.clientX - rect.left) / rect.width - 0.5
-                      const y = (e.clientY - rect.top) / rect.height - 0.5
-                      const img = e.currentTarget.querySelector('.ht-product-img')
-                      if (img) {
-                        img.style.transform = `scale(1.08) translate(${x * 12}px, ${y * 12}px)`
-                      }
-                      const shine = e.currentTarget.querySelector('.ht-shine-overlay')
-                      if (shine) {
-                        shine.style.background = `radial-gradient(circle at ${(x + 0.5) * 100}% ${(y + 0.5) * 100}%, rgba(255,255,255,0.22) 0%, transparent 55%)`
-                        shine.style.opacity = '1'
-                      }
-                    }}
-                    onMouseLeave={(e) => {
-                      const img = e.currentTarget.querySelector('.ht-product-img')
-                      if (img) img.style.transform = 'scale(1.02) translate(0, 0)'
-                      const shine = e.currentTarget.querySelector('.ht-shine-overlay')
-                      if (shine) shine.style.opacity = '0'
-                    }}
-                  >
-                    {/* Full-bleed image layer */}
-                    <img
-                      className="ht-product-img"
-                      src={product.image}
-                      alt={product.name}
-                      loading="lazy"
-                      decoding="async"
-                      fetchPriority={idx === activeModuloIndex ? "high" : "low"}
-                      style={{
-                        position: 'absolute',
-                        inset: 0,
-                        width: '100%',
-                        height: '74%',
-                        objectFit: product.imageFit || 'cover',
-                        objectPosition: product.imagePosition || "80% 20%",
-                        backgroundColor: product.imageBg || 'transparent',
-                        transition: 'transform 0.25s ease-out',
-                        willChange: 'transform',
-                        transform: 'scale(1.02)',
-                        zIndex: 1,
-                      }}
-                    />
+                <span>⚡</span>
+                <span>Get All-in-One Master Suite · {currency === 'INR' ? '₹199' : '$2.49'}</span>
+              </button>
+              <button
+                className="plaque-btn-secondary interactive"
+                onClick={() => addToCart(PRODUCTS[0])}
+              >
+                <span>🛒</span>
+                <span>Add to Cart</span>
+              </button>
+            </div>
 
-                    {/* Pulsing glow ring overlay */}
-                    <div style={{
-                      position: 'absolute',
-                      inset: '6px',
-                      borderRadius: '14px',
-                      border: `1.5px solid ${product.color}44`,
-                      boxShadow: `inset 0 0 30px ${product.color}15, 0 0 20px ${product.color}20`,
-                      animation: 'htGlowRing 3s ease-in-out infinite',
-                      pointerEvents: 'none',
-                      zIndex: 5,
-                    }} />
+            {/* 4 Structured Value Cards */}
+            <div className="plaque-value-grid">
+              <div className="plaque-value-card">
+                <span className="plaque-value-icon">📊</span>
+                <div className="plaque-value-text">
+                  <strong>1,000+ Ready Templates</strong>
+                  <span>100+ business sectors</span>
+                </div>
+              </div>
+              <div className="plaque-value-card">
+                <span className="plaque-value-icon">📈</span>
+                <div className="plaque-value-text">
+                  <strong>10 Business Dashboards</strong>
+                  <span>Sales, Finance, HR & MIS</span>
+                </div>
+              </div>
+              <div className="plaque-value-card">
+                <span className="plaque-value-icon">⚡</span>
+                <div className="plaque-value-text">
+                  <strong>Instant Email Access</strong>
+                  <span>Lifetime Google Drive Link</span>
+                </div>
+              </div>
+              <div className="plaque-value-card">
+                <span className="plaque-value-icon">💻</span>
+                <div className="plaque-value-text">
+                  <strong>100% Fully Editable</strong>
+                  <span>Excel (.xlsx) & Sheets Ready</span>
+                </div>
+              </div>
+            </div>
 
-                    {/* Shine overlay that follows mouse */}
-                    <div className="ht-shine-overlay" style={{
-                      position: 'absolute',
-                      inset: 0,
-                      opacity: 0,
-                      transition: 'opacity 0.3s ease',
-                      pointerEvents: 'none',
-                      zIndex: 6,
-                    }} />
+            {/* 🎁 5 Free Bonus Toolkits Badges (Structured Vault) */}
+            <div className="plaque-bonus-vault">
+              <div className="plaque-bonus-vault-header">
+                <div className="plaque-bonus-vault-header-left">
+                  <span className="plaque-bonus-vault-icon">🎁</span>
+                  <span className="plaque-bonus-vault-title">5 FREE BONUS TOOLKITS INCLUDED</span>
+                </div>
+                <span className="plaque-bonus-vault-badge">₹0 TODAY · WORTH ₹2,499</span>
+              </div>
+              <div className="plaque-bonus-grid">
+                <div className="plaque-bonus-card">
+                  <span className="plaque-bonus-icon">📋</span>
+                  <div className="plaque-bonus-text">
+                    <strong>Attendance Tracker</strong>
+                    <span>Leaves, OT & shift logs</span>
+                  </div>
+                </div>
+                <div className="plaque-bonus-card">
+                  <span className="plaque-bonus-icon">🌱</span>
+                  <div className="plaque-bonus-text">
+                    <strong>Habit Tracker</strong>
+                    <span>Daily streaks & progress</span>
+                  </div>
+                </div>
+                <div className="plaque-bonus-card">
+                  <span className="plaque-bonus-icon">📅</span>
+                  <div className="plaque-bonus-text">
+                    <strong>Daily Planner</strong>
+                    <span>Time-blocked task matrix</span>
+                  </div>
+                </div>
+                <div className="plaque-bonus-card">
+                  <span className="plaque-bonus-icon">⌨️</span>
+                  <div className="plaque-bonus-text">
+                    <strong>120+ Shortcuts</strong>
+                    <span>Cheat sheet for Excel speed</span>
+                  </div>
+                </div>
+                <div className="plaque-bonus-card full-span">
+                  <span className="plaque-bonus-icon">📄</span>
+                  <div className="plaque-bonus-text">
+                    <strong>Executive Resume Templates</strong>
+                    <span>ATS-friendly corporate CV formats</span>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-                    {/* Shimmer sweep */}
-                    <div style={{
-                      position: 'absolute',
-                      inset: 0,
-                      overflow: 'hidden',
-                      pointerEvents: 'none',
-                      zIndex: 7,
-                    }}>
-                      <div style={{
-                        position: 'absolute',
-                        top: 0,
-                        left: '-100%',
-                        width: '50%',
-                        height: '100%',
-                        background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent)',
-                        animation: 'htShimmerSweep 3.5s ease-in-out infinite',
-                      }} />
-                    </div>
+            {/* Structured Trust Row */}
+            <div className="plaque-trust-grid">
+              <div className="plaque-trust-card">
+                <span className="plaque-trust-icon">🔒</span>
+                <span>100% Encrypted Checkout</span>
+              </div>
+              <div className="plaque-trust-card">
+                <span className="plaque-trust-icon">⚡</span>
+                <span>Instant Email Access</span>
+              </div>
+              <div className="plaque-trust-card">
+                <span className="plaque-trust-icon">⭐</span>
+                <span>4.9/5 Rating (500+ Buyers)</span>
+              </div>
+              <div className="plaque-trust-card">
+                <span className="plaque-trust-icon">🇮🇳</span>
+                <span>Made with Pride in India</span>
+              </div>
+            </div>
+          </div>
+        </div>
 
-                    {/* Bottom gradient overlay for price + buttons */}
-                    <div style={{
-                      position: 'absolute',
-                      bottom: 0,
-                      left: 0,
-                      right: 0,
-                      background: 'linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.75) 40%, rgba(0,0,0,0.3) 70%, transparent 100%)',
-                      padding: '40px 14px 14px 14px',
-                      zIndex: 10,
-                      display: 'flex',
-                      flexDirection: 'column',
-                      gap: '8px',
-                    }}>
-                      {/* Price row */}
-                      <div style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        gap: '8px',
-                        flexWrap: 'wrap',
-                      }}>
-                        <span style={{
-                          textDecoration: 'line-through',
-                          color: 'rgba(255,255,255,0.45)',
-                          fontSize: '0.85rem',
-                          fontFamily: 'Orbitron, sans-serif',
-                        }}>{product.originalPrice}</span>
-                        <span style={{
-                          color: '#fff',
-                          fontSize: '1.4rem',
-                          fontWeight: 800,
-                          fontFamily: 'Orbitron, sans-serif',
-                          textShadow: `0 0 25px ${product.color}88`,
-                        }}>{product.priceDisplay}</span>
-                        <span style={{
-                          background: 'linear-gradient(135deg, #ff416c, #ff4b2b)',
-                          color: '#fff',
-                          fontSize: '0.6rem',
-                          fontWeight: 700,
-                          padding: '3px 8px',
-                          borderRadius: '10px',
-                          letterSpacing: '0.06em',
-                          boxShadow: '0 2px 10px rgba(255, 65, 108, 0.4)',
-                        }}>50% OFF</span>
-                      </div>
+        {/* ═══ MANAGER HARI — MICROSOFT ENTERPRISE ACCURACY GUARANTEE ═══ */}
+        <div className="ain-manager-section">
+          <div className="ain-manager-photo-wrap">
+            <img
+              src="/ceo_hariharan.jpg"
+              alt="Hariharan.D — Microsoft Verified Professional & General Manager"
+              className="ain-manager-photo"
+            />
+            <div className="ain-manager-verified-dot">✓</div>
+          </div>
 
-                      {/* Buttons row */}
-                      <div style={{ display: 'flex', gap: '6px' }}>
-                        <button
-                          className="product-buy-btn interactive"
-                          style={{
-                            flex: 1,
-                            background: 'rgba(255,255,255,0.08)',
-                            backdropFilter: 'blur(8px)',
-                            border: `1px solid ${product.color}66`,
-                            color: '#fff',
-                            fontSize: '0.68rem',
-                            padding: '7px 4px',
-                            borderRadius: '6px',
-                            cursor: 'pointer',
-                            transition: 'all 0.3s ease',
-                            fontWeight: 600,
-                          }}
-                          onMouseEnter={(e) => {
-                            e.target.style.background = `${product.color}33`
-                            e.target.style.transform = 'scale(1.04)'
-                            e.target.style.boxShadow = `0 0 18px ${product.color}44`
-                          }}
-                          onMouseLeave={(e) => {
-                            e.target.style.background = 'rgba(255,255,255,0.08)'
-                            e.target.style.transform = 'scale(1)'
-                            e.target.style.boxShadow = 'none'
-                          }}
-                          onClick={() => addToCart(product)}
-                        >
-                          🛒 CART
-                        </button>
+          <div className="ain-manager-info">
+            <div className="ain-manager-tags">
+              <a
+                href="https://www.linkedin.com/in/hariharan-d"
+                target="_blank"
+                rel="noreferrer"
+                className="ain-ms-badge ain-ms-badge-link"
+                title="View Microsoft Verified Profile"
+              >
+                <span>✓</span>
+                <span>MICROSOFT VERIFIED</span>
+              </a>
+              <span className="ain-role-tag">MANAGER & FOUNDER</span>
+              <span className="ain-role-tag">LEAD EXCEL ARCHITECT</span>
+            </div>
 
-                        <button
-                          className="product-buy-btn interactive"
-                          style={{
-                            flex: 1.1,
-                            background: `linear-gradient(135deg, ${product.color}, ${product.color}cc)`,
-                            border: 'none',
-                            color: '#fff',
-                            fontSize: '0.68rem',
-                            padding: '7px 4px',
-                            fontWeight: 700,
-                            borderRadius: '6px',
-                            cursor: 'pointer',
-                            transition: 'all 0.3s ease',
-                            boxShadow: `0 4px 15px ${product.color}44`,
-                          }}
-                          onMouseEnter={(e) => {
-                            e.target.style.transform = 'scale(1.04)'
-                            e.target.style.boxShadow = `0 6px 25px ${product.color}77`
-                          }}
-                          onMouseLeave={(e) => {
-                            e.target.style.transform = 'scale(1)'
-                            e.target.style.boxShadow = `0 4px 15px ${product.color}44`
-                          }}
-                          onClick={() => handleOpenCheckoutModal(product)}
-                        >
-                          🔐 PAY {currency === 'USD' ? `$${(product.price / 85).toFixed(2)}` : `₹${product.price}`}
-                        </button>
-                      </div>
-                    </div>
+            <h3 className="ain-manager-name">Hariharan.D</h3>
+            <p className="ain-manager-quote">
+              "Every template in the <strong>aIn Pack</strong> is engineered under official Microsoft enterprise accuracy guidelines. Clean formula architectures, zero broken links, and presentation-ready executive visual layouts."
+            </p>
 
-                    {/* 50% OFF corner badge */}
-                    <div className="ht-off-badge" style={{
-                      position: 'absolute',
-                      top: '10px',
-                      right: '10px',
-                      background: 'linear-gradient(135deg, #ff416c, #ff4b2b)',
-                      color: '#fff',
-                      fontFamily: 'Orbitron, sans-serif',
-                      fontSize: '0.65rem',
-                      fontWeight: 800,
-                      padding: '5px 12px',
-                      borderRadius: '16px',
-                      zIndex: 15,
-                      boxShadow: '0 4px 20px rgba(255, 65, 108, 0.5)',
-                      animation: 'htBadgePulse 2s ease-in-out infinite',
-                      letterSpacing: '0.08em',
-                    }}>
-                      50% OFF
-                    </div>
+            <div className="ain-manager-bottom">
+              <div className="ain-manager-stats">
+                <span className="ain-stat-item"><strong>100+</strong> Dashboards</span>
+                <span className="ain-stat-item"><strong>500+</strong> Students</span>
+                <span className="ain-stat-item"><strong>100%</strong> Verified</span>
+              </div>
 
-                    {/* SAVE badge top-left */}
-                    <div style={{
-                      position: 'absolute',
-                      top: '10px',
-                      left: '10px',
-                      background: 'linear-gradient(135deg, #22c55e, #16a34a)',
-                      color: '#fff',
-                      fontFamily: 'Orbitron, sans-serif',
-                      fontSize: '0.55rem',
-                      fontWeight: 700,
-                      padding: '4px 10px',
-                      borderRadius: '12px',
-                      zIndex: 15,
-                      boxShadow: '0 3px 12px rgba(34, 197, 94, 0.4)',
-                      letterSpacing: '0.06em',
-                    }}>
-                      SAVE ₹300
+              <a
+                href="mailto:bexsigmatech@gmail.com?subject=Excel%20Training%20%26%20aIn%20Inquiry%20-%20Manager%20Hari"
+                className="ain-manager-contact interactive"
+              >
+                <span>✉</span>
+                <span>Contact Manager Hari</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        {/* ═══ LIVE EXCEL MASTERCLASS — COMMERCIAL POSTER ADVERTISEMENT ═══ */}
+        <div className="excel-poster-ad-wrap">
+          {/* Picture Lamp / Overhead Gallery Fixture */}
+          <div className="ad-poster-lamp" aria-hidden="true">
+            <div className="ad-poster-lamp-stem-left" />
+            <div className="ad-poster-lamp-stem-right" />
+            <div className="ad-poster-lamp-bar">
+              <div className="ad-poster-lamp-bulb" />
+            </div>
+            <div className="ad-poster-lamp-beam" />
+          </div>
+
+          <div className="excel-poster-ad">
+            {/* Metallic Corner Mounting Brackets */}
+            <div className="ad-bracket ad-bracket-tl" aria-hidden="true"><span className="ad-screw" /></div>
+            <div className="ad-bracket ad-bracket-tr" aria-hidden="true"><span className="ad-screw" /></div>
+            <div className="ad-bracket ad-bracket-bl" aria-hidden="true"><span className="ad-screw" /></div>
+            <div className="ad-bracket ad-bracket-br" aria-hidden="true"><span className="ad-screw" /></div>
+
+            {/* Diagonal Gold Ribbon: ★ EXCLUSIVE ★ */}
+            <div className="ad-ribbon-exclusive">
+              <span>★ EXCLUSIVE ★</span>
+            </div>
+
+            {/* Marquee Banner Bar */}
+            <div className="ad-poster-marquee-bar">
+              <div className="ad-poster-marquee-pill-live">
+                <span className="ad-live-beacon" />
+                <span className="ad-marquee-pill-text">🔴 ADMISSION OPEN</span>
+                <span className="ad-marquee-pill-cohort">BATCH 2026</span>
+              </div>
+              <div className="ad-poster-marquee-center">
+                <span className="ad-star">★</span>
+                <span>OFFICIAL LIVE SPREADSHEET & BI ACADEMY</span>
+                <span className="ad-star">★</span>
+              </div>
+              <div className="ad-poster-marquee-badge">
+                <span>⚡ 10 SEATS ONLY · WEEKEND & WEEKDAY</span>
+              </div>
+            </div>
+
+            {/* Poster Inner Content Grid */}
+            <div className="excel-poster-ad-body">
+              {/* Left Column: Commercial Poster Pitch, Badges, Modules */}
+              <div className="excel-poster-ad-left">
+                <div className="ad-poster-eyebrow">
+                  <span className="ad-gold-tag">★ LIVE MASTERCLASS</span>
+                  <span className="ad-sep">·</span>
+                  <span>1-ON-1 & COHORT SPRINT</span>
+                </div>
+
+                <h2 className="ad-poster-headline">
+                  Stop Struggling With Formulas. <br />
+                  <span className="ad-gradient-gold">Master Advanced Excel Live.</span>
+                </h2>
+
+                <p className="ad-poster-sub">
+                  Transform from manual spreadsheet headaches into automated executive BI dashboards. Learn live, hands-on, directly from <strong>Hariharan.D</strong> (Microsoft Verified Professional & Lead Architect) in intensive weekend masterclass cohorts.
+                </p>
+
+                {/* 4 Poster Feature Stamps */}
+                <div className="ad-poster-stamps">
+                  <div className="ad-poster-stamp">
+                    <span className="ad-stamp-icon">🔴</span>
+                    <div className="ad-stamp-text">
+                      <strong>Live 1-on-1 & Cohorts</strong>
+                      <span>Interactive screen-share practice</span>
                     </div>
                   </div>
-                ) : (
-                  /* ── Standard text-based product card ── */
-                  <>
-                    <div>
-                      {/* Product Badge */}
-                      <div className="product-card-header" style={{ marginBottom: '8px' }}>
-                        <span className="product-badge" style={{ borderColor: product.color, color: product.color }}>{product.badge}</span>
-                        <div className="product-orb" style={{ background: product.color, boxShadow: `0 0 25px ${product.color}` }} />
-                      </div>
-
-                      <h2 className="product-name" style={{ color: product.color, fontSize: '1.1rem', fontFamily: 'Orbitron, sans-serif' }}>{product.name}</h2>
-                      <p className="product-tagline" style={{ opacity: 0.7, fontSize: '0.75rem', marginBottom: '8px' }}>{product.tagline}</p>
-
-                      {/* Price */}
-                      <div className="product-price-block" style={{ marginBottom: '8px' }}>
-                        <span className="product-original-price" style={{ textDecoration: 'line-through', opacity: 0.5, marginRight: '10px', fontSize: '0.75rem' }}>{product.originalPrice}</span>
-                        <span className="product-price" style={{ color: product.color, fontSize: '1.2rem', fontWeight: 700 }}>{product.priceDisplay}</span>
-                        <span className="product-price-note" style={{ fontSize: '0.72rem', opacity: 0.5 }}>/ blueprints</span>
-                      </div>
-
-                      <div className="product-delivery" style={{ borderColor: `${product.color}22`, fontSize: '0.72rem', padding: '5px 8px', background: 'rgba(255,255,255,0.02)', borderRadius: '4px', marginBottom: '8px' }}>
-                        ⏱ Delivery: <strong>{product.deliveryDays} cycles</strong>
-                      </div>
-
-                      {/* Features */}
-                      <ul className="product-features-list" style={{ listStyle: 'none', padding: 0, margin: '0 0 10px 0', fontSize: '0.75rem', display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                        {product.features.slice(0, 4).map((f, i) => (
-                          <li key={i} style={{ display: 'flex', gap: '6px', opacity: 0.85 }}>
-                            <span style={{ color: product.color }}>✓</span>
-                            {f}
-                          </li>
-                        ))}
-                      </ul>
+                  <div className="ad-poster-stamp">
+                    <span className="ad-stamp-icon">📜</span>
+                    <div className="ad-stamp-text">
+                      <strong>Microsoft Credential</strong>
+                      <span>Official verified completion certificate</span>
                     </div>
+                  </div>
+                  <div className="ad-poster-stamp">
+                    <span className="ad-stamp-icon">⚡</span>
+                    <div className="ad-stamp-text">
+                      <strong>Solve Real Office Sheets</strong>
+                      <span>Bring your company sheets to class</span>
+                    </div>
+                  </div>
+                  <div className="ad-poster-stamp">
+                    <span className="ad-stamp-icon">🎥</span>
+                    <div className="ad-stamp-text">
+                      <strong>Lifetime 4K Vault</strong>
+                      <span>All recordings + master workbooks</span>
+                    </div>
+                  </div>
+                </div>
 
-                    <div>
-                      {/* Tech Row */}
-                      <div className="product-tech-row" style={{ display: 'flex', gap: '6px', flexWrap: 'wrap', marginBottom: '10px' }}>
-                        {product.tech.map((t, i) => (
-                          <span key={i} className="product-tech-tag" style={{ borderColor: `${product.color}33`, color: product.color, fontSize: '0.62rem', padding: '1px 6px', borderRadius: '3px' }}>
-                            {t}
-                          </span>
-                        ))}
-                      </div>
-
-                      {/* Actions row */}
-                      <div style={{ display: 'flex', gap: '8px' }}>
-                        <button
-                          className="product-buy-btn interactive"
-                          style={{
-                            flex: 1,
-                            background: 'transparent',
-                            borderColor: product.color,
-                            color: product.color,
-                            fontSize: '0.72rem',
-                            padding: '6px 4px',
-                            borderRadius: '4px',
-                            cursor: 'pointer',
-                          }}
-                          onClick={() => addToCart(product)}
-                        >
-                          🛒 ADD TO CART
-                        </button>
-                        <button
-                          className="product-buy-btn interactive"
-                          style={{
-                            flex: 1.1,
-                            background: product.color,
-                            borderColor: product.color,
-                            color: '#000',
-                            fontSize: '0.72rem',
-                            padding: '6px 4px',
-                            fontWeight: 700,
-                            borderRadius: '4px',
-                            cursor: 'pointer',
-                          }}
-                          onClick={() => handleOpenCheckoutModal(product)}
-                        >
-                          🔐 PAY {product.priceDisplay}
-                        </button>
+                {/* 3 Core Curriculum Modules */}
+                <div className="ad-poster-curriculum">
+                  <div className="ad-curriculum-header">
+                    <span className="ad-curriculum-label">CORE SYLLABUS BREAKDOWN</span>
+                    <span className="ad-curriculum-badge">3 WEEKS SPRINT</span>
+                  </div>
+                  <div className="ad-curriculum-items">
+                    <div className="ad-curriculum-item">
+                      <span className="ad-mod-pill">01</span>
+                      <div>
+                        <strong>Dynamic Formulas & Nested Logic</strong>
+                        <span>XLOOKUP, INDEX/MATCH, LAMBDA, LET, Nested Logic</span>
                       </div>
                     </div>
-                  </>
-                )}
+                    <div className="ad-curriculum-item">
+                      <span className="ad-mod-pill">02</span>
+                      <div>
+                        <strong>Executive BI & Dynamic Slicers</strong>
+                        <span>KPI Slicers, Interactive Heatmaps & Executive Views</span>
+                      </div>
+                    </div>
+                    <div className="ad-curriculum-item">
+                      <span className="ad-mod-pill">03</span>
+                      <div>
+                        <strong>Power Query & Data Pipelines</strong>
+                        <span>1-Click ETL, Multi-Sheet Sync & Automated Pipelines</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
-            )
-          })}
-        </div>
-      </div>
 
-      {/* Slider indicators */}
-      <div style={{ display: 'flex', justifyContent: 'center', gap: '8px', margin: '15px auto 20px auto', zIndex: 10, position: 'relative' }}>
-        {PRODUCTS.map((_, i) => {
-          const isActive = i === activeModuloIndex
-          return (
-            <div
-              key={i}
-              className="interactive"
-              onClick={() => {
-                cinemaAudio.playScrollTransition()
-                let diff = i - activeModuloIndex
-                const halfLen = Math.floor(PRODUCTS.length / 2)
-                if (diff > halfLen) diff -= PRODUCTS.length
-                if (diff < -halfLen) diff += PRODUCTS.length
-                setCurrentIndex((prev) => prev + diff)
-              }}
-              style={{
-                width: isActive ? '30px' : '8px',
-                height: '8px',
-                borderRadius: '4px',
-                background: isActive ? '#a78bfa' : 'rgba(255, 255, 255, 0.2)',
-                boxShadow: isActive ? '0 0 8px #a78bfa' : 'none',
-                cursor: 'pointer',
-                transition: 'all 0.3s ease'
-              }}
-            />
-          )
-        })}
-      </div>
+              {/* Right Column: Commercial VIP Admission Pass / Ticket */}
+              <div className="excel-poster-ad-right">
+                <div className="ad-vip-ticket">
+                  {/* Decorative Ticket Cutouts */}
+                  <div className="ad-ticket-notch ad-ticket-notch-left" aria-hidden="true" />
+                  <div className="ad-ticket-notch ad-ticket-notch-right" aria-hidden="true" />
 
-      {/* ── 5 SaaS Logos section ── */}
-      <section className="webdev-logos-section">
-        <div className="webdev-logos-title">SECURE CLOUD INTEGRATION WITH PROVEN PLATFORMS</div>
-        <div className="webdev-logos-row">
-          <div className="webdev-logo-item">
-            <svg className="webdev-logo-svg" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" /></svg>
-            <span>AETHER.io</span>
-          </div>
-          <div className="webdev-logo-item">
-            <svg className="webdev-logo-svg" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-4 6h-4v2h4v2h-4v2h4v2H9V7h6v2z" /></svg>
-            <span>VERTEX</span>
-          </div>
-          <div className="webdev-logo-item">
-            <svg className="webdev-logo-svg" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" /></svg>
-            <span>NEBULA.DB</span>
-          </div>
-          <div className="webdev-logo-item">
-            <svg className="webdev-logo-svg" viewBox="0 0 24 24"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z" /></svg>
-            <span>APEX.CO</span>
-          </div>
-          <div className="webdev-logo-item">
-            <svg className="webdev-logo-svg" viewBox="0 0 24 24"><path d="M12 2L1 21h22L12 2zm0 4l7.5 13h-15L12 6z" /></svg>
-            <span>SPECTER.NET</span>
+                  {/* Ticket Header */}
+                  <div className="ad-ticket-header">
+                    <div className="ad-ticket-head-left">
+                      <span className="ad-ticket-seal">★ EXCLUSIVE ★</span>
+                      <span className="ad-ticket-title">VIP ADMISSION PASS</span>
+                    </div>
+                    <span className="ad-ticket-id">#BEX-LIVE-2026</span>
+                  </div>
+
+                  {/* Instructor Spotlight */}
+                  <div className="ad-ticket-instructor">
+                    <div className="ad-instructor-avatar-wrap">
+                      <img
+                        src="/ceo_hariharan.jpg"
+                        alt="Hariharan.D"
+                        className="ad-instructor-avatar"
+                      />
+                      <div className="ad-avatar-badge" title="Microsoft Verified">✓</div>
+                    </div>
+                    <div className="ad-instructor-meta">
+                      <a
+                        href="https://www.linkedin.com/in/hariharan-d"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="ad-ms-link"
+                        title="View Microsoft Verified Profile"
+                      >
+                        <span>✓ MICROSOFT VERIFIED ARCHITECT</span>
+                      </a>
+                      <h3 className="ad-instructor-title">Hariharan.D</h3>
+                      <p className="ad-instructor-desc">Lead Excel Architect · Founder</p>
+                    </div>
+                  </div>
+
+                  {/* Dashed Perforation Divider */}
+                  <div className="ad-ticket-divider">
+                    <span className="ad-divider-line" />
+                    <span className="ad-divider-badge">ADMIT ONE · FREE DEMO</span>
+                    <span className="ad-divider-line" />
+                  </div>
+
+                  {/* Ticket Perks */}
+                  <div className="ad-ticket-perks">
+                    <div className="ad-ticket-perk">
+                      <span className="ad-perk-check">✔</span>
+                      <span>Free 1-Hour Live Interactive Demo Session</span>
+                    </div>
+                    <div className="ad-ticket-perk">
+                      <span className="ad-perk-check">✔</span>
+                      <span>1-on-1 Skill Diagnosis & Real-time Q&A</span>
+                    </div>
+                    <div className="ad-ticket-perk">
+                      <span className="ad-perk-check">✔</span>
+                      <span>Custom Learning Roadmap for Your Job Role</span>
+                    </div>
+                  </div>
+
+                  {/* Barcode Graphic */}
+                  <div className="ad-ticket-barcode">
+                    <div className="ad-barcode-bars" aria-hidden="true">
+                      <span className="b-w2" /><span className="b-w1" /><span className="b-w3" /><span className="b-w1" />
+                      <span className="b-w2" /><span className="b-w4" /><span className="b-w1" /><span className="b-w2" />
+                      <span className="b-w3" /><span className="b-w1" /><span className="b-w2" /><span className="b-w1" />
+                      <span className="b-w4" /><span className="b-w2" /><span className="b-w1" /><span className="b-w3" />
+                      <span className="b-w2" /><span className="b-w1" /><span className="b-w3" /><span className="b-w2" />
+                    </div>
+                    <span className="ad-barcode-number">9874 0123 2026 LIVE</span>
+                  </div>
+
+                  {/* CTA Button */}
+                  <div className="ad-ticket-cta-wrap">
+                    <a
+                      href="mailto:bexsigmatech@gmail.com?subject=Excel%20Live%20Masterclass%20%26%20Demo%20Session%20Booking&body=Hi%20Manager%20Hari,%0A%0AI%20am%20interested%20in%20joining%20the%20Excel%20Live%20Masterclass%20/%201-on-1%20Training.%20Please%20reserve%20a%20seat%20for%20the%20upcoming%20batch%20and%20share%20the%20free%20demo%20class%20details."
+                      className="ad-ticket-btn-primary interactive"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      <span>🎟️ Book Free Demo Pass & Talk to Hari</span>
+                      <span>→</span>
+                    </a>
+                    <div className="ad-ticket-urgency">
+                      <span className="ad-urgency-fire">🔥</span>
+                      <span>Limited to 10 Seats · Weekend & Weekday Cohorts</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Poster Commercial Guarantee Strip */}
+            <div className="ad-poster-guarantee-bar">
+              <span>🛡️ 100% Practical Corporate Training · Zero Theory Fluff · Direct Screen-Share Guidance · Official Certificate</span>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* ── What We Build — Dynamic 4-Way Architecture Matrix ── */}
-      <section className="webdev-bento-section">
-        <div className="webdev-bento-header">
-          <div className="webdev-bento-eyebrow">
-            <span className="bento-eyebrow-dot" />
-            WHAT WE BUILD · 4 CORE PATHWAYS
-            <span className="bento-eyebrow-line" />
+      {/* ── Our Services — Framed Blueprints Exhibition Wall ── */}
+      <section className="services-poster-wall-section">
+        {/* Header */}
+        <div className="services-wall-header">
+          <div className="services-wall-eyebrow">
+            <span className="services-wall-dot" />
+            <span>EXHIBITION · 4 CORE DISCIPLINES</span>
           </div>
-          <h2 className="webdev-bento-title">Four ways we bring your idea to life</h2>
-          <p className="webdev-bento-sub">From essential corporate web to spatial 3D and enterprise SaaS — select a pathway below to inspect architecture models.</p>
+          <h2 className="services-wall-title">
+            Our Services · <span>Visual Blueprints</span>
+          </h2>
+          <p className="services-wall-sub">
+            Four ways we engineer digital products into reality. Browse each service as a framed exhibition blueprint — click any poster to inspect architecture, delivery timelines, and technology stacks.
+          </p>
         </div>
 
-        {/* Pathway Tabs Selector */}
-        <div className="webdev-pathway-tabs" role="tablist">
-          {WORKS.map((work, idx) => {
-            const isSelected = activePathwayIndex === idx
-            return (
-              <button
-                key={work.id}
-                className={`webdev-pathway-tab interactive ${isSelected ? 'active' : ''}`}
-                style={{
-                  '--tab-accent': work.accent,
-                  '--tab-glow': work.glow,
-                }}
-                onClick={() => {
-                  cinemaAudio.playOrbSelect()
-                  setActivePathwayIndex(idx)
-                }}
-                role="tab"
-                aria-selected={isSelected}
-              >
-                <span className="pathway-tab-num">{work.num}</span>
-                <span className="pathway-tab-icon">{work.icon}</span>
-                <span className="pathway-tab-title">{work.title}</span>
-              </button>
-            )
-          })}
-        </div>
+        {/* Gallery Wall Surface */}
+        <div className="services-wall-surface">
+          {/* Top Museum Wall Rail */}
+          <div className="services-wall-rail" />
 
-        {/* Active Pathway Hero Stage (Split Showcase) */}
-        {(() => {
-          const activeWork = WORKS[activePathwayIndex] || WORKS[0]
-          return (
-            <div
-              className="webdev-pathway-stage"
-              style={{
-                '--stage-accent': activeWork.accent,
-                '--stage-glow': activeWork.glow,
-              }}
-            >
-              {/* Left Stage: Visualizer Preview */}
-              <div className="pathway-stage-visual">
-                <img src={activeWork.image} alt={activeWork.title} className="pathway-stage-img" loading="lazy" />
-                <div className="pathway-stage-overlay" />
-                <div className="pathway-stage-scanline" />
-                
-                <div className="pathway-stage-badge-bar">
-                  <span className="pathway-stage-badge" style={{ color: activeWork.accent, borderColor: activeWork.accent }}>
-                    {activeWork.meta}
-                  </span>
-                  <span className="pathway-stage-timeline">⏱ {activeWork.timeline}</span>
-                </div>
-
-                <div className="pathway-stage-corners tl" style={{ borderColor: activeWork.accent }} />
-                <div className="pathway-stage-corners tr" style={{ borderColor: activeWork.accent }} />
-                <div className="pathway-stage-corners bl" style={{ borderColor: activeWork.accent }} />
-                <div className="pathway-stage-corners br" style={{ borderColor: activeWork.accent }} />
-              </div>
-
-              {/* Right Stage: Architecture Specs & Actions */}
-              <div className="pathway-stage-info">
-                <div>
-                  <div className="pathway-stage-header">
-                    <span className="pathway-stage-num">{activeWork.num}</span>
-                    <span className="pathway-stage-model-pill" style={{ color: activeWork.accent }}>
-                      {activeWork.models}
-                    </span>
-                  </div>
-                  <h3 className="pathway-stage-title">{activeWork.title}</h3>
-                  <div className="pathway-stage-subtitle" style={{ color: activeWork.accent }}>
-                    {activeWork.subtitle}
-                  </div>
-                  <p className="pathway-stage-desc">{activeWork.desc}</p>
-                </div>
-
-                {/* Specs Grid */}
-                <div className="pathway-stage-specs">
-                  {activeWork.specs?.map((spec, i) => (
-                    <div key={i} className="pathway-spec-chip">
-                      <span className="pathway-spec-dot" style={{ background: activeWork.accent }} />
-                      <span>{spec}</span>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Tech Tags */}
-                <div className="pathway-stage-tags">
-                  {activeWork.tags.map((t, i) => (
-                    <span key={i} className="pathway-tech-tag">{t}</span>
-                  ))}
-                </div>
-
-                {/* Actions */}
-                <div className="pathway-stage-actions">
-                  <button
-                    className="pathway-btn-primary interactive"
-                    style={{ background: activeWork.accent }}
-                    onClick={() => {
-                      cinemaAudio.playOrbSelect()
-                      setSelectedService(activeWork.id)
-                    }}
-                  >
-                    <span>🔍 EXPLORE DEEP ARCHITECTURE & QUOTE</span>
-                    <span>→</span>
-                  </button>
-                  <a
-                    href="mailto:bexsigmatech@gmail.com?subject=Project%20Inquiry%20-%20Bex%20Sigma%20Tech"
-                    className="pathway-btn-secondary interactive"
-                  >
-                    ✉ CONTACT CEO
-                  </a>
-                </div>
-              </div>
-            </div>
-          )
-        })()}
-
-        {/* 4-Card Pathway Interactive Strip */}
-        <div className="webdev-pathway-grid">
-          {WORKS.map((work, idx) => {
-            const isSelected = activePathwayIndex === idx
-            return (
+          {/* 4-Column Poster Wall Grid */}
+          <div className="services-wall-grid">
+            {WORKS.map((work) => (
               <div
-                key={idx}
-                className={`webdev-pathway-mini-card interactive ${isSelected ? 'active' : ''}`}
+                key={work.id}
+                className="services-poster-item"
                 style={{
-                  '--accent': work.accent,
-                  '--glow': work.glow,
-                }}
-                onClick={() => {
-                  cinemaAudio.playOrbSelect()
-                  setActivePathwayIndex(idx)
+                  '--service-accent': work.accent,
+                  '--service-glow': work.glow,
                 }}
               >
-                <div className="pathway-mini-img-wrap">
-                  <img src={work.image} alt={work.title} className="pathway-mini-img" loading="lazy" />
-                  <div className="pathway-mini-img-overlay" />
-                  <span className="pathway-mini-num">{work.num}</span>
+                {/* Authentic Hanging Wire & Brass Wall Hook */}
+                <div className="services-hanging-wire">
+                  <div className="services-wire-hook" />
+                  <div className="services-wire-line left" />
+                  <div className="services-wire-line right" />
                 </div>
-                <div className="pathway-mini-content">
-                  <div className="pathway-mini-top">
-                    <span className="pathway-mini-icon">{work.icon}</span>
-                    <span className="pathway-mini-meta" style={{ color: work.accent }}>{work.meta.split('·')[1]?.trim() || work.meta}</span>
+
+                {/* The Framed Picture */}
+                <div
+                  className="services-picture-frame interactive"
+                  onClick={() => {
+                    cinemaAudio.playOrbSelect()
+                    setSelectedService(work.id)
+                  }}
+                  title={`Inspect ${work.title} specifications`}
+                >
+                  {/* Corner Frame Accents */}
+                  <div className="services-frame-corner tl" />
+                  <div className="services-frame-corner tr" />
+                  <div className="services-frame-corner bl" />
+                  <div className="services-frame-corner br" />
+
+                  {/* Poster Artwork Canvas */}
+                  <div className="services-poster-canvas">
+                    <img
+                      src={work.image}
+                      alt={work.title}
+                      className="services-poster-img"
+                      loading="lazy"
+                    />
+                    {/* Badge */}
+                    <span className="services-poster-badge">
+                      {work.meta}
+                    </span>
+                    {/* Hover Inspect Pill */}
+                    <div className="services-poster-hover-overlay">
+                      <span className="services-hover-pill">🔍 Click to Inspect</span>
+                    </div>
                   </div>
-                  <h4 className="pathway-mini-title">{work.title}</h4>
-                  <div className="pathway-mini-cta" style={{ color: work.accent }}>
-                    <span>{isSelected ? '● Active' : 'Select'}</span>
-                    <span>→</span>
+
+                  {/* Museum Plaque Mounted Below Poster */}
+                  <div className="services-plaque">
+                    <div className="services-plaque-top">
+                      <span className="services-plaque-num">{work.num} · {work.id.toUpperCase()}</span>
+                      <span className="services-plaque-timeline">⏱ {work.timeline}</span>
+                    </div>
+                    <h3 className="services-plaque-title">{work.title}</h3>
+                    <p className="services-plaque-sub">{work.subtitle}</p>
+
+                    {/* Specs Chips */}
+                    <div className="services-plaque-chips">
+                      {work.specs?.slice(0, 3).map((spec, sIdx) => (
+                        <div key={sIdx} className="services-plaque-chip">
+                          <span className="services-chip-dot" />
+                          <span>{spec}</span>
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Plaque Action Buttons */}
+                    <div className="services-plaque-actions">
+                      <button
+                        type="button"
+                        className="services-btn-inspect interactive"
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          cinemaAudio.playOrbSelect()
+                          setSelectedService(work.id)
+                        }}
+                      >
+                        <span>Explore Scope</span>
+                        <span>→</span>
+                      </button>
+                      <button
+                        type="button"
+                        className="services-btn-lightbox interactive"
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          cinemaAudio.playOrbSelect()
+                          setActiveLightboxPoster({
+                            title: work.title,
+                            image: work.image,
+                            tag: work.meta,
+                          })
+                        }}
+                        title="Inspect poster in 4K Fullscreen"
+                      >
+                        🔍
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
-            )
-          })}
+            ))}
+          </div>
         </div>
       </section>
 
@@ -1580,7 +1234,7 @@ export default function WebDevStore() {
       <div className={`webdev-cart-sidebar ${isCartOpen ? 'open' : ''}`}>
         <div className="webdev-cart-header">
           <h2 className="webdev-cart-title">
-            <span>🛒 OBSERVATORY CART</span>
+            <span>🛒 Your Cart</span>
           </h2>
           <button className="webdev-cart-close" onClick={() => setIsCartOpen(false)}>×</button>
         </div>
@@ -1589,12 +1243,12 @@ export default function WebDevStore() {
           {cart.length === 0 ? (
             <div className="webdev-cart-empty">
               <div className="webdev-cart-empty-icon">📭</div>
-              <div>No blueprints in database cart.</div>
+              <div>Your cart is empty. Add the aIn Pack to get started!</div>
             </div>
           ) : (
             cart.map((item) => (
               <div key={item.product.id} className="webdev-cart-item">
-                <div className="webdev-cart-item-dot" style={{ color: item.product.color }} />
+                <img src={item.product.image} alt={item.product.name} className="webdev-cart-item-thumb" />
                 <div className="webdev-cart-item-info">
                   <h4 className="webdev-cart-item-name">{item.product.name}</h4>
                   <div className="webdev-cart-item-price" style={{ color: item.product.color }}>
@@ -1623,11 +1277,14 @@ export default function WebDevStore() {
               className="webdev-cart-checkout-btn primary interactive"
               onClick={() => {
                 const cartItems = cart.map((item) => ({ productId: item.product.id, quantity: item.quantity }))
-                const cartProduct = cart.length === 1
+                const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0)
+                const cartProduct = (cart.length === 1 && cart[0].quantity === 1)
                   ? cart[0].product
                   : {
                     cartItems,
-                    name: `Cart Bundle (${cart.length} Excel Dashboards)`,
+                    name: cart.length === 1
+                      ? `${cart[0].product.name} (x${cart[0].quantity})`
+                      : `Cart Bundle (${totalQuantity} Items)`,
                     price: getCartTotal(), // rupees for display, server calculates paise
                     priceDisplay: `₹${getCartTotal().toLocaleString('en-IN')}`,
                     id: `bundle_${Date.now()}`,
@@ -1636,7 +1293,7 @@ export default function WebDevStore() {
                 handleOpenCheckoutModal(cartProduct)
               }}
             >
-              ⚙️ INITIATE SECURE CHECKOUT (₹{getCartTotal().toLocaleString('en-IN')})
+              🔒 Proceed to Checkout · ₹{getCartTotal().toLocaleString('en-IN')}
             </button>
           </div>
         )}
@@ -1644,145 +1301,105 @@ export default function WebDevStore() {
 
       {/* ── Customer Details Checkout Form Modal ── */}
       {isCustomerModalOpen && targetProduct && (
-        <div className="webdev-modal-overlay open" style={{ zIndex: 10000 }}>
-          <div className="webdev-modal-box" style={{ maxWidth: '480px', padding: '30px', textAlign: 'left', background: 'rgba(11, 17, 32, 0.95)', border: '1px solid rgba(0, 212, 255, 0.3)', borderRadius: '12px', boxShadow: '0 20px 50px rgba(0,0,0,0.8)', backdropFilter: 'blur(20px)' }}>
+        <div className="ain-checkout-overlay" onClick={(e) => e.target === e.currentTarget && setIsCustomerModalOpen(false)}>
+          <div className="ain-checkout-modal" role="dialog" aria-modal="true" aria-label="Checkout">
 
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px' }}>
-              <h2 style={{ fontFamily: 'Orbitron, sans-serif', fontSize: '1.1rem', color: '#00d4ff', margin: 0 }}>
-                🔐 Customer Checkout & Delivery
-              </h2>
-              <button
-                onClick={() => setIsCustomerModalOpen(false)}
-                style={{ background: 'transparent', border: 'none', color: '#8899a6', fontSize: '1.4rem', cursor: 'pointer' }}
-              >
-                ×
-              </button>
+            {/* Top gradient bar */}
+            <div className="ain-checkout-bar" />
+
+            {/* Modal Header */}
+            <div className="ain-checkout-header">
+              <div className="ain-checkout-header-left">
+                <div className="ain-checkout-lock-icon">🔐</div>
+                <div>
+                  <div className="ain-checkout-title">Secure Checkout</div>
+                  <div className="ain-checkout-subtitle">Your info is encrypted end-to-end</div>
+                </div>
+              </div>
+              <button className="ain-checkout-close" aria-label="Close checkout" onClick={() => setIsCustomerModalOpen(false)}>✕</button>
             </div>
 
             {/* Product Summary */}
-            <div style={{ background: 'rgba(255, 255, 255, 0.04)', border: '1px solid rgba(16, 185, 129, 0.3)', borderRadius: '8px', padding: '12px 15px', marginBottom: '20px' }}>
-              <div style={{ fontSize: '0.7rem', color: '#10b981', fontWeight: 'bold', textTransform: 'uppercase' }}>Selected Item</div>
-              <div style={{ fontSize: '0.95rem', fontWeight: 'bold', color: '#ffffff', marginTop: '2px' }}>{targetProduct.name}</div>
-              <div style={{ fontSize: '0.85rem', color: '#10b981', fontWeight: 'bold', marginTop: '4px' }}>
-                Total Amount: {targetProduct.priceDisplay}
-              </div>
-              <div style={{ fontSize: '0.72rem', color: '#38bdf8', marginTop: '6px', display: 'flex', alignItems: 'center', gap: '5px' }}>
-                📁 <span>Deliverable: Instant Google Drive link sent to your email after payment</span>
+            <div className="ain-checkout-product">
+              <img src={targetProduct.image || '/ain_excel_pack.jpg'} alt={targetProduct.name} className="ain-checkout-product-img" />
+              <div className="ain-checkout-product-info">
+                <div className="ain-checkout-product-label">Selected Product</div>
+                <div className="ain-checkout-product-name">{targetProduct.name}</div>
+                <div className="ain-checkout-product-price">{targetProduct.priceDisplay}</div>
+                <div className="ain-checkout-product-delivery">📁 Instant Google Drive link delivered to your email</div>
               </div>
             </div>
 
-            {/* Customer Inputs Form */}
-            <form onSubmit={handleStartPayment} style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
-              <div>
-                <label style={{ fontSize: '0.75rem', color: '#8899a6', display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>
-                  👤 FULL NAME *
-                </label>
+            {/* Form */}
+            <form onSubmit={handleStartPayment} className="ain-checkout-form">
+              <div className="ain-checkout-field">
+                <label className="ain-checkout-label" htmlFor="checkout-name">👤 Full Name *</label>
                 <input
+                  id="checkout-name"
                   type="text"
                   required
+                  autoComplete="name"
                   value={custName}
                   onChange={(e) => setCustName(e.target.value)}
                   placeholder="e.g. Kandavel"
-                  style={{
-                    width: '100%',
-                    padding: '10px 14px',
-                    background: 'rgba(255,255,255,0.06)',
-                    border: '1px solid rgba(255,255,255,0.15)',
-                    borderRadius: '6px',
-                    color: '#ffffff',
-                    fontSize: '0.9rem',
-                    outline: 'none',
-                    boxSizing: 'border-box'
-                  }}
+                  className="ain-checkout-input"
                 />
               </div>
 
-              <div>
-                <label style={{ fontSize: '0.75rem', color: '#38bdf8', display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>
-                  ✉️ EMAIL ADDRESS * (Google Drive link sent here)
-                </label>
+              <div className="ain-checkout-field">
+                <label className="ain-checkout-label ain-checkout-label-primary" htmlFor="checkout-email">✉️ Email Address * — Drive link sent here</label>
                 <input
+                  id="checkout-email"
                   type="email"
                   required
+                  autoComplete="email"
                   value={custEmail}
                   onChange={(e) => setCustEmail(e.target.value)}
                   placeholder="e.g. yourname@gmail.com"
-                  style={{
-                    width: '100%',
-                    padding: '10px 14px',
-                    background: 'rgba(56, 189, 248, 0.08)',
-                    border: '1px solid rgba(56, 189, 248, 0.4)',
-                    borderRadius: '6px',
-                    color: '#ffffff',
-                    fontSize: '0.9rem',
-                    outline: 'none',
-                    boxSizing: 'border-box'
-                  }}
+                  className="ain-checkout-input ain-checkout-input-primary"
                 />
-                <span style={{ fontSize: '0.68rem', color: '#8899a6', display: 'block', marginTop: '4px' }}>
-                  Double check your email address to ensure prompt delivery!
-                </span>
+                <span className="ain-checkout-hint">Double-check your email — your download link goes here</span>
               </div>
 
-              <div>
-                <label style={{ fontSize: '0.75rem', color: '#8899a6', display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>
-                  📱 PHONE NUMBER (Optional)
-                </label>
+              <div className="ain-checkout-field">
+                <label className="ain-checkout-label" htmlFor="checkout-phone">📱 Phone Number (Optional)</label>
                 <input
+                  id="checkout-phone"
                   type="tel"
+                  autoComplete="tel"
                   value={custPhone}
                   onChange={(e) => setCustPhone(e.target.value)}
                   placeholder="e.g. 9876543210"
-                  style={{
-                    width: '100%',
-                    padding: '10px 14px',
-                    background: 'rgba(255,255,255,0.06)',
-                    border: '1px solid rgba(255,255,255,0.15)',
-                    borderRadius: '6px',
-                    color: '#ffffff',
-                    fontSize: '0.9rem',
-                    outline: 'none',
-                    boxSizing: 'border-box'
-                  }}
+                  className="ain-checkout-input"
                 />
               </div>
 
-              <div style={{ display: 'flex', gap: '10px', marginTop: '10px' }}>
+              <div className="ain-checkout-actions">
                 <button
                   type="button"
+                  className="ain-checkout-cancel"
                   onClick={() => setIsCustomerModalOpen(false)}
-                  style={{
-                    flex: 1,
-                    padding: '12px',
-                    background: 'transparent',
-                    border: '1px solid rgba(255,255,255,0.2)',
-                    color: '#8899a6',
-                    borderRadius: '6px',
-                    cursor: 'pointer',
-                    fontSize: '0.8rem',
-                    fontWeight: 'bold'
-                  }}
                 >
-                  CANCEL
+                  Cancel
                 </button>
                 <button
                   type="submit"
-                  style={{
-                    flex: 2,
-                    padding: '12px',
-                    background: 'linear-gradient(135deg, #10b981, #0284c7)',
-                    border: 'none',
-                    color: '#ffffff',
-                    borderRadius: '6px',
-                    cursor: 'pointer',
-                    fontSize: '0.85rem',
-                    fontWeight: 'bold',
-                    boxShadow: '0 4px 15px rgba(16,185,129,0.3)',
-                    fontFamily: 'Orbitron, sans-serif'
-                  }}
+                  className={isPaying ? 'ain-checkout-pay loading' : 'ain-checkout-pay'}
+                  disabled={isPaying}
                 >
-                  💳 PROCEED TO PAY {targetProduct.priceDisplay}
+                  {isPaying ? (
+                    <><span className="ain-checkout-spinner" />Processing...</>
+                  ) : (
+                    <>💳 Pay {targetProduct.priceDisplay}</>
+                  )}
                 </button>
+              </div>
+
+              {/* Trust row */}
+              <div className="ain-checkout-trust">
+                <span>🔒 SSL Encrypted</span>
+                <span>💳 Cards + UPI</span>
+                <span>⚡ Instant Delivery</span>
               </div>
             </form>
           </div>
@@ -1829,9 +1446,11 @@ export default function WebDevStore() {
         ))}
       </div>
 
-      <div className="webdev-api-note">
-        Backend API: <code>{BACKEND_URL}</code> · Preloaded with 5 secure SaaS routes
-      </div>
+      {import.meta.env.DEV && (
+        <div className="webdev-api-note">
+          Backend API: <code>{BACKEND_URL}</code> · Live System Active
+        </div>
+      )}
 
       {/* 10/10 Toast — replaces alert(), respects single-product ZIP */}
       {toast && (
@@ -1843,6 +1462,57 @@ export default function WebDevStore() {
       {/* Service Detail Article Modal */}
       {selectedService && (
         <ServiceDetail serviceId={selectedService} onClose={() => setSelectedService(null)} />
+      )}
+
+      {/* 4K Fullscreen Poster Lightbox */}
+      {activeLightboxPoster && (
+        <div className="poster-lightbox-overlay" onClick={() => setActiveLightboxPoster(null)}>
+          <div className="poster-lightbox-bar" onClick={(e) => e.stopPropagation()}>
+            <span className="poster-lightbox-title">🖼️ {activeLightboxPoster.title}</span>
+            <button className="poster-lightbox-close" onClick={() => setActiveLightboxPoster(null)}>✕</button>
+          </div>
+          <div className="poster-lightbox-content" onClick={(e) => e.stopPropagation()}>
+            <img src={activeLightboxPoster.image} alt={activeLightboxPoster.title} className="poster-lightbox-img" />
+          </div>
+          <div className="poster-lightbox-actions" onClick={(e) => e.stopPropagation()}>
+            <button
+              className="plaque-btn-primary interactive"
+              onClick={() => {
+                setActiveLightboxPoster(null)
+                handleOpenCheckoutModal(PRODUCTS[0])
+              }}
+            >
+              ⚡ Get All-in-One Master Suite & 1,000+ Templates ({currency === 'INR' ? '₹199' : '$2.49'})
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Sticky Floating Gallery Dock */}
+      {isDockVisible && (
+        <div className="poster-floating-dock">
+          <div className="poster-dock-info">
+            <img src="/ain_excel_pack.jpg" alt="Poster" className="poster-dock-thumb" />
+            <div className="poster-dock-text">
+              <span className="poster-dock-name">aIn — Excel All-in-One Suite</span>
+              <span className="poster-dock-price">{currency === 'INR' ? '₹199' : '$2.49'} · 1,000+ Templates</span>
+            </div>
+          </div>
+          <div className="poster-dock-actions">
+            <button
+              className="poster-dock-buy-btn interactive"
+              onClick={() => handleOpenCheckoutModal(PRODUCTS[0])}
+            >
+              ⚡ Quick Buy ({currency === 'INR' ? '₹199' : '$2.49'})
+            </button>
+            <button
+              className="poster-dock-cart-btn interactive"
+              onClick={() => addToCart(PRODUCTS[0])}
+            >
+              🛒 Cart
+            </button>
+          </div>
+        </div>
       )}
     </div>
   )
