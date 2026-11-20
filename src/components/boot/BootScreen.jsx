@@ -25,9 +25,16 @@ export default function BootScreen() {
     setStarted(true)
     useStore.setState({ bootStarted: true })
     unlockAudioContext()
-    startLoading()
-    // Event-driven trigger
-    voiceEmitter.emit('LOADING_STARTED')
+    // LAGFREE INSTANT TRANSITION: Skip multi-stage 20-second artificial wait directly to HQ
+    useStore.setState({
+      scene: 'headquarters',
+      loadingProgress: 100,
+      audioContextUnlocked: true,
+      isIntroSkipped: true,
+      userName: useStore.getState().userName || 'Guest'
+    })
+    cinemaAudio.setScene('headquarters')
+    voiceEmitter.emit('HQ_SCENE_ACTIVE')
   }
 
   useEffect(() => {

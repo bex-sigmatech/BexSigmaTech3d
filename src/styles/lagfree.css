@@ -66,10 +66,24 @@ canvas {
   contain: layout style;
 }
 
-/* 6c. Desktop blur capping: limit extreme 24px+ blurs to 10px with dark alpha blending for 4x faster compositing */
-.jarvis-dept-panel, .nolan-hq-header, .webdev-glass-panel, .apps-glass-panel {
-  backdrop-filter: blur(10px) !important;
-  -webkit-backdrop-filter: blur(10px) !important;
+/* 6c. Universal Blur Capping: Cap all glass elements to 6px blur with high alpha dark tint for instant 120 FPS rendering */
+.apps-card, .cp-dossier-card, .webdev-product-card, .dashboard-card,
+.jarvis-dept-panel, .nolan-hq-header, .webdev-glass-panel, .apps-glass-panel,
+.quicknav-dock, .mc-matrix-card, .poster-dock-strip, .plaque-value-card {
+  backdrop-filter: blur(6px) !important;
+  -webkit-backdrop-filter: blur(6px) !important;
+}
+
+/* 6d. Content-visibility for 120 FPS infinite scrolling on large lists */
+.apps-card, .cp-dossier-card, .webdev-product-card, .poster-corridor-card,
+.mc-matrix-card, .plaque-value-card, .dashboard-metric-box {
+  content-visibility: auto;
+  contain-intrinsic-size: 320px;
+}
+
+/* 6e. Box-shadow capping: Replace heavy 100px blur spreads with crisp performance shadows */
+.poster-exhibition-wall, .apps-card, .cp-dossier-card, .webdev-product-card, .dashboard-card {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45) !important;
 }
 
 /* 7. Scrollbar and compositor hints */

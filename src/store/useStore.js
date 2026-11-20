@@ -9,7 +9,14 @@ const isMobileDevice = typeof window !== 'undefined' && (
   (navigator.maxTouchPoints && navigator.maxTouchPoints > 1)
 )
 
+const isLowPowerDevice = typeof window !== 'undefined' && (
+  isMobileDevice ||
+  (typeof navigator.hardwareConcurrency === 'number' && navigator.hardwareConcurrency <= 4) ||
+  (typeof navigator.deviceMemory === 'number' && navigator.deviceMemory <= 4)
+)
+
 const savedGraphics = typeof window !== 'undefined' ? localStorage.getItem('bex_graphics_quality') : null
+const initialGraphics = savedGraphics || (isLowPowerDevice ? 'low' : 'high')
 
 function getInitialRouteState() {
   if (typeof window === 'undefined') return { scene: 'boot', bootStarted: false, isIntroSkipped: false, activeMission: null }
@@ -42,7 +49,7 @@ export const useStore = create((set, get) => {
     activeMission: initialRoute.activeMission,
     scrollPosition: 0,
     audioContextUnlocked: false,
-    graphicsQuality: savedGraphics || 'high', // High graphics preset as default preference
+    graphicsQuality: initialGraphics, // Auto-tuned: low on budget/mobile devices, high on dedicated GPUs
     isIntroSkipped: initialRoute.isIntroSkipped,
     bootStarted: initialRoute.bootStarted, // true once user clicks ENTER or lands directly on deep link
 

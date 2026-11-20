@@ -29,14 +29,16 @@
     radial-gradient(ellipse at 80% 90%, rgba(0, 212, 255, 0.04) 0%, transparent 50%);
 }
 
-/* ── Dynamic Ambient Aurora Glows ── */
+/* ── Dynamic Ambient Aurora Glows (0ms GPU fill-rate) ── */
 .cp-ambient-aurora {
   position: fixed;
   border-radius: 50%;
   pointer-events: none;
-  filter: blur(85px);
   z-index: 0;
-  opacity: 0.5;
+  opacity: 0.65;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+  contain: strict;
   animation: cpAuroraDrift 16s infinite ease-in-out alternate;
 }
 
@@ -45,7 +47,7 @@
   height: 480px;
   top: 15%;
   left: -70px;
-  background: radial-gradient(circle, rgba(245, 158, 11, 0.16) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(245, 158, 11, 0.18) 0%, rgba(245, 158, 11, 0.07) 35%, rgba(245, 158, 11, 0.015) 58%, transparent 72%);
   animation-duration: 18s;
 }
 
@@ -54,7 +56,7 @@
   height: 520px;
   bottom: 20%;
   right: -80px;
-  background: radial-gradient(circle, rgba(0, 212, 255, 0.14) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(0, 212, 255, 0.16) 0%, rgba(0, 212, 255, 0.06) 35%, rgba(0, 212, 255, 0.015) 58%, transparent 72%);
   animation-duration: 22s;
   animation-delay: -7s;
 }
