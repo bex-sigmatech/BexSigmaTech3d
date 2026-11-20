@@ -2703,6 +2703,26 @@ body {
   gap: 8px;
   margin-top: auto;
   min-height: 38px;
+  position: relative;
+  overflow: hidden;
+}
+
+.product-buy-btn::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+  transform: translateX(-150%) skewX(-20deg);
+  animation: productBtnShimmer 3.5s infinite;
+  pointer-events: none;
+}
+
+@keyframes productBtnShimmer {
+  0% { transform: translateX(-150%) skewX(-20deg); }
+  30%, 100% { transform: translateX(300%) skewX(-20deg); }
 }
 
 .product-buy-btn:hover:not(:disabled) {
@@ -10138,6 +10158,26 @@ body {
 .quicknav-about-btn:hover {
   border-color: #a855f7;
   box-shadow: 0 0 24px rgba(168, 85, 247, 0.45);
+}
+
+.quicknav-audio-btn {
+  border-color: rgba(52, 211, 153, 0.4);
+}
+
+.quicknav-audio-btn:hover {
+  border-color: #34d399;
+  box-shadow: 0 0 24px rgba(52, 211, 153, 0.45);
+}
+
+.quicknav-audio-btn.is-muted {
+  border-color: rgba(239, 68, 68, 0.45);
+  color: #fca5a5;
+  background: rgba(30, 10, 15, 0.85);
+}
+
+.quicknav-audio-btn.is-muted:hover {
+  border-color: #ef4444;
+  box-shadow: 0 0 24px rgba(239, 68, 68, 0.45);
 }
 
 .quicknav-btn-icon {

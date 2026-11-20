@@ -131,6 +131,8 @@ export default function ClientProjectsShowcase() {
   return (
     <div className="cp-root">
       <div className="cp-bg-noise" />
+      <div className="cp-ambient-aurora cp-aurora-1" />
+      <div className="cp-ambient-aurora cp-aurora-2" />
 
       {/* ── Topbar ── */}
       <header className="cp-topbar">

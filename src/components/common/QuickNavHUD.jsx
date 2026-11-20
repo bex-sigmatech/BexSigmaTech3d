@@ -78,6 +78,12 @@ export default function QuickNavHUD() {
   const { scene, navigateToSector } = useStore()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isAboutOpen, setIsAboutOpen] = useState(false)
+  const [isAudioMuted, setIsAudioMuted] = useState(() => cinemaAudio.isMuted)
+
+  const handleToggleAudio = () => {
+    const nextMuted = cinemaAudio.toggleMute()
+    setIsAudioMuted(nextMuted)
+  }
 
   // Close modals on Escape key
   useEffect(() => {
@@ -139,6 +145,18 @@ export default function QuickNavHUD() {
         >
           <span className="quicknav-btn-icon">ℹ️</span>
           <span className="quicknav-btn-text">WHAT IS THIS?</span>
+        </button>
+
+        {/* Global Sound FX Audio Toggle */}
+        <button
+          type="button"
+          className={`quicknav-btn quicknav-audio-btn interactive ${isAudioMuted ? 'is-muted' : ''}`}
+          onClick={handleToggleAudio}
+          title={isAudioMuted ? 'Unmute Sound FX' : 'Mute Sound FX'}
+          aria-label={isAudioMuted ? 'Unmute Sound FX' : 'Mute Sound FX'}
+        >
+          <span className="quicknav-btn-icon">{isAudioMuted ? '🔇' : '🔊'}</span>
+          <span className="quicknav-btn-text">{isAudioMuted ? 'MUTED' : 'AUDIO ON'}</span>
         </button>
       </nav>
 

@@ -3,7 +3,7 @@
    Authentic Framed Wall Posters · Museum Wall Plaques · Gallery Spotlights
    ========================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Space+Grotesk:wght@400;500;600;700;800&family=Syne:wght@700;800;900&display=swap');
 
 /* ── Gallery Room Container ── */
 .poster-gallery-container {
@@ -56,11 +56,11 @@
 }
 
 .poster-gallery-headline {
-  font-family: 'Inter', sans-serif;
-  font-size: 2.8rem;
+  font-family: 'Syne', 'Outfit', sans-serif !important;
+  font-size: clamp(2.4rem, 4.8vw, 3.4rem);
   font-weight: 900;
   color: #ffffff;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.035em;
   line-height: 1.15;
   margin: 0 0 12px 0;
 }
@@ -73,7 +73,7 @@
 }
 
 .poster-gallery-subline {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Plus Jakarta Sans', sans-serif;
   font-size: 1.05rem;
   color: #94a3b8;
   max-width: 680px;
@@ -393,13 +393,13 @@
 }
 
 .plaque-artwork-title {
-  font-family: 'Inter', sans-serif;
-  font-size: 2.1rem;
+  font-family: 'Syne', 'Outfit', sans-serif !important;
+  font-size: clamp(1.8rem, 3.5vw, 2.3rem);
   font-weight: 900;
   color: #ffffff;
   line-height: 1.15;
   margin: 0 0 4px 0;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
 }
 
 .plaque-artwork-subtitle {
@@ -518,6 +518,27 @@
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   box-shadow: 0 4px 20px rgba(16, 185, 129, 0.4);
   letter-spacing: 0.02em;
+  position: relative;
+  overflow: hidden;
+}
+
+.plaque-btn-primary::after,
+.poster-dock-buy-btn::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.38), transparent);
+  transform: translateX(-150%) skewX(-20deg);
+  animation: posterBtnShimmer 3.5s infinite;
+  pointer-events: none;
+}
+
+@keyframes posterBtnShimmer {
+  0% { transform: translateX(-150%) skewX(-20deg); }
+  30%, 100% { transform: translateX(300%) skewX(-20deg); }
 }
 
 .plaque-btn-primary:hover {
@@ -751,12 +772,12 @@
 }
 
 .poster-corridor-title {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Syne', 'Outfit', sans-serif !important;
   font-size: 2.2rem;
-  font-weight: 800;
+  font-weight: 900;
   color: #ffffff;
   margin: 0 0 10px 0;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
 }
 
 .poster-corridor-sub {
@@ -997,6 +1018,8 @@
   white-space: nowrap;
   box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
   transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
 }
 
 .poster-dock-buy-btn:hover {

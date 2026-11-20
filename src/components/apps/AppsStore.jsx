@@ -161,8 +161,10 @@ export default function AppsStore() {
 
   return (
     <div className="webdev-store-container apps-store-container">
-      {/* Background Holographic Glow */}
+      {/* Background Holographic Glow & Ambient Aurora */}
       <div className="webdev-store-bg apps-store-bg" />
+      <div className="apps-ambient-aurora apps-aurora-1" />
+      <div className="apps-ambient-aurora apps-aurora-2" />
 
       {/* ── Top Header ── */}
       <header className="webdev-store-header">
