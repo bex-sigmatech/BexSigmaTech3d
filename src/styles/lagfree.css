@@ -56,9 +56,10 @@ canvas {
   transform: translateZ(0);
 }
 
-/* 6b. Hardware Accelerate Interactive HUD panels to avoid CPU repaint passes */
-.hq-bottom-dock, .jarvis-dept-panel, .jarvis-orb-minimap, .nolan-hq-header, .jarvis-capsule-orb-wrap {
-  will-change: transform, opacity;
+/* 6b. Hardware Accelerate Interactive HUD panels & Ambient Auroras to avoid CPU repaint passes */
+.hq-bottom-dock, .jarvis-dept-panel, .jarvis-orb-minimap, .nolan-hq-header, .jarvis-capsule-orb-wrap,
+.apps-ambient-aurora, .cp-ambient-aurora, .mc-ambient-aurora {
+  will-change: transform;
   transform: translateZ(0);
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
