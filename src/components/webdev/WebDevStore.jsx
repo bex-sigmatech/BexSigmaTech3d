@@ -3,6 +3,7 @@ import { useStore } from '../../store/useStore'
 import { cinemaAudio } from '../../audio/CinematicAudioEngine'
 import { voiceEmitter } from '../../audio/AIVoiceEngine'
 import ServiceDetail from './ServiceDetail'
+import '../../styles/missionControl.css'
 import '../../styles/ainExcelStore.css'
 import '../../styles/wallPosterGallery.css'
 
@@ -16,13 +17,142 @@ const BACKEND_URL = import.meta.env.VITE_BACKEND_URL
     ? 'http://localhost:5001'
     : 'https://bexsigmatech3d.onrender.com')
 
+const SERVICES_PILLARS = [
+  {
+    num: '01',
+    badge: '01',
+    title: '300+ Financial & Valuation Models',
+    subtitle: '3-Statement Models, DCF Engines & Cash Runway',
+    desc: 'Battle-tested corporate 3-statement financial models, automated DCF valuation, scenario & sensitivity tables, monthly balance sheet variance, and investor pitch deck metrics.',
+    accent: '#ff4d29',
+    specs: ['3-Statement Models', 'Cash Runway Forecasts', 'DCF Valuation Engine', 'Sensitivity Tables']
+  },
+  {
+    num: '02',
+    badge: '02',
+    title: '10 Executive BI Dashboards',
+    subtitle: 'Automated Sales Cockpits & Dynamic Slicers',
+    desc: 'Automated executive cockpits with interactive regional slicers, dynamic win-rate calculations, customer acquisition cost (CAC) trackers, and board-ready KPI trendlines.',
+    accent: '#10b981',
+    specs: ['Interactive Slicers', 'Sales Funnel Math', 'CAC & LTV Matrix', 'Executive Board Views']
+  },
+  {
+    num: '03',
+    badge: '03',
+    title: '250+ Operations & HR Systems',
+    subtitle: 'Automated Payroll, Shift Rosters & Workload Roadmaps',
+    desc: 'Full workforce management sheets. Calculates overtime, automated tax deductions, employee attrition metrics, 360 performance reviews, and monthly payroll summaries in one click.',
+    accent: '#38bdf8',
+    specs: ['Automated Leaves & OT', 'Shift Scheduling Grid', '9-Box Talent Matrix', '1-Click Payroll Generator']
+  },
+  {
+    num: '04',
+    badge: '04',
+    title: '450+ Sales & Marketing Engines',
+    subtitle: 'Pipeline Forecasters, Gantt Timelines & Ad ROI',
+    desc: 'Full-funnel pipeline forecaster with automated conversion probabilities, rep quota leaderboards, sales commission tiered matrix, and multi-currency billing logs.',
+    accent: '#f59e0b',
+    specs: ['Cohort Retention Heatmap', 'MRR/ARR Waterfall', 'Sales Quota Pacing', 'Commission Calculator']
+  }
+]
+
+const HABITO_REVIEWS = [
+  {
+    author: 'Vikram S.',
+    company: 'Fintech Solutions',
+    quote: 'The 3-statement financial models and DCF sheets saved us over 40 hours during our seed fundraising. Clean, error-free formulas that gave our investors instant confidence.',
+    tag: 'Financial Modeling',
+  },
+  {
+    author: 'Arun K.',
+    company: 'Logix Supply Chain',
+    quote: 'Managing 1,500+ SKUs used to be a weekly nightmare of manual reconciliations. The automated inventory turnover and reorder sheets completely transformed our warehouse.',
+    tag: 'Inventory & Operations',
+  },
+  {
+    author: 'Priya M.',
+    company: 'SaaS Pulse Media',
+    quote: 'The executive sales cockpit with regional slicers is boardroom gold. Our CEO now relies on this exact dashboard for Monday morning leadership reviews.',
+    tag: 'Executive BI Dashboard',
+  },
+]
+
+const HYPERFIT_STEPS = [
+  {
+    num: '01',
+    title: '1,000+ PRE-BUILT BUSINESS TEMPLATES',
+    tagline: 'Universal architectures for 100+ industries',
+    desc: 'Eliminate manual spreadsheet busywork with battle-tested templates for finance, operations, marketing, and sales.',
+    status: 'INCLUDED'
+  },
+  {
+    num: '02',
+    title: '10 EXECUTIVE BI INTERACTIVE DASHBOARDS',
+    tagline: 'Dynamic regional slicers & board-ready visuals',
+    desc: 'Present with absolute confidence. Pre-linked interactive charts, KPI cards, and trendlines that impress executive leadership.',
+    status: 'INCLUDED'
+  },
+  {
+    num: '03',
+    title: '5 VIP BONUS PROFESSIONAL TOOLKITS',
+    tagline: 'Shortcuts, resumes, daily trackers & habits',
+    desc: 'Includes essential productivity boosters: Excel shortcut cheat sheets, executive resume templates, and daily trackers.',
+    status: 'INCLUDED'
+  },
+  {
+    num: '04',
+    title: '100% MICROSOFT EXCEL & GOOGLE SHEETS READY',
+    tagline: 'Universal cross-platform compatibility',
+    desc: 'Fully unlocked .xlsx files with automated XLOOKUP and dynamic arrays. Works seamlessly on desktop Excel, Mac, and Google Sheets.',
+    status: 'INCLUDED'
+  },
+  {
+    num: '05',
+    title: 'INSTANT EMAIL + LIFETIME GOOGLE DRIVE LINK',
+    tagline: 'Zero waiting · 60-second automated delivery',
+    desc: 'Instant delivery to your email upon checkout with permanent access to our master Google Drive cloud repository.',
+    status: 'LIFETIME'
+  }
+]
+
+const PROCESS_STEPS = [
+  {
+    step: '01',
+    title: 'Choose the Master Suite',
+    desc: '1-click encrypted checkout at just ₹199 / $2.49 with zero subscriptions or hidden fees.'
+  },
+  {
+    step: '02',
+    title: 'Instant 60s Delivery',
+    desc: 'Receive master Google Drive link and email pack in under 60 seconds.'
+  },
+  {
+    step: '03',
+    title: 'Input Your Numbers',
+    desc: 'Enter numbers and all automated formulas, KPIs, and charts calculate dynamically.'
+  },
+  {
+    step: '04',
+    title: 'Export Boardroom Visuals',
+    desc: 'Share high-impact reports with investors, stakeholders, and executive leadership.'
+  }
+]
+
+const FONTO_WORDS = [
+  'ALL-IN-ONE MASTER SUITE',
+  '1,000+ PRO TEMPLATES',
+  '10 EXECUTIVE BI COCKPITS',
+  '₹199 FLASH SALE DEAL'
+]
+
 const PRODUCTS = [
   {
     id: 'ain-excel-pack',
     badge: '🔥 1,000+ EXCEL TEMPLATES — ₹199 ONLY',
     name: 'aIn — Excel All-in-One Master Suite',
-    category: 'BI',
+    category: 'BI & FINANCE',
     tagline: 'From Manual To Smart Work — Pro Dashboards, Auto Calculation & Business Templates (.xlsx)',
+    shortDesc: '1,000+ ready-to-use business spreadsheets, 10 automated BI dashboards & 5 VIP bonus toolkits with lifetime Drive access.',
     price: 199,
     priceDisplay: '₹199',
     originalPrice: '₹999',
@@ -45,6 +175,141 @@ const PRODUCTS = [
     tech: ['Microsoft Excel .xlsx', 'Google Drive Master Folder', 'VBA & Dynamic Formulas', 'Microsoft Verified Standards'],
     deliveryDays: 0,
     popular: true,
+  },
+  {
+    id: 'omnicoder-ai',
+    badge: '🤖 RECOMMENDED',
+    name: 'OmniCoder AI Agent',
+    category: 'AI & DEV HUB',
+    tagline: 'Autonomous Repository Developer Hub',
+    shortDesc: 'Autonomous multi-agent repository developer hub with automated test guards and natural language code manipulation.',
+    price: 299,
+    priceDisplay: '₹299',
+    originalPrice: '₹599',
+    currency: 'INR',
+    color: '#7c3aed',
+    glowColor: 'rgba(124, 58, 237, 0.25)',
+    image: '/omnicoder_ai.jpg',
+    imageFit: 'cover',
+    features: [
+      'Multi-Agent Collaborative Coding',
+      'Automated Test & Build Integrity Guard',
+      'Git Integration (GitHub/GitLab)',
+      'Natural Language Code Manipulation',
+      'Semantic Codebase Indexing',
+      '1 Month Free Support',
+    ],
+    tech: ['Multi-Agent AI', 'Git Hooks', 'NodeJS', 'React'],
+    deliveryDays: 7,
+    popular: false,
+  },
+  {
+    id: 'quantum-shield',
+    badge: '🛡️ SECURITY 10/10',
+    name: 'QuantumShield Crypt Vault',
+    category: 'POST-QUANTUM CRYPT',
+    tagline: 'Post-Quantum Shield & Telemetry Armor',
+    shortDesc: 'NIST-approved post-quantum encryption, zero-trust telemetry armor, and real-time threat sentinel node.',
+    price: 291,
+    priceDisplay: '₹291',
+    originalPrice: '₹582',
+    currency: 'INR',
+    color: '#f43f5e',
+    glowColor: 'rgba(244, 63, 94, 0.25)',
+    image: '/quantum_shield.jpg',
+    imageFit: 'cover',
+    features: [
+      'NIST-Approved Post-Quantum Cryptography',
+      'End-to-End Encrypted Telemetry',
+      'Zero-Trust Biometric Access Controls',
+      'Real-time Threat Sentinel Node',
+      'Tamper-proof Observability Logs',
+      '3 Months Priority Support',
+    ],
+    tech: ['Kyber / Dilithium', 'Zero-Trust', 'Rust Core'],
+    deliveryDays: 12,
+    popular: false,
+  },
+  {
+    id: 'spacemesh-iot',
+    badge: '🛰️ REAL-TIME DATA',
+    name: 'SpaceMesh IoT Gateway',
+    category: 'PLANETARY TELEMETRY',
+    tagline: 'Planetary Device Telemetry Aggregator',
+    shortDesc: 'Planetary device telemetry aggregator with zero-latency Timescale database sync and WebSockets broker protocol.',
+    price: 359,
+    priceDisplay: '₹359',
+    originalPrice: '₹718',
+    currency: 'INR',
+    color: '#38bdf8',
+    glowColor: 'rgba(56, 189, 248, 0.25)',
+    image: '/spacemesh_iot.jpg',
+    imageFit: 'cover',
+    features: [
+      'Zero-Latency Planetary Sync',
+      'High-Throughput Timescale Database',
+      'MQTT / WebSockets Broker Protocol',
+      'Automated Hardware Sensor Failover',
+      'Interactive 3D Telemetry Canvas',
+      '3 Months Tech Assistance',
+    ],
+    tech: ['IoT Mesh', 'WebSockets', 'Go', 'TimescaleDB'],
+    deliveryDays: 10,
+    popular: false,
+  },
+  {
+    id: 'vision-spatial',
+    badge: '🕶️ SPATIAL WEB',
+    name: 'VisionSpatial Designer',
+    category: 'SPATIAL 3D',
+    tagline: 'Apple Vision Pro Web UI Canvas',
+    shortDesc: 'Interactive WebXR spatial canvas with depth-based UI layout engines and optimized 3D model asset loaders.',
+    price: 289,
+    priceDisplay: '₹289',
+    originalPrice: '₹578',
+    currency: 'INR',
+    color: '#e879f9',
+    glowColor: 'rgba(232, 121, 249, 0.25)',
+    image: '/vision_spatial.jpg',
+    imageFit: 'cover',
+    features: [
+      'Interactive WebXR Sandbox Creator',
+      'Depth-Based UI Layout Engines',
+      'Framer Spatial Motion Core',
+      'Optimized 3D Model Assets Loader',
+      'Glassmorphic Style Tokens Exporter',
+      '6 Months Premium Support',
+    ],
+    tech: ['Three.js', 'React Three Fiber', 'WebXR'],
+    deliveryDays: 14,
+    popular: false,
+  },
+  {
+    id: 'biosync-health',
+    badge: '🩺 HEALTHCARE NODE',
+    name: 'BioSync Telehealth Engine',
+    category: 'CLINICAL MATRIX',
+    tagline: 'Decentralized Clinical Matrix Console',
+    shortDesc: 'HIPAA-compliant patient telemetry with distributed node consultation logs and real-time biosignals streaming.',
+    price: 291,
+    priceDisplay: '₹291',
+    originalPrice: '₹582',
+    currency: 'INR',
+    color: '#34d399',
+    glowColor: 'rgba(52, 211, 153, 0.25)',
+    image: '/biosync_health.jpg',
+    imageFit: 'cover',
+    features: [
+      'HIPAA Compliant Patient Telemetry',
+      'Distributed Node Consultation Logs',
+      'Real-Time Biosignals Streaming',
+      'Automated Emergency Alert Triggers',
+      'Integrative Diagnostic Interface',
+      '1 Month Operational Sync',
+    ],
+    tech: ['HL7 / FHIR API', 'Distributed Ledger', 'WebRTC Core'],
+    deliveryDays: 10,
+    popular: false,
   },
 ]
 
@@ -223,6 +488,7 @@ export default function WebDevStore() {
 
   // Service detail modal
   const [selectedService, setSelectedService] = useState(null)
+  const [expandedExcelDivision, setExpandedExcelDivision] = useState('01')
 
   // Cart & Sidebar States
   const [cart, setCart] = useState([])
@@ -230,6 +496,34 @@ export default function WebDevStore() {
 
 
   const [currency, setCurrency] = useState('INR') // 'INR' | 'USD'
+  const [fontoIndex, setFontoIndex] = useState(0)
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setFontoIndex((prev) => (prev + 1) % FONTO_WORDS.length)
+    }, 2400)
+    return () => clearInterval(timer)
+  }, [])
+
+  // Lumos Editorial Products Section Scroll Observer
+  const productsSectionRef = React.useRef(null)
+  const [isProductsInView, setIsProductsInView] = useState(false)
+
+  useEffect(() => {
+    const el = productsSectionRef.current
+    if (!el) return
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsProductsInView(true)
+          observer.disconnect()
+        }
+      },
+      { threshold: 0.05 }
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
 
   // Checkout States
   const [checkoutMode, setCheckoutMode] = useState(null) // 'cashfree' | 'sandbox' | null
@@ -516,7 +810,7 @@ export default function WebDevStore() {
         setSandboxMsg(`🎉 Payment Verified! Your Excel Dashboard access link has been sent to ${custEmail}`)
         cinemaAudio.playAccessGrantedChime()
         voiceEmitter.emit('PAYMENT_SUCCESS')
-        try { localStorage.setItem('bex_customer_email', custEmail) } catch {}
+        try { localStorage.setItem('bex_customer_email', custEmail) } catch { }
         if (cart.length > 0) setCart([])
       },
       (err) => {
@@ -528,7 +822,7 @@ export default function WebDevStore() {
   }
 
   return (
-    <div className="webdev-store-container">
+    <div className="webdev-store-container store-editorial-theme">
       {/* Cashfree SDK is loaded via index.html */}
 
       {/* Dark holographic background grids */}
@@ -537,697 +831,715 @@ export default function WebDevStore() {
       {/* 10/10 Interactive Particle Field */}
       <canvas id="store-particle-canvas" style={{ position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 0 }} />
 
-
-      {/* Header */}
-      <header className="webdev-store-header">
-        <div className="webdev-header-left">
-          <button className="webdev-back-btn interactive" onClick={exitWebDevStore}>
-            ← BACK TO HQ
-          </button>
-          <div className="webdev-header-titles">
-            <span className="webdev-dept-label">OUR PRODUCTS · EXCEL ECOSYSTEM</span>
-            <h1 className="webdev-store-title">Excel Master Hub & Store</h1>
-            <p className="webdev-store-sub">
-              Operator: <strong style={{ color: '#10b981' }}>{userName || 'Guest'}</strong> · Flagship "aIn" Pack & Live Excel Academy
-            </p>
-          </div>
+      {/* ── TOP CAPSULE FLOATING NAVIGATION (NOIR BRUTALIST HYBRID) ── */}
+      <header className="habito-navbar store-capsule-navbar">
+        <div className="habito-brand-wrap" onClick={() => document.getElementById('noir-about')?.scrollIntoView({ behavior: 'smooth' })}>
+          <span className="habito-brand-title">BEx EXCEL ARCHITECTURE</span>
+          <span className="habito-brand-dot" />
         </div>
 
-        <div className="webdev-store-header-right webdev-header-right">
+        <nav className="habito-nav-links mc-capsule-links">
+          <button
+            className="habito-nav-link"
+            onClick={() => document.getElementById('our-products')?.scrollIntoView({ behavior: 'smooth' })}
+          >
+            Products
+          </button>
+          <button
+            className="habito-nav-link"
+            onClick={() => document.getElementById('ad-comparison')?.scrollIntoView({ behavior: 'smooth' })}
+          >
+            Why Us
+          </button>
+          <button
+            className="habito-nav-link"
+            onClick={() => document.getElementById('noir-system')?.scrollIntoView({ behavior: 'smooth' })}
+          >
+            System
+          </button>
+          <button
+            className="habito-nav-link"
+            onClick={() => document.getElementById('noir-process')?.scrollIntoView({ behavior: 'smooth' })}
+          >
+            Process
+          </button>
+          <button
+            className="habito-nav-link"
+            onClick={() => document.getElementById('noir-pricing')?.scrollIntoView({ behavior: 'smooth' })}
+          >
+            Pricing
+          </button>
+        </nav>
+
+        <div className="habito-nav-actions">
           {/* Currency Switcher */}
           <button
             aria-label={`Switch currency, currently ${currency}`}
-            className="webdev-currency-btn interactive"
+            className="habito-currency-pill interactive"
             onClick={() => setCurrency(currency === 'INR' ? 'USD' : 'INR')}
-            title={currency === 'INR' ? 'Show USD estimate (charge is still INR via Cashfree)' : 'Show INR (actual charge)'}
+            title={currency === 'INR' ? 'Show USD estimate' : 'Show INR (actual charge)'}
           >
             💱 {currency === 'INR' ? '₹ INR' : '$ USD'}
           </button>
 
-          {/* Cart trigger button */}
-          <div role="button" tabIndex={0} aria-label={`Open cart, ${cart.reduce((s, i) => s + i.quantity, 0)} items`} className="webdev-cart-trigger interactive" onClick={() => setIsCartOpen(true)} onKeyDown={(e) => e.key === 'Enter' && setIsCartOpen(true)}>
+          {/* Cart Trigger Button */}
+          <div
+            role="button"
+            tabIndex={0}
+            aria-label={`Open cart, ${cart.reduce((s, i) => s + i.quantity, 0)} items`}
+            className="habito-cart-pill interactive"
+            onClick={() => setIsCartOpen(true)}
+            onKeyDown={(e) => e.key === 'Enter' && setIsCartOpen(true)}
+          >
             <span>🛒 CART</span>
-            {cart.length > 0 && <span className="webdev-cart-badge" aria-live="polite">{cart.reduce((sum, item) => sum + item.quantity, 0)}</span>}
+            {cart.length > 0 && (
+              <span className="habito-cart-counter">{cart.reduce((sum, item) => sum + item.quantity, 0)}</span>
+            )}
           </div>
 
-          <div className="webdev-secure-badge">
-            <span>🔒</span>
-            <div>
-              <div style={{ fontWeight: 700, fontSize: '0.78rem' }}>100% Encrypted</div>
-              <div style={{ fontSize: '0.62rem', opacity: 0.65 }}>Powered by Cashfree & Sandbox</div>
-            </div>
-          </div>
+          {/* Direct Buy Button */}
+          <button
+            className="habito-nav-btn-primary interactive"
+            style={{ background: '#ff5722', borderColor: '#ff5722', boxShadow: '0 4px 18px rgba(255, 87, 34, 0.45)' }}
+            onClick={() => handleOpenCheckoutModal(PRODUCTS[0])}
+          >
+            <span>BUY {currency === 'INR' ? '₹199' : '$2.49'}</span>
+            <span>→</span>
+          </button>
+
+          {/* Exit / Return to HQ */}
+          <button
+            className="habito-nav-btn-close interactive"
+            onClick={exitWebDevStore}
+            title="Return to Headquarters"
+          >
+            ✕
+          </button>
         </div>
       </header>
 
+      {/* ── MAIN NOIR BRUTALIST PAGE FLOW ── */}
+      <main className="habito-page-content">
 
-
-      {/* ── WALL POSTER EXHIBITION GALLERY ── */}
-      <section className="poster-gallery-container">
-        
-        {/* Gallery Exhibition Marquee */}
-        <div className="poster-gallery-marquee">
-          <div className="poster-gallery-badge">
-            <span className="pulse-dot" />
-            <span>EXHIBITION · OFFICIAL VISUAL BLUEPRINTS</span>
+        {/* ══ SECTION 1: NOIR HERO (EXCEL SALE ADVERTISEMENT CLIMAX) ══ */}
+        <section id="noir-about" className="noir-hero-section">
+          {/* Flash Sale Pill */}
+          <div className="ad-flash-pill">
+            <span className="ad-flash-dot" />
+            <span>🔥 MEGA SALE · 80% OFF · ₹199 LIFETIME ACCESS</span>
           </div>
-          <h1 className="poster-gallery-headline">
-            From Manual To Smart Work — <span>Excel Master</span> Suite
+
+          {/* Creator Micro Badge */}
+          <div className="noir-hero-avatar-wrap">
+            <div className="noir-hero-avatar-ring">
+              <img
+                src="/ceo_hariharan.jpg"
+                alt="Hariharan.D — Microsoft Verified Excel Architect"
+                className="noir-hero-avatar-img"
+              />
+              <span className="noir-hero-verified-dot" title="Microsoft Verified">✓</span>
+            </div>
+            <span style={{ fontSize: '0.74rem', color: '#94a3b8', marginTop: '8px', display: 'block', fontWeight: 700, letterSpacing: '0.04em' }}>
+              CURATED BY MICROSOFT VERIFIED ARCHITECT
+            </span>
+          </div>
+
+          {/* Giant Hero Title with Fonto 3D Slide Cube Effect */}
+          <h1 className="noir-hero-title">
+            <span>1,000+ PRO EXCEL TEMPLATES</span>
+            <span className="fonto-slide-container">
+              <span key={fontoIndex} className="fonto-slide-active-word">
+                {FONTO_WORDS[fontoIndex]}
+              </span>
+            </span>
           </h1>
-          <p className="poster-gallery-subline">
-            Experience our flagship Excel systems as framed high-definition blueprints. Designed for high-impact decision making, automated reporting, and executive clarity.
+
+          {/* High-Converting Ad Copy */}
+          <p className="noir-hero-sub">
+            Stop wasting 40+ hours wrestling with formulas or paying ₹15,000+ to freelancers. Download 1,000+ battle-tested business spreadsheets, 10 automated executive BI dashboards, and 5 VIP bonus toolkits. 100% editable in Microsoft Excel (.xlsx) & Google Sheets with instant lifetime Google Drive access.
           </p>
-        </div>
 
-        {/* ═══ FLAGSHIP EXHIBITION WALL (Framed Centerpiece + Museum Plaque) ═══ */}
-        <div className="poster-exhibition-wall">
-          
-          {/* Left: The Grand Framed Wall Poster */}
-          <div className="poster-frame-stage">
-            {/* Overhead Gallery Picture Lamp Fixture */}
-            <div className="poster-wall-lamp">
-              <div className="poster-lamp-mount" />
-              <div className="poster-lamp-arms">
-                <div className="poster-lamp-arm" />
-                <div className="poster-lamp-arm" />
-              </div>
-              <div className="poster-lamp-bar" />
-              <div className="poster-light-cone" />
-            </div>
-
-            {/* The Framed Poster */}
-            <div
-              className="poster-picture-frame interactive"
-              onClick={() => setActiveLightboxPoster({
-                title: 'BEx Sigma Tech — Learn Practice Excel: From Manual To Smart Work',
-                image: '/ain_excel_pack.jpg',
-                tag: 'Master Flagship Roadmap'
-              })}
-              title="Click to inspect poster in 4K Fullscreen"
+          {/* Hero CTAs (Radiant Orange Button) */}
+          <div className="noir-hero-actions">
+            <button
+              className="noir-btn-primary interactive"
+              onClick={() => handleOpenCheckoutModal(PRODUCTS[0])}
             >
-              {/* Corner Frame Brackets */}
-              <div className="poster-frame-corner tl" />
-              <div className="poster-frame-corner tr" />
-              <div className="poster-frame-corner bl" />
-              <div className="poster-frame-corner br" />
-
-              {/* Deal Ribbon */}
-              <div className="poster-deal-ribbon">₹199 Deal</div>
-
-              {/* Inner Matting */}
-              <div className="poster-frame-matting">
-                <div className="poster-canvas-wrap">
-                  <img
-                    src="/ain_excel_pack.jpg"
-                    alt="BEx Sigma Tech — Learn Practice Excel From Manual To Smart Work"
-                    className="poster-canvas-img"
-                    loading="lazy"
-                  />
-                  <div className="poster-glass-sheen" />
-                  
-                  {/* Hover Inspect Overlay (Desktop) */}
-                  <div className="poster-hover-inspect">
-                    <button className="poster-inspect-btn interactive">
-                      <span>🔍</span>
-                      <span>Inspect Blueprint Fullscreen</span>
-                    </button>
-                    <span className="poster-inspect-hint">Click for ultra-sharp HD zoom</span>
-                  </div>
-
-                  {/* Touch Zoom Pill (Mobile) */}
-                  <div className="poster-mobile-zoom-pill">
-                    <span>🔍 Tap to Zoom in 4K</span>
-                  </div>
-                </div>
-              </div>
-            </div>
+              <span>⚡ GET 1,000+ TEMPLATES · {currency === 'INR' ? '₹199' : '$2.49'}</span>
+            </button>
+            <button
+              className="noir-btn-secondary interactive"
+              onClick={() => document.getElementById('our-products')?.scrollIntoView({ behavior: 'smooth' })}
+            >
+              <span>Explore Products</span>
+              <span>↓</span>
+            </button>
           </div>
 
-          {/* Right: Museum Exhibition Wall Plaque */}
-          <div className="poster-wall-plaque">
-            {/* Plaque Screws */}
-            <div className="plaque-screw tl" />
-            <div className="plaque-screw tr" />
-            <div className="plaque-screw bl" />
-            <div className="plaque-screw br" />
-
-            <div className="plaque-catalog-num">
-              <span className="plaque-catalog-tag">🏛️ EXHIBIT #01 · MASTER ROADMAP</span>
-              <span className="plaque-rating-tag">⭐ 4.9/5 (500+ BUYERS)</span>
-            </div>
-
-            <h2 className="plaque-artwork-title">
-              From Manual To Smart Work
-            </h2>
-            <div className="plaque-artwork-subtitle">
-              aIn — Excel All-in-One Master Suite · 1,000+ Business Templates (.xlsx)
-            </div>
-
-            <div className="plaque-curator-line">
-              <span className="plaque-ms-tag">✓ MICROSOFT VERIFIED ARCHITECT</span>
-              <span>Curated by <strong>Hariharan.D</strong></span>
-            </div>
-
-            <p className="plaque-description">
-              The definitive master blueprint transforming spreadsheets into automated executive command centers. Master Step 1 through Step 5 — featuring 10 enterprise dashboards and 5 bonus daily productivity suites.
-            </p>
-
-            {/* Price Tag Plaque */}
-            <div className="plaque-price-row">
-              <div className="plaque-price-left">
-                <span className="plaque-price-main">{currency === 'INR' ? '₹199' : '$2.49'}</span>
-                <span className="plaque-price-orig">{currency === 'INR' ? '₹999' : '$12.99'}</span>
-              </div>
-              <span className="plaque-price-deal">80% OFF · INSTANT ACCESS</span>
-            </div>
-
-            {/* Action Buttons */}
-            <div className="plaque-actions">
-              <button
-                className="plaque-btn-primary interactive"
-                onClick={() => handleOpenCheckoutModal(PRODUCTS[0])}
-              >
-                <span>⚡</span>
-                <span>Get All-in-One Master Suite · {currency === 'INR' ? '₹199' : '$2.49'}</span>
-              </button>
-              <button
-                className="plaque-btn-secondary interactive"
-                onClick={() => addToCart(PRODUCTS[0])}
-              >
-                <span>🛒</span>
-                <span>Add to Cart</span>
-              </button>
-            </div>
-
-            {/* 4 Structured Value Cards */}
-            <div className="plaque-value-grid">
-              <div className="plaque-value-card">
-                <span className="plaque-value-icon">📊</span>
-                <div className="plaque-value-text">
-                  <strong>1,000+ Ready Templates</strong>
-                  <span>100+ business sectors</span>
+          {/* 3D Product Box Advertisement Showcase */}
+          <div className="ad-hero-product-showcase">
+            <span className="ad-float-badge-left">🔥 1,000+ TEMPLATES INCLUDED</span>
+            <span className="ad-float-badge-right">📁 INSTANT GOOGLE DRIVE LINK</span>
+            <div
+              className="ad-product-card-3d interactive"
+              onClick={() => setActiveLightboxPoster({
+                title: 'aIn — Excel All-in-One Master Suite',
+                image: '/ain_excel_pack.jpg',
+                tag: 'Master Pack'
+              })}
+              title="Click to inspect Master Suite preview"
+            >
+              <img
+                src="/ain_excel_pack.jpg"
+                alt="aIn Excel Master Pack 3D Preview"
+                className="ad-product-img"
+              />
+              <div className="ad-product-card-bar">
+                <div className="ad-product-card-info">
+                  <span className="ad-product-card-tag">★ FLAGSHIP SPREADSHEET VAULT</span>
+                  <span className="ad-product-card-title">1,000+ Formulas & 10 Executive Dashboards</span>
                 </div>
-              </div>
-              <div className="plaque-value-card">
-                <span className="plaque-value-icon">📈</span>
-                <div className="plaque-value-text">
-                  <strong>10 Business Dashboards</strong>
-                  <span>Sales, Finance, HR & MIS</span>
-                </div>
-              </div>
-              <div className="plaque-value-card">
-                <span className="plaque-value-icon">⚡</span>
-                <div className="plaque-value-text">
-                  <strong>Instant Email Access</strong>
-                  <span>Lifetime Google Drive Link</span>
-                </div>
-              </div>
-              <div className="plaque-value-card">
-                <span className="plaque-value-icon">💻</span>
-                <div className="plaque-value-text">
-                  <strong>100% Fully Editable</strong>
-                  <span>Excel (.xlsx) & Sheets Ready</span>
-                </div>
-              </div>
-            </div>
-
-            {/* 🎁 5 Free Bonus Toolkits Badges (Structured Vault) */}
-            <div className="plaque-bonus-vault">
-              <div className="plaque-bonus-vault-header">
-                <div className="plaque-bonus-vault-header-left">
-                  <span className="plaque-bonus-vault-icon">🎁</span>
-                  <span className="plaque-bonus-vault-title">5 FREE BONUS TOOLKITS INCLUDED</span>
-                </div>
-                <span className="plaque-bonus-vault-badge">₹0 TODAY · WORTH ₹2,499</span>
-              </div>
-              <div className="plaque-bonus-grid">
-                <div className="plaque-bonus-card">
-                  <span className="plaque-bonus-icon">📋</span>
-                  <div className="plaque-bonus-text">
-                    <strong>Attendance Tracker</strong>
-                    <span>Leaves, OT & shift logs</span>
-                  </div>
-                </div>
-                <div className="plaque-bonus-card">
-                  <span className="plaque-bonus-icon">🌱</span>
-                  <div className="plaque-bonus-text">
-                    <strong>Habit Tracker</strong>
-                    <span>Daily streaks & progress</span>
-                  </div>
-                </div>
-                <div className="plaque-bonus-card">
-                  <span className="plaque-bonus-icon">📅</span>
-                  <div className="plaque-bonus-text">
-                    <strong>Daily Planner</strong>
-                    <span>Time-blocked task matrix</span>
-                  </div>
-                </div>
-                <div className="plaque-bonus-card">
-                  <span className="plaque-bonus-icon">⌨️</span>
-                  <div className="plaque-bonus-text">
-                    <strong>120+ Shortcuts</strong>
-                    <span>Cheat sheet for Excel speed</span>
-                  </div>
-                </div>
-                <div className="plaque-bonus-card full-span">
-                  <span className="plaque-bonus-icon">📄</span>
-                  <div className="plaque-bonus-text">
-                    <strong>Executive Resume Templates</strong>
-                    <span>ATS-friendly corporate CV formats</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Structured Trust Row */}
-            <div className="plaque-trust-grid">
-              <div className="plaque-trust-card">
-                <span className="plaque-trust-icon">🔒</span>
-                <span>100% Encrypted Checkout</span>
-              </div>
-              <div className="plaque-trust-card">
-                <span className="plaque-trust-icon">⚡</span>
-                <span>Instant Email Access</span>
-              </div>
-              <div className="plaque-trust-card">
-                <span className="plaque-trust-icon">⭐</span>
-                <span>4.9/5 Rating (500+ Buyers)</span>
-              </div>
-              <div className="plaque-trust-card">
-                <span className="plaque-trust-icon">🇮🇳</span>
-                <span>Made with Pride in India</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* ═══ MANAGER HARI — MICROSOFT ENTERPRISE ACCURACY GUARANTEE ═══ */}
-        <div className="ain-manager-section">
-          <div className="ain-manager-photo-wrap">
-            <img
-              src="/ceo_hariharan.jpg"
-              alt="Hariharan.D — Microsoft Verified Professional & General Manager"
-              className="ain-manager-photo"
-            />
-            <div className="ain-manager-verified-dot">✓</div>
-          </div>
-
-          <div className="ain-manager-info">
-            <div className="ain-manager-tags">
-              <a
-                href="https://www.linkedin.com/in/hariharan-d"
-                target="_blank"
-                rel="noreferrer"
-                className="ain-ms-badge ain-ms-badge-link"
-                title="View Microsoft Verified Profile"
-              >
-                <span>✓</span>
-                <span>MICROSOFT VERIFIED</span>
-              </a>
-              <span className="ain-role-tag">MANAGER & FOUNDER</span>
-              <span className="ain-role-tag">LEAD EXCEL ARCHITECT</span>
-            </div>
-
-            <h3 className="ain-manager-name">Hariharan.D</h3>
-            <p className="ain-manager-quote">
-              "Every template in the <strong>aIn Pack</strong> is engineered under official Microsoft enterprise accuracy guidelines. Clean formula architectures, zero broken links, and presentation-ready executive visual layouts."
-            </p>
-
-            <div className="ain-manager-bottom">
-              <div className="ain-manager-stats">
-                <span className="ain-stat-item"><strong>100+</strong> Dashboards</span>
-                <span className="ain-stat-item"><strong>500+</strong> Students</span>
-                <span className="ain-stat-item"><strong>100%</strong> Verified</span>
-              </div>
-
-              <a
-                href="mailto:bexsigmatech@gmail.com?subject=Excel%20Training%20%26%20aIn%20Inquiry%20-%20Manager%20Hari"
-                className="ain-manager-contact interactive"
-              >
-                <span>✉</span>
-                <span>Contact Manager Hari</span>
-              </a>
-            </div>
-          </div>
-        </div>
-
-        {/* ═══ LIVE EXCEL MASTERCLASS — COMMERCIAL POSTER ADVERTISEMENT ═══ */}
-        <div className="excel-poster-ad-wrap">
-          {/* Picture Lamp / Overhead Gallery Fixture */}
-          <div className="ad-poster-lamp" aria-hidden="true">
-            <div className="ad-poster-lamp-stem-left" />
-            <div className="ad-poster-lamp-stem-right" />
-            <div className="ad-poster-lamp-bar">
-              <div className="ad-poster-lamp-bulb" />
-            </div>
-            <div className="ad-poster-lamp-beam" />
-          </div>
-
-          <div className="excel-poster-ad">
-            {/* Metallic Corner Mounting Brackets */}
-            <div className="ad-bracket ad-bracket-tl" aria-hidden="true"><span className="ad-screw" /></div>
-            <div className="ad-bracket ad-bracket-tr" aria-hidden="true"><span className="ad-screw" /></div>
-            <div className="ad-bracket ad-bracket-bl" aria-hidden="true"><span className="ad-screw" /></div>
-            <div className="ad-bracket ad-bracket-br" aria-hidden="true"><span className="ad-screw" /></div>
-
-            {/* Diagonal Gold Ribbon: ★ EXCLUSIVE ★ */}
-            <div className="ad-ribbon-exclusive">
-              <span>★ EXCLUSIVE ★</span>
-            </div>
-
-            {/* Marquee Banner Bar */}
-            <div className="ad-poster-marquee-bar">
-              <div className="ad-poster-marquee-pill-live">
-                <span className="ad-live-beacon" />
-                <span className="ad-marquee-pill-text">🔴 ADMISSION OPEN</span>
-                <span className="ad-marquee-pill-cohort">BATCH 2026</span>
-              </div>
-              <div className="ad-poster-marquee-center">
-                <span className="ad-star">★</span>
-                <span>OFFICIAL LIVE SPREADSHEET & BI ACADEMY</span>
-                <span className="ad-star">★</span>
-              </div>
-              <div className="ad-poster-marquee-badge">
-                <span>⚡ 10 SEATS ONLY · WEEKEND & WEEKDAY</span>
-              </div>
-            </div>
-
-            {/* Poster Inner Content Grid */}
-            <div className="excel-poster-ad-body">
-              {/* Left Column: Commercial Poster Pitch, Badges, Modules */}
-              <div className="excel-poster-ad-left">
-                <div className="ad-poster-eyebrow">
-                  <span className="ad-gold-tag">★ LIVE MASTERCLASS</span>
-                  <span className="ad-sep">·</span>
-                  <span>1-ON-1 & COHORT SPRINT</span>
-                </div>
-
-                <h2 className="ad-poster-headline">
-                  Stop Struggling With Formulas. <br />
-                  <span className="ad-gradient-gold">Master Advanced Excel Live.</span>
-                </h2>
-
-                <p className="ad-poster-sub">
-                  Transform from manual spreadsheet headaches into automated executive BI dashboards. Learn live, hands-on, directly from <strong>Hariharan.D</strong> (Microsoft Verified Professional & Lead Architect) in intensive weekend masterclass cohorts.
-                </p>
-
-                {/* 4 Poster Feature Stamps */}
-                <div className="ad-poster-stamps">
-                  <div className="ad-poster-stamp">
-                    <span className="ad-stamp-icon">🔴</span>
-                    <div className="ad-stamp-text">
-                      <strong>Live 1-on-1 & Cohorts</strong>
-                      <span>Interactive screen-share practice</span>
-                    </div>
-                  </div>
-                  <div className="ad-poster-stamp">
-                    <span className="ad-stamp-icon">📜</span>
-                    <div className="ad-stamp-text">
-                      <strong>Microsoft Credential</strong>
-                      <span>Official verified completion certificate</span>
-                    </div>
-                  </div>
-                  <div className="ad-poster-stamp">
-                    <span className="ad-stamp-icon">⚡</span>
-                    <div className="ad-stamp-text">
-                      <strong>Solve Real Office Sheets</strong>
-                      <span>Bring your company sheets to class</span>
-                    </div>
-                  </div>
-                  <div className="ad-poster-stamp">
-                    <span className="ad-stamp-icon">🎥</span>
-                    <div className="ad-stamp-text">
-                      <strong>Lifetime 4K Vault</strong>
-                      <span>All recordings + master workbooks</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* 3 Core Curriculum Modules */}
-                <div className="ad-poster-curriculum">
-                  <div className="ad-curriculum-header">
-                    <span className="ad-curriculum-label">CORE SYLLABUS BREAKDOWN</span>
-                    <span className="ad-curriculum-badge">3 WEEKS SPRINT</span>
-                  </div>
-                  <div className="ad-curriculum-items">
-                    <div className="ad-curriculum-item">
-                      <span className="ad-mod-pill">01</span>
-                      <div>
-                        <strong>Dynamic Formulas & Nested Logic</strong>
-                        <span>XLOOKUP, INDEX/MATCH, LAMBDA, LET, Nested Logic</span>
-                      </div>
-                    </div>
-                    <div className="ad-curriculum-item">
-                      <span className="ad-mod-pill">02</span>
-                      <div>
-                        <strong>Executive BI & Dynamic Slicers</strong>
-                        <span>KPI Slicers, Interactive Heatmaps & Executive Views</span>
-                      </div>
-                    </div>
-                    <div className="ad-curriculum-item">
-                      <span className="ad-mod-pill">03</span>
-                      <div>
-                        <strong>Power Query & Data Pipelines</strong>
-                        <span>1-Click ETL, Multi-Sheet Sync & Automated Pipelines</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Right Column: Commercial VIP Admission Pass / Ticket */}
-              <div className="excel-poster-ad-right">
-                <div className="ad-vip-ticket">
-                  {/* Decorative Ticket Cutouts */}
-                  <div className="ad-ticket-notch ad-ticket-notch-left" aria-hidden="true" />
-                  <div className="ad-ticket-notch ad-ticket-notch-right" aria-hidden="true" />
-
-                  {/* Ticket Header */}
-                  <div className="ad-ticket-header">
-                    <div className="ad-ticket-head-left">
-                      <span className="ad-ticket-seal">★ EXCLUSIVE ★</span>
-                      <span className="ad-ticket-title">VIP ADMISSION PASS</span>
-                    </div>
-                    <span className="ad-ticket-id">#BEX-LIVE-2026</span>
-                  </div>
-
-                  {/* Instructor Spotlight */}
-                  <div className="ad-ticket-instructor">
-                    <div className="ad-instructor-avatar-wrap">
-                      <img
-                        src="/ceo_hariharan.jpg"
-                        alt="Hariharan.D"
-                        className="ad-instructor-avatar"
-                      />
-                      <div className="ad-avatar-badge" title="Microsoft Verified">✓</div>
-                    </div>
-                    <div className="ad-instructor-meta">
-                      <a
-                        href="https://www.linkedin.com/in/hariharan-d"
-                        target="_blank"
-                        rel="noreferrer"
-                        className="ad-ms-link"
-                        title="View Microsoft Verified Profile"
-                      >
-                        <span>✓ MICROSOFT VERIFIED ARCHITECT</span>
-                      </a>
-                      <h3 className="ad-instructor-title">Hariharan.D</h3>
-                      <p className="ad-instructor-desc">Lead Excel Architect · Founder</p>
-                    </div>
-                  </div>
-
-                  {/* Dashed Perforation Divider */}
-                  <div className="ad-ticket-divider">
-                    <span className="ad-divider-line" />
-                    <span className="ad-divider-badge">ADMIT ONE · FREE DEMO</span>
-                    <span className="ad-divider-line" />
-                  </div>
-
-                  {/* Ticket Perks */}
-                  <div className="ad-ticket-perks">
-                    <div className="ad-ticket-perk">
-                      <span className="ad-perk-check">✔</span>
-                      <span>Free 1-Hour Live Interactive Demo Session</span>
-                    </div>
-                    <div className="ad-ticket-perk">
-                      <span className="ad-perk-check">✔</span>
-                      <span>1-on-1 Skill Diagnosis & Real-time Q&A</span>
-                    </div>
-                    <div className="ad-ticket-perk">
-                      <span className="ad-perk-check">✔</span>
-                      <span>Custom Learning Roadmap for Your Job Role</span>
-                    </div>
-                  </div>
-
-                  {/* Barcode Graphic */}
-                  <div className="ad-ticket-barcode">
-                    <div className="ad-barcode-bars" aria-hidden="true">
-                      <span className="b-w2" /><span className="b-w1" /><span className="b-w3" /><span className="b-w1" />
-                      <span className="b-w2" /><span className="b-w4" /><span className="b-w1" /><span className="b-w2" />
-                      <span className="b-w3" /><span className="b-w1" /><span className="b-w2" /><span className="b-w1" />
-                      <span className="b-w4" /><span className="b-w2" /><span className="b-w1" /><span className="b-w3" />
-                      <span className="b-w2" /><span className="b-w1" /><span className="b-w3" /><span className="b-w2" />
-                    </div>
-                    <span className="ad-barcode-number">9874 0123 2026 LIVE</span>
-                  </div>
-
-                  {/* CTA Button */}
-                  <div className="ad-ticket-cta-wrap">
-                    <a
-                      href="mailto:bexsigmatech@gmail.com?subject=Excel%20Live%20Masterclass%20%26%20Demo%20Session%20Booking&body=Hi%20Manager%20Hari,%0A%0AI%20am%20interested%20in%20joining%20the%20Excel%20Live%20Masterclass%20/%201-on-1%20Training.%20Please%20reserve%20a%20seat%20for%20the%20upcoming%20batch%20and%20share%20the%20free%20demo%20class%20details."
-                      className="ad-ticket-btn-primary interactive"
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      <span>🎟️ Book Free Demo Pass & Talk to Hari</span>
-                      <span>→</span>
-                    </a>
-                    <div className="ad-ticket-urgency">
-                      <span className="ad-urgency-fire">🔥</span>
-                      <span>Limited to 10 Seats · Weekend & Weekday Cohorts</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Poster Commercial Guarantee Strip */}
-            <div className="ad-poster-guarantee-bar">
-              <span>🛡️ 100% Practical Corporate Training · Zero Theory Fluff · Direct Screen-Share Guidance · Official Certificate</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── Our Services — Framed Blueprints Exhibition Wall ── */}
-      <section className="services-poster-wall-section">
-        {/* Header */}
-        <div className="services-wall-header">
-          <div className="services-wall-eyebrow">
-            <span className="services-wall-dot" />
-            <span>EXHIBITION · 4 CORE DISCIPLINES</span>
-          </div>
-          <h2 className="services-wall-title">
-            Our Services · <span>Visual Blueprints</span>
-          </h2>
-          <p className="services-wall-sub">
-            Four ways we engineer digital products into reality. Browse each service as a framed exhibition blueprint — click any poster to inspect architecture, delivery timelines, and technology stacks.
-          </p>
-        </div>
-
-        {/* Gallery Wall Surface */}
-        <div className="services-wall-surface">
-          {/* Top Museum Wall Rail */}
-          <div className="services-wall-rail" />
-
-          {/* 4-Column Poster Wall Grid */}
-          <div className="services-wall-grid">
-            {WORKS.map((work) => (
-              <div
-                key={work.id}
-                className="services-poster-item"
-                style={{
-                  '--service-accent': work.accent,
-                  '--service-glow': work.glow,
-                }}
-              >
-                {/* Authentic Hanging Wire & Brass Wall Hook */}
-                <div className="services-hanging-wire">
-                  <div className="services-wire-hook" />
-                  <div className="services-wire-line left" />
-                  <div className="services-wire-line right" />
-                </div>
-
-                {/* The Framed Picture */}
-                <div
-                  className="services-picture-frame interactive"
-                  onClick={() => {
-                    cinemaAudio.playOrbSelect()
-                    setSelectedService(work.id)
+                <button
+                  className="ad-product-card-btn interactive"
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    handleOpenCheckoutModal(PRODUCTS[0])
                   }}
-                  title={`Inspect ${work.title} specifications`}
                 >
-                  {/* Corner Frame Accents */}
-                  <div className="services-frame-corner tl" />
-                  <div className="services-frame-corner tr" />
-                  <div className="services-frame-corner bl" />
-                  <div className="services-frame-corner br" />
+                  Quick Buy ({currency === 'INR' ? '₹199' : '$2.49'})
+                </button>
+              </div>
+            </div>
+          </div>
 
-                  {/* Poster Artwork Canvas */}
-                  <div className="services-poster-canvas">
-                    <img
-                      src={work.image}
-                      alt={work.title}
-                      className="services-poster-img"
-                      loading="lazy"
-                    />
-                    {/* Badge */}
-                    <span className="services-poster-badge">
-                      {work.meta}
-                    </span>
-                    {/* Hover Inspect Pill */}
-                    <div className="services-poster-hover-overlay">
-                      <span className="services-hover-pill">🔍 Click to Inspect</span>
+          {/* Hero Credibility Chips */}
+          <div className="noir-hero-chips">
+            <span className="noir-hero-chip">⭐ 4.9/5 Rating (12,400+ Downloads)</span>
+            <span className="noir-hero-chip">💳 One-Time ₹199 · Zero Subscriptions</span>
+            <span className="noir-hero-chip">⚡ 60-Sec Automated Drive Delivery</span>
+          </div>
+        </section>
+
+        {/* ══ LUMOS INFINITE SLIDING MARQUEE TICKER 1 (FORWARD) ══ */}
+        <div className="lumos-marquee-wrap">
+          <div className="lumos-marquee-track">
+            <div className="lumos-marquee-content">
+              <span>★ 1,000+ READY-TO-USE BUSINESS TEMPLATES</span>
+              <span>★ 10 EXECUTIVE BI COCKPITS</span>
+              <span>★ 3-STATEMENT GAAP MODELS</span>
+              <span>★ ZERO MANUAL FORMULAS</span>
+              <span>★ 100% UNLOCKED .XLSX</span>
+              <span>★ INSTANT GOOGLE DRIVE ACCESS</span>
+              <span>★ ₹199 FLASH SALE ENDING TODAY</span>
+              <span>★ MICROSOFT AUDITED ARCHITECTURE</span>
+            </div>
+            <div className="lumos-marquee-content" aria-hidden="true">
+              <span>★ 1,000+ READY-TO-USE BUSINESS TEMPLATES</span>
+              <span>★ 10 EXECUTIVE BI COCKPITS</span>
+              <span>★ 3-STATEMENT GAAP MODELS</span>
+              <span>★ ZERO MANUAL FORMULAS</span>
+              <span>★ 100% UNLOCKED .XLSX</span>
+              <span>★ INSTANT GOOGLE DRIVE ACCESS</span>
+              <span>★ ₹199 FLASH SALE ENDING TODAY</span>
+              <span>★ MICROSOFT AUDITED ARCHITECTURE</span>
+            </div>
+          </div>
+        </div>
+
+        {/* ══ SECTION 2: NOIR CLIENT STRIP (IMAGE 2 TRUST BAR) ══ */}
+        <div className="noir-client-strip">
+          <span className="noir-client-label">Used by founders & operators at world-class companies</span>
+          <div className="noir-client-logos">
+            <span className="noir-client-logo">DELOITTE</span>
+            <span className="noir-client-logo">MCKINSEY</span>
+            <span className="noir-client-logo">PWC</span>
+            <span className="noir-client-logo">GOLDMAN SACHS</span>
+            <span className="noir-client-logo">AMAZON</span>
+            <span className="noir-client-logo">STARTUPS</span>
+          </div>
+        </div>
+
+        {/* ══ SECTION 3: EDITORIAL PRODUCTS SHOWCASE (LUMOS MARKETING INSPIRATION) ══ */}
+        <section
+          id="our-products"
+          ref={productsSectionRef}
+          className={`our-products lumos-editorial-section ${isProductsInView ? 'in-view' : ''}`}
+        >
+          {/* Paper Texture Overlay (Subtle Noise) */}
+          <div className="lumos-paper-texture" aria-hidden="true" />
+
+          {/* Anchor preserving backward compatibility for navbar and hero 'See What's Inside' buttons */}
+          <div id="noir-vault" style={{ position: 'absolute', top: '-80px', pointerEvents: 'none' }} />
+
+          <div className="lumos-container">
+            {/* ── SECTION HEADER: OVERSIZED CONDENSED TYPOGRAPHY ── */}
+            <header className="lumos-section-header">
+              <div className="lumos-header-meta">
+                <span className="lumos-index-badge">[ 01 — 06 ]</span>
+                <span className="lumos-section-tag">SELECTED COMMERCIAL RELEASES</span>
+                <span className="lumos-curation-pill">ARCHITECT VERIFIED</span>
+              </div>
+
+              {/* Massive Oversized Condensed Headline */}
+              <div className="lumos-title-wrap">
+                <h2 className="lumos-giant-headline">
+                  <span className="lumos-headline-row">
+                    <span className="lumos-headline-word">PROVEN</span>
+                    <span className="lumos-headline-word lumos-text-outline">DIGITAL</span>
+                  </span>
+                  <span className="lumos-headline-row">
+                    <span className="lumos-headline-word lumos-text-accent">ARCHITECTURES</span>
+                    <span className="lumos-headline-word">& ENGINES</span>
+                  </span>
+                </h2>
+              </div>
+
+              <div className="lumos-header-desc-row">
+                <p className="lumos-header-desc">
+                  Curated business spreadsheets, autonomous AI developers, post-quantum telemetry, and spatial WebXR engines.
+                  Engineered with zero technical debt and turnkey executive execution.
+                </p>
+                <div className="lumos-header-aside">
+                  <span className="lumos-aside-number">06</span>
+                  <span className="lumos-aside-label">PRODUCTION PRODUCTS</span>
+                </div>
+              </div>
+
+              {/* Animated Thin Dividing Line */}
+              <div className="lumos-hairline-divider" />
+            </header>
+
+            {/* ── EDITORIAL PRODUCTS STORYTELLING SHOWCASE (UNCONVENTIONAL ASYMMETRICAL LAYOUT) ── */}
+            <div className="lumos-showcase-list">
+              {PRODUCTS.map((prod, idx) => {
+                const productNumber = String(idx + 1).padStart(2, '0')
+                const isEven = idx % 2 === 1
+                return (
+                  <article
+                    key={prod.id}
+                    id={`editorial-product-${prod.id}`}
+                    className={`lumos-product-item ${isEven ? 'is--inverted' : ''} ${prod.popular ? 'is--flagship' : ''}`}
+                    style={{ '--item-delay': `${idx * 0.1}s` }}
+                  >
+                    {/* Top Index & Classification Bar */}
+                    <div className="lumos-item-topbar">
+                      <div className="lumos-item-top-left">
+                        <span className="lumos-item-num">[{productNumber} / 06]</span>
+                        <span className="lumos-item-category">{prod.category || 'ARCHITECTURE'}</span>
+                        {prod.popular && <span className="lumos-flagship-tag">FLAGSHIP SUITE</span>}
+                      </div>
+                      <div className="lumos-item-top-right">
+                        <span className="lumos-item-price-chip">
+                          {currency === 'INR' ? prod.priceDisplay : `$${(prod.price * 0.0125).toFixed(2)}`}
+                        </span>
+                        <span className="lumos-item-status">VERIFIED PROD</span>
+                      </div>
                     </div>
-                  </div>
 
-                  {/* Museum Plaque Mounted Below Poster */}
-                  <div className="services-plaque">
-                    <div className="services-plaque-top">
-                      <span className="services-plaque-num">{work.num} · {work.id.toUpperCase()}</span>
-                      <span className="services-plaque-timeline">⏱ {work.timeline}</span>
-                    </div>
-                    <h3 className="services-plaque-title">{work.title}</h3>
-                    <p className="services-plaque-sub">{work.subtitle}</p>
-
-                    {/* Specs Chips */}
-                    <div className="services-plaque-chips">
-                      {work.specs?.slice(0, 3).map((spec, sIdx) => (
-                        <div key={sIdx} className="services-plaque-chip">
-                          <span className="services-chip-dot" />
-                          <span>{spec}</span>
+                    {/* Product Main Editorial Lockup */}
+                    <div className="lumos-item-body">
+                      {/* Visual Frame */}
+                      <div className="lumos-item-visual-wrap">
+                        <div
+                          className="lumos-visual-frame interactive"
+                          onClick={() => handleOpenCheckoutModal(prod)}
+                        >
+                          <img
+                            src={prod.image}
+                            alt={prod.name}
+                            className="lumos-visual-img"
+                            loading="lazy"
+                          />
+                          <div className="lumos-visual-overlay">
+                            <span className="lumos-visual-pill">INSPECT & ACQUIRE →</span>
+                          </div>
+                          {/* Corner Editorial Crosshairs */}
+                          <span className="lumos-crosshair tl">+</span>
+                          <span className="lumos-crosshair tr">+</span>
+                          <span className="lumos-crosshair bl">+</span>
+                          <span className="lumos-crosshair br">+</span>
                         </div>
-                      ))}
+                        <div className="lumos-visual-caption">
+                          <span>{prod.tech?.[0] || 'VERIFIED ARTIFACT'}</span>
+                          <span>STABLE // V2.4</span>
+                        </div>
+                      </div>
+
+                      {/* Content & Typography Column */}
+                      <div className="lumos-item-content">
+                        {/* Oversized Product Title */}
+                        <h3 className="lumos-item-title">
+                          <span className="lumos-title-inner">{prod.name}</span>
+                        </h3>
+
+                        {/* Tagline */}
+                        <div className="lumos-item-tagline">{prod.tagline}</div>
+
+                        {/* Descriptive Storytelling Text */}
+                        <p className="lumos-item-desc">{prod.shortDesc || prod.tagline}</p>
+
+                        {/* Technical Specs / Features Breakdown */}
+                        <div className="lumos-item-specs">
+                          <span className="lumos-specs-title">VERIFIED CAPABILITIES</span>
+                          <div className="lumos-specs-grid">
+                            {(prod.features?.slice(0, 4) || []).map((feat, fIdx) => (
+                              <div key={fIdx} className="lumos-spec-item">
+                                <span className="lumos-spec-bullet">✦</span>
+                                <span>{feat}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+
+                        {/* Tech Stack Chips */}
+                        {prod.tech && prod.tech.length > 0 && (
+                          <div className="lumos-tech-strip">
+                            {prod.tech.map((t, tIdx) => (
+                              <span key={tIdx} className="lumos-tech-chip">
+                                {t}
+                              </span>
+                            ))}
+                          </div>
+                        )}
+
+                        {/* Editorial Action Row */}
+                        <div className="lumos-item-action-row">
+                          <button
+                            type="button"
+                            className="lumos-action-btn interactive"
+                            onClick={() => handleOpenCheckoutModal(prod)}
+                          >
+                            <span className="lumos-btn-text">
+                              {prod.id === 'ain-excel-pack'
+                                ? `ACQUIRE MASTER SUITE · ${currency === 'INR' ? '₹199' : '$2.49'}`
+                                : `ACQUIRE LICENSE · ${currency === 'INR' ? prod.priceDisplay : `$${(prod.price * 0.0125).toFixed(2)}`}`}
+                            </span>
+                            <span className="lumos-btn-arrow">→</span>
+                          </button>
+
+                          <div className="lumos-action-guarantee">
+                            <span>LIFETIME UPDATES</span>
+                            <span>·</span>
+                            <span>ZERO SUBSCRIPTIONS</span>
+                          </div>
+                        </div>
+                      </div>
                     </div>
 
-                    {/* Plaque Action Buttons */}
-                    <div className="services-plaque-actions">
-                      <button
-                        type="button"
-                        className="services-btn-inspect interactive"
-                        onClick={(e) => {
-                          e.stopPropagation()
-                          cinemaAudio.playOrbSelect()
-                          setSelectedService(work.id)
-                        }}
-                      >
-                        <span>Explore Scope</span>
-                        <span>→</span>
-                      </button>
-                      <button
-                        type="button"
-                        className="services-btn-lightbox interactive"
-                        onClick={(e) => {
-                          e.stopPropagation()
-                          cinemaAudio.playOrbSelect()
-                          setActiveLightboxPoster({
-                            title: work.title,
-                            image: work.image,
-                            tag: work.meta,
-                          })
-                        }}
-                        title="Inspect poster in 4K Fullscreen"
-                      >
-                        🔍
-                      </button>
-                    </div>
-                  </div>
+                    {/* Thin Animated Dividing Line between Products */}
+                    <div className="lumos-hairline-divider" />
+                  </article>
+                )
+              })}
+            </div>
+
+            {/* ── SECTION CLOSING FOOTER STATEMENT ── */}
+            <div className="lumos-section-bottom">
+              <div className="lumos-bottom-left">
+                <span className="lumos-bottom-mark">BEx ARCHITECTURES</span>
+                <span className="lumos-bottom-meta">ALL 6 PRODUCTS READY FOR TURNKEY DEPLOYMENT</span>
+              </div>
+              <div className="lumos-bottom-right">
+                <button
+                  type="button"
+                  className="lumos-bottom-all-btn interactive"
+                  onClick={() => handleOpenCheckoutModal(PRODUCTS[0])}
+                >
+                  <span>GET FLAGSHIP aIn EXCEL SUITE ({currency === 'INR' ? '₹199' : '$2.49'})</span>
+                  <span>↗</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ══ SECTION 4: THE HARD WAY VS THE aIn WAY (AD COMPARISON) ══ */}
+        <section id="ad-comparison" className="ad-comparison-section">
+          <div className="noir-section-header">
+            <div className="noir-section-kicker">
+              <span>● WHY GET THE MASTER SUITE</span>
+            </div>
+            <h2 className="noir-section-heading">STOP REINVENTING THE SPREADSHEET WHEEL</h2>
+            <p className="noir-section-subtitle">
+              Building formulas from scratch wastes valuable hours and thousands in freelancer bills.
+            </p>
+          </div>
+
+          <div className="ad-comparison-grid">
+            <div className="ad-comparison-card is--bad">
+              <span className="ad-comparison-tag">❌ THE HARD & EXPENSIVE WAY</span>
+              <h3 className="ad-comparison-title">Building From Scratch</h3>
+              <div className="ad-comparison-list">
+                <div className="ad-comparison-item is--bad-item">
+                  <span>✗</span>
+                  <span>40+ hours wasted typing formulas and troubleshooting #REF! and circular errors</span>
+                </div>
+                <div className="ad-comparison-item is--bad-item">
+                  <span>✗</span>
+                  <span>₹15,000+ spent hiring disjointed freelancers on Upwork & Fiverr</span>
+                </div>
+                <div className="ad-comparison-item is--bad-item">
+                  <span>✗</span>
+                  <span>₹2,500/month recurring fees for clunky enterprise SaaS subscriptions</span>
+                </div>
+                <div className="ad-comparison-item is--bad-item">
+                  <span>✗</span>
+                  <span>Amateur-looking charts that fail to inspire confidence in leadership</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="ad-comparison-card is--good">
+              <span className="ad-comparison-tag">✅ THE aIn MASTER SUITE WAY</span>
+              <h3 className="ad-comparison-title">1,000+ Pro Templates (₹199 Once)</h3>
+              <div className="ad-comparison-list">
+                <div className="ad-comparison-item">
+                  <span>✓</span>
+                  <span>Open battle-tested .xlsx sheets and start at 90% completion in 60 seconds</span>
+                </div>
+                <div className="ad-comparison-item">
+                  <span>✓</span>
+                  <span>Curated by Microsoft Verified Architect — 100% automated formulas</span>
+                </div>
+                <div className="ad-comparison-item">
+                  <span>✓</span>
+                  <span>₹199 one-time payment with lifetime Google Drive updates · No subscriptions</span>
+                </div>
+                <div className="ad-comparison-item">
+                  <span>✓</span>
+                  <span>Boardroom-ready interactive BI slicers & presentation visuals</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ══ SECTION 4: BRUTALIST EDITORIAL STATEMENT (IMAGE 1 CENTER: JASON MILLER STYLE) ══ */}
+        <section id="noir-manifesto" className="noir-statement-section">
+          <div className="noir-statement-tabs">
+            <span className="noir-statement-tab active">Financial Models</span>
+            <span className="noir-statement-tab">BI Cockpits</span>
+            <span className="noir-statement-tab">Workforce Matrix</span>
+            <span className="noir-statement-tab">Revenue Engines</span>
+          </div>
+
+          <h2 className="noir-statement-giant-heading">
+            BUILD ACCURACY<br />
+            SCALE YOUR BUSINESS<br />
+            TODAY
+          </h2>
+
+          <div className="noir-statement-lead-block">
+            <p className="noir-statement-lead-text">
+              HELPING YOU BUILD FINANCIAL CONFIDENCE AND BOARD-READY DISCIPLINE THROUGH AUTOMATED SPREADSHEETS AND EXECUTIVE INTELLIGENCE.
+            </p>
+
+            <div className="noir-statement-meta-col">
+              <div className="noir-statement-scroll-indicator">
+                <span className="noir-statement-scroll-dot" />
+                <span>.SCROLL TO EXPLORE</span>
+              </div>
+
+              <div className="noir-statement-creator-card">
+                <img
+                  src="/ceo_hariharan.jpg"
+                  alt="Hariharan.D"
+                  className="noir-statement-avatar"
+                />
+                <div>
+                  <div className="noir-statement-creator-name">HARIHARAN.D</div>
+                  <div className="noir-statement-creator-role">Lead Excel Architect & Founder</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* FONTO SLIDE TEXTURED GIANT (IMAGE 1 "FOUR PATHS TO TRANSFORMATION" STYLE) */}
+          <div className="fonto-textured-giant-wrap">
+            <span className="fonto-textured-giant">FOUR PATHS TO AUTOMATION</span>
+          </div>
+        </section>
+
+        {/* ══ SECTION 5: HYPERFIT NUMBERED SYSTEM (IMAGE 1 LEFT STYLE) ══ */}
+        <section id="noir-system" className="noir-hyperfit-section">
+          <div className="noir-section-header">
+            <div className="noir-section-kicker">
+              <span>● THE COMPLETE SYSTEM</span>
+            </div>
+            <h2 className="noir-section-heading">NOT JUST SPREADSHEETS — A FULL BUSINESS ARSENAL</h2>
+            <p className="noir-section-subtitle">
+              Every formula, dynamic array, and executive chart is structured for turnkey execution with zero setup.
+            </p>
+          </div>
+
+          <div className="noir-hyperfit-list">
+            {HYPERFIT_STEPS.map((step) => (
+              <div key={step.num} className="noir-hyperfit-row">
+                <div className="noir-hyperfit-num">{step.num}</div>
+                <div>
+                  <h3 className="noir-hyperfit-title">{step.title}</h3>
+                  <div className="noir-hyperfit-tagline">{step.tagline}</div>
+                </div>
+                <p className="noir-hyperfit-desc">{step.desc}</p>
+                <div className="noir-hyperfit-status">{step.status}</div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* ══ SECTION 7: COURSEKIT STEP PROCESS (IMAGE 1 RIGHT STYLE) ══ */}
+        <section id="noir-process" className="noir-process-section">
+          <div className="noir-section-header">
+            <div className="noir-section-kicker">
+              <span>● HOW IT WORKS</span>
+            </div>
+            <h2 className="noir-section-heading">STOP PAYING FOR DISJOINTED FREELANCERS</h2>
+            <p className="noir-section-subtitle">
+              One master architecture replaces dozens of expensive freelancer gigs. Simple, automated 4-stage process.
+            </p>
+          </div>
+
+          <div className="noir-process-grid">
+            {PROCESS_STEPS.map((st) => (
+              <div key={st.step} className="noir-process-card">
+                <span className="noir-process-step">[{st.step}]</span>
+                <div>
+                  <h3 className="noir-process-title">{st.title}</h3>
+                  <p className="noir-process-desc">{st.desc}</p>
                 </div>
               </div>
             ))}
           </div>
+        </section>
+
+        {/* ══ LUMOS INFINITE SLIDING MARQUEE TICKER 2 (REVERSE) ══ */}
+        <div className="lumos-marquee-wrap is--reverse">
+          <div className="lumos-marquee-track is--reverse">
+            <div className="lumos-marquee-content is--outline">
+              <span>✦ PUT SPREADSHEETS ON AUTOPILOT</span>
+              <span>✦ SAVE 15+ HOURS WEEKLY</span>
+              <span>✦ 5 VIP BONUS TOOLKITS</span>
+              <span>✦ 100% EDITABLE IN EXCEL & GOOGLE SHEETS</span>
+              <span>✦ ZERO RECURRING SUBSCRIPTIONS</span>
+              <span>✦ LIFETIME ACCESS GUARANTEE</span>
+            </div>
+            <div className="lumos-marquee-content is--outline" aria-hidden="true">
+              <span>✦ PUT SPREADSHEETS ON AUTOPILOT</span>
+              <span>✦ SAVE 15+ HOURS WEEKLY</span>
+              <span>✦ 5 VIP BONUS TOOLKITS</span>
+              <span>✦ 100% EDITABLE IN EXCEL & GOOGLE SHEETS</span>
+              <span>✦ ZERO RECURRING SUBSCRIPTIONS</span>
+              <span>✦ LIFETIME ACCESS GUARANTEE</span>
+            </div>
+          </div>
         </div>
-      </section>
+
+        {/* ══ SECTION 8: CLIMAX PRICING (SELLING ONLY THE ₹199 ALL-IN-ONE MASTER SUITE) ══ */}
+        <section id="noir-pricing" className="noir-pricing-section">
+          <div className="noir-pricing-card">
+            {/* Left Column: Feature Highlights */}
+            <div>
+              <span className="noir-pricing-kicker">🔥 1,000+ EXCEL TEMPLATES — ₹199 ONLY</span>
+              <h2 className="noir-pricing-title">{PRODUCTS[0].name}</h2>
+              <p className="noir-pricing-tagline">{PRODUCTS[0].tagline}</p>
+
+              <div className="noir-pricing-features">
+                {PRODUCTS[0].features.map((feat, fIdx) => (
+                  <div key={fIdx} className="noir-feature-item">
+                    <span className="noir-feature-check">✓</span>
+                    <span>{feat}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Right Column: High-Impact Price Box */}
+            <div className="noir-pricing-box">
+              <div className="noir-price-row">
+                <span className="noir-price-val">{currency === 'INR' ? '₹199' : '$2.49'}</span>
+                <span className="noir-price-original">{currency === 'INR' ? '₹999' : '$12.99'}</span>
+              </div>
+              <span className="noir-price-savings">80% OFF TODAY · ZERO SUBSCRIPTION FEES</span>
+
+              <button
+                className="noir-checkout-cta interactive"
+                onClick={() => handleOpenCheckoutModal(PRODUCTS[0])}
+              >
+                <span>🛒 GET ALL-IN-ONE MASTER SUITE</span>
+                <span>→</span>
+              </button>
+
+              <div className="noir-pricing-secondary-row">
+                <button
+                  className="noir-pricing-cart-btn interactive"
+                  onClick={() => addToCart(PRODUCTS[0])}
+                >
+                  + Add to Cart
+                </button>
+                <a
+                  href="https://wa.me/919361657929?text=Hi%20Hariharan,%20I%20have%20a%20query%20about%20the%20aIn%20Excel%20Master%20Suite."
+                  target="_blank"
+                  rel="noreferrer"
+                  className="noir-pricing-wa-btn interactive"
+                >
+                  💬 WhatsApp Line
+                </a>
+              </div>
+
+              <div className="noir-pricing-trust-list">
+                <span>🔒 100% Encrypted Checkout via Cashfree</span>
+                <span>⚡ Instant Email Delivery within 60 Seconds</span>
+                <span>📁 Lifetime Google Drive Access Guarantee</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ══ SECTION 9: REVIEWS & TESTIMONIALS ══ */}
+        <section className="noir-reviews-section">
+          <div className="noir-section-header">
+            <div className="noir-section-kicker">
+              <span>● TESTIMONIALS</span>
+            </div>
+            <h2 className="noir-section-heading">WHAT OUR PARTNERS SAY</h2>
+            <p className="noir-section-subtitle">
+              ⭐ 4.9/5 Rating across 500+ corporate professionals and startup operators.
+            </p>
+          </div>
+
+          <div className="noir-reviews-grid">
+            {HABITO_REVIEWS.map((rev, rIdx) => (
+              <div key={rIdx} className="noir-review-card">
+                <p className="noir-review-quote">"{rev.quote}"</p>
+                <div className="noir-review-bottom">
+                  <div>
+                    <div className="noir-review-author">{rev.author}</div>
+                    <div className="noir-review-company">{rev.company}</div>
+                  </div>
+                  <span className="noir-review-tag">[{rev.tag}]</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* ══ SECTION 10: NOIR BRUTALIST FOOTER ══ */}
+        <footer className="noir-footer">
+          <div>
+            <span className="noir-footer-brand">BEx SIGMA TECH · EXCEL ARCHITECTURE</span>
+            <span style={{ marginLeft: '12px' }}>© {new Date().getFullYear()} All rights reserved.</span>
+          </div>
+          <div>
+            <button
+              className="noir-footer-btn-top interactive"
+              onClick={() => document.getElementById('noir-about')?.scrollIntoView({ behavior: 'smooth' })}
+            >
+              Back to Top ↑
+            </button>
+          </div>
+        </footer>
+
+      </main>
 
       {/* Cart Sidebar Drawer */}
       <div className={`webdev-cart-overlay ${isCartOpen ? 'open' : ''}`} onClick={() => setIsCartOpen(false)} />
