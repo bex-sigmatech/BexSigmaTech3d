@@ -5347,241 +5347,336 @@
 }
 
 /* ==========================================================================
-   LUMOS MARKETING INSPIRED EDITORIAL DESIGN SYSTEM FOR /store
-   Full-page editorial aesthetic: tactile off-white paper canvas, oversized
-   condensed typography, razor-thin hairline dividers, asymmetric storytelling,
-   and fluid, cinematic motion.
+   BEX SIGMA TECH — MISSION CONTROL THEME FOR /store & PRODUCTS SHOWCASE
+   High-End Architectural Dark Cybernetic Theme:
+   - Pure obsidian background (#020612) with ambient cyan (#38bdf8), emerald (#10b981), and amber (#f59e0b) auroras
+   - Floating dark glass capsule navbar with blur and high-fashion micro-interactions
+   - Massive architectural typography (Syne + Outfit + Plus Jakarta Sans + Space Grotesk)
+   - Luxury dark glass surface cards (linear-gradient(175deg, rgba(14,24,46,0.85) 0%, rgba(6,12,24,0.98) 100%))
+   - Glowing hairline dividers and crosshairs
+   - Animated flowing gradient text accents
    ========================================================================== */
 
-/* ── 1. Page Root & Paper Canvas ── */
+/* ── 1. Page Root & Cybernetic Obsidian Canvas ── */
 .webdev-store-container.store-editorial-theme {
-  background-color: #f7f7f4 !important;
-  color: #111111 !important;
-  font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: #020612 !important;
+  color: #ffffff !important;
+  font-family: var(--mc-font-body, 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif) !important;
   min-height: 100vh;
-  position: relative;
-  overflow-x: hidden;
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  -webkit-overflow-scrolling: touch !important;
+  overscroll-behavior-y: contain !important;
+  z-index: 50 !important;
+  padding-top: 100px;
 }
 
 .store-editorial-theme .webdev-store-bg {
   position: fixed;
   inset: 0;
   pointer-events: none;
-  background-color: #f7f7f4;
+  background-color: #020612;
   background-image:
-    radial-gradient(at 15% 15%, rgba(255, 77, 41, 0.035) 0px, transparent 50%),
-    radial-gradient(at 85% 85%, rgba(16, 185, 129, 0.03) 0px, transparent 50%),
-    url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.035'/%3E%3C/svg%3E");
+    radial-gradient(ellipse 70% 50% at 15% 15%, rgba(16, 185, 129, 0.08) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 85% 80%, rgba(56, 189, 248, 0.08) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 50% at 50% 0%, rgba(245, 158, 11, 0.04) 0%, transparent 50%),
+    linear-gradient(180deg, #020610 0%, #050a16 100%);
   z-index: 0;
 }
 
-/* ── 2. Floating Capsule Navbar (Lumos Minimalist High-Fashion) ── */
+/* ── 2. Floating Capsule Navbar (Mission Control Dark Glass) ── */
 .store-editorial-theme .store-capsule-navbar {
-  background: rgba(255, 255, 255, 0.88) !important;
-  backdrop-filter: blur(16px) !important;
-  -webkit-backdrop-filter: blur(16px) !important;
-  border: 1px solid rgba(17, 17, 17, 0.12) !important;
-  box-shadow: 0 12px 32px -8px rgba(0, 0, 0, 0.06) !important;
+  position: fixed !important;
+  top: 18px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  max-width: 1280px !important;
+  width: calc(100% - 36px) !important;
+  height: 64px !important;
+  background: rgba(14, 23, 44, 0.85) !important;
+  backdrop-filter: blur(24px) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.12) !important;
+  border-radius: 9999px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 0 16px 0 28px !important;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+  z-index: 99999 !important;
 }
 
 .store-editorial-theme .habito-brand-title {
-  color: #111111 !important;
-  font-family: 'Space Grotesk', sans-serif !important;
+  color: #ffffff !important;
+  font-family: var(--mc-font-heading, 'Outfit', 'Space Grotesk', sans-serif) !important;
   font-weight: 800 !important;
   letter-spacing: 0.08em !important;
 }
 
 .store-editorial-theme .habito-brand-dot {
-  background-color: #ff4d29 !important;
-  box-shadow: 0 0 8px rgba(255, 77, 41, 0.6) !important;
+  background-color: #38bdf8 !important;
+  box-shadow: 0 0 10px #38bdf8, 0 0 20px rgba(56, 189, 248, 0.6) !important;
 }
 
 .store-editorial-theme .habito-nav-link {
-  color: #444444 !important;
-  font-weight: 600 !important;
+  color: #94a3b8 !important;
+  font-family: var(--mc-font-heading, 'Outfit', sans-serif) !important;
+  font-weight: 700 !important;
   letter-spacing: 0.04em !important;
-  transition: color 0.25s ease !important;
+  transition: all 0.25s ease !important;
 }
 
 .store-editorial-theme .habito-nav-link:hover {
-  color: #ff4d29 !important;
+  color: #38bdf8 !important;
+  text-shadow: 0 0 12px rgba(56, 189, 248, 0.6) !important;
 }
 
 .store-editorial-theme .habito-currency-pill {
-  background: rgba(17, 17, 17, 0.05) !important;
-  border: 1px solid rgba(17, 17, 17, 0.14) !important;
-  color: #111111 !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  color: #cbd5e1 !important;
+  font-family: var(--mc-font-heading, 'Outfit', sans-serif) !important;
+  font-weight: 700 !important;
+  transition: all 0.2s ease !important;
 }
 
-.store-editorial-theme .habito-cart-pill {
-  background: rgba(17, 17, 17, 0.05) !important;
-  border: 1px solid rgba(17, 17, 17, 0.14) !important;
-  color: #111111 !important;
-}
-
-.store-editorial-theme .habito-cart-counter {
-  background: #ff4d29 !important;
+.store-editorial-theme .habito-currency-pill:hover {
+  background: rgba(56, 189, 248, 0.14) !important;
+  border-color: rgba(56, 189, 248, 0.45) !important;
   color: #ffffff !important;
 }
 
-.store-editorial-theme .habito-nav-btn-close {
-  background: rgba(17, 17, 17, 0.06) !important;
-  color: #111111 !important;
-  border: 1px solid rgba(17, 17, 17, 0.12) !important;
+.store-editorial-theme .habito-cart-pill {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  color: #cbd5e1 !important;
+  font-family: var(--mc-font-heading, 'Outfit', sans-serif) !important;
+  font-weight: 700 !important;
+  transition: all 0.2s ease !important;
 }
 
-/* ── 3. Hero Section (High-Impact Editorial Climax) ── */
+.store-editorial-theme .habito-cart-pill:hover {
+  background: rgba(16, 185, 129, 0.14) !important;
+  border-color: rgba(16, 185, 129, 0.45) !important;
+  color: #ffffff !important;
+}
+
+.store-editorial-theme .habito-cart-counter {
+  background: #10b981 !important;
+  color: #ffffff !important;
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.7) !important;
+}
+
+.store-editorial-theme .habito-nav-btn-close {
+  background: rgba(255, 255, 255, 0.05) !important;
+  color: #94a3b8 !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.store-editorial-theme .habito-nav-btn-close:hover {
+  color: #ef4444 !important;
+  border-color: rgba(239, 68, 68, 0.5) !important;
+  background: rgba(239, 68, 68, 0.15) !important;
+  transform: rotate(90deg);
+}
+
+/* ── 3. Hero Section (Mission Control Directive Climax) ── */
 .store-editorial-theme .noir-hero-section {
   position: relative;
   z-index: 1;
-  padding: 140px 24px 60px;
+  padding: 120px 24px 60px;
   background: transparent !important;
-  color: #111111 !important;
+  color: #ffffff !important;
 }
 
 .store-editorial-theme .ad-flash-pill {
-  background: rgba(255, 77, 41, 0.08) !important;
-  border: 1px solid rgba(255, 77, 41, 0.25) !important;
-  color: #ff4d29 !important;
-  font-weight: 700 !important;
+  background: rgba(245, 158, 11, 0.1) !important;
+  border: 1px solid rgba(245, 158, 11, 0.35) !important;
+  color: #fbbf24 !important;
+  font-family: var(--mc-font-heading, 'Outfit', sans-serif) !important;
+  font-weight: 800 !important;
   letter-spacing: 0.08em !important;
+  box-shadow: 0 0 20px rgba(245, 158, 11, 0.18) !important;
+  border-radius: 100px !important;
+}
+
+.store-editorial-theme .ad-flash-dot {
+  background: #f59e0b !important;
+  box-shadow: 0 0 8px #f59e0b !important;
+}
+
+.store-editorial-theme .noir-hero-avatar-ring {
+  box-shadow: 0 0 20px rgba(56, 189, 248, 0.35);
+  border: 2px solid rgba(56, 189, 248, 0.5);
 }
 
 .store-editorial-theme .noir-hero-title {
-  color: #111111 !important;
-  font-family: 'Space Grotesk', -apple-system, sans-serif !important;
+  color: #ffffff !important;
+  font-family: var(--mc-font-display, 'Syne', 'Outfit', sans-serif) !important;
   font-weight: 900 !important;
   letter-spacing: -0.04em !important;
-  line-height: 0.95 !important;
+  line-height: 1.05 !important;
   text-transform: uppercase !important;
-  font-size: clamp(2.6rem, 7vw, 6.2rem) !important;
+  font-size: clamp(2.6rem, 7vw, 5.8rem) !important;
+}
+
+.store-editorial-theme .fonto-slide-active-word {
+  background: linear-gradient(135deg, #38bdf8 0%, #818cf8 35%, #34d399 70%, #38bdf8 100%);
+  background-size: 250% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: mcGradientFlow 7s linear infinite;
 }
 
 .store-editorial-theme .noir-hero-sub {
-  color: #555555 !important;
-  font-size: clamp(1rem, 1.3vw, 1.25rem) !important;
-  line-height: 1.6 !important;
+  color: #94a3b8 !important;
+  font-family: var(--mc-font-body, 'Plus Jakarta Sans', sans-serif) !important;
+  font-size: clamp(1rem, 1.25vw, 1.16rem) !important;
+  line-height: 1.7 !important;
   max-width: 820px !important;
 }
 
 .store-editorial-theme .noir-btn-primary {
-  background: #ff4d29 !important;
+  background: linear-gradient(135deg, #ff5722 0%, #f59e0b 100%) !important;
   color: #ffffff !important;
-  border: 1px solid #ff4d29 !important;
-  box-shadow: 0 8px 24px -4px rgba(255, 77, 41, 0.45) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  box-shadow: 0 8px 30px -4px rgba(255, 87, 34, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.25) !important;
+  font-family: var(--mc-font-heading, 'Outfit', sans-serif) !important;
   font-weight: 800 !important;
   letter-spacing: 0.06em !important;
   text-transform: uppercase !important;
   padding: 16px 36px !important;
+  border-radius: 100px !important;
 }
 
 .store-editorial-theme .noir-btn-primary:hover {
   transform: translateY(-2px) !important;
-  box-shadow: 0 12px 30px -4px rgba(255, 77, 41, 0.6) !important;
+  box-shadow: 0 14px 40px -4px rgba(255, 87, 34, 0.7), 0 0 25px rgba(245, 158, 11, 0.4) !important;
 }
 
 .store-editorial-theme .noir-btn-secondary {
-  background: transparent !important;
-  color: #111111 !important;
-  border: 1px solid rgba(17, 17, 17, 0.25) !important;
+  background: rgba(255, 255, 255, 0.04) !important;
+  color: #e2e8f0 !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  font-family: var(--mc-font-heading, 'Outfit', sans-serif) !important;
   font-weight: 700 !important;
   letter-spacing: 0.06em !important;
   text-transform: uppercase !important;
   padding: 16px 30px !important;
+  border-radius: 100px !important;
+  backdrop-filter: blur(12px) !important;
 }
 
 .store-editorial-theme .noir-btn-secondary:hover {
-  background: #111111 !important;
+  background: rgba(56, 189, 248, 0.14) !important;
+  border-color: rgba(56, 189, 248, 0.45) !important;
   color: #ffffff !important;
-  border-color: #111111 !important;
+  transform: translateY(-2px) !important;
 }
 
 .store-editorial-theme .ad-product-card-3d {
-  background: #ffffff !important;
-  border: 1px solid rgba(17, 17, 17, 0.16) !important;
-  box-shadow: 0 24px 64px -16px rgba(0, 0, 0, 0.12) !important;
-  border-radius: 4px !important;
+  background: linear-gradient(175deg, rgba(14, 24, 46, 0.88) 0%, rgba(6, 12, 24, 0.98) 100%) !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.12) !important;
+  box-shadow: 0 26px 70px rgba(0, 0, 0, 0.85), inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+  border-radius: 20px !important;
+  overflow: hidden !important;
+}
+
+.store-editorial-theme .ad-product-card-3d:hover {
+  border-color: rgba(56, 189, 248, 0.5) !important;
+  box-shadow: 0 32px 85px rgba(0, 0, 0, 0.9), 0 0 40px rgba(56, 189, 248, 0.3) !important;
 }
 
 .store-editorial-theme .ad-product-card-bar {
-  background: #ffffff !important;
-  border-top: 1px solid rgba(17, 17, 17, 0.1) !important;
-  color: #111111 !important;
+  background: rgba(6, 12, 24, 0.95) !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+  color: #ffffff !important;
 }
 
 .store-editorial-theme .ad-product-card-title {
-  color: #111111 !important;
+  color: #ffffff !important;
+}
+
+.store-editorial-theme .ad-float-badge-left,
+.store-editorial-theme .ad-float-badge-right {
+  background: rgba(14, 23, 44, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #cbd5e1;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
 }
 
 .store-editorial-theme .noir-hero-chip {
-  background: rgba(17, 17, 17, 0.05) !important;
-  border: 1px solid rgba(17, 17, 17, 0.12) !important;
-  color: #333333 !important;
+  background: rgba(255, 255, 255, 0.04) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  color: #cbd5e1 !important;
+  border-radius: 100px !important;
 }
 
-/* ── 4. Marquee Tickers (Clean Infinite Motion) ── */
+/* ── 4. Marquee Tickers (Dark Space Velocity) ── */
 .store-editorial-theme .lumos-marquee-wrap {
-  background: #111111 !important;
+  background: rgba(6, 12, 24, 0.85) !important;
   color: #ffffff !important;
-  border-top: 1px solid rgba(17, 17, 17, 0.15) !important;
-  border-bottom: 1px solid rgba(17, 17, 17, 0.15) !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
   padding: 18px 0 !important;
 }
 
 .store-editorial-theme .lumos-marquee-content span {
-  color: #ffffff !important;
-  font-family: 'Space Grotesk', sans-serif !important;
+  color: #94a3b8 !important;
+  font-family: var(--mc-font-heading, 'Outfit', sans-serif) !important;
   font-weight: 800 !important;
   letter-spacing: 0.08em !important;
 }
 
 /* ── 5. Client Trust Strip ── */
 .store-editorial-theme .noir-client-strip {
-  border-top: 1px solid rgba(17, 17, 17, 0.1) !important;
-  border-bottom: 1px solid rgba(17, 17, 17, 0.1) !important;
-  background: rgba(255, 255, 255, 0.5) !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.06) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+  background: rgba(2, 6, 18, 0.5) !important;
 }
 
 .store-editorial-theme .noir-client-label {
-  color: #777777 !important;
+  color: #64748b !important;
+  font-family: var(--mc-font-heading, 'Outfit', sans-serif) !important;
   font-size: 11px !important;
   letter-spacing: 0.16em !important;
 }
 
 .store-editorial-theme .noir-client-logo {
-  color: #111111 !important;
+  color: #cbd5e1 !important;
   font-weight: 800 !important;
-  opacity: 0.7 !important;
-  transition: opacity 0.3s ease !important;
+  opacity: 0.55 !important;
+  transition: all 0.3s ease !important;
 }
 
 .store-editorial-theme .noir-client-logo:hover {
   opacity: 1 !important;
-  color: #ff4d29 !important;
+  color: #38bdf8 !important;
+  text-shadow: 0 0 14px rgba(56, 189, 248, 0.5) !important;
 }
 
-/* ── 6. Section 3: Lumos Editorial Products Showcase (#our-products) ── */
+/* ── 6. Section 3: Mission Control Products Showcase (#our-products) ── */
 #our-products.lumos-editorial-section,
 .our-products.lumos-editorial-section {
   position: relative;
   width: 100%;
-  background-color: #f7f7f4;
-  color: #111111;
-  padding: 130px 0 100px;
+  background: transparent !important;
+  color: #ffffff !important;
+  padding: 120px 0 90px;
   overflow: hidden;
   box-sizing: border-box;
   font-family: inherit;
-  border-top: 1px solid rgba(17, 17, 17, 0.08);
-  border-bottom: 1px solid rgba(17, 17, 17, 0.08);
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
 }
 
 .lumos-paper-texture {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  opacity: 0.038;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-  z-index: 1;
+  display: none !important;
 }
 
 .lumos-container {
@@ -5598,36 +5693,40 @@
   align-items: center;
   gap: 16px;
   font-size: 11px;
-  font-weight: 700;
+  font-weight: 800;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: #666666;
-  margin-bottom: 24px;
+  color: #94a3b8;
+  margin-bottom: 20px;
+  font-family: var(--mc-font-heading, 'Outfit', sans-serif);
 }
 
 .lumos-index-badge {
-  color: #ff4d29;
-  font-family: monospace, monospace;
+  color: #38bdf8;
+  font-family: var(--mc-font-mono, monospace);
+  font-weight: 800;
 }
 
 .lumos-curation-pill {
-  padding: 3px 10px;
+  padding: 3px 12px;
   border-radius: 999px;
-  background-color: rgba(17, 17, 17, 0.06);
-  color: #111111;
+  background-color: rgba(56, 189, 248, 0.1);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  color: #38bdf8;
   font-size: 10px;
   letter-spacing: 0.12em;
+  font-weight: 800;
 }
 
 .lumos-giant-headline {
-  font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: clamp(2.8rem, 7.5vw, 7.2rem);
+  font-family: var(--mc-font-display, 'Syne', 'Outfit', sans-serif);
+  font-size: clamp(2.8rem, 7.5vw, 6.5rem);
   font-weight: 900;
   letter-spacing: -0.04em;
-  line-height: 0.92;
+  line-height: 0.95;
   text-transform: uppercase;
-  color: #111111;
-  margin: 0 0 28px 0;
+  color: #ffffff;
+  margin: 0 0 24px 0;
 }
 
 .lumos-headline-row {
@@ -5640,8 +5739,8 @@
 
 .lumos-headline-word {
   display: inline-block;
-  transform: translateY(110%);
-  opacity: 0;
+  transform: translateY(0);
+  opacity: 1;
   transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s ease-out;
   will-change: transform, opacity;
 }
@@ -5653,11 +5752,16 @@
 
 .lumos-text-outline {
   color: transparent;
-  -webkit-text-stroke: 1.5px #111111;
+  -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.35);
 }
 
 .lumos-text-accent {
-  color: #ff4d29;
+  background: linear-gradient(135deg, #38bdf8 0%, #818cf8 35%, #34d399 70%, #38bdf8 100%);
+  background-size: 250% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: mcGradientFlow 7s linear infinite;
 }
 
 .lumos-header-desc-row {
@@ -5669,9 +5773,10 @@
 }
 
 .lumos-header-desc {
-  font-size: clamp(15px, 1.4vw, 18px);
-  color: #555555;
-  line-height: 1.6;
+  font-family: var(--mc-font-body, 'Plus Jakarta Sans', sans-serif);
+  font-size: clamp(15px, 1.35vw, 18px);
+  color: #94a3b8;
+  line-height: 1.65;
   max-width: 680px;
   margin: 0;
   font-weight: 400;
@@ -5685,120 +5790,148 @@
 }
 
 .lumos-aside-number {
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 38px;
-  font-weight: 800;
+  font-family: var(--mc-font-display, 'Syne', sans-serif);
+  font-size: 42px;
+  font-weight: 900;
   line-height: 1;
-  color: #111111;
+  color: #38bdf8;
   letter-spacing: -0.03em;
+  text-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
 }
 
 .lumos-aside-label {
+  font-family: var(--mc-font-heading, 'Outfit', sans-serif);
   font-size: 10px;
-  font-weight: 700;
+  font-weight: 800;
   letter-spacing: 0.14em;
-  color: #888888;
-  margin-top: 4px;
-  text-transform: uppercase;
+  color: #64748b;
 }
 
 .lumos-hairline-divider {
   width: 100%;
   height: 1px;
-  background-color: rgba(17, 17, 17, 0.12);
-  margin: 52px 0 0;
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  background: linear-gradient(90deg, rgba(56, 189, 248, 0.4) 0%, rgba(255, 255, 255, 0.08) 50%, rgba(16, 185, 129, 0.3) 100%);
+  margin: 36px 0;
+  position: relative;
 }
 
-.lumos-editorial-section.in-view .lumos-hairline-divider {
-  transform: scaleX(1);
-}
-
-.lumos-showcase-list {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-}
-
+/* ── Product Cards in Mission Control Surface Style ── */
 .lumos-product-item {
   position: relative;
-  padding: 80px 0 30px;
-  opacity: 0;
-  transform: translateY(40px);
-  transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
-  transition-delay: var(--item-delay, 0s);
-  will-change: transform, opacity;
+  background: linear-gradient(175deg, rgba(14, 24, 46, 0.85) 0%, rgba(6, 12, 24, 0.98) 100%);
+  border: 1.5px solid rgba(255, 255, 255, 0.09);
+  border-radius: 28px;
+  padding: 36px;
+  margin-bottom: 48px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.09);
+  transition: all 0.35s var(--mc-ease-out, cubic-bezier(0.16, 1, 0.3, 1));
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .lumos-editorial-section.in-view .lumos-product-item {
   opacity: 1;
   transform: translateY(0);
+  transition-delay: var(--item-delay, 0s);
+}
+
+.lumos-product-item:hover {
+  border-color: rgba(56, 189, 248, 0.45);
+  transform: translateY(-5px);
+  box-shadow: 0 28px 70px rgba(0, 0, 0, 0.9), 0 0 35px rgba(56, 189, 248, 0.25);
+}
+
+.lumos-product-item.is--flagship {
+  border-color: rgba(245, 158, 11, 0.4);
+  box-shadow: 0 20px 55px rgba(0, 0, 0, 0.75), 0 0 30px rgba(245, 158, 11, 0.15);
+}
+
+.lumos-product-item.is--flagship:hover {
+  border-color: rgba(245, 158, 11, 0.7);
+  box-shadow: 0 28px 75px rgba(0, 0, 0, 0.9), 0 0 45px rgba(245, 158, 11, 0.35);
 }
 
 .lumos-item-topbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-bottom: 20px;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: #666666;
+  padding-bottom: 18px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .lumos-item-top-left {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 12px;
 }
 
 .lumos-item-num {
-  font-family: monospace, monospace;
-  color: #111111;
+  font-family: var(--mc-font-mono, monospace);
   font-size: 12px;
+  font-weight: 800;
+  color: #38bdf8;
+}
+
+.lumos-item-category {
+  font-family: var(--mc-font-heading, 'Outfit', sans-serif);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  color: #94a3b8;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 4px 10px;
+  border-radius: 6px;
 }
 
 .lumos-flagship-tag {
-  background-color: #ff4d29;
+  background: linear-gradient(135deg, #f59e0b 0%, #ff5722 100%);
   color: #ffffff;
-  padding: 2px 8px;
-  font-size: 9px;
+  font-family: var(--mc-font-heading, 'Outfit', sans-serif);
+  font-size: 10px;
+  font-weight: 900;
   letter-spacing: 0.12em;
+  padding: 4px 10px;
+  border-radius: 6px;
+  box-shadow: 0 0 14px rgba(245, 158, 11, 0.4);
 }
 
 .lumos-item-top-right {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
 }
 
 .lumos-item-price-chip {
-  font-family: 'Space Grotesk', monospace;
-  font-size: 14px;
-  font-weight: 800;
-  color: #111111;
-  letter-spacing: -0.01em;
+  font-family: var(--mc-font-display, 'Syne', sans-serif);
+  font-size: 18px;
+  font-weight: 900;
+  color: #34d399;
+  letter-spacing: -0.02em;
+  background: rgba(16, 185, 129, 0.12);
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  padding: 5px 14px;
+  border-radius: 100px;
 }
 
 .lumos-item-status {
-  padding: 2px 8px;
-  border: 1px solid rgba(17, 17, 17, 0.2);
-  font-size: 9px;
-  color: #111111;
+  font-family: var(--mc-font-mono, monospace);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: #64748b;
 }
 
 .lumos-item-body {
   display: grid;
-  grid-template-columns: 1.18fr 1fr;
-  gap: 68px;
+  grid-template-columns: 5fr 7fr;
+  gap: 48px;
   align-items: center;
 }
 
 .lumos-product-item.is--inverted .lumos-item-body {
-  grid-template-columns: 1fr 1.18fr;
+  grid-template-columns: 7fr 5fr;
 }
 
 .lumos-product-item.is--inverted .lumos-item-visual-wrap {
@@ -5809,47 +5942,37 @@
   order: 1;
 }
 
+/* Visual Frame */
 .lumos-visual-frame {
   position: relative;
-  width: 100%;
-  aspect-ratio: 16 / 10;
+  background: #020610;
+  border: 1.5px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
   overflow: hidden;
-  background-color: #ecece8;
-  border: 1px solid rgba(17, 17, 17, 0.15);
+  aspect-ratio: 4 / 3;
   cursor: pointer;
-}
-
-.lumos-product-item.is--flagship .lumos-visual-frame {
-  aspect-ratio: 16 / 9.5;
-  border-color: rgba(255, 77, 41, 0.35);
-  box-shadow: 0 16px 48px -16px rgba(0, 0, 0, 0.1);
 }
 
 .lumos-visual-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  display: block;
-  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.5s ease;
-  filter: contrast(101%);
-  will-change: transform;
+  transition: transform 0.65s var(--mc-ease-out, cubic-bezier(0.16, 1, 0.3, 1));
 }
 
 .lumos-visual-frame:hover .lumos-visual-img {
-  transform: scale(1.04);
-  filter: contrast(106%);
+  transform: scale(1.06);
 }
 
 .lumos-visual-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(17, 17, 17, 0.2);
-  opacity: 0;
+  background: linear-gradient(180deg, rgba(2, 6, 18, 0.1) 0%, rgba(3, 7, 18, 0.88) 100%);
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: opacity 0.4s ease;
-  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
 .lumos-visual-frame:hover .lumos-visual-overlay {
@@ -5857,477 +5980,329 @@
 }
 
 .lumos-visual-pill {
-  background-color: #ffffff;
-  color: #111111;
+  background: rgba(14, 23, 44, 0.9);
+  border: 1px solid rgba(56, 189, 248, 0.5);
+  color: #ffffff;
   padding: 10px 20px;
+  border-radius: 100px;
+  font-family: var(--mc-font-heading, 'Outfit', sans-serif);
   font-size: 11px;
   font-weight: 800;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-  transform: translateY(8px);
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.lumos-visual-frame:hover .lumos-visual-pill {
-  transform: translateY(0);
+  letter-spacing: 0.1em;
+  box-shadow: 0 0 25px rgba(56, 189, 248, 0.4);
 }
 
 .lumos-crosshair {
   position: absolute;
-  font-size: 13px;
+  font-family: monospace;
+  font-size: 14px;
+  color: rgba(56, 189, 248, 0.5);
   line-height: 1;
-  color: rgba(17, 17, 17, 0.35);
   pointer-events: none;
-  z-index: 3;
-  font-family: monospace, monospace;
 }
-
-.lumos-crosshair.tl { top: 6px; left: 8px; }
-.lumos-crosshair.tr { top: 6px; right: 8px; }
-.lumos-crosshair.bl { bottom: 6px; left: 8px; }
-.lumos-crosshair.br { bottom: 6px; right: 8px; }
+.lumos-crosshair.tl { top: 10px; left: 10px; }
+.lumos-crosshair.tr { top: 10px; right: 10px; }
+.lumos-crosshair.bl { bottom: 10px; left: 10px; }
+.lumos-crosshair.br { bottom: 10px; right: 10px; }
 
 .lumos-visual-caption {
   display: flex;
   justify-content: space-between;
-  align-items: center;
   margin-top: 10px;
+  font-family: var(--mc-font-mono, monospace);
   font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  color: #888888;
-  text-transform: uppercase;
+  color: #64748b;
+  letter-spacing: 0.08em;
 }
 
-.lumos-item-content {
-  display: flex;
-  flex-direction: column;
-}
-
+/* Typography & Content */
 .lumos-item-title {
-  font-family: 'Space Grotesk', -apple-system, sans-serif;
-  font-size: clamp(1.8rem, 3.4vw, 3.2rem);
-  font-weight: 800;
+  font-family: var(--mc-font-heading, 'Outfit', 'Space Grotesk', sans-serif);
+  font-size: clamp(1.8rem, 3.2vw, 2.7rem);
+  font-weight: 900;
   letter-spacing: -0.03em;
-  line-height: 1.05;
-  color: #111111;
-  margin: 0 0 12px 0;
-  text-transform: uppercase;
-}
-
-.lumos-title-inner {
-  display: inline-block;
-  transition: color 0.3s ease;
-}
-
-.lumos-product-item:hover .lumos-title-inner {
-  color: #ff4d29;
+  line-height: 1.1;
+  color: #ffffff;
+  margin: 0 0 8px 0;
 }
 
 .lumos-item-tagline {
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  color: #ff4d29;
-  text-transform: uppercase;
-  margin-bottom: 16px;
+  font-family: var(--mc-font-heading, 'Outfit', sans-serif);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #38bdf8;
+  margin-bottom: 14px;
 }
 
 .lumos-item-desc {
-  font-size: 15px;
+  font-family: var(--mc-font-body, 'Plus Jakarta Sans', sans-serif);
+  font-size: 0.94rem;
+  color: #cbd5e1;
   line-height: 1.65;
-  color: #555555;
-  margin: 0 0 24px 0;
-}
-
-.lumos-item-specs {
-  margin-bottom: 24px;
+  margin: 0 0 22px 0;
 }
 
 .lumos-specs-title {
-  display: block;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: #888888;
+  color: #64748b;
+  font-family: var(--mc-font-heading, 'Outfit', sans-serif);
+  font-weight: 800;
+  font-size: 11px;
+  letter-spacing: 0.14em;
   margin-bottom: 12px;
+  text-transform: uppercase;
 }
 
 .lumos-specs-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px 18px;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 20px;
 }
 
 .lumos-spec-item {
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 10px;
+  padding: 8px 12px;
+  color: #cbd5e1;
+  font-family: var(--mc-font-body, 'Plus Jakarta Sans', sans-serif);
+  font-size: 0.8rem;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 8px;
-  font-size: 12.5px;
-  line-height: 1.4;
-  color: #333333;
 }
 
 .lumos-spec-bullet {
-  color: #ff4d29;
+  color: #38bdf8;
   font-size: 10px;
-  flex-shrink: 0;
-  margin-top: 2px;
 }
 
 .lumos-tech-strip {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  margin-bottom: 32px;
+  margin-bottom: 24px;
 }
 
 .lumos-tech-chip {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #94a3b8;
+  font-family: var(--mc-font-mono, monospace);
   font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.04em;
   padding: 4px 10px;
-  background-color: rgba(17, 17, 17, 0.05);
-  color: #333333;
-  border-radius: 2px;
+  border-radius: 6px;
 }
 
+/* Action button in Mission Control Style */
 .lumos-item-action-row {
   display: flex;
   align-items: center;
-  gap: 24px;
-  flex-wrap: wrap;
+  gap: 20px;
 }
 
 .lumos-action-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 14px;
-  padding: 16px 30px;
-  background-color: #111111;
-  color: #ffffff;
-  font-size: 12.5px;
-  font-weight: 800;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  border: 1px solid #111111;
-  cursor: pointer;
-  transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.3s ease, color 0.3s ease;
-  will-change: transform;
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.22) 0%, rgba(16, 185, 129, 0.22) 100%) !important;
+  color: #ffffff !important;
+  border: 1.5px solid rgba(56, 189, 248, 0.45) !important;
+  box-shadow: 0 8px 24px rgba(56, 189, 248, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
+  font-family: var(--mc-font-heading, 'Outfit', sans-serif) !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.06em !important;
+  padding: 14px 28px !important;
+  border-radius: 100px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  cursor: pointer !important;
+  transition: all 0.25s var(--mc-ease-out, cubic-bezier(0.16, 1, 0.3, 1)) !important;
 }
 
 .lumos-action-btn:hover {
-  background-color: #ff4d29;
-  border-color: #ff4d29;
-  color: #ffffff;
-  transform: translateY(-2px);
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.35) 0%, rgba(16, 185, 129, 0.35) 100%) !important;
+  border-color: #38bdf8 !important;
+  box-shadow: 0 12px 32px rgba(56, 189, 248, 0.4), 0 0 20px rgba(56, 189, 248, 0.3) !important;
+  transform: translateY(-2px) !important;
 }
 
 .lumos-btn-arrow {
-  display: inline-block;
-  font-size: 16px;
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: transform;
+  transition: transform 0.25s ease;
 }
 
 .lumos-action-btn:hover .lumos-btn-arrow {
-  transform: translateX(6px);
+  transform: translateX(4px);
 }
 
 .lumos-action-guarantee {
+  color: #64748b;
+  font-family: var(--mc-font-mono, monospace);
+  font-size: 11px;
+  letter-spacing: 0.08em;
   display: flex;
-  align-items: center;
   gap: 8px;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  color: #777777;
-  text-transform: uppercase;
 }
 
+/* Section Bottom Statement */
 .lumos-section-bottom {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-top: 60px;
-  margin-top: 30px;
-  border-top: 1px solid rgba(17, 17, 17, 0.12);
-  flex-wrap: wrap;
-  gap: 20px;
+  padding-top: 36px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.lumos-bottom-left {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
 .lumos-bottom-mark {
-  font-size: 11px;
+  color: #ffffff;
+  font-family: var(--mc-font-heading, 'Outfit', sans-serif);
   font-weight: 800;
-  letter-spacing: 0.16em;
-  color: #111111;
-  text-transform: uppercase;
-  display: block;
+  font-size: 14px;
+  letter-spacing: 0.08em;
 }
 
 .lumos-bottom-meta {
-  font-size: 12px;
-  color: #777777;
-  letter-spacing: 0.05em;
-  margin-top: 4px;
-  display: block;
+  color: #64748b;
+  font-family: var(--mc-font-mono, monospace);
+  font-size: 11px;
 }
 
 .lumos-bottom-all-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 14px 26px;
-  background-color: transparent;
-  color: #111111;
-  font-size: 12px;
-  font-weight: 800;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  border: 1px solid rgba(17, 17, 17, 0.3);
-  cursor: pointer;
-  transition: all 0.3s ease;
+  background: linear-gradient(135deg, #ff5722 0%, #f59e0b 100%) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  box-shadow: 0 8px 28px rgba(255, 87, 34, 0.45) !important;
+  font-family: var(--mc-font-heading, 'Outfit', sans-serif) !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.06em !important;
+  border-radius: 100px !important;
+  padding: 14px 28px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  cursor: pointer !important;
+  transition: all 0.25s ease !important;
 }
 
 .lumos-bottom-all-btn:hover {
-  background-color: #111111;
-  color: #ffffff;
-  border-color: #111111;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 12px 36px rgba(255, 87, 34, 0.6) !important;
 }
 
-/* ── 7. Comparison Section (Editorial Split) ── */
-.store-editorial-theme .ad-comparison-section {
-  padding: 100px 24px;
+/* ── 7. Subsequent Sections (Comparison, System, Process, Pricing, Reviews, Footer) ── */
+.store-editorial-theme .ad-comparison-section,
+.store-editorial-theme .noir-system-section,
+.store-editorial-theme .noir-process-section,
+.store-editorial-theme .noir-reviews-section {
   background: transparent !important;
-}
-
-.store-editorial-theme .ad-comparison-grid {
-  display: grid;
-  grid-template-columns: 1fr 1.15fr;
-  gap: 32px;
-  max-width: 1240px;
-  margin: 48px auto 0;
-}
-
-.store-editorial-theme .ad-comparison-card {
-  border-radius: 4px !important;
-  padding: 40px !important;
-}
-
-.store-editorial-theme .ad-comparison-card.is--bad {
-  background: #ffffff !important;
-  border: 1px solid rgba(239, 68, 68, 0.25) !important;
-  box-shadow: 0 16px 40px -16px rgba(0, 0, 0, 0.05) !important;
-}
-
-.store-editorial-theme .ad-comparison-card.is--good {
-  background: #ffffff !important;
-  border: 2px solid #10b981 !important;
-  box-shadow: 0 20px 48px -12px rgba(16, 185, 129, 0.15) !important;
-}
-
-.store-editorial-theme .ad-comparison-title {
-  color: #111111 !important;
-  font-family: 'Space Grotesk', sans-serif !important;
-  font-weight: 800 !important;
-}
-
-.store-editorial-theme .ad-comparison-item {
-  color: #444444 !important;
-}
-
-/* ── 8. Editorial Manifesto Statement ── */
-.store-editorial-theme .noir-statement-section {
-  padding: 110px 24px !important;
-  background: #111111 !important;
-  color: #ffffff !important;
-  border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
-}
-
-.store-editorial-theme .noir-statement-tab {
-  border-color: rgba(255, 255, 255, 0.2) !important;
-  color: rgba(255, 255, 255, 0.7) !important;
-}
-
-.store-editorial-theme .noir-statement-tab.active {
-  background: #ff4d29 !important;
-  border-color: #ff4d29 !important;
   color: #ffffff !important;
 }
 
-.store-editorial-theme .noir-statement-giant-heading {
-  font-family: 'Space Grotesk', -apple-system, sans-serif !important;
-  font-weight: 900 !important;
-  letter-spacing: -0.04em !important;
-  line-height: 0.95 !important;
-  color: #ffffff !important;
+.store-editorial-theme .ad-comp-column.our-way {
+  background: linear-gradient(175deg, rgba(14, 24, 46, 0.9) 0%, rgba(6, 12, 24, 0.98) 100%) !important;
+  border: 1.5px solid rgba(16, 185, 129, 0.35) !important;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.75), 0 0 25px rgba(16, 185, 129, 0.15) !important;
+  border-radius: 24px !important;
 }
 
-.store-editorial-theme .noir-statement-lead-text {
-  color: #d1d5db !important;
+.store-editorial-theme .ad-comp-column.old-way {
+  background: rgba(14, 23, 44, 0.5) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 24px !important;
 }
 
-/* ── 9. System & Process Sections ── */
-.store-editorial-theme .noir-hyperfit-section,
-.store-editorial-theme .noir-process-section {
-  padding: 100px 24px !important;
-  background: transparent !important;
+.store-editorial-theme .noir-hyperfit-step {
+  background: linear-gradient(175deg, rgba(14, 24, 46, 0.8) 0%, rgba(6, 12, 24, 0.95) 100%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 18px !important;
+  transition: all 0.3s ease !important;
 }
 
-.store-editorial-theme .noir-section-heading {
-  font-family: 'Space Grotesk', sans-serif !important;
-  font-weight: 800 !important;
-  color: #111111 !important;
-  letter-spacing: -0.03em !important;
-}
-
-.store-editorial-theme .noir-section-subtitle {
-  color: #555555 !important;
-}
-
-.store-editorial-theme .noir-hyperfit-row {
-  background: #ffffff !important;
-  border: 1px solid rgba(17, 17, 17, 0.12) !important;
-  color: #111111 !important;
-  border-radius: 4px !important;
-}
-
-.store-editorial-theme .noir-hyperfit-title {
-  color: #111111 !important;
-}
-
-.store-editorial-theme .noir-hyperfit-desc {
-  color: #555555 !important;
-}
-
-.store-editorial-theme .noir-process-card {
-  background: #ffffff !important;
-  border: 1px solid rgba(17, 17, 17, 0.12) !important;
-  border-radius: 4px !important;
-}
-
-.store-editorial-theme .noir-process-title {
-  color: #111111 !important;
-}
-
-.store-editorial-theme .noir-process-desc {
-  color: #555555 !important;
-}
-
-/* ── 10. Climax Pricing Section ── */
-.store-editorial-theme .noir-pricing-section {
-  padding: 120px 24px !important;
-  background: transparent !important;
-}
-
-.store-editorial-theme .noir-pricing-card {
-  background: #ffffff !important;
-  border: 1px solid rgba(17, 17, 17, 0.16) !important;
-  box-shadow: 0 32px 80px -20px rgba(0, 0, 0, 0.12) !important;
-  border-radius: 6px !important;
-}
-
-.store-editorial-theme .noir-pricing-title {
-  color: #111111 !important;
-  font-family: 'Space Grotesk', sans-serif !important;
-  font-weight: 800 !important;
-}
-
-.store-editorial-theme .noir-pricing-tagline {
-  color: #ff4d29 !important;
-}
-
-.store-editorial-theme .noir-feature-item {
-  color: #333333 !important;
-}
-
-.store-editorial-theme .noir-pricing-box {
-  background: #111111 !important;
-  color: #ffffff !important;
-  border-radius: 4px !important;
-}
-
-.store-editorial-theme .noir-price-val {
-  color: #ffffff !important;
-}
-
-.store-editorial-theme .noir-price-original {
-  color: #9ca3af !important;
-}
-
-.store-editorial-theme .noir-checkout-cta {
-  background: #ff4d29 !important;
-  color: #ffffff !important;
-  border: 1px solid #ff4d29 !important;
-  font-weight: 800 !important;
-  letter-spacing: 0.08em !important;
-  text-transform: uppercase !important;
-}
-
-.store-editorial-theme .noir-checkout-cta:hover {
-  background: #ff5722 !important;
+.store-editorial-theme .noir-hyperfit-step:hover {
+  border-color: rgba(56, 189, 248, 0.45) !important;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.65), 0 0 25px rgba(56, 189, 248, 0.2) !important;
   transform: translateY(-2px) !important;
 }
 
-/* ── 11. Customer Reviews ── */
-.store-editorial-theme .noir-reviews-section {
-  padding: 90px 24px !important;
-  background: rgba(255, 255, 255, 0.6) !important;
-  border-top: 1px solid rgba(17, 17, 17, 0.08) !important;
+.store-editorial-theme .noir-hyperfit-title {
+  color: #ffffff !important;
+  font-family: var(--mc-font-heading, 'Outfit', sans-serif) !important;
+}
+
+.store-editorial-theme .noir-hyperfit-desc {
+  color: #94a3b8 !important;
+}
+
+.store-editorial-theme .noir-process-card {
+  background: linear-gradient(175deg, rgba(14, 24, 46, 0.85) 0%, rgba(6, 12, 24, 0.98) 100%) !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.09) !important;
+  border-radius: 20px !important;
+  transition: all 0.3s ease !important;
+}
+
+.store-editorial-theme .noir-process-card:hover {
+  border-color: rgba(56, 189, 248, 0.4) !important;
+  transform: translateY(-3px) !important;
+}
+
+.store-editorial-theme .noir-process-title {
+  color: #ffffff !important;
+  font-family: var(--mc-font-heading, 'Outfit', sans-serif) !important;
+}
+
+.store-editorial-theme .noir-process-desc {
+  color: #94a3b8 !important;
+}
+
+.store-editorial-theme .noir-pricing-card {
+  background: linear-gradient(175deg, rgba(14, 24, 46, 0.95) 0%, rgba(6, 12, 24, 0.98) 100%) !important;
+  border: 1.5px solid rgba(245, 158, 11, 0.35) !important;
+  box-shadow: 0 32px 85px rgba(0, 0, 0, 0.9), 0 0 35px rgba(245, 158, 11, 0.15) !important;
+  border-radius: 24px !important;
+}
+
+.store-editorial-theme .noir-pricing-title {
+  color: #ffffff !important;
+  font-family: var(--mc-font-display, 'Syne', sans-serif) !important;
+}
+
+.store-editorial-theme .noir-feature-item {
+  color: #cbd5e1 !important;
 }
 
 .store-editorial-theme .noir-review-card {
-  background: #ffffff !important;
-  border: 1px solid rgba(17, 17, 17, 0.12) !important;
-  border-radius: 4px !important;
-  box-shadow: 0 8px 24px -6px rgba(0, 0, 0, 0.04) !important;
+  background: linear-gradient(175deg, rgba(14, 24, 46, 0.85) 0%, rgba(6, 12, 24, 0.98) 100%) !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.09) !important;
+  border-radius: 20px !important;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6) !important;
 }
 
 .store-editorial-theme .noir-review-quote {
-  color: #333333 !important;
+  color: #cbd5e1 !important;
 }
 
 .store-editorial-theme .noir-review-author {
-  color: #111111 !important;
-  font-weight: 800 !important;
+  color: #ffffff !important;
+  font-family: var(--mc-font-heading, 'Outfit', sans-serif) !important;
 }
 
 .store-editorial-theme .noir-review-company {
-  color: #666666 !important;
+  color: #94a3b8 !important;
 }
 
-.store-editorial-theme .noir-review-tag {
-  color: #ff4d29 !important;
-}
-
-/* ── 12. Minimalist Editorial Footer ── */
 .store-editorial-theme .noir-footer {
-  background: #111111 !important;
-  color: #ffffff !important;
-  border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
-  padding: 40px 24px !important;
+  background: #020610 !important;
+  color: #94a3b8 !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
 }
 
 .store-editorial-theme .noir-footer-brand {
   color: #ffffff !important;
-  font-family: 'Space Grotesk', sans-serif !important;
-  font-weight: 800 !important;
-  letter-spacing: 0.08em !important;
-}
-
-.store-editorial-theme .noir-footer-btn-top {
-  background: rgba(255, 255, 255, 0.1) !important;
-  color: #ffffff !important;
-  border: 1px solid rgba(255, 255, 255, 0.2) !important;
-  border-radius: 2px !important;
-}
-
-.store-editorial-theme .noir-footer-btn-top:hover {
-  background: #ff4d29 !important;
-  border-color: #ff4d29 !important;
+  font-family: var(--mc-font-heading, 'Outfit', sans-serif) !important;
 }
 
 /* ── Responsive Adaptations ── */
@@ -6344,7 +6319,7 @@
   .lumos-item-body,
   .lumos-product-item.is--inverted .lumos-item-body {
     grid-template-columns: 1fr;
-    gap: 40px;
+    gap: 36px;
   }
 
   .lumos-product-item.is--inverted .lumos-item-visual-wrap {
@@ -6386,11 +6361,19 @@
   }
 
   .lumos-product-item {
-    padding: 60px 0 20px;
+    padding: 24px;
+    border-radius: 20px;
+    margin-bottom: 32px;
+  }
+
+  .lumos-item-topbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
   }
 
   .lumos-item-body {
-    gap: 28px;
+    gap: 24px;
   }
 
   .lumos-visual-frame {
@@ -6416,6 +6399,12 @@
   .lumos-bottom-all-btn {
     width: 100%;
     justify-content: center;
+  }
+
+  .lumos-section-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
   }
 }
 

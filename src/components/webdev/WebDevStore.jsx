@@ -670,7 +670,7 @@ export default function WebDevStore() {
           }
         }
 
-        ctx.fillStyle = `rgba(52, 211, 153, ${p.alpha})`
+        ctx.fillStyle = `rgba(56, 189, 248, ${p.alpha})`
         ctx.beginPath()
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2)
         ctx.fill()
@@ -683,7 +683,7 @@ export default function WebDevStore() {
           const distSq = dx * dx + dy * dy
           if (distSq < 8100) {
             const dist = Math.sqrt(distSq)
-            ctx.strokeStyle = `rgba(16, 185, 129, ${(1 - dist / 90) * 0.08})`
+            ctx.strokeStyle = `rgba(56, 189, 248, ${(1 - dist / 90) * 0.12})`
             ctx.lineWidth = 0.5
             ctx.beginPath()
             ctx.moveTo(p.x, p.y)
@@ -828,8 +828,15 @@ export default function WebDevStore() {
       {/* Dark holographic background grids */}
       <div className="webdev-store-bg" />
 
+      {/* Mission Control Ambient Auroras & Lighting */}
+      <div className="mc-bg-grid" style={{ position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 0 }} />
+      <div className="mc-ambient-radial" style={{ position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 0 }} />
+      <div className="mc-ambient-spotlight" style={{ position: 'fixed', pointerEvents: 'none', zIndex: 0 }} />
+      <div className="mc-ambient-aurora mc-aurora-1" style={{ position: 'fixed', pointerEvents: 'none', zIndex: 0 }} />
+      <div className="mc-ambient-aurora mc-aurora-2" style={{ position: 'fixed', pointerEvents: 'none', zIndex: 0 }} />
+
       {/* 10/10 Interactive Particle Field */}
-      <canvas id="store-particle-canvas" style={{ position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 0 }} />
+      <canvas id="store-particle-canvas" style={{ position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 1 }} />
 
       {/* ── TOP CAPSULE FLOATING NAVIGATION (NOIR BRUTALIST HYBRID) ── */}
       <header className="habito-navbar store-capsule-navbar">
