@@ -12,6 +12,7 @@ const crypto = require('crypto')
 const { Cashfree } = require('cashfree-pg')
 const db = require('./db')
 const { setupGeminiLiveGateway } = require('./geminiLiveGateway')
+const certificateRoutes = require('./certificateRoutes')
 
 db.initDb()
 
@@ -87,6 +88,9 @@ app.use(express.json({
     req.rawBody = buf.toString() // Store raw body for webhook verification
   }
 }))
+
+/* ── Certificate & Admin Routes ── */
+app.use('/api', certificateRoutes)
 
 /* ── Cashfree Instance ── */
 Cashfree.XClientId = process.env.CASHFREE_APP_ID || 'TEST_APP_ID'

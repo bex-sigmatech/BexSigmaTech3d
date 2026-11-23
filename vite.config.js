@@ -8,6 +8,16 @@ export default defineConfig({
     port: 5174,
     strictPort: false,
     allowedHosts: true,
+    proxy: {
+      '/api': {
+        target: 'http://localhost:5001',
+        changeOrigin: true,
+      },
+      '/ws': {
+        target: 'ws://localhost:5001',
+        ws: true,
+      },
+    },
   },
   build: {
     chunkSizeWarningLimit: 1200,

@@ -2,94 +2,90 @@ import React, { useEffect, useState, useRef } from 'react'
 import { useStore } from '../../store/useStore'
 import { cinemaAudio } from '../../audio/CinematicAudioEngine'
 import { voiceEmitter } from '../../audio/AIVoiceEngine'
+import ScheduleDemoModal from './ScheduleDemoModal'
 import '../../styles/missionControl.css'
 
 /* ==========================================================================
-   BEX SIGMA TECH — STRATEGIC MISSION CONTROL & CORPORATE PROFILE
-   "Who We Are · What Services We Do · Why Choose Us · About Us Fully"
+   BEX SIGMA TECH — STRATEGIC MISSION CONTROL
+   High-End Editorial Dark Aesthetic (Inspired by Hyperfit, Bold Typography & CourseKit):
+   - Pure obsidian background (#060709) with warm amber & emerald ambient glow
+   - Floating glass capsule navbar with 'BOOK A CALL' action
+   - Massive condensed editorial headline: "BUILD PRODUCTION SYSTEMS. CHANGE YOUR BUSINESS TODAY."
+   - Executive Centerpiece: Studio portrait card of Manager / Architect Hariharan.D
+   - Big bold manifesto statement block
+   - Stacked numbered services showcase (01 to 06) with interactive expansions
+   - 4 Live telemetry metrics + Why Choose Us comparative matrix
    ========================================================================== */
 
-const SERVICES_CATALOG = [
+const SERVICES = [
   {
-    id: 'excel_bi',
+    num: '01',
     code: 'SRV-01',
     title: 'Enterprise BI & Spreadsheet Master Suites',
-    badge: 'FLAGSHIP DIVISION · ₹199',
     tagline: '1,000+ Business Templates (.xlsx) + Weekend Live Masterclasses',
+    badge: 'FLAGSHIP DIVISION · ₹199',
+    accent: '#f59e0b',
     desc: 'Automated executive spreadsheet architecture built for corporate decision-makers. Includes 10 plug-and-play executive BI dashboards, Power Query 1-Click ETL automation, financial models, and direct weekend cohort training with Microsoft Verified Architect Hariharan.D.',
-    image: '/ain_excel_pack.jpg',
-    accent: '#10b981',
-    glow: 'rgba(16, 185, 129, 0.45)',
     specs: ['1,000+ Production Templates', '10 Executive BI Dashboards', 'Power Query 1-Click ETL', 'Weekend Live Masterclasses'],
     actionLabel: '🛒 Launch Product Store (₹199)',
     actionRoute: 'web_dev',
   },
   {
-    id: 'spatial_3d',
+    num: '02',
     code: 'SRV-02',
-    title: '3D Spatial Web & WebGL Interactive Sites',
-    badge: '3D SPATIAL WEB · 60 FPS',
+    title: '3D Spatial Web & 60 FPS WebGL Interactive Sites',
     tagline: 'Hardware-Accelerated WebGL, Three.js & Immersive Storytelling',
-    desc: 'High-performance 3D digital experiences that run smoothly at 60 FPS on any modern browser. From interactive 3D product visualizers to cinematic spatial landing pages that captivate enterprise customers and elevate brand authority.',
-    image: '/sector_3d_website.jpg',
+    badge: '3D SPATIAL WEB · 60 FPS',
     accent: '#38bdf8',
-    glow: 'rgba(56, 189, 248, 0.45)',
+    desc: 'High-performance 3D digital experiences that run smoothly at 60 FPS on any modern browser. From interactive 3D product visualizers to cinematic spatial landing pages that captivate enterprise customers and elevate brand authority.',
     specs: ['Three.js & WebGL 60 FPS', 'Draco Mesh Compression', 'Interactive Camera Rigs', 'Silk Shader Dynamics'],
     actionLabel: '🌐 Inspect 3D Architecture',
     actionRoute: 'web_dev',
   },
   {
-    id: 'cloud_saas',
+    num: '03',
     code: 'SRV-03',
     title: 'Custom Enterprise Software & Cloud SaaS',
-    badge: 'FULL STACK SAAS · APIS',
     tagline: 'Scalable Administrative Portals, Cloud Backends & APIs',
-    desc: 'End-to-end custom business software engineered to match your operational workflow. We build multi-tenant SaaS platforms, administrative command dashboards, secure REST & GraphQL microservices, and automated CI/CD cloud pipelines.',
-    image: '/sector_software.jpg',
+    badge: 'FULL STACK SAAS · APIS',
     accent: '#a78bfa',
-    glow: 'rgba(167, 139, 250, 0.45)',
+    desc: 'End-to-end custom business software engineered to match your operational workflow. We build multi-tenant SaaS platforms, administrative command dashboards, secure REST & GraphQL microservices, and automated CI/CD cloud pipelines.',
     specs: ['Bespoke Cloud Portals', 'Automated CI/CD Pipelines', 'PostgreSQL / MongoDB Microservices', 'Enterprise RBAC Security'],
     actionLabel: '💻 View Software Scope',
     actionRoute: 'apps',
   },
   {
-    id: 'mobile_apps',
+    num: '04',
     code: 'SRV-04',
     title: 'Mobile Application Engineering (iOS & Android)',
-    badge: 'CROSS-PLATFORM · NATIVE',
     tagline: 'High-Performance React Native & Flutter Mobile Apps',
+    badge: 'CROSS-PLATFORM · NATIVE',
+    accent: '#10b981',
     desc: 'Fluid, responsive mobile applications for iOS and Android. Built with offline-first synchronization, real-time push notifications, payment gateway integrations, and published directly to the Apple App Store and Google Play Store.',
-    image: '/sector_application.jpg',
-    accent: '#f59e0b',
-    glow: 'rgba(245, 158, 11, 0.45)',
     specs: ['React Native & Flutter', 'Offline-First Local DB', 'Real-Time WebSockets', 'App Store & Play Store Setup'],
     actionLabel: '📱 Request Mobile Build',
     actionRoute: 'apps',
   },
   {
-    id: 'ai_pipelines',
+    num: '05',
     code: 'SRV-05',
     title: 'Autonomous AI Pipelines & Workflow Automation',
-    badge: 'AI AUTOMATION · LLMS',
     tagline: 'Intelligent Agent Swarms, Document Processing & ETL',
-    desc: 'Eliminate repetitive manual operations. We design and integrate custom AI agent workflows, automated document data extractors, intelligent customer service bots, and automated ETL pipelines powered by Gemini and Claude.',
-    image: '/sector_ai_automation.jpg',
+    badge: 'AI AUTOMATION · LLMS',
     accent: '#ec4899',
-    glow: 'rgba(236, 72, 153, 0.45)',
+    desc: 'Eliminate repetitive manual operations. We design and integrate custom AI agent workflows, automated document data extractors, intelligent customer service bots, and automated ETL pipelines powered by Gemini and Claude.',
     specs: ['LLM Agent Workflows', 'Automated Document OCR & ETL', 'Gemini & Claude Integrations', 'Real-Time Alert Webhooks'],
     actionLabel: '🤖 Explore AI Pipelines',
     actionMailto: true,
   },
   {
-    id: 'bespoke_rd',
+    num: '06',
     code: 'SRV-06',
     title: 'Bespoke R&D Pod & Rapid Startup Prototyping',
-    badge: 'BESPOKE INNOVATION · 100% IP',
     tagline: 'Turn Your Breakthrough Concept Into a Working MVP in < 48 Hours',
-    desc: 'Have an ambitious idea or uncharted digital vision? Our elite engineering pod builds and deploys custom interactive prototypes and production-ready MVPs with weekly milestone demos and 100% intellectual property ownership transfer.',
-    image: '/pathway_bespoke_idea.jpg',
+    badge: 'BESPOKE INNOVATION · 100% IP',
     accent: '#06b6d4',
-    glow: 'rgba(6, 182, 212, 0.45)',
+    desc: 'Have an ambitious idea or uncharted digital vision? Our elite engineering pod builds and deploys custom interactive prototypes and production-ready MVPs with weekly milestone demos and 100% intellectual property ownership transfer.',
     specs: ['Dedicated Engineering Pod', 'Weekly Milestone Demos', '< 48h Rapid MVP Sprint', '100% Full IP Transfer'],
     actionLabel: '✦ Initiate Bespoke Project',
     actionMailto: true,
@@ -102,42 +98,42 @@ const WHY_CHOOSE_US = [
     title: '100% Microsoft Verified Standards',
     badge: 'VERIFIED INTEGRITY',
     icon: '🛡️',
-    desc: 'Unlike self-taught hobbyists or generic template aggregators, all our systems, spreadsheet architectures, and software data models are verified against Microsoft enterprise standards for absolute formula accuracy and zero spreadsheet crashes.',
+    desc: 'All our systems, spreadsheet architectures, and software data models are verified against Microsoft enterprise standards for absolute formula accuracy and zero crashes.',
   },
   {
     number: '02',
     title: '< 48-Hour Rapid Sprint Delivery',
     badge: 'EXTREME AGILITY',
     icon: '⚡',
-    desc: 'We operate with agile, elite engineering pods. While traditional corporate agencies take months and endless meetings just to scope a project, we build and deliver functioning interactive prototypes in less than 48 hours.',
+    desc: 'While traditional corporate agencies take months just to scope a project, we build and deliver functioning interactive prototypes in less than 48 hours.',
   },
   {
     number: '03',
     title: 'Executive Presentation-Ready UI/UX',
     badge: 'CINEMATIC CRAFT',
     icon: '🎨',
-    desc: 'We reject ugly, boring corporate tools. Every dashboard, 3D WebGL experience, and software interface is built with luxury dark aesthetics, crisp typography, and silky 60 FPS fluidity that will impress boards, investors, and clients.',
+    desc: 'Every dashboard, 3D WebGL experience, and software interface is built with luxury dark aesthetics, crisp typography, and silky 60 FPS fluidity.',
   },
   {
     number: '04',
     title: '100% Source Code & IP Ownership',
     badge: 'ZERO LOCK-IN',
     icon: '🔑',
-    desc: 'When we build custom software, web platforms, or bespoke spreadsheet models for you, you own 100% of the intellectual property, design assets, and source code upon completion. No hidden royalties, no forced dependencies.',
+    desc: 'You own 100% of the intellectual property, design assets, and source code upon completion. No hidden royalties, no forced dependencies.',
   },
   {
     number: '05',
     title: 'Direct Line with Lead Architect',
     badge: 'ZERO MIDDLEMEN',
     icon: '👤',
-    desc: 'You work directly with Founder & Chief Architect Hariharan.D and senior engineers — not junior account managers or offshore support tickets. Clear technical communication, rapid decisions, and flawless execution.',
+    desc: 'You work directly with Founder & Chief Architect Hariharan.D — not junior account managers or offshore support tickets. Clear technical execution.',
   },
   {
     number: '06',
     title: 'Unmatched Value & Accessible Pricing',
     badge: 'MAXIMUM ROI',
     icon: '💎',
-    desc: 'We democratize elite technology. Our flagship aIn Excel Master Suite provides 1,000+ enterprise templates and live training for just ₹199, and our custom software builds deliver agency-grade quality at accessible startup rates.',
+    desc: 'Our flagship aIn Excel Master Suite provides 1,000+ enterprise templates and live training for just ₹199, and our custom software builds deliver agency-grade quality at accessible startup rates.',
   },
 ]
 
@@ -149,10 +145,11 @@ const GLOBAL_NODES = [
 ]
 
 export default function MissionControl() {
-  const { closeMissionBriefing, userName, navigateToSector } = useStore()
+  const { closeMissionBriefing, navigateToSector } = useStore()
   const [mounted, setMounted] = useState(false)
-  const [currentTime, setCurrentTime] = useState('')
-  const [activeTab, setActiveTab] = useState('who_are_we')
+  const [activeTab, setActiveTab] = useState('divisions')
+  const [demoModalOpen, setDemoModalOpen] = useState(false)
+  const [expandedService, setExpandedService] = useState('01')
   const scrollContainerRef = useRef(null)
 
   useEffect(() => {
@@ -161,45 +158,13 @@ export default function MissionControl() {
     return () => clearTimeout(t)
   }, [])
 
-  // Live UTC Clock
-  useEffect(() => {
-    const updateTime = () => {
-      const now = new Date()
-      setCurrentTime(now.toUTCString().slice(17, 25) + ' UTC')
-    }
-    updateTime()
-    const timer = setInterval(updateTime, 1000)
-    return () => clearInterval(timer)
-  }, [])
-
-  // Smooth Scrollspy: updates active tab as user scrolls
-  useEffect(() => {
-    const container = scrollContainerRef.current
-    if (!container) return
-
-    const sectionIds = ['who_are_we', 'services', 'why_choose_us', 'leadership', 'dispatch']
-    const handleScroll = () => {
-      const scrollPos = container.scrollTop + 220
-      for (let i = sectionIds.length - 1; i >= 0; i--) {
-        const el = document.getElementById(sectionIds[i])
-        if (el && el.offsetTop <= scrollPos) {
-          setActiveTab(sectionIds[i])
-          break
-        }
-      }
-    }
-
-    container.addEventListener('scroll', handleScroll, { passive: true })
-    return () => container.removeEventListener('scroll', handleScroll)
-  }, [])
-
   const handleNavigate = (sectorId) => {
-    cinemaAudio.playSectorTransition()
+    cinemaAudio.playSectorTransition?.()
     navigateToSector(sectorId)
   }
 
   const handleClose = () => {
-    cinemaAudio.playSectorTransition()
+    cinemaAudio.playSectorTransition?.()
     closeMissionBriefing()
   }
 
@@ -213,494 +178,418 @@ export default function MissionControl() {
   }
 
   return (
-    <div className={`mc-command-overlay ${mounted ? 'mc-mounted' : ''}`}>
-      <div className="mc-bg-grid" />
-      <div className="mc-ambient-radial" />
-      <div className="mc-ambient-spotlight" />
-      
-      {/* Dynamic Animated Aurora Glows */}
-      <div className="mc-ambient-aurora mc-aurora-1" />
-      <div className="mc-ambient-aurora mc-aurora-2" />
-      <div className="mc-ambient-aurora mc-aurora-3" />
+    <div className={`mc-editorial-overlay ${mounted ? 'mc-mounted' : ''}`}>
+      {/* Background Ambience */}
+      <div className="mc-editorial-ambient-glow" />
+      <div className="mc-editorial-grid-lines" />
 
-      <div className="mc-scroll-container" ref={scrollContainerRef}>
-        {/* ── TOP HUD COMMAND DECK ── */}
-        <header className="mc-top-deck">
-          <div className="mc-deck-left">
-            <button className="mc-deck-back-btn interactive" onClick={handleClose} title="Return to HQ Observatory">
-              <span className="mc-back-arrow">‹</span>
-              <span>HQ STATION</span>
-            </button>
-            <div className="mc-deck-title-group">
-              <span className="mc-deck-brand">BEX SIGMA TECH · COMMAND HQ</span>
-              <span className="mc-deck-op">OPERATOR: {userName || 'GUEST COMMANDER'}</span>
-            </div>
+      {/* ── TOP CAPSULE FLOATING NAVIGATION (Hyperfit / CourseKit Style) ── */}
+      <header className="mc-capsule-navbar">
+        <div className="mc-capsule-brand" onClick={() => scrollToSection('top')}>
+          <span className="mc-brand-sigma">σ</span>
+          <span className="mc-brand-name">BEx SIGMA TECH</span>
+          <span className="mc-brand-dot" />
+        </div>
+
+        <nav className="mc-capsule-links">
+          <button
+            className={`mc-capsule-link ${activeTab === 'divisions' ? 'active' : ''}`}
+            onClick={() => scrollToSection('divisions')}
+          >
+            DIVISIONS
+          </button>
+          <button
+            className={`mc-capsule-link ${activeTab === 'manifesto' ? 'active' : ''}`}
+            onClick={() => scrollToSection('manifesto')}
+          >
+            METHODOLOGY
+          </button>
+          <button
+            className={`mc-capsule-link ${activeTab === 'why' ? 'active' : ''}`}
+            onClick={() => scrollToSection('why')}
+          >
+            WHY BEX
+          </button>
+          <button
+            className={`mc-capsule-link ${activeTab === 'manager' ? 'active' : ''}`}
+            onClick={() => scrollToSection('manager')}
+          >
+            LEADERSHIP
+          </button>
+          <button
+            className="mc-capsule-link"
+            onClick={() => handleNavigate('web_dev')}
+          >
+            PRICING (₹199)
+          </button>
+        </nav>
+
+        <div className="mc-capsule-actions">
+          <button
+            className="mc-capsule-btn-primary interactive"
+            onClick={() => setDemoModalOpen(true)}
+          >
+            <span>BOOK A CALL</span>
+            <span className="mc-btn-arrow">→</span>
+          </button>
+          <button
+            className="mc-capsule-btn-close interactive"
+            onClick={handleClose}
+            title="Return to Headquarters"
+          >
+            ✕
+          </button>
+        </div>
+      </header>
+
+      {/* ── SCROLLABLE EDITORIAL BODY ── */}
+      <div className="mc-editorial-scroll" ref={scrollContainerRef}>
+        <div id="top" />
+
+        {/* ── SECTION 1: MASSIVE EDITORIAL HERO (Template 2 Bold Style) ── */}
+        <section className="mc-editorial-hero">
+          <div className="mc-hero-eyebrow">
+            <span className="mc-eyebrow-badge">● MICROSOFT VERIFIED ARCHITECTURE STUDIO</span>
+            <span className="mc-eyebrow-sep">/</span>
+            <span className="mc-eyebrow-sub">ENTERPRISE BI · 3D SPATIAL WEB · CLOUD SAAS</span>
           </div>
 
-          <div className="mc-deck-center">
-            <div className="mc-status-pill">
-              <span className="mc-pulse-dot" />
-              <span className="mc-pulse-ring" />
-              <span>GRID STATUS: ALL SYSTEMS OPTIMAL</span>
-            </div>
-            <span className="mc-clock-text">{currentTime || '12:00:00 UTC'}</span>
-          </div>
-
-          <div className="mc-deck-right">
-            <button className="mc-quick-nav-btn interactive" onClick={() => handleNavigate('web_dev')}>
-              🛒 Products
-            </button>
-            <button className="mc-quick-nav-btn interactive" onClick={() => handleNavigate('apps')}>
-              📱 Apps
-            </button>
-            <button className="mc-quick-nav-btn interactive" onClick={() => handleNavigate('client_projects')}>
-              🚀 Projects
-            </button>
-            <button className="mc-close-cross interactive" onClick={handleClose} title="Exit Mission Control">
-              ✕
-            </button>
-          </div>
-        </header>
-
-        {/* ── HERO COMMAND DIRECTIVE ── */}
-        <section className="mc-directive-hero">
-          <div className="mc-directive-eyebrow">
-            <span className="mc-directive-star">★</span>
-            <span>STRATEGIC EXECUTIVE DIRECTIVE & CORPORATE DOSSIER</span>
-            <span className="mc-directive-star">★</span>
-          </div>
-          <h1 className="mc-directive-title">
-            Who We Are · <span className="mc-title-gradient">What We Do</span> · Why Choose Us
+          <h1 className="mc-hero-giant-title">
+            BUILD PRODUCTION SYSTEMS.<br />
+            CHANGE YOUR BUSINESS.<br />
+            <span className="mc-title-highlight">TODAY.</span>
           </h1>
-          <p className="mc-directive-sub">
-            The definitive blueprint of BEx Sigma Tech. An elite engineering laboratory and technology studio dedicated to enterprise business intelligence, 3D WebGL spatial web, and custom cloud software.
+
+          <p className="mc-hero-manifesto-sub">
+            Eliminating theory fluff. BEx Sigma Tech architects automated enterprise spreadsheets, 60 FPS 3D spatial web applications, and custom cloud SaaS platforms with 100% intellectual property ownership.
           </p>
 
-          {/* Quick-Jump Section Floating Pill Dock */}
-          <nav className="mc-jump-dock" aria-label="Section navigation">
+          <div className="mc-hero-actions-row">
             <button
-              className={`mc-dock-item ${activeTab === 'who_are_we' ? 'mc-dock-active' : ''}`}
-              onClick={() => scrollToSection('who_are_we')}
-            >
-              <span className="mc-dock-icon">🏢</span>
-              <span>Who We Are</span>
-            </button>
-            <button
-              className={`mc-dock-item ${activeTab === 'services' ? 'mc-dock-active' : ''}`}
-              onClick={() => scrollToSection('services')}
-            >
-              <span className="mc-dock-icon">⚡</span>
-              <span>What We Do</span>
-            </button>
-            <button
-              className={`mc-dock-item ${activeTab === 'why_choose_us' ? 'mc-dock-active' : ''}`}
-              onClick={() => scrollToSection('why_choose_us')}
-            >
-              <span className="mc-dock-icon">🛡️</span>
-              <span>Why Choose Us</span>
-            </button>
-            <button
-              className={`mc-dock-item ${activeTab === 'leadership' ? 'mc-dock-active' : ''}`}
-              onClick={() => scrollToSection('leadership')}
-            >
-              <span className="mc-dock-icon">👤</span>
-              <span>About Leadership</span>
-            </button>
-            <button
-              className={`mc-dock-item ${activeTab === 'dispatch' ? 'mc-dock-active' : ''}`}
-              onClick={() => scrollToSection('dispatch')}
-            >
-              <span className="mc-dock-icon">🚀</span>
-              <span>Work With Us</span>
-            </button>
-          </nav>
-        </section>
-
-        {/* ── SECTION 1: WHO ARE WE? ── */}
-        <section id="who_are_we" className="mc-section-block">
-          <div className="mc-section-header">
-            <div className="mc-section-eyebrow">
-              <span className="mc-section-dot" />
-              <span>SECTION 01 · CORPORATE IDENTITY</span>
-            </div>
-            <h2 className="mc-section-title">Who Are We?</h2>
-            <p className="mc-section-sub">
-              A specialized technology studio bridging enterprise data architectures, 3D spatial web design, and bespoke software engineering.
-            </p>
-          </div>
-
-          <div className="mc-who-grid">
-            {/* Left Story Column */}
-            <div className="mc-who-story-card">
-              <div className="mc-card-shine" />
-              <div className="mc-who-badge-row">
-                <span className="mc-who-badge">THE BEX SIGMA TECH ORIGIN</span>
-                <span className="mc-who-verified-badge">✓ MICROSOFT AUDITED</span>
-              </div>
-              <h3 className="mc-who-story-title">
-                Eliminating Theory Fluff. <br />
-                <span className="mc-story-accent">Architecting Production Systems.</span>
-              </h3>
-              <p className="mc-who-p">
-                BEx Sigma Tech was founded by <strong>Hariharan.D</strong>, a <strong>Microsoft Verified Professional</strong> and Enterprise Data Architect, with a single non-negotiable principle: <em>modern technology and business tools must be practical, automated, and presentation-ready from minute one.</em>
-              </p>
-              <p className="mc-who-p">
-                Too many companies are trapped between slow, overpriced consulting agencies on one side, and low-quality theoretical courses or broken spreadsheet templates on the other. BEx Sigma Tech solves this by serving as a dual-engine technology powerhouse:
-              </p>
-              
-              <div className="mc-dual-engine-box">
-                <div className="mc-engine-item">
-                  <div className="mc-engine-dot mc-dot-green" />
-                  <div className="mc-engine-text">
-                    <strong>1. Accessible Enterprise Toolkits:</strong> Turnkey, automated spreadsheet systems (like our flagship <strong>aIn All-in-One Master Suite</strong>) priced accessibly at <strong>₹199</strong> so professionals and businesses can automate their workflows without corporate budgets.
-                  </div>
-                </div>
-                <div className="mc-engine-item">
-                  <div className="mc-engine-dot mc-dot-blue" />
-                  <div className="mc-engine-text">
-                    <strong>2. High-End Custom Engineering:</strong> Partnering with ambitious startups and enterprises to architect <strong>60 FPS 3D spatial web experiences</strong>, scalable cloud SaaS portals, native mobile apps, and autonomous AI pipelines in rapid sprint cycles (&lt; 48 hours).
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Right 4 Core DNA Pillars */}
-            <div className="mc-who-pillars-wrap">
-              <div className="mc-pillar-card">
-                <div className="mc-pillar-icon-box">⚡</div>
-                <div className="mc-pillar-content">
-                  <h4 className="mc-pillar-title">Zero Theory Fluff</h4>
-                  <p className="mc-pillar-desc">
-                    Every spreadsheet template, formula pipeline, and software architecture is tested in real production environments before release.
-                  </p>
-                </div>
-              </div>
-
-              <div className="mc-pillar-card">
-                <div className="mc-pillar-icon-box">🎨</div>
-                <div className="mc-pillar-content">
-                  <h4 className="mc-pillar-title">Cinematic UI & Spatial Web</h4>
-                  <p className="mc-pillar-desc">
-                    We believe business tools should be visually stunning. We build with hardware-accelerated WebGL, dark glass aesthetics, and 60 FPS fluidity.
-                  </p>
-                </div>
-              </div>
-
-              <div className="mc-pillar-card">
-                <div className="mc-pillar-icon-box">🛡️</div>
-                <div className="mc-pillar-content">
-                  <h4 className="mc-pillar-title">Microsoft Verified Integrity</h4>
-                  <p className="mc-pillar-desc">
-                    Our data architectures adhere strictly to Microsoft enterprise validation standards, ensuring formula accuracy and zero spreadsheet corruption.
-                  </p>
-                </div>
-              </div>
-
-              <div className="mc-pillar-card">
-                <div className="mc-pillar-icon-box">🤝</div>
-                <div className="mc-pillar-content">
-                  <h4 className="mc-pillar-title">Direct Pod Collaboration</h4>
-                  <p className="mc-pillar-desc">
-                    No layered account managers. You collaborate directly with Lead Architect Hariharan.D and core developers for rapid execution.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* 4 Telemetry Metrics Bar */}
-          <div className="mc-telemetry-ribbon">
-            <div className="mc-telemetry-card">
-              <div className="mc-telemetry-top">
-                <span className="mc-telemetry-icon">📊</span>
-                <span className="mc-telemetry-tag">ACTIVE SECTORS</span>
-              </div>
-              <div className="mc-telemetry-num">1,000+</div>
-              <div className="mc-telemetry-label">Production Templates</div>
-              <div className="mc-telemetry-desc">Excel & BI suites active across 100+ industries</div>
-            </div>
-
-            <div className="mc-telemetry-card">
-              <div className="mc-telemetry-top">
-                <span className="mc-telemetry-icon">⚡</span>
-                <span className="mc-telemetry-tag">TURNAROUND</span>
-              </div>
-              <div className="mc-telemetry-num">&lt; 48h</div>
-              <div className="mc-telemetry-label">Rapid Sprint Cycle</div>
-              <div className="mc-telemetry-desc">Turnaround for working interactive prototypes</div>
-            </div>
-
-            <div className="mc-telemetry-card">
-              <div className="mc-telemetry-top">
-                <span className="mc-telemetry-icon">🏆</span>
-                <span className="mc-telemetry-tag">STANDARDS</span>
-              </div>
-              <div className="mc-telemetry-num">100%</div>
-              <div className="mc-telemetry-label">Microsoft Verified</div>
-              <div className="mc-telemetry-desc">Formulas and architectural standards verified</div>
-            </div>
-
-            <div className="mc-telemetry-card">
-              <div className="mc-telemetry-top">
-                <span className="mc-telemetry-icon">🌍</span>
-                <span className="mc-telemetry-tag">COMMUNITY</span>
-              </div>
-              <div className="mc-telemetry-num">500+</div>
-              <div className="mc-telemetry-label">Mentored & Trained</div>
-              <div className="mc-telemetry-desc">Students, managers & business owners empowered</div>
-            </div>
-          </div>
-        </section>
-
-        {/* ── SECTION 2: WHAT ARE ALL THE SERVICES WE DO? ── */}
-        <section id="services" className="mc-section-block">
-          <div className="mc-section-header">
-            <div className="mc-section-eyebrow">
-              <span className="mc-section-dot" />
-              <span>SECTION 02 · FULL CAPABILITIES</span>
-            </div>
-            <h2 className="mc-section-title">What Services Do We Do?</h2>
-            <p className="mc-section-sub">
-              Our 6 core engineering divisions. From turnkey spreadsheet toolkits to high-scale custom cloud software and 3D spatial web.
-            </p>
-          </div>
-
-          <div className="mc-divisions-grid">
-            {SERVICES_CATALOG.map((srv) => (
-              <div
-                key={srv.id}
-                className="mc-division-card interactive"
-                style={{
-                  '--div-accent': srv.accent,
-                  '--div-glow': srv.glow,
-                }}
-              >
-                {/* Visual Banner */}
-                <div className="mc-div-visual-wrap">
-                  <img src={srv.image} alt={srv.title} className="mc-div-visual-img" loading="lazy" />
-                  <div className="mc-div-visual-overlay" />
-                  <span className="mc-div-code">{srv.code}</span>
-                  <span className="mc-div-badge">{srv.badge}</span>
-                </div>
-
-                {/* Body Content */}
-                <div className="mc-div-body">
-                  <h3 className="mc-div-title">{srv.title}</h3>
-                  <div className="mc-div-tagline">{srv.tagline}</div>
-                  <p className="mc-div-desc">{srv.desc}</p>
-
-                  {/* 4 Specs */}
-                  <div className="mc-div-specs-grid">
-                    {srv.specs.map((spec, sIdx) => (
-                      <div key={sIdx} className="mc-div-spec-pill">
-                        <span className="mc-spec-dot" />
-                        <span>{spec}</span>
-                      </div>
-                    ))}
-                  </div>
-
-                  {/* Action Button */}
-                  <div className="mc-div-action-row">
-                    {srv.actionMailto ? (
-                      <a
-                        href={`mailto:bexsigmatech@gmail.com?subject=${encodeURIComponent(srv.title + ' - Project Inquiry')}&body=Hi%20BEx%20Sigma%20Tech%20Pod,%0A%0AI%20am%20interested%20in%20your%20services%20for%20${encodeURIComponent(srv.title)}.%20Please%20schedule%20a%20consultation.`}
-                        className="mc-div-btn interactive"
-                      >
-                        <span>{srv.actionLabel}</span>
-                        <span className="mc-btn-arrow">→</span>
-                      </a>
-                    ) : (
-                      <button
-                        className="mc-div-btn interactive"
-                        onClick={() => handleNavigate(srv.actionRoute)}
-                      >
-                        <span>{srv.actionLabel}</span>
-                        <span className="mc-btn-arrow">→</span>
-                      </button>
-                    )}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* ── SECTION 3: WHY CHOOSE US? ── */}
-        <section id="why_choose_us" className="mc-section-block">
-          <div className="mc-section-header">
-            <div className="mc-section-eyebrow">
-              <span className="mc-section-dot" />
-              <span>SECTION 03 · THE BEX ADVANTAGE</span>
-            </div>
-            <h2 className="mc-section-title">Why Choose BEx Sigma Tech?</h2>
-            <p className="mc-section-sub">
-              How we compare against slow traditional agencies and generic low-quality template sellers.
-            </p>
-          </div>
-
-          <div className="mc-why-grid">
-            {WHY_CHOOSE_US.map((item, idx) => (
-              <div key={idx} className="mc-why-card">
-                <span className="mc-why-bg-num">{item.number}</span>
-                <div className="mc-why-top">
-                  <span className="mc-why-icon">{item.icon}</span>
-                  <span className="mc-why-badge">{item.badge}</span>
-                </div>
-                <h3 className="mc-why-title">{item.title}</h3>
-                <p className="mc-why-desc">{item.desc}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* ── SECTION 4: ABOUT US FULLY & LEADERSHIP ── */}
-        <section id="leadership" className="mc-section-block">
-          <div className="mc-section-header">
-            <div className="mc-section-eyebrow">
-              <span className="mc-section-dot" />
-              <span>SECTION 04 · FOUNDER & INFRASTRUCTURE</span>
-            </div>
-            <h2 className="mc-section-title">About Us Fully & Leadership</h2>
-            <p className="mc-section-sub">
-              Engineered with pride from India, powering professionals and companies worldwide.
-            </p>
-          </div>
-
-          {/* Founder Spotlight Card */}
-          <div className="mc-leadership-card">
-            <div className="mc-leadership-left">
-              <div className="mc-leader-avatar-wrap">
-                <div className="mc-leader-ring-glow" />
-                <img
-                  src="/ceo_hariharan.jpg"
-                  alt="Hariharan.D — Founder & Lead Architect"
-                  className="mc-leader-avatar"
-                />
-                <div className="mc-leader-verified-ring" title="Microsoft Verified">✓</div>
-              </div>
-              <div className="mc-leader-meta">
-                <a
-                  href="https://www.linkedin.com/in/hariharan-d"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="mc-leader-ms-badge"
-                  title="View Microsoft Verified Profile on LinkedIn"
-                >
-                  <span className="mc-ms-check">✓</span>
-                  <span>MICROSOFT VERIFIED ARCHITECT</span>
-                  <span className="mc-ext-arrow">↗</span>
-                </a>
-                <h3 className="mc-leader-name">Hariharan.D</h3>
-                <span className="mc-leader-role">Founder & Chief Architect · BEx Sigma Tech</span>
-              </div>
-            </div>
-
-            <div className="mc-leadership-right">
-              <div className="mc-leader-quote">
-                "We don't teach or build theoretical concepts. Every spreadsheet formula, 3D WebGL camera rig, and SaaS database architecture built at BEx Sigma Tech is engineered for production accuracy, zero spreadsheet crash risk, and presentation-ready executive visual clarity."
-              </div>
-              <div className="mc-leader-stats-row">
-                <div className="mc-leader-stat">
-                  <strong>100+</strong>
-                  <span>Dashboards Built</span>
-                </div>
-                <div className="mc-leader-stat">
-                  <strong>500+</strong>
-                  <span>Students & Clients</span>
-                </div>
-                <div className="mc-leader-stat">
-                  <strong>100%</strong>
-                  <span>Verified Standards</span>
-                </div>
-                <a
-                  href="mailto:bexsigmatech@gmail.com?subject=Direct%20Inquiry%20-%20Lead%20Architect%20Hariharan.D"
-                  className="mc-leader-contact-btn interactive"
-                >
-                  <span>✉ Direct Line with Hari</span>
-                </a>
-              </div>
-            </div>
-          </div>
-
-          {/* Worldwide Operational Infrastructure Nodes */}
-          <div className="mc-nodes-section-wrap">
-            <div className="mc-nodes-header-row">
-              <h3 className="mc-nodes-title">Global Strategic Nodes</h3>
-              <span className="mc-nodes-status-badge">● 4 NODES ONLINE · 99.98% UPTIME</span>
-            </div>
-            <div className="mc-nodes-grid">
-              {GLOBAL_NODES.map((node, nIdx) => (
-                <div key={nIdx} className="mc-node-card">
-                  <div className="mc-node-top">
-                    <div className="mc-node-flag-city">
-                      <span className="mc-node-flag">{node.flag}</span>
-                      <span className="mc-node-city">{node.city}</span>
-                    </div>
-                    <div className="mc-node-ping">
-                      <div className="mc-ping-wrapper">
-                        <span className="mc-ping-radar" />
-                        <span className="mc-ping-dot" />
-                      </div>
-                      <span className="mc-ping-val">{node.latency}</span>
-                    </div>
-                  </div>
-                  <div className="mc-node-role">{node.role}</div>
-                  <div className="mc-node-status-bar">
-                    <span className="mc-status-label">GRID STATUS:</span>
-                    <span className="mc-status-active">{node.status}</span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* ── SECTION 5: WORK WITH US (DISPATCH TERMINAL) ── */}
-        <section id="dispatch" className="mc-dispatch-terminal">
-          <div className="mc-terminal-eyebrow">
-            <span>READY TO ELEVATE YOUR BUSINESS OR TECH CAPABILITIES?</span>
-          </div>
-          <h2 className="mc-terminal-title">
-            Step Into The Future with BEx Sigma Tech
-          </h2>
-          <p className="mc-terminal-sub">
-            Whether you want immediate lifetime access to the <strong>aIn Excel Master Suite (₹199)</strong>, live weekend masterclass cohorts, or a custom 3D web application built in a 48-hour sprint — our engineering pod is ready to deploy.
-          </p>
-
-          <div className="mc-terminal-actions">
-            <button
-              className="mc-terminal-btn-primary interactive"
+              className="mc-hero-btn-accent interactive"
               onClick={() => handleNavigate('web_dev')}
             >
-              <span className="mc-btn-shimmer" />
-              <span>🛒 Get Flagship Excel Suite (₹199 Only)</span>
+              <span>⚡ Explore Master Suite (₹199)</span>
               <span className="mc-btn-arrow">→</span>
             </button>
-            <a
-              href="mailto:bexsigmatech@gmail.com?subject=Custom%20Project%20Inquiry%20-%20BEx%20Sigma%20Tech&body=Hi%20Hariharan%20%26%20BEx%20Sigma%20Tech%20Pod,%0A%0AI%20would%20like%20to%20discuss%20a%20custom%20project.%0A%0AScope:%20[Excel%20BI%20/%203D%20Web%20/%20Custom%20Software%20/%20AI%20Pipeline]%0ABudget%20/%20Timeline:%0ADetails:"
-              className="mc-terminal-btn-secondary interactive"
+            <button
+              className="mc-hero-btn-ghost interactive"
+              onClick={() => setDemoModalOpen(true)}
             >
-              <span>✉ Discuss a Custom Project Sprint</span>
-            </a>
-            <a
-              href="https://wa.me/919361657929?text=Hi%20BEx%20Sigma%20Tech,%20I%20have%20an%20inquiry%20regarding%20your%20services%20and%20products."
-              target="_blank"
-              rel="noreferrer"
-              className="mc-terminal-btn-whatsapp interactive"
-            >
-              <span>💬 WhatsApp: +91 93616 57929</span>
-            </a>
+              <span className="mc-ghost-dot" />
+              <span>Book Architectural Call</span>
+            </button>
           </div>
 
-          <div className="mc-terminal-trust-row">
-            <span className="mc-trust-item">🔒 SSL Encrypted Checkout</span>
-            <span className="mc-trust-item">⚡ Instant Email Download Access</span>
-            <span className="mc-trust-item">⭐ 4.9/5 Rating (500+ Professionals)</span>
-            <span className="mc-trust-item">🛡️ Microsoft Verified Standards</span>
-            <span className="mc-trust-item">🇮🇳 Proudly Engineered in India</span>
+          <div className="mc-hero-trust-bar">
+            <div className="mc-trust-pill">
+              <span className="mc-trust-check">✓</span>
+              <span>100% Microsoft Verified</span>
+            </div>
+            <div className="mc-trust-pill">
+              <span className="mc-trust-check">✓</span>
+              <span>&lt; 48h Sprint Delivery</span>
+            </div>
+            <div className="mc-trust-pill">
+              <span className="mc-trust-check">✓</span>
+              <span>100% Source Code & IP Transfer</span>
+            </div>
+            <div className="mc-trust-pill">
+              <span className="mc-trust-check">✓</span>
+              <span>Direct Lead Architect Collaboration</span>
+            </div>
+          </div>
+        </section>
+
+        {/* ── SECTION 2: EXECUTIVE SPOTLIGHT (Template 3 Style Creator Card) ── */}
+        <section id="manager" className="mc-executive-spotlight-section">
+          <div className="mc-spotlight-card">
+            <div className="mc-spotlight-ambient-glow" />
+            
+            <div className="mc-spotlight-grid">
+              {/* Left Portrait */}
+              <div className="mc-spotlight-portrait-wrap">
+                <img
+                  src="/ceo_hariharan.jpg"
+                  alt="Hariharan.D — Founder & Lead Technical Architect"
+                  className="mc-spotlight-img"
+                />
+                <div className="mc-spotlight-portrait-overlay" />
+                <div className="mc-spotlight-live-tag">
+                  <span className="mc-pulse-dot" />
+                  <span>LEAD ARCHITECT DIRECT LINE</span>
+                </div>
+              </div>
+
+              {/* Right Bio & Direct Credentials */}
+              <div className="mc-spotlight-content">
+                <div className="mc-spotlight-tag">
+                  <span>FOUNDER & CHIEF TECHNICAL ARCHITECT</span>
+                </div>
+                <h2 className="mc-spotlight-name">Hariharan.D</h2>
+                <div className="mc-spotlight-role-badge">
+                  <span className="mc-badge-check">✓</span>
+                  <span>MICROSOFT VERIFIED PROFESSIONAL · ENTERPRISE DATA ARCHITECT</span>
+                </div>
+                
+                <p className="mc-spotlight-p">
+                  "We reject theoretical fluff and sluggish agency retainers. Every spreadsheet pipeline, 3D WebGL camera rig, and SaaS database architecture built at BEx Sigma Tech is engineered for production accuracy, zero spreadsheet crash risk, and presentation-ready executive visual clarity."
+                </p>
+
+                <div className="mc-spotlight-stats-row">
+                  <div className="mc-spotlight-stat">
+                    <span className="mc-stat-num">1,000+</span>
+                    <span className="mc-stat-label">Production Templates</span>
+                  </div>
+                  <div className="mc-spotlight-stat">
+                    <span className="mc-stat-num">&lt; 48h</span>
+                    <span className="mc-stat-label">Rapid MVP Turnaround</span>
+                  </div>
+                  <div className="mc-spotlight-stat">
+                    <span className="mc-stat-num">500+</span>
+                    <span className="mc-stat-label">Engineers & Leaders Mentored</span>
+                  </div>
+                </div>
+
+                <div className="mc-spotlight-actions">
+                  <button
+                    className="mc-spotlight-btn interactive"
+                    onClick={() => setDemoModalOpen(true)}
+                  >
+                    <span>🗓️ Schedule Direct Briefing</span>
+                    <span className="mc-btn-arrow">→</span>
+                  </button>
+                  <a
+                    href="https://wa.me/919361657929?text=Hi%20Hariharan,%20I%20would%20like%20to%20discuss%20a%20project%20with%20BEx%20Sigma%20Tech."
+                    target="_blank"
+                    rel="noreferrer"
+                    className="mc-spotlight-wa-btn interactive"
+                  >
+                    <span>💬 WhatsApp Quick Chat</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ── SECTION 3: BOLD MANIFESTO BANNER (Template 2 Manifesto Style) ── */}
+        <section id="manifesto" className="mc-manifesto-banner">
+          <div className="mc-manifesto-container">
+            <span className="mc-manifesto-kicker">OUR OPERATIONAL CODE</span>
+            <h2 className="mc-manifesto-headline">
+              HELPING YOU BUILD AUTOMATED DATA ARCHITECTURES, FLUID 3D EXPERIENCES, AND ROCK-SOLID CODE THROUGH UNCOMPROMISING PRECISION.
+            </h2>
+            <div className="mc-manifesto-credit">
+              <span className="mc-credit-line" />
+              <span className="mc-credit-text">BEX SIGMA TECH · ZERO FLUFF METHODOLOGY</span>
+              <span className="mc-credit-line" />
+            </div>
+          </div>
+        </section>
+
+        {/* ── SECTION 4: NUMBERED SERVICES MATRIX (Template 1 Numbered Style) ── */}
+        <section id="divisions" className="mc-numbered-services-section">
+          <div className="mc-section-top-row">
+            <div>
+              <span className="mc-section-kicker">OUR CAPABILITIES</span>
+              <h2 className="mc-section-giant-heading">
+                NOT JUST CODE.<br />
+                A WHOLE ARCHITECTURAL APPROACH.
+              </h2>
+            </div>
+            <p className="mc-section-lead-p">
+              From turnkey, automated enterprise spreadsheet suites to high-scale custom cloud SaaS platforms and 60 FPS 3D spatial web environments.
+            </p>
+          </div>
+
+          <div className="mc-numbered-list">
+            {SERVICES.map((srv) => {
+              const isExpanded = expandedService === srv.num
+              return (
+                <div
+                  key={srv.num}
+                  className={`mc-numbered-item ${isExpanded ? 'is-expanded' : ''}`}
+                  onClick={() => setExpandedService(isExpanded ? '' : srv.num)}
+                >
+                  <div className="mc-item-header">
+                    <span className="mc-item-num">{srv.num}</span>
+                    <div className="mc-item-title-group">
+                      <div className="mc-item-badge-row">
+                        <span className="mc-item-code">{srv.code}</span>
+                        <span className="mc-item-badge" style={{ color: srv.accent, borderColor: srv.accent }}>
+                          {srv.badge}
+                        </span>
+                      </div>
+                      <h3 className="mc-item-title">{srv.title}</h3>
+                      <p className="mc-item-tagline">{srv.tagline}</p>
+                    </div>
+                    <span className="mc-item-toggle-icon">
+                      {isExpanded ? '−' : '+'}
+                    </span>
+                  </div>
+
+                  {isExpanded && (
+                    <div className="mc-item-expanded-content">
+                      <p className="mc-item-desc">{srv.desc}</p>
+                      
+                      <div className="mc-item-specs-grid">
+                        {srv.specs.map((spec, sIdx) => (
+                          <div key={sIdx} className="mc-spec-pill">
+                            <span className="mc-spec-dot" style={{ background: srv.accent }} />
+                            <span>{spec}</span>
+                          </div>
+                        ))}
+                      </div>
+
+                      <div className="mc-item-action-row">
+                        {srv.actionMailto ? (
+                          <a
+                            href={`mailto:bexsigmatech@gmail.com?subject=${encodeURIComponent(srv.title + ' - Project Inquiry')}&body=Hi%20BEx%20Sigma%20Tech%20Pod,%0A%0AI%20am%20interested%20in%20your%20services%20for%20${encodeURIComponent(srv.title)}.`}
+                            className="mc-item-action-btn interactive"
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            <span>{srv.actionLabel}</span>
+                            <span className="mc-btn-arrow">→</span>
+                          </a>
+                        ) : (
+                          <button
+                            className="mc-item-action-btn interactive"
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              handleNavigate(srv.actionRoute)
+                            }}
+                          >
+                            <span>{srv.actionLabel}</span>
+                            <span className="mc-btn-arrow">→</span>
+                          </button>
+                        )}
+                        <button
+                          className="mc-item-demo-btn interactive"
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            setDemoModalOpen(true)
+                          }}
+                        >
+                          <span>Request Consultation</span>
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )
+            })}
+          </div>
+        </section>
+
+        {/* ── SECTION 5: WHY CHOOSE US (Template 3 Style Modular Cards) ── */}
+        <section id="why" className="mc-why-section">
+          <div className="mc-section-top-row">
+            <div>
+              <span className="mc-section-kicker">THE BEX ADVANTAGE</span>
+              <h2 className="mc-section-giant-heading">
+                WHY WORK WITH BEX SIGMA TECH?
+              </h2>
+            </div>
+            <p className="mc-section-lead-p">
+              How our agile architecture model compares against slow traditional consultancies and generic low-quality template sellers.
+            </p>
+          </div>
+
+          <div className="mc-why-cards-grid">
+            {WHY_CHOOSE_US.map((item, idx) => (
+              <div key={idx} className="mc-why-card-editorial">
+                <span className="mc-why-card-number">{item.number}</span>
+                <div className="mc-why-card-top">
+                  <span className="mc-why-card-icon">{item.icon}</span>
+                  <span className="mc-why-card-badge">{item.badge}</span>
+                </div>
+                <h3 className="mc-why-card-title">{item.title}</h3>
+                <p className="mc-why-card-desc">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* ── SECTION 6: GLOBAL NODES & TELEMETRY ── */}
+        <section className="mc-nodes-section-editorial">
+          <div className="mc-nodes-header-row">
+            <div>
+              <span className="mc-section-kicker">INFRASTRUCTURE</span>
+              <h3 className="mc-nodes-title-editorial">Worldwide Strategic Mainframe</h3>
+            </div>
+            <span className="mc-nodes-status-live">● 4 NODES ONLINE · 99.98% UPTIME</span>
+          </div>
+
+          <div className="mc-nodes-editorial-grid">
+            {GLOBAL_NODES.map((node, nIdx) => (
+              <div key={nIdx} className="mc-node-card-editorial">
+                <div className="mc-node-card-top">
+                  <span className="mc-node-flag">{node.flag}</span>
+                  <span className="mc-node-city-editorial">{node.city}</span>
+                  <span className="mc-node-ping-val">{node.latency}</span>
+                </div>
+                <div className="mc-node-role-editorial">{node.role}</div>
+                <div className="mc-node-footer">
+                  <span className="mc-node-status-dot" />
+                  <span>{node.status}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* ── SECTION 7: FINAL CALL-TO-ACTION (DISPATCH) ── */}
+        <section className="mc-final-cta-section">
+          <div className="mc-cta-container">
+            <span className="mc-cta-kicker">READY TO COMMAND YOUR DATA & TECH?</span>
+            <h2 className="mc-cta-title">
+              STEP INTO THE FUTURE WITH BEX SIGMA TECH
+            </h2>
+            <p className="mc-cta-sub">
+              Get immediate lifetime access to the <strong>aIn Excel Master Suite (₹199)</strong> with 1,000+ templates, or book an architectural sprint for custom 3D web applications and cloud software.
+            </p>
+
+            <div className="mc-cta-buttons-row">
+              <button
+                className="mc-cta-btn-primary interactive"
+                onClick={() => handleNavigate('web_dev')}
+              >
+                <span>🛒 Get Flagship Excel Suite (₹199 Only)</span>
+                <span className="mc-btn-arrow">→</span>
+              </button>
+              <button
+                className="mc-cta-btn-secondary interactive"
+                onClick={() => setDemoModalOpen(true)}
+              >
+                <span>🗓️ Book Architectural Call</span>
+              </button>
+              <a
+                href="https://wa.me/919361657929?text=Hi%20BEx%20Sigma%20Tech,%20I%20would%20like%20to%20discuss%20a%20project."
+                target="_blank"
+                rel="noreferrer"
+                className="mc-cta-btn-wa interactive"
+              >
+                <span>💬 WhatsApp Us</span>
+              </a>
+            </div>
+
+            <div className="mc-cta-trust-row">
+              <span>🔒 SSL Encrypted</span>
+              <span>⚡ Instant Download Access</span>
+              <span>⭐ 4.9/5 Rating (500+ Leaders)</span>
+              <span>🛡️ Microsoft Verified Standards</span>
+              <span>🇮🇳 Engineered in India</span>
+            </div>
           </div>
         </section>
       </div>
+
+      {/* ── SCHEDULE / BOOK A CALL MODAL ── */}
+      <ScheduleDemoModal
+        isOpen={demoModalOpen}
+        onClose={() => setDemoModalOpen(false)}
+      />
     </div>
   )
 }

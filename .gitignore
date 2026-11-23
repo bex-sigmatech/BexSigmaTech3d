@@ -26,6 +26,7 @@ npm-debug.log*
 # Audio test files
 /hello.m4a
 
-# Runtime data — contains customer PII (emails, tokens)
+# Runtime data — contains customer PII (emails, tokens, certificates)
 server/data/database.json
+server/data/certificates/
 
