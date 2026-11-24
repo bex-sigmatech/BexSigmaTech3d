@@ -6607,3 +6607,209 @@
   border-radius: 22px !important;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7), 0 0 35px rgba(255, 87, 34, 0.25) !important;
 }
+
+/* ==========================================================================
+   10/10 CONVERSION BOOSTERS: SOCIAL PROOF TOAST, FAQ ACCORDION & CTA PULSE
+   ========================================================================== */
+
+/* Live Social Proof Floating Toast */
+.live-sales-toast {
+  position: fixed;
+  bottom: 28px;
+  left: 28px;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 20px 14px 16px;
+  background: rgba(14, 23, 44, 0.88);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  border-radius: 16px;
+  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.75), 0 0 25px rgba(56, 189, 248, 0.2);
+  cursor: pointer;
+  animation: toastSlideIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  max-width: 380px;
+  transition: transform 0.25s ease, border-color 0.25s ease;
+}
+
+.live-sales-toast:hover {
+  transform: translateY(-3px) scale(1.02);
+  border-color: rgba(56, 189, 248, 0.6);
+  box-shadow: 0 20px 55px rgba(0, 0, 0, 0.85), 0 0 35px rgba(56, 189, 248, 0.35);
+}
+
+@keyframes toastSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.live-sales-avatar {
+  position: relative;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(56, 189, 248, 0.15);
+  border: 1px solid rgba(56, 189, 248, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.live-sales-pulse {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 8px #10b981;
+  animation: pulseDot 1.8s infinite ease-in-out;
+}
+
+.live-sales-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  text-align: left;
+}
+
+.live-sales-title {
+  font-family: var(--mc-font-heading, 'Outfit', sans-serif);
+  font-size: 0.82rem;
+  color: #ffffff;
+}
+
+.live-sales-title strong {
+  color: #38bdf8;
+  font-weight: 700;
+}
+
+.live-sales-sub {
+  font-family: var(--mc-font-mono, monospace);
+  font-size: 0.72rem;
+  color: #94a3b8;
+}
+
+.live-sales-sub strong {
+  color: #ff5722;
+}
+
+.live-sales-time {
+  color: #64748b;
+}
+
+.live-sales-close {
+  color: #64748b;
+  font-size: 12px;
+  padding: 4px;
+  cursor: pointer;
+  margin-left: auto;
+  transition: color 0.2s;
+}
+
+.live-sales-close:hover {
+  color: #ffffff;
+}
+
+/* 10/10 FAQ Section Glass Accordion */
+.store-faq-section {
+  width: 100%;
+  max-width: 900px;
+  margin: 60px auto 40px;
+  padding: 0 20px;
+}
+
+.store-faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 32px;
+}
+
+.store-faq-card {
+  background: rgba(14, 23, 44, 0.55);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  overflow: hidden;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.store-faq-card.is--open {
+  border-color: rgba(56, 189, 248, 0.4);
+  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.7), 0 0 25px rgba(56, 189, 248, 0.15);
+}
+
+.store-faq-question {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  font-family: var(--mc-font-heading, 'Outfit', sans-serif);
+  font-size: 1rem;
+  font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.store-faq-question:hover {
+  color: #38bdf8;
+}
+
+.store-faq-icon {
+  font-size: 1.2rem;
+  color: #38bdf8;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.store-faq-card.is--open .store-faq-icon {
+  transform: rotate(45deg);
+}
+
+.store-faq-answer {
+  padding: 0 24px 22px;
+  font-size: 0.92rem;
+  color: #94a3b8;
+  line-height: 1.65;
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+  animation: faqFadeIn 0.35s ease forwards;
+}
+
+@keyframes faqFadeIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Radiant CTA Pulse Effect */
+.store-editorial-theme .noir-btn-primary,
+.store-editorial-theme .lumos-action-btn,
+.store-editorial-theme .noir-checkout-cta {
+  animation: ctaPulseGlow 3s infinite alternate ease-in-out !important;
+}
+
+@keyframes ctaPulseGlow {
+  0% {
+    box-shadow: 0 4px 20px rgba(255, 87, 34, 0.4);
+  }
+  100% {
+    box-shadow: 0 6px 35px rgba(255, 87, 34, 0.75), 0 0 25px rgba(255, 87, 34, 0.35);
+  }
+}

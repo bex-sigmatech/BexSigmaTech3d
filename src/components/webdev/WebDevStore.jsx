@@ -17,6 +17,35 @@ const BACKEND_URL = import.meta.env.VITE_BACKEND_URL
     ? 'http://localhost:5001'
     : 'https://bexsigmatech3d.onrender.com')
 
+const RECENT_SALES = [
+  { name: 'Vikram S.', city: 'Mumbai', time: '2m ago' },
+  { name: 'Ananya R.', city: 'Bengaluru', time: '5m ago' },
+  { name: 'Rajesh K.', city: 'Delhi NCR', time: '8m ago' },
+  { name: 'Karthik M.', city: 'Chennai', time: '11m ago' },
+  { name: 'Pooja T.', city: 'Hyderabad', time: '14m ago' },
+  { name: 'Amitabh D.', city: 'Pune', time: '19m ago' },
+  { name: 'Sneha P.', city: 'Kolkata', time: '23m ago' },
+]
+
+const FAQ_ITEMS = [
+  {
+    q: 'How do I receive the files after paying ₹199?',
+    a: 'Instantly! Within 60 seconds of completing your payment via Cashfree, our automated system delivers a permanent Google Drive master link directly to your email. You can download all .xlsx files immediately or save them to your own cloud storage with lifetime access.'
+  },
+  {
+    q: 'Does this work on Mac, Windows, and Google Sheets?',
+    a: 'Yes, 100%! Every file is fully unlocked .xlsx format and compatible with Microsoft Excel 2013, 2016, 2019, 2021, Office 365 on both Windows and Mac, plus 100% cloud-editable in Google Sheets.'
+  },
+  {
+    q: 'Are there any monthly or recurring subscription fees?',
+    a: 'Zero recurring fees. ₹199 is a strictly one-time payment for lifetime access, with zero subscriptions, zero hidden fees, and lifetime updates included.'
+  },
+  {
+    q: 'Do I need advanced Excel knowledge or VBA coding to use this?',
+    a: 'Not at all! Every single template and executive cockpit is completely pre-built with automated formulas, dynamic arrays, and interactive slicers. All you do is type your numbers, and the charts and dashboards calculate dynamically.'
+  }
+]
+
 const HABITO_REVIEWS = [
   {
     author: 'Vikram S.',
@@ -271,6 +300,41 @@ export default function WebDevStore() {
   const [fontoIndex, setFontoIndex] = useState(0)
   const [activeDashboardTab, setActiveDashboardTab] = useState('master')
   const activeView = DASHBOARD_VIEWS.find((v) => v.id === activeDashboardTab) || DASHBOARD_VIEWS[0]
+
+  // Real-Time Perpetual Urgency Flash Countdown
+  const [timeLeft, setTimeLeft] = useState({ hours: 4, minutes: 28, seconds: 45 })
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTimeLeft((prev) => {
+        if (prev.seconds > 0) return { ...prev, seconds: prev.seconds - 1 }
+        if (prev.minutes > 0) return { ...prev, minutes: prev.minutes - 1, seconds: 59 }
+        if (prev.hours > 0) return { ...prev, hours: prev.hours - 1, minutes: 59, seconds: 59 }
+        return { hours: 4, minutes: 59, seconds: 59 }
+      })
+    }, 1000)
+    return () => clearInterval(timer)
+  }, [])
+
+  // Live Social Proof Recent Purchases Ticker
+  const [liveSaleIndex, setLiveSaleIndex] = useState(0)
+  const [showLiveSale, setShowLiveSale] = useState(false)
+  useEffect(() => {
+    const initialTimer = setTimeout(() => setShowLiveSale(true), 3200)
+    const interval = setInterval(() => {
+      setShowLiveSale(false)
+      setTimeout(() => {
+        setLiveSaleIndex((prev) => (prev + 1) % RECENT_SALES.length)
+        setShowLiveSale(true)
+      }, 700)
+    }, 9500)
+    return () => {
+      clearTimeout(initialTimer)
+      clearInterval(interval)
+    }
+  }, [])
+
+  // FAQ Accordion State
+  const [openFaqIndex, setOpenFaqIndex] = useState(0)
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -640,6 +704,12 @@ export default function WebDevStore() {
           </button>
           <button
             className="habito-nav-link"
+            onClick={() => document.getElementById('noir-faq')?.scrollIntoView({ behavior: 'smooth' })}
+          >
+            FAQ
+          </button>
+          <button
+            className="habito-nav-link"
             onClick={() => document.getElementById('noir-pricing')?.scrollIntoView({ behavior: 'smooth' })}
           >
             Pricing
@@ -698,10 +768,10 @@ export default function WebDevStore() {
 
         {/* ══ SECTION 1: NOIR HERO (EXCEL SALE ADVERTISEMENT CLIMAX) ══ */}
         <section id="noir-about" className="noir-hero-section">
-          {/* Flash Sale Pill */}
+          {/* Flash Sale Pill with Real-Time Perpetual Urgency Countdown */}
           <div className="ad-flash-pill">
             <span className="ad-flash-dot" />
-            <span>🔥 MEGA SALE · 80% OFF · ₹199 LIFETIME ACCESS</span>
+            <span>🔥 MEGA SALE · 80% OFF · ₹199 · OFFER ENDS IN {String(timeLeft.hours).padStart(2, '0')}h {String(timeLeft.minutes).padStart(2, '0')}m {String(timeLeft.seconds).padStart(2, '0')}s</span>
           </div>
 
           {/* Creator Micro Badge */}
@@ -1118,7 +1188,40 @@ export default function WebDevStore() {
           </div>
         </section>
 
-        {/* ══ SECTION 5: CLIMAX PRICING (SELLING ONLY THE ₹199 ALL-IN-ONE MASTER SUITE) ══ */}
+        {/* ══ SECTION 5: FREQUENTLY ASKED QUESTIONS (FAQ GLASS ACCORDION) ══ */}
+        <section id="noir-faq" className="store-faq-section">
+          <div className="noir-section-header">
+            <div className="noir-section-kicker">
+              <span>● COMMON QUESTIONS</span>
+            </div>
+            <h2 className="noir-section-heading">FREQUENTLY ASKED QUESTIONS</h2>
+            <p className="noir-section-subtitle">
+              Everything you need to know before acquiring your ₹199 Excel All-in-One Master Suite.
+            </p>
+          </div>
+
+          <div className="store-faq-list">
+            {FAQ_ITEMS.map((item, idx) => (
+              <div
+                key={idx}
+                className={`store-faq-card interactive ${openFaqIndex === idx ? 'is--open' : ''}`}
+                onClick={() => setOpenFaqIndex(openFaqIndex === idx ? -1 : idx)}
+              >
+                <div className="store-faq-question">
+                  <span>{item.q}</span>
+                  <span className="store-faq-icon">{openFaqIndex === idx ? '✕' : '+'}</span>
+                </div>
+                {openFaqIndex === idx && (
+                  <div className="store-faq-answer">
+                    <p>{item.a}</p>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* ══ SECTION 6: CLIMAX PRICING (SELLING ONLY THE ₹199 ALL-IN-ONE MASTER SUITE) ══ */}
         <section id="noir-pricing" className="noir-pricing-section">
           <div className="noir-pricing-card">
             {/* Left Column: Feature Highlights & Value Stack */}
@@ -1500,6 +1603,37 @@ export default function WebDevStore() {
               🛒 Cart
             </button>
           </div>
+        </div>
+      )}
+
+      {/* ── 10/10 CONVERSION BOOSTER: LIVE SOCIAL PROOF PURCHASE TICKER ── */}
+      {showLiveSale && (
+        <div
+          className="live-sales-toast interactive"
+          onClick={() => handleOpenCheckoutModal(PRODUCTS[0])}
+          title="Click to acquire Excel Master Suite"
+        >
+          <div className="live-sales-avatar">
+            <span className="live-sales-pulse" />
+            ⚡
+          </div>
+          <div className="live-sales-content">
+            <div className="live-sales-title">
+              <strong>{RECENT_SALES[liveSaleIndex].name}</strong> from {RECENT_SALES[liveSaleIndex].city}
+            </div>
+            <div className="live-sales-sub">
+              Acquired <strong>Excel Master Suite (₹199)</strong> · <span className="live-sales-time">{RECENT_SALES[liveSaleIndex].time}</span>
+            </div>
+          </div>
+          <span
+            className="live-sales-close"
+            onClick={(e) => {
+              e.stopPropagation()
+              setShowLiveSale(false)
+            }}
+          >
+            ✕
+          </span>
         </div>
       )}
     </div>
