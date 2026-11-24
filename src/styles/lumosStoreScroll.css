@@ -1,6 +1,7 @@
 /* ==========================================================================
    LUMOS STORE SCROLL EXPERIENCE — BEX SIGMA TECH STORE
    Strictly scoped to .lumos-store-experience to never affect any other page.
+   100% Mobile Responsive, Hardware Accelerated, Visceral Kinetic Polish.
    ========================================================================== */
 
 .lumos-store-experience {
@@ -28,8 +29,8 @@
   inset: 0;
   pointer-events: none;
   background-image: 
-    radial-gradient(rgba(0,0,0,0.03) 1px, transparent 1px),
-    url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.045'/%3E%3C/svg%3E");
+    radial-gradient(rgba(0,0,0,0.035) 1px, transparent 1px),
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
   background-size: 20px 20px, 140px 140px;
   z-index: 1;
 }
@@ -50,13 +51,91 @@
 }
 
 /* ══════════════════════════════════════════════════════════════════════════
+   0. ICONIC HOT-PINK INTRO CURTAIN & MARQUEE (AS SEEN IN LUMOS VIDEO)
+   ══════════════════════════════════════════════════════════════════════════ */
+.lumos-intro-curtain {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background-color: #E6007A;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.08'/%3E%3C/svg%3E");
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: clip-path 0.85s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.4s ease;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+}
+
+.lumos-intro-curtain.tearing {
+  clip-path: polygon(0 0, 100% 0, 100% 0%, 0 0%);
+  pointer-events: none;
+}
+
+.lumos-intro-marquee-track {
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  user-select: none;
+}
+
+.lumos-intro-marquee-content {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+  white-space: nowrap;
+  animation: lumosIntroScroll 14s linear infinite;
+  font-family: 'Syne', 'Outfit', -apple-system, sans-serif;
+  font-size: clamp(3rem, 7.5vw, 7.5rem);
+  font-weight: 950;
+  color: #FFFFFF;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+}
+
+.lumos-intro-marquee-content span.lumos-cross {
+  color: rgba(255, 255, 255, 0.35);
+  font-size: 0.7em;
+  margin: 0 8px;
+}
+
+@keyframes lumosIntroScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.lumos-intro-skip-btn {
+  position: absolute;
+  bottom: 40px;
+  right: 50px;
+  background: #000000;
+  color: #FFFFFF;
+  border: none;
+  font-family: 'Syne', 'Outfit', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  padding: 14px 30px;
+  border-radius: 999px;
+  cursor: pointer;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  transition: transform 0.2s ease, background-color 0.2s ease;
+  z-index: 10;
+}
+
+.lumos-intro-skip-btn:hover {
+  transform: scale(1.05);
+  background: #1a1a1a;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
    1. STORE PAGE HERO (PAPER #F2EFE9)
    ══════════════════════════════════════════════════════════════════════════ */
 .lumos-hero-section {
   position: relative;
   width: 100%;
   min-height: 100vh;
-  padding: 30px 40px 60px;
+  padding: 30px 48px 50px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -74,23 +153,24 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  padding-bottom: 24px;
+  padding-bottom: 20px;
 }
 
 .lumos-brand-pill {
   font-family: 'Syne', 'Outfit', sans-serif;
-  font-size: 0.95rem;
-  font-weight: 800;
-  letter-spacing: 0.16em;
+  font-size: 1.05rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
   color: #111111;
   text-transform: uppercase;
 }
 
 .lumos-center-pill {
   font-size: 0.88rem;
-  font-weight: 600;
+  font-weight: 650;
   color: #555555;
   letter-spacing: 0.04em;
+  font-family: -apple-system, sans-serif;
 }
 
 .lumos-top-actions {
@@ -118,114 +198,115 @@
 
 .lumos-cart-btn {
   background: #111111;
-  color: #ffffff;
+  color: #FFFFFF;
   border: none;
   font-size: 0.82rem;
-  font-weight: 700;
+  font-weight: 800;
   padding: 7px 16px;
   border-radius: 999px;
   cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
+  letter-spacing: 0.05em;
   transition: all 0.2s ease;
 }
 
 .lumos-cart-btn:hover {
-  background: #262626;
+  background: #000000;
   transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
-.lumos-cart-badge {
-  background: #ff2d75;
+.lumos-cart-badge-count {
+  background: #E6007A;
   color: #ffffff;
   font-size: 0.72rem;
-  font-weight: 800;
+  font-weight: 850;
   padding: 2px 7px;
   border-radius: 999px;
 }
 
 .lumos-get-started-btn {
-  background: #fbcfe8;
-  color: #9d174d;
-  border: 1px solid rgba(157, 23, 77, 0.2);
+  background: #E6007A;
+  color: #FFFFFF;
+  border: none;
   font-size: 0.82rem;
-  font-weight: 750;
+  font-weight: 800;
+  letter-spacing: 0.04em;
   padding: 7px 18px;
   border-radius: 999px;
   cursor: pointer;
+  box-shadow: 0 4px 12px rgba(230, 0, 122, 0.3);
   transition: all 0.2s ease;
 }
 
 .lumos-get-started-btn:hover {
-  background: #f472b6;
-  color: #ffffff;
+  background: #ff1a8c;
   transform: translateY(-1px);
-  box-shadow: 0 4px 14px rgba(244, 114, 182, 0.4);
+  box-shadow: 0 6px 16px rgba(230, 0, 122, 0.45);
 }
 
-/* Hero Typography Row */
+/* Hero Content Row */
 .lumos-hero-content-row {
   position: relative;
   z-index: 5;
   display: flex;
-  align-items: flex-start;
   justify-content: space-between;
-  width: 100%;
-  margin-top: 20px;
+  align-items: flex-start;
+  margin-top: 15px;
 }
 
 .lumos-hero-headline {
-  font-family: 'Syne', 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: clamp(2.4rem, 5.8vw, 5.6rem);
-  font-weight: 850;
-  line-height: 1.04;
-  letter-spacing: -0.04em;
-  color: #0d0d0d;
+  font-family: 'Syne', 'Outfit', sans-serif;
+  font-size: clamp(2.4rem, 5.2vw, 5.2rem);
+  font-weight: 950;
+  line-height: 1.02;
+  letter-spacing: -0.045em;
+  color: #0c0c0c;
   margin: 0;
-  max-width: 820px;
-  word-break: keep-all;
-  overflow-wrap: normal;
-  hyphens: none;
+  max-width: 780px;
 }
 
 .lumos-hero-side-sub {
   font-family: 'Syne', 'Outfit', sans-serif;
-  font-size: clamp(1rem, 1.8vw, 1.45rem);
-  font-weight: 700;
+  font-size: clamp(1.2rem, 2.2vw, 2.2rem);
+  font-weight: 850;
+  letter-spacing: -0.02em;
   color: #1a1a1a;
-  letter-spacing: -0.01em;
   text-align: right;
-  padding-top: 10px;
+  max-width: 320px;
+  line-height: 1.25;
 }
 
-/* Mid Micro-Row */
-.lumos-hero-mid-row {
-  position: relative;
-  z-index: 5;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  margin: 20px 0 10px;
-  font-size: clamp(0.85rem, 1.2vw, 1.05rem);
+.lumos-hero-side-sub .lumos-bracket-tag {
+  display: block;
+  font-family: monospace;
+  font-size: 0.85rem;
+  color: #777777;
   font-weight: 600;
-  color: #444444;
+  margin-bottom: 6px;
 }
 
-/* Logo & Watermark Centerpiece */
+.lumos-hero-side-micro {
+  display: block;
+  font-family: -apple-system, sans-serif;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: #666666;
+  margin-top: 8px;
+  line-height: 1.45;
+}
+
+/* Centerpiece Container: Logo + Drips + Watermark */
 .lumos-centerpiece-wrap {
   position: relative;
   width: 100%;
-  max-width: 100%;
-  min-width: 0;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 20px 0 10px;
-  min-height: 380px;
-  overflow: hidden;
+  margin: 25px 0 35px;
+  min-height: 250px;
 }
 
 .lumos-bex-watermark {
@@ -234,16 +315,14 @@
   left: 50%;
   transform: translate(-50%, -50%);
   font-family: 'Syne', 'Outfit', sans-serif;
-  font-size: clamp(8rem, 28vw, 29rem);
+  font-size: clamp(8rem, 25vw, 23rem);
   font-weight: 950;
-  color: rgba(0, 0, 0, 0.05);
   letter-spacing: -0.05em;
-  pointer-events: none;
+  color: rgba(0, 0, 0, 0.045);
   user-select: none;
+  pointer-events: none;
   z-index: 1;
-  line-height: 0.85;
-  text-align: center;
-  white-space: nowrap;
+  line-height: 1;
 }
 
 .lumos-logo-container {
@@ -252,188 +331,252 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  max-width: 760px;
-  width: 92%;
-  min-width: 0;
+  max-width: 100%;
 }
 
 .lumos-metallic-logo {
-  width: 100%;
-  max-width: 720px;
-  min-width: 0;
-  height: auto;
-  object-fit: contain;
-  filter: drop-shadow(0 18px 30px rgba(6, 78, 59, 0.22));
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-/* Melting Drips Animation */
-.lumos-drips-svg {
-  position: relative;
+  display: block;
   width: 100%;
   max-width: 660px;
-  min-width: 0;
-  height: 90px;
-  margin-top: -10px;
-  overflow: visible;
-  pointer-events: none;
-  z-index: 3;
+  height: auto;
+  filter: drop-shadow(0 18px 30px rgba(0, 60, 50, 0.28));
+  user-select: none;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Bottom Bar */
+.lumos-metallic-logo:hover {
+  transform: scale(1.02);
+}
+
+/* SVG Drips */
+.lumos-drips-svg {
+  width: 100%;
+  max-width: 660px;
+  height: 80px;
+  margin-top: -8px;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.lumos-drip-drop-1 {
+  animation: lumosDripDrop 3.4s ease-in infinite;
+}
+.lumos-drip-drop-2 {
+  animation: lumosDripDrop 4.2s ease-in infinite 0.9s;
+}
+.lumos-drip-drop-3 {
+  animation: lumosDripDrop 3.8s ease-in infinite 1.8s;
+}
+
+@keyframes lumosDripDrop {
+  0% { transform: translateY(0); opacity: 0; }
+  25% { opacity: 0.95; }
+  65% { transform: translateY(22px) scaleY(1.35); opacity: 1; }
+  85% { transform: translateY(52px) scale(0.85); opacity: 0.7; }
+  100% { transform: translateY(72px) scale(0.3); opacity: 0; }
+}
+
+/* Hero Bottom Micro-Bar (Lumos Brutalist Signature) */
 .lumos-hero-bottom-bar {
   position: relative;
-  z-index: 5;
+  z-index: 10;
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  padding-top: 24px;
-  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  padding-top: 18px;
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
 }
 
 .lumos-hero-bottom-left {
-  font-size: 0.94rem;
-  font-weight: 650;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.92rem;
+  font-weight: 700;
   color: #222222;
+  letter-spacing: -0.01em;
+}
+
+.lumos-smiley-icon {
+  font-size: 1.3rem;
+  line-height: 1;
+  color: #111111;
+  display: inline-block;
+  transform: rotate(-10deg);
+}
+
+.lumos-hero-bottom-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lumos-barcode-svg {
+  height: 30px;
+  width: auto;
+  color: #111111;
+  opacity: 0.85;
 }
 
 .lumos-hero-bottom-right {
-  font-size: 0.94rem;
-  font-weight: 700;
-  color: #111111;
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 12px;
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #222222;
   cursor: pointer;
-  transition: transform 0.2s ease;
+  transition: all 0.2s ease;
 }
 
 .lumos-hero-bottom-right:hover {
-  transform: translateY(2px);
-  color: #ff2d75;
+  color: #E6007A;
+  transform: translateX(4px);
+}
+
+.lumos-bracket-tag {
+  font-family: monospace;
+  font-size: 0.82rem;
+  color: #666666;
+  font-weight: 700;
+}
+
+.lumos-bottom-line {
+  display: inline-block;
+  width: 50px;
+  height: 1px;
+  background-color: #111111;
+}
+
+.lumos-arrow-down {
+  font-size: 1.1rem;
 }
 
 /* ══════════════════════════════════════════════════════════════════════════
-   2. SCROLL 1: TORN PAPER & STATS
+   2. STORE PAGE SCROLL 1 - TORN PAPER & STATS
    ══════════════════════════════════════════════════════════════════════════ */
 .lumos-torn-section {
   position: relative;
   width: 100%;
-  background-color: #EAE6DE;
+  background-color: #F2EFE9;
   z-index: 6;
-  overflow: hidden;
-  margin-top: -2px;
+  box-sizing: border-box;
 }
 
 .lumos-torn-paper-edge {
   position: relative;
   width: 100%;
-  height: 80px;
+  height: 55px;
   background-image: url('/torn_paper_edge.png');
   background-size: 100% 100%;
   background-repeat: no-repeat;
-  margin-top: -40px;
+  margin-top: -20px;
   z-index: 7;
 }
 
 .lumos-torn-content {
   position: relative;
-  max-width: 1200px;
+  width: 100%;
+  padding: 80px 48px 110px;
+  max-width: 1240px;
   margin: 0 auto;
-  padding: 80px 30px 100px;
-  text-align: center;
-  z-index: 8;
+  box-sizing: border-box;
 }
 
 .lumos-torn-headline {
   font-family: 'Syne', 'Outfit', sans-serif;
-  font-size: clamp(2.2rem, 5.2vw, 4.8rem);
-  font-weight: 900;
-  line-height: 1.08;
-  letter-spacing: -0.04em;
-  color: #0f0f0f;
-  margin-bottom: 50px;
-  text-transform: capitalize;
+  font-size: clamp(2.8rem, 6.2vw, 6.2rem);
+  font-weight: 950;
+  letter-spacing: -0.045em;
+  line-height: 1.04;
+  color: #0c0c0c;
+  margin: 0 0 24px 0;
+  max-width: 980px;
+}
+
+.lumos-torn-sub {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #555555;
+  line-height: 1.6;
+  max-width: 680px;
+  margin: 0 0 65px 0;
 }
 
 .lumos-stats-row {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 30px;
+  align-items: flex-start;
+  gap: 48px;
   flex-wrap: wrap;
-  padding: 24px 30px;
-  background: rgba(255, 255, 255, 0.6);
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  border-radius: 20px;
-  backdrop-filter: blur(8px);
-  max-width: 900px;
-  margin: 0 auto;
+  padding-top: 36px;
+  border-top: 1px solid rgba(0, 0, 0, 0.14);
 }
 
 .lumos-stat-item {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  min-width: 180px;
 }
 
 .lumos-stat-val {
   font-family: 'Syne', 'Outfit', sans-serif;
-  font-size: clamp(2rem, 4vw, 3.4rem);
-  font-weight: 900;
-  color: #064e3b;
-  letter-spacing: -0.03em;
-  line-height: 1;
+  font-size: clamp(3.2rem, 5.8vw, 5.8rem);
+  font-weight: 950;
+  letter-spacing: -0.05em;
+  color: #000000;
+  line-height: 0.95;
 }
 
 .lumos-stat-label {
-  font-size: 0.92rem;
+  font-size: 1.05rem;
   font-weight: 750;
-  color: #555555;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
+  color: #111111;
   margin-top: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.lumos-stat-bracket {
+  font-family: monospace;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #777777;
+  margin-top: 4px;
 }
 
 .lumos-stat-divider {
   width: 1px;
-  height: 50px;
-  background: rgba(0, 0, 0, 0.15);
+  height: 90px;
+  background-color: rgba(0, 0, 0, 0.16);
 }
 
 /* ══════════════════════════════════════════════════════════════════════════
-   3. SCROLL 2: WHY WE ARE LOVED (BLACK BACKGROUND)
+   3. STORE PAGE SCROLL 2 - WHY WE ARE LOVED & DRAGGABLE STICKERS
    ══════════════════════════════════════════════════════════════════════════ */
 .lumos-loved-section {
   position: relative;
   width: 100%;
-  background-color: #070707;
+  background: radial-gradient(circle at 50% 46%, rgba(230, 0, 122, 0.26) 0%, rgba(7, 7, 7, 0.98) 65%, #070707 100%);
   color: #ffffff;
-  padding: 120px 30px 140px;
+  padding: 130px 48px 120px;
   z-index: 10;
   box-sizing: border-box;
   overflow: hidden;
 }
 
 .lumos-loved-inner {
-  max-width: 1260px;
+  max-width: 1240px;
   margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 
 .lumos-loved-title {
   font-family: 'Syne', 'Outfit', sans-serif;
-  font-size: clamp(2.6rem, 6.5vw, 6rem);
-  font-weight: 900;
-  letter-spacing: -0.04em;
-  text-align: center;
-  margin-bottom: 70px;
-  line-height: 1.05;
+  font-size: clamp(3.8rem, 9.2vw, 9.2rem);
+  font-weight: 950;
+  line-height: 0.96;
+  letter-spacing: -0.05em;
+  margin: 0 0 50px 0;
+  text-transform: lowercase;
 }
 
 .lumos-loved-title .white-text {
@@ -441,118 +584,239 @@
 }
 
 .lumos-loved-title .grey-text {
-  color: #6b7280;
+  color: #4b5563;
 }
 
-/* 3 Tilted Cards Container */
-.lumos-cards-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 36px;
-  width: 100%;
-  max-width: 1180px;
-  perspective: 1200px;
-}
-
-.lumos-tilt-card {
+/* Overlapping Draggable Sticker Cards Cluster */
+.lumos-cards-cluster {
   position: relative;
-  background: #141414;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 24px;
-  padding: 44px 34px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  min-height: 380px;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.85);
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.4s ease;
-  transform-style: preserve-3d;
+  width: 100%;
+  min-height: 480px;
+  margin: 30px auto 0;
 }
 
-/* Lumos Video Tilted Angles */
-.lumos-tilt-card.card-1 {
-  transform: rotate(-6deg) translateY(10px);
+.lumos-drag-card {
+  position: absolute;
+  width: 320px;
+  padding: 28px 24px 22px;
+  border-radius: 20px;
+  box-sizing: border-box;
+  user-select: none;
+  touch-action: none;
+  cursor: grab;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.65), 0 0 15px rgba(0, 0, 0, 0.4);
+  transition: box-shadow 0.2s ease, transform 0.1s ease;
 }
 
-.lumos-tilt-card.card-2 {
-  transform: rotate(1.5deg) translateY(-15px);
-  border-color: rgba(52, 211, 153, 0.35);
-  background: linear-gradient(180deg, #181818 0%, #111111 100%);
+.lumos-drag-card:active {
+  cursor: grabbing;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.85), 0 0 25px rgba(230, 0, 122, 0.4);
 }
 
-.lumos-tilt-card.card-3 {
-  transform: rotate(7.5deg) translateY(14px);
+.lumos-drag-pill {
+  position: absolute;
+  top: -12px;
+  right: -10px;
+  background: #E6007A;
+  color: #ffffff;
+  font-family: 'Syne', 'Outfit', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 999px;
+  box-shadow: 0 4px 12px rgba(230, 0, 122, 0.5);
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  pointer-events: none;
 }
 
-.lumos-tilt-card:hover {
-  transform: rotate(0deg) translateY(-14px) scale(1.03) !important;
-  border-color: #34d399;
-  box-shadow: 0 35px 60px -10px rgba(52, 211, 153, 0.25);
-  z-index: 15;
+.lumos-drag-card:hover .lumos-drag-pill {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Card 1: Fast & Reliable (Polaroid Off-White Style with Hazard Tape) */
+.lumos-drag-card.card-polaroid {
+  background: #F4F2EC;
+  color: #111111;
+  top: 20px;
+  left: 3%;
+  transform: rotate(-6deg);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+.lumos-drag-card.card-polaroid .lumos-card-title {
+  color: #111111;
+}
+.lumos-drag-card.card-polaroid .lumos-card-desc {
+  color: #444444;
+}
+
+/* Card 2: Custom To You (Mint Teal Card with Barcode Stripes) */
+.lumos-drag-card.card-mint {
+  background: #A6F4E0;
+  color: #064E3B;
+  top: 50px;
+  left: 33%;
+  transform: rotate(2deg);
+  border: 1px solid rgba(6, 78, 59, 0.2);
+}
+.lumos-drag-card.card-mint .lumos-card-title {
+  color: #064E3B;
+}
+.lumos-drag-card.card-mint .lumos-card-desc {
+  color: #0d5c4b;
+}
+
+/* Card 3: Easy To Use (Hot Pink Textured Card) */
+.lumos-drag-card.card-pink {
+  background: #E6007A;
+  color: #FFFFFF;
+  top: 15px;
+  left: 63%;
+  transform: rotate(7deg);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+.lumos-drag-card.card-pink .lumos-card-title {
+  color: #FFFFFF;
+}
+.lumos-drag-card.card-pink .lumos-card-desc {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.lumos-hazard-tape {
+  height: 12px;
+  width: 100%;
+  margin-top: 16px;
+  border-radius: 2px;
+  background: repeating-linear-gradient(
+    -45deg,
+    #111111,
+    #111111 6px,
+    #ffffff 6px,
+    #ffffff 12px
+  );
 }
 
 .lumos-card-badge {
   display: inline-block;
-  align-self: flex-start;
-  font-size: 0.76rem;
+  font-size: 0.72rem;
   font-weight: 800;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #34d399;
-  background: rgba(52, 211, 153, 0.1);
-  border: 1px solid rgba(52, 211, 153, 0.25);
-  padding: 6px 14px;
+  padding: 4px 10px;
   border-radius: 999px;
-  margin-bottom: 24px;
+  margin-bottom: 14px;
+}
+
+.card-polaroid .lumos-card-badge {
+  background: rgba(0, 0, 0, 0.08);
+  color: #111111;
+}
+.card-mint .lumos-card-badge {
+  background: rgba(6, 78, 59, 0.15);
+  color: #064E3B;
+}
+.card-pink .lumos-card-badge {
+  background: rgba(255, 255, 255, 0.22);
+  color: #ffffff;
 }
 
 .lumos-card-title {
   font-family: 'Syne', 'Outfit', sans-serif;
-  font-size: clamp(1.6rem, 2.4vw, 2.2rem);
-  font-weight: 850;
+  font-size: 1.8rem;
+  font-weight: 900;
   letter-spacing: -0.03em;
-  color: #ffffff;
-  margin: 0 0 16px 0;
-  line-height: 1.15;
+  margin: 0 0 10px 0;
+  line-height: 1.1;
 }
 
 .lumos-card-desc {
-  font-size: 1rem;
-  line-height: 1.6;
-  color: #a3a3a3;
-  margin: 0 0 28px 0;
+  font-size: 0.94rem;
+  line-height: 1.5;
+  margin: 0;
 }
 
-.lumos-card-footer {
+/* Bottom Continuous Marquee Ticker Strip */
+.lumos-ticker-strip {
+  margin-top: 60px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: #737373;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  padding-top: 20px;
+  gap: 20px;
+  width: 100%;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.04);
 }
 
-.lumos-card-icon {
-  font-size: 1.6rem;
+.lumos-ticker-btn {
+  flex-shrink: 0;
+  background: #E6007A;
+  color: #ffffff;
+  font-family: 'Syne', 'Outfit', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 850;
+  letter-spacing: 0.04em;
+  padding: 10px 22px;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(230, 0, 122, 0.45);
+  transition: all 0.2s ease;
+}
+
+.lumos-ticker-btn:hover {
+  transform: scale(1.04);
+  background: #ff1a8c;
+}
+
+.lumos-ticker-track {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+}
+
+.lumos-ticker-content {
+  display: flex;
+  gap: 32px;
+  align-items: center;
+  white-space: nowrap;
+  font-family: 'Syne', 'Outfit', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 750;
+  color: rgba(255, 255, 255, 0.85);
+  animation: lumosTickerScroll 22s linear infinite;
+}
+
+.lumos-ticker-content span.cross {
+  color: #E6007A;
+  font-size: 0.8em;
+}
+
+@keyframes lumosTickerScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }
 
 /* ══════════════════════════════════════════════════════════════════════════
-   4. SCROLL 3: ALL PRODUCTS LIST — MAIN BUY SECTION (WHITE BG)
+   4. SCROLL 3: ALL PRODUCTS LIST — SPLIT PREVIEW LAYOUT (MATCHING LUMOS VIDEO)
    ══════════════════════════════════════════════════════════════════════════ */
 .lumos-products-section {
   position: relative;
   width: 100%;
   background-color: #FFFFFF;
   color: #111111;
-  padding: 120px 40px 140px;
+  padding: 120px 48px 140px;
   z-index: 12;
   box-sizing: border-box;
 }
 
 .lumos-products-inner {
-  max-width: 1200px;
+  max-width: 1240px;
   margin: 0 auto;
 }
 
@@ -560,15 +824,15 @@
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
-  margin-bottom: 60px;
+  margin-bottom: 50px;
   border-bottom: 2px solid #111111;
-  padding-bottom: 24px;
+  padding-bottom: 22px;
 }
 
 .lumos-products-title {
   font-family: 'Syne', 'Outfit', sans-serif;
   font-size: clamp(2.8rem, 6vw, 5.2rem);
-  font-weight: 900;
+  font-weight: 950;
   letter-spacing: -0.04em;
   color: #111111;
   margin: 0;
@@ -576,11 +840,106 @@
 
 .lumos-products-sub {
   font-size: 1.05rem;
-  font-weight: 650;
+  font-weight: 700;
   color: #666666;
 }
 
-/* Lumos Linear Row List */
+/* Split Layout: Left Preview Pane + Right Linear Row List */
+.lumos-products-split-layout {
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  gap: 50px;
+  align-items: start;
+}
+
+/* Floating Left Preview Pane (Matching Lumos Video Frame 6!) */
+.lumos-product-preview-pane {
+  position: sticky;
+  top: 40px;
+  background: #F4F2EC;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 24px;
+  padding: 24px;
+  box-sizing: border-box;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+}
+
+.lumos-preview-thumb-wrap {
+  width: 100%;
+  height: 220px;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #000000;
+  margin-bottom: 20px;
+}
+
+.lumos-preview-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.lumos-product-preview-pane:hover .lumos-preview-img {
+  transform: scale(1.04);
+}
+
+.lumos-preview-tag {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #E6007A;
+  background: rgba(230, 0, 122, 0.1);
+  padding: 4px 10px;
+  border-radius: 999px;
+  margin-bottom: 12px;
+}
+
+.lumos-preview-name {
+  font-family: 'Syne', 'Outfit', sans-serif;
+  font-size: 1.7rem;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  color: #111111;
+  margin: 0 0 8px 0;
+}
+
+.lumos-preview-tagline {
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: #555555;
+  margin: 0 0 20px 0;
+}
+
+.lumos-preview-btn {
+  width: 100%;
+  background: #111111;
+  color: #ffffff;
+  border: none;
+  font-family: 'Syne', 'Outfit', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 850;
+  letter-spacing: 0.04em;
+  padding: 12px;
+  border-radius: 999px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+}
+
+.lumos-preview-btn:hover {
+  background: #E6007A;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(230, 0, 122, 0.35);
+}
+
+/* Right Linear Rows List */
 .lumos-products-list {
   display: flex;
   flex-direction: column;
@@ -591,31 +950,32 @@
 .lumos-product-row {
   position: relative;
   display: grid;
-  grid-template-columns: 80px 1.4fr 1fr 140px 160px;
+  grid-template-columns: 60px 1.4fr 1fr 110px 140px;
   align-items: center;
-  padding: 34px 24px;
+  padding: 30px 18px;
   border-top: 1px solid #111111;
   text-decoration: none;
   cursor: pointer;
   transition: background-color 0.25s ease, padding 0.25s ease;
-  overflow: hidden;
 }
 
-.lumos-product-row:hover {
-  background-color: #fce7f3; /* turns soft vibrant pink */
-  padding-left: 36px;
+.lumos-product-row:hover,
+.lumos-product-row.active {
+  background-color: #fce7f3; /* Authentic Lumos soft pink */
+  padding-left: 24px;
 }
 
 .lumos-row-index {
-  font-family: 'Syne', monospace;
-  font-size: 1.1rem;
-  font-weight: 800;
-  color: #888888;
-  transition: color 0.2s ease;
+  font-family: 'Syne', 'Outfit', sans-serif;
+  font-size: 1.15rem;
+  font-weight: 850;
+  color: #9ca3af;
+  letter-spacing: -0.02em;
 }
 
-.lumos-product-row:hover .lumos-row-index {
-  color: #be185d;
+.lumos-product-row:hover .lumos-row-index,
+.lumos-product-row.active .lumos-row-index {
+  color: #db2777;
 }
 
 .lumos-row-name-wrap {
@@ -626,37 +986,33 @@
 
 .lumos-row-name {
   font-family: 'Syne', 'Outfit', sans-serif;
-  font-size: clamp(1.4rem, 2.2vw, 2rem);
-  font-weight: 850;
-  letter-spacing: -0.02em;
+  font-size: clamp(1.4rem, 2vw, 1.85rem);
+  font-weight: 900;
+  letter-spacing: -0.03em;
   color: #111111;
   margin: 0;
 }
 
 .lumos-row-tagline {
-  font-size: 0.88rem;
-  color: #666666;
+  font-size: 0.85rem;
+  color: #6b7280;
   font-weight: 550;
 }
 
-.lumos-product-row:hover .lumos-row-tagline {
-  color: #831843;
-}
-
 .lumos-row-category {
-  font-size: 0.8rem;
+  font-size: 0.82rem;
   font-weight: 750;
-  letter-spacing: 0.08em;
+  color: #4b5563;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: #555555;
 }
 
 .lumos-row-price {
   font-family: 'Syne', 'Outfit', sans-serif;
-  font-size: 1.55rem;
-  font-weight: 850;
+  font-size: 1.4rem;
+  font-weight: 950;
   color: #111111;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
 }
 
 .lumos-row-action {
@@ -668,58 +1024,65 @@
   background: #111111;
   color: #ffffff;
   border: none;
+  font-family: 'Syne', 'Outfit', sans-serif;
   font-size: 0.88rem;
-  font-weight: 750;
-  padding: 10px 24px;
+  font-weight: 800;
+  padding: 10px 20px;
   border-radius: 999px;
   cursor: pointer;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 8px;
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-.lumos-product-row:hover .lumos-buy-pill-btn {
-  background: #db2777; /* hot pink on hover */
-  transform: scale(1.06);
+.lumos-product-row:hover .lumos-buy-pill-btn,
+.lumos-product-row.active .lumos-buy-pill-btn {
+  background: #db2777;
+  color: #ffffff;
+  transform: translateX(-4px) scale(1.04);
   box-shadow: 0 8px 20px rgba(219, 39, 119, 0.35);
 }
 
 /* ══════════════════════════════════════════════════════════════════════════
-   5. SCROLL 4: EXPERT SECTION (BLACK BG)
+   5. SCROLL 4: EXPERT SECTION (BLACK BG) & 3D TILT
    ══════════════════════════════════════════════════════════════════════════ */
 .lumos-expert-section {
   position: relative;
   width: 100%;
   background-color: #070707;
   color: #ffffff;
-  padding: 120px 40px 130px;
+  padding: 120px 48px 130px;
   z-index: 14;
   box-sizing: border-box;
 }
 
 .lumos-expert-inner {
-  max-width: 1160px;
+  max-width: 1200px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 380px 1fr;
-  gap: 60px;
+  grid-template-columns: 400px 1fr;
+  gap: 70px;
   align-items: center;
 }
 
 .lumos-expert-photo-wrap {
   position: relative;
   width: 100%;
-  max-width: 360px;
+  max-width: 380px;
   border-radius: 28px;
   overflow: hidden;
   border: 2px solid rgba(52, 211, 153, 0.35);
-  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.8), 0 0 35px rgba(52, 211, 153, 0.15);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.8), 0 0 35px rgba(52, 211, 153, 0.15);
+  perspective: 1000px;
+  transform-style: preserve-3d;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .lumos-expert-img {
   width: 100%;
-  height: 440px;
+  height: 460px;
   object-fit: cover;
   display: block;
 }
@@ -729,11 +1092,19 @@
   flex-direction: column;
 }
 
+.lumos-expert-meta-header {
+  font-family: monospace;
+  font-size: 0.85rem;
+  color: #6ee7b7;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
 .lumos-expert-tag {
   display: inline-block;
   align-self: flex-start;
   font-size: 0.8rem;
-  font-weight: 800;
+  font-weight: 850;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: #34d399;
@@ -741,24 +1112,34 @@
   border: 1px solid rgba(52, 211, 153, 0.3);
   padding: 6px 16px;
   border-radius: 999px;
-  margin-bottom: 24px;
+  margin-bottom: 22px;
 }
 
 .lumos-expert-title {
   font-family: 'Syne', 'Outfit', sans-serif;
   font-size: clamp(2.4rem, 4.8vw, 4.4rem);
-  font-weight: 900;
-  line-height: 1.08;
+  font-weight: 950;
+  line-height: 1.06;
   letter-spacing: -0.04em;
   color: #ffffff;
-  margin: 0 0 24px 0;
+  margin: 0 0 20px 0;
+}
+
+.lumos-expert-quote {
+  font-size: 1.15rem;
+  line-height: 1.6;
+  color: #e5e7eb;
+  font-style: italic;
+  margin: 0 0 22px 0;
+  border-left: 3px solid #34d399;
+  padding-left: 18px;
 }
 
 .lumos-expert-bio {
-  font-size: 1.12rem;
+  font-size: 1.05rem;
   line-height: 1.65;
   color: #a3a3a3;
-  margin: 0 0 34px 0;
+  margin: 0 0 32px 0;
   max-width: 640px;
 }
 
@@ -771,16 +1152,23 @@
 .lumos-expert-bullet-item {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
   font-size: 1rem;
-  font-weight: 650;
-  color: #e5e5e5;
+  color: #e5e7eb;
 }
 
 .lumos-bullet-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: rgba(52, 211, 153, 0.2);
   color: #34d399;
   font-weight: 900;
-  font-size: 1.1rem;
+  font-size: 0.85rem;
+  flex-shrink: 0;
 }
 
 /* ══════════════════════════════════════════════════════════════════════════
@@ -789,48 +1177,46 @@
 .lumos-buybox-section {
   position: relative;
   width: 100%;
-  background: #0d0d0d;
-  color: #ffffff;
-  padding: 100px 30px 120px;
+  background-color: #070707;
+  padding: 100px 48px 120px;
   z-index: 16;
   box-sizing: border-box;
 }
 
 .lumos-buybox-card {
-  max-width: 1080px;
+  max-width: 980px;
   margin: 0 auto;
-  background: linear-gradient(145deg, #161616 0%, #0d0d0d 100%);
-  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: #111111;
+  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 36px;
-  padding: 70px 50px;
+  padding: 65px 45px;
   text-align: center;
-  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.9), 0 0 40px rgba(52, 211, 153, 0.1);
-  position: relative;
-  overflow: hidden;
+  box-sizing: border-box;
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.9), 0 0 40px rgba(230, 0, 122, 0.15);
 }
 
 .lumos-buybox-pill {
   display: inline-block;
-  font-size: 0.8rem;
-  font-weight: 800;
-  letter-spacing: 0.14em;
+  font-size: 0.85rem;
+  font-weight: 850;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: #ff2d75;
   background: rgba(255, 45, 117, 0.12);
   border: 1px solid rgba(255, 45, 117, 0.3);
-  padding: 6px 18px;
+  padding: 8px 22px;
   border-radius: 999px;
   margin-bottom: 28px;
 }
 
 .lumos-buybox-heading {
   font-family: 'Syne', 'Outfit', sans-serif;
-  font-size: clamp(2.8rem, 6.8vw, 5.8rem);
+  font-size: clamp(2.8rem, 6.5vw, 6.5rem);
   font-weight: 950;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.05em;
   color: #ffffff;
-  margin: 0 0 36px 0;
-  line-height: 1.05;
+  margin: 0 0 45px 0;
+  line-height: 1;
 }
 
 .lumos-buybox-actions {
@@ -838,28 +1224,28 @@
   align-items: center;
   justify-content: center;
   gap: 18px;
+  margin-bottom: 35px;
   flex-wrap: wrap;
-  margin-bottom: 30px;
 }
 
 .lumos-action-btn-primary {
-  background: linear-gradient(135deg, #ff2d75 0%, #db2777 100%);
+  background: #E6007A;
   color: #ffffff;
   border: none;
   font-family: 'Syne', 'Outfit', sans-serif;
   font-size: 1.15rem;
   font-weight: 850;
-  padding: 18px 42px;
+  padding: 18px 44px;
   border-radius: 999px;
   cursor: pointer;
   letter-spacing: 0.02em;
-  box-shadow: 0 10px 25px rgba(255, 45, 117, 0.4);
+  box-shadow: 0 10px 25px rgba(230, 0, 122, 0.45);
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .lumos-action-btn-primary:hover {
-  transform: translateY(-3px) scale(1.02);
-  box-shadow: 0 16px 35px rgba(255, 45, 117, 0.6);
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 16px 35px rgba(230, 0, 122, 0.65);
 }
 
 .lumos-action-btn-cart {
@@ -911,36 +1297,110 @@
 }
 
 /* ══════════════════════════════════════════════════════════════════════════
-   7. STORE PAGE FOOTER (INSIDE STORE PAGE)
+   7. STORE PAGE FOOTER (INSIDE STORE PAGE) — WITH MELTING LETTER DRIPS!
    ══════════════════════════════════════════════════════════════════════════ */
 .lumos-footer-section {
   position: relative;
   width: 100%;
   background-color: #000000;
   color: #ffffff;
-  padding: 110px 40px 60px;
+  padding: 110px 48px 60px;
   z-index: 18;
   box-sizing: border-box;
   text-align: center;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .lumos-footer-statement {
+  position: relative;
+  display: inline-block;
   font-family: 'Syne', 'Outfit', sans-serif;
-  font-size: clamp(3.5rem, 11vw, 11rem);
+  font-size: clamp(3.8rem, 11.5vw, 12rem);
   font-weight: 950;
   line-height: 0.95;
   letter-spacing: -0.05em;
-  margin: 0 0 50px 0;
+  margin: 0 auto 50px;
   text-transform: uppercase;
+  user-select: none;
 }
 
 .lumos-footer-hello {
+  position: relative;
   color: #ffffff;
 }
 
 .lumos-footer-bex {
-  color: #34d399; /* Mint Green */
+  position: relative;
+  color: #A6F4E0; /* Authentic Lumos Mint Cyan */
+  margin-left: 20px;
+}
+
+/* SVG Liquid Melting Drips on Footer Letter Stems */
+.lumos-footer-letter-drip {
+  position: absolute;
+  bottom: -28px;
+  pointer-events: none;
+  width: 18px;
+  height: 38px;
+  fill: currentColor;
+}
+
+.lumos-footer-meta-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr 1fr;
+  align-items: center;
+  gap: 30px;
+  max-width: 1200px;
+  margin: 40px auto 60px;
+  text-align: left;
+}
+
+.lumos-footer-col-left {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-family: 'Syne', 'Outfit', sans-serif;
+  font-size: 1.15rem;
+  font-weight: 800;
+}
+
+.lumos-footer-col-left a {
+  color: #ffffff;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.lumos-footer-col-left a:hover {
+  color: #E6007A;
+}
+
+.lumos-footer-col-center {
+  font-family: 'Syne', 'Outfit', sans-serif;
+  font-size: clamp(1.4rem, 2.4vw, 2.4rem);
+  font-weight: 950;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  color: #ffffff;
+}
+
+.lumos-footer-col-right {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-size: 0.92rem;
+  color: #d1d5db;
+}
+
+.lumos-footer-meta-item {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.lumos-footer-meta-label {
+  font-family: monospace;
+  font-size: 0.8rem;
+  color: #9ca3af;
+  font-weight: 700;
 }
 
 .lumos-footer-bottom-row {
@@ -950,7 +1410,7 @@
   max-width: 1200px;
   margin: 0 auto;
   padding-top: 30px;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
   font-size: 0.88rem;
   color: #737373;
 }
@@ -958,8 +1418,8 @@
 .lumos-footer-top-btn {
   background: transparent;
   color: #a3a3a3;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  padding: 8px 18px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  padding: 8px 20px;
   border-radius: 999px;
   font-size: 0.82rem;
   font-weight: 700;
@@ -992,10 +1452,7 @@
     padding-bottom: 14px;
   }
 
-  .lumos-center-pill {
-    display: none;
-  }
-
+  .lumos-center-pill,
   .lumos-get-started-btn {
     display: none;
   }
@@ -1012,133 +1469,107 @@
 
   .lumos-hero-content-row {
     flex-direction: column;
-    gap: 6px;
+    gap: 8px;
     margin-top: 10px;
   }
 
   .lumos-hero-headline {
     font-size: clamp(1.4rem, 6.2vw, 2.2rem) !important;
-    line-height: 1.14 !important;
+    line-height: 1.08;
     max-width: 100%;
   }
 
   .lumos-hero-side-sub {
+    font-size: 1rem;
     text-align: left;
-    padding-top: 0;
-    font-size: 0.92rem;
-  }
-
-  .lumos-hero-mid-row {
-    margin: 12px 0 6px;
-    font-size: 0.82rem;
-  }
-
-  .lumos-centerpiece-wrap {
-    min-height: 180px !important;
-    padding: 10px 0 !important;
-    max-width: 100% !important;
-    overflow: hidden !important;
-  }
-
-  .lumos-bex-watermark {
-    font-size: 22vw !important;
-  }
-
-  .lumos-logo-container {
-    width: 100% !important;
-    max-width: 330px !important;
-    padding: 0 10px;
-    box-sizing: border-box;
-  }
-
-  .lumos-metallic-logo {
-    width: 100% !important;
-    max-width: 100% !important;
-    height: auto !important;
-  }
-
-  .lumos-drips-svg {
-    width: 100% !important;
-    max-width: 100% !important;
-    height: 40px !important;
+    max-width: 100%;
   }
 
   .lumos-hero-bottom-bar {
-    padding-top: 14px;
-    font-size: 0.8rem;
+    flex-direction: column;
+    gap: 14px;
+    align-items: flex-start;
   }
 
-  .lumos-hero-bottom-left,
-  .lumos-hero-bottom-right {
-    font-size: 0.8rem;
+  .lumos-hero-bottom-center {
+    display: none;
   }
 
   .lumos-torn-content {
     padding: 50px 20px 70px;
   }
 
+  .lumos-torn-headline {
+    font-size: clamp(2rem, 7vw, 3.2rem);
+  }
+
   .lumos-stats-row {
     flex-direction: column;
-    gap: 20px;
-    padding: 20px 16px;
+    gap: 24px;
   }
 
   .lumos-stat-divider {
     display: none;
   }
 
-  .lumos-cards-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-  }
-
-  .lumos-tilt-card {
-    min-height: auto;
-    padding: 30px 22px;
-    transform: none !important;
-  }
-
-  .lumos-products-section {
-    padding: 80px 20px 100px;
-  }
-
-  .lumos-products-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-    margin-bottom: 30px;
-  }
-
-  .lumos-product-row {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
-    padding: 22px 16px;
-  }
-
-  .lumos-row-price {
-    font-size: 1.3rem;
-  }
-
-  .lumos-row-action {
-    width: 100%;
-  }
-
-  .lumos-buy-pill-btn {
-    width: 100%;
-    justify-content: center;
-    padding: 12px;
-  }
-
-  .lumos-expert-section {
+  .lumos-loved-section {
     padding: 80px 20px 90px;
   }
 
-  .lumos-expert-inner {
+  .lumos-cards-cluster {
+    min-height: auto;
     display: flex;
     flex-direction: column;
+    gap: 20px;
+  }
+
+  .lumos-drag-card {
+    position: relative !important;
+    top: 0 !important;
+    left: 0 !important;
+    transform: none !important;
+    width: 100% !important;
+  }
+
+  .lumos-ticker-strip {
+    flex-direction: column;
+    align-items: stretch;
+    border-radius: 20px;
+  }
+
+  .lumos-products-section {
+    padding: 70px 20px 90px;
+  }
+
+  .lumos-products-split-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .lumos-product-preview-pane {
+    position: relative;
+    top: 0;
+  }
+
+  .lumos-product-row {
+    grid-template-columns: 40px 1fr 100px;
+    gap: 12px;
+    padding: 20px 12px;
+  }
+
+  .lumos-row-category {
+    display: none;
+  }
+
+  .lumos-row-action {
+    display: none;
+  }
+
+  .lumos-expert-section {
+    padding: 70px 20px 80px;
+  }
+
+  .lumos-expert-inner {
+    grid-template-columns: 1fr;
     gap: 36px;
     text-align: center;
   }
@@ -1162,11 +1593,11 @@
   }
 
   .lumos-buybox-section {
-    padding: 70px 16px 90px;
+    padding: 60px 16px 80px;
   }
 
   .lumos-buybox-card {
-    padding: 44px 20px;
+    padding: 40px 18px;
   }
 
   .lumos-buybox-actions {
@@ -1182,7 +1613,17 @@
   }
 
   .lumos-footer-section {
-    padding: 80px 20px 50px;
+    padding: 70px 20px 45px;
+  }
+
+  .lumos-footer-meta-grid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+    text-align: center;
+  }
+
+  .lumos-footer-col-right {
+    align-items: center;
   }
 
   .lumos-footer-bottom-row {
