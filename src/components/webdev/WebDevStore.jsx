@@ -39,10 +39,103 @@ const HABITO_REVIEWS = [
 ]
 
 const FONTO_WORDS = [
-  'ALL-IN-ONE MASTER SUITE',
-  '1,000+ PRO TEMPLATES',
   '10 EXECUTIVE BI COCKPITS',
-  '₹199 FLASH SALE DEAL'
+  '1,000+ PRO BUSINESS SHEETS',
+  '3-STATEMENT GAAP MODELS',
+  '₹199 FLASH SALE ACCESS'
+]
+
+const DASHBOARD_VIEWS = [
+  {
+    id: 'master',
+    tab: '📁 All-in-One Suite',
+    title: 'aIn — Excel All-in-One Master Suite',
+    tagline: 'From Manual To Smart Work — Pro Dashboards, Auto Calculation & Business Templates (.xlsx)',
+    image: '/ain_excel_pack.jpg',
+    tag: 'Flagship Master Pack',
+    desc: 'The complete universal repository for 100+ industries. 1,000+ battle-tested business spreadsheets, 10 automated executive BI dashboards, and 5 VIP bonus toolkits with instant lifetime Google Drive access.',
+    badge: '1,000+ SPREADSHEETS INCLUDED',
+    specs: [
+      '1,000+ Ready-to-Use Business Excel Templates for 100+ Industries',
+      'Sales Dashboard, Financial Analysis & Expense Tracker',
+      'Inventory Tracker, Project Tracker & HR KPI Dashboard',
+      'Free Bonus: Shortcuts, Resumes, Habit Trackers & Daily Planner',
+      'Automated Formulas (XLOOKUP, Dynamic Arrays, Auto Calculation)',
+      'Delivered instantly to your email with Lifetime Google Drive Access'
+    ]
+  },
+  {
+    id: 'sales',
+    tab: '📊 Sales BI Cockpit',
+    title: 'Executive Sales BI Cockpit',
+    tagline: 'Interactive Regional Slicers, Win-Rates, Quotas & Revenue Velocity',
+    image: '/sales_dashboard.jpg',
+    tag: 'Executive Cockpit',
+    desc: 'Full-funnel automated sales intelligence. Real-time conversion tracking, regional territory slicers, sales rep quota leaderboards, commission calculators, and boardroom revenue pacing charts.',
+    badge: 'INTERACTIVE REGIONAL SLICERS',
+    specs: [
+      'Dynamic Regional & Product Category Slicers',
+      'Full-Funnel Lead Conversion Probability Math',
+      'Sales Rep Commission & Quota Leaderboards',
+      'Customer Acquisition Cost (CAC) & LTV Metrics',
+      'Quarterly & Monthly Revenue Forecasting Models',
+      'Boardroom-Ready Executive Summary Visuals'
+    ]
+  },
+  {
+    id: 'finance',
+    tab: '💰 Financial & DCF Models',
+    title: '3-Statement Financial Models & DCF Engine',
+    tagline: 'Linked GAAP Financial Statements, Cash Runway & Investor Valuations',
+    image: '/financial_trend.jpg',
+    tag: 'Financial Architecture',
+    desc: 'Battle-tested corporate financial architecture. Fully linked 3-statement models (P&L, Balance Sheet, Cash Flow), automated Discounted Cash Flow (DCF) valuation, runway burnout forecasting, and investor sensitivity tables.',
+    badge: 'GAAP COMPLIANT ARCHITECTURE',
+    specs: [
+      'Fully Linked 3-Statement Models (P&L, Balance Sheet, Cash Flow)',
+      'Automated Discounted Cash Flow (DCF) Valuation Engine',
+      'Monthly Cash Burn & 18-Month Runway Calculator',
+      'Scenario & Sensitivity Analysis Tables (Base / Bull / Bear)',
+      'Cap Table & Equity Dilution Waterfall Schedules',
+      'Investor Pitch Deck Financial Chart Templates'
+    ]
+  },
+  {
+    id: 'hr',
+    tab: '👥 HR & Workforce Matrix',
+    title: 'Automated HR, Payroll & Operations Matrix',
+    tagline: 'Automated Payroll, Shift Rosters, Overtime & 9-Box Talent Matrix',
+    image: '/hr_kpi.jpg',
+    tag: 'Operations & Workforce',
+    desc: 'Complete organizational workforce management. Calculates overtime, automated tax brackets, employee attrition metrics, 360 performance reviews, and monthly payroll summaries in one click.',
+    badge: '1-CLICK PAYROLL RUN',
+    specs: [
+      '1-Click Automated Monthly Payroll & Salary Slip Generator',
+      'Automated Overtime (OT), Leaves & Tax Deductions',
+      'Dynamic Shift Scheduling & Roster Management Grid',
+      '9-Box Grid for High-Potential Talent & Performance Reviews',
+      'Departmental Headcount & Attrition Cost Analytics',
+      'Employee Onboarding & Exit Interview Tracking Sheets'
+    ]
+  },
+  {
+    id: 'projects',
+    tab: '📈 Project Scorecard',
+    title: 'Executive Project Health Scorecard',
+    tagline: 'Dynamic Gantt Timelines, Resource Allocation & Milestone Pacing',
+    image: '/project_scorecard.jpg',
+    tag: 'Executive Cockpit',
+    desc: 'Turnkey operational command center. Real-time project health scorecard with automated Gantt timelines, resource allocation heatmaps, milestone pacing, and budget vs actual burn tracking.',
+    badge: 'REAL-TIME TRACKING',
+    specs: [
+      'Automated Dynamic Gantt Chart with Conditional Formatting',
+      'Resource Workload Allocation & Team Capacity Heatmap',
+      'Budget vs Actual Spend Variance Tracking',
+      'Critical Path & Milestone Delivery Pacing',
+      'Risk Assessment & Mitigation Matrix',
+      'Executive Leadership Weekly Status Brief Visuals'
+    ]
+  }
 ]
 
 const PRODUCTS = [
@@ -176,6 +269,8 @@ export default function WebDevStore() {
 
   const [currency, setCurrency] = useState('INR') // 'INR' | 'USD'
   const [fontoIndex, setFontoIndex] = useState(0)
+  const [activeDashboardTab, setActiveDashboardTab] = useState('master')
+  const activeView = DASHBOARD_VIEWS.find((v) => v.id === activeDashboardTab) || DASHBOARD_VIEWS[0]
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -753,151 +848,160 @@ export default function WebDevStore() {
               <div className="lumos-hairline-divider" />
             </header>
 
-            {/* ── EDITORIAL PRODUCTS STORYTELLING SHOWCASE (UNCONVENTIONAL ASYMMETRICAL LAYOUT) ── */}
+            {/* ── INTERACTIVE GLASS DASHBOARD COCKPIT TABS ── */}
+            <div className="glass-tab-bar">
+              {DASHBOARD_VIEWS.map((v) => (
+                <button
+                  key={v.id}
+                  type="button"
+                  className={`glass-tab-btn interactive ${activeDashboardTab === v.id ? 'is--active' : ''}`}
+                  onClick={() => setActiveDashboardTab(v.id)}
+                >
+                  <span>{v.tab}</span>
+                </button>
+              ))}
+            </div>
+
+            {/* ── EDITORIAL PRODUCTS STORYTELLING SHOWCASE (INTERACTIVE GLASS COCKPIT) ── */}
             <div className="lumos-showcase-list">
-              {PRODUCTS.map((prod, idx) => {
-                const productNumber = String(idx + 1).padStart(2, '0')
-                const isEven = idx % 2 === 1
-                return (
-                  <article
-                    key={prod.id}
-                    id={`editorial-product-${prod.id}`}
-                    className={`lumos-product-item ${isEven ? 'is--inverted' : ''} ${prod.popular ? 'is--flagship' : ''}`}
-                    style={{ '--item-delay': `${idx * 0.1}s` }}
-                  >
-                    {/* Top Index & Classification Bar */}
-                    <div className="lumos-item-topbar">
-                      <div className="lumos-item-top-left">
-                        <span className="lumos-item-num">[{productNumber} / 01]</span>
-                        <span className="lumos-item-category">{prod.category || 'ARCHITECTURE'}</span>
-                        {prod.popular && <span className="lumos-flagship-tag">FLAGSHIP SUITE</span>}
+              <article
+                id={`editorial-product-${PRODUCTS[0].id}`}
+                className="lumos-product-item is--flagship"
+                style={{ '--item-delay': '0s' }}
+              >
+                {/* Top Index & Classification Bar */}
+                <div className="lumos-item-topbar">
+                  <div className="lumos-item-top-left">
+                    <span className="lumos-item-num">[ 01 / 01 ]</span>
+                    <span className="lumos-item-category">BI & FINANCIAL ARCHITECTURE</span>
+                    <span className="lumos-flagship-tag">{activeView.tag}</span>
+                  </div>
+                  <div className="lumos-item-top-right">
+                    <span className="lumos-item-price-chip">
+                      {currency === 'INR' ? '₹199' : '$2.49'}
+                    </span>
+                    <span className="lumos-item-status">VERIFIED PROD</span>
+                  </div>
+                </div>
+
+                {/* Product Main Editorial Lockup */}
+                <div className="lumos-item-body">
+                  {/* Visual Frame */}
+                  <div className="lumos-item-visual-wrap">
+                    <div
+                      className="lumos-visual-frame interactive"
+                      onClick={() => setActiveLightboxPoster({
+                        title: activeView.title,
+                        image: activeView.image,
+                        tag: activeView.tag
+                      })}
+                      title="Click to inspect dashboard preview"
+                    >
+                      <img
+                        key={activeView.id}
+                        src={activeView.image}
+                        alt={activeView.title}
+                        className="lumos-visual-img"
+                        loading="lazy"
+                      />
+                      <div className="lumos-visual-overlay">
+                        <span className="lumos-visual-pill">CLICK TO ZOOM & INSPECT →</span>
                       </div>
-                      <div className="lumos-item-top-right">
-                        <span className="lumos-item-price-chip">
-                          {currency === 'INR' ? prod.priceDisplay : `$${(prod.price * 0.0125).toFixed(2)}`}
+                      {/* Corner Editorial Crosshairs */}
+                      <span className="lumos-crosshair tl">+</span>
+                      <span className="lumos-crosshair tr">+</span>
+                      <span className="lumos-crosshair bl">+</span>
+                      <span className="lumos-crosshair br">+</span>
+                    </div>
+                    <div className="lumos-visual-caption">
+                      <span>{activeView.badge}</span>
+                      <span>STABLE // V2.4</span>
+                    </div>
+                  </div>
+
+                  {/* Content & Typography Column */}
+                  <div className="lumos-item-content">
+                    {/* Oversized Product Title */}
+                    <h3 className="lumos-item-title">
+                      <span className="lumos-title-inner">{activeView.title}</span>
+                    </h3>
+
+                    {/* Tagline */}
+                    <div className="lumos-item-tagline">{activeView.tagline}</div>
+
+                    {/* Descriptive Storytelling Text */}
+                    <p className="lumos-item-desc">{activeView.desc}</p>
+
+                    {/* Technical Specs / Features Breakdown */}
+                    <div className="lumos-item-specs">
+                      <span className="lumos-specs-title">VERIFIED CAPABILITIES (INCLUDED IN ₹199 MASTER SUITE)</span>
+                      <div className="lumos-specs-grid">
+                        {activeView.specs.map((feat, fIdx) => (
+                          <div key={fIdx} className="lumos-spec-item">
+                            <span className="lumos-spec-bullet">✦</span>
+                            <span>{feat}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Tech Stack Chips */}
+                    <div className="lumos-tech-strip">
+                      {['Microsoft Excel .xlsx', 'Google Drive Master Link', 'VBA & Dynamic Formulas', 'Microsoft Verified Standards'].map((t, tIdx) => (
+                        <span key={tIdx} className="lumos-tech-chip">
+                          {t}
                         </span>
-                        <span className="lumos-item-status">VERIFIED PROD</span>
-                      </div>
+                      ))}
                     </div>
 
-                    {/* Product Main Editorial Lockup */}
-                    <div className="lumos-item-body">
-                      {/* Visual Frame */}
-                      <div className="lumos-item-visual-wrap">
-                        <div
-                          className="lumos-visual-frame interactive"
-                          onClick={() => handleOpenCheckoutModal(prod)}
-                        >
-                          <img
-                            src={prod.image}
-                            alt={prod.name}
-                            className="lumos-visual-img"
-                            loading="lazy"
-                          />
-                          <div className="lumos-visual-overlay">
-                            <span className="lumos-visual-pill">INSPECT & ACQUIRE →</span>
-                          </div>
-                          {/* Corner Editorial Crosshairs */}
-                          <span className="lumos-crosshair tl">+</span>
-                          <span className="lumos-crosshair tr">+</span>
-                          <span className="lumos-crosshair bl">+</span>
-                          <span className="lumos-crosshair br">+</span>
-                        </div>
-                        <div className="lumos-visual-caption">
-                          <span>{prod.tech?.[0] || 'VERIFIED ARTIFACT'}</span>
-                          <span>STABLE // V2.4</span>
-                        </div>
-                      </div>
+                    {/* Editorial Action Row */}
+                    <div className="lumos-item-action-row">
+                      <button
+                        type="button"
+                        className="lumos-action-btn interactive"
+                        onClick={() => handleOpenCheckoutModal(PRODUCTS[0])}
+                      >
+                        <span className="lumos-btn-text">
+                          ACQUIRE MASTER SUITE · {currency === 'INR' ? '₹199' : '$2.49'}
+                        </span>
+                        <span className="lumos-btn-arrow">→</span>
+                      </button>
 
-                      {/* Content & Typography Column */}
-                      <div className="lumos-item-content">
-                        {/* Oversized Product Title */}
-                        <h3 className="lumos-item-title">
-                          <span className="lumos-title-inner">{prod.name}</span>
-                        </h3>
+                      <button
+                        type="button"
+                        className="interactive"
+                        onClick={() => addToCart(PRODUCTS[0])}
+                        style={{
+                          background: 'rgba(255, 255, 255, 0.05)',
+                          border: '1px solid rgba(255, 255, 255, 0.15)',
+                          color: '#cbd5e1',
+                          padding: '12px 18px',
+                          borderRadius: '8px',
+                          fontFamily: 'monospace',
+                          fontSize: '11px',
+                          fontWeight: 700,
+                          cursor: 'pointer',
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '6px',
+                          letterSpacing: '0.05em'
+                        }}
+                      >
+                        🛒 + ADD TO CART
+                      </button>
 
-                        {/* Tagline */}
-                        <div className="lumos-item-tagline">{prod.tagline}</div>
-
-                        {/* Descriptive Storytelling Text */}
-                        <p className="lumos-item-desc">{prod.shortDesc || prod.tagline}</p>
-
-                        {/* Technical Specs / Features Breakdown */}
-                        <div className="lumos-item-specs">
-                          <span className="lumos-specs-title">VERIFIED CAPABILITIES</span>
-                          <div className="lumos-specs-grid">
-                            {(prod.features?.slice(0, 6) || []).map((feat, fIdx) => (
-                              <div key={fIdx} className="lumos-spec-item">
-                                <span className="lumos-spec-bullet">✦</span>
-                                <span>{feat}</span>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-
-                        {/* Tech Stack Chips */}
-                        {prod.tech && prod.tech.length > 0 && (
-                          <div className="lumos-tech-strip">
-                            {prod.tech.map((t, tIdx) => (
-                              <span key={tIdx} className="lumos-tech-chip">
-                                {t}
-                              </span>
-                            ))}
-                          </div>
-                        )}
-
-                        {/* Editorial Action Row */}
-                        <div className="lumos-item-action-row">
-                          <button
-                            type="button"
-                            className="lumos-action-btn interactive"
-                            onClick={() => handleOpenCheckoutModal(prod)}
-                          >
-                            <span className="lumos-btn-text">
-                              {prod.id === 'ain-excel-pack'
-                                ? `ACQUIRE MASTER SUITE · ${currency === 'INR' ? '₹199' : '$2.49'}`
-                                : `ACQUIRE LICENSE · ${currency === 'INR' ? prod.priceDisplay : `$${(prod.price * 0.0125).toFixed(2)}`}`}
-                            </span>
-                            <span className="lumos-btn-arrow">→</span>
-                          </button>
-
-                          <button
-                            type="button"
-                            className="interactive"
-                            onClick={() => addToCart(prod)}
-                            style={{
-                              background: 'rgba(255, 255, 255, 0.05)',
-                              border: '1px solid rgba(255, 255, 255, 0.15)',
-                              color: '#cbd5e1',
-                              padding: '12px 18px',
-                              borderRadius: '8px',
-                              fontFamily: 'monospace',
-                              fontSize: '11px',
-                              fontWeight: 700,
-                              cursor: 'pointer',
-                              display: 'inline-flex',
-                              alignItems: 'center',
-                              gap: '6px',
-                              letterSpacing: '0.05em'
-                            }}
-                          >
-                            🛒 + ADD TO CART
-                          </button>
-
-                          <div className="lumos-action-guarantee">
-                            <span>LIFETIME UPDATES</span>
-                            <span>·</span>
-                            <span>ZERO SUBSCRIPTIONS</span>
-                          </div>
-                        </div>
+                      <div className="lumos-action-guarantee">
+                        <span>LIFETIME UPDATES</span>
+                        <span>·</span>
+                        <span>ZERO SUBSCRIPTIONS</span>
                       </div>
                     </div>
+                  </div>
+                </div>
 
                     {/* Thin Animated Dividing Line between Products */}
                     <div className="lumos-hairline-divider" />
                   </article>
-                )
-              })}
             </div>
 
             {/* ── SECTION CLOSING FOOTER STATEMENT ── */}
@@ -1017,19 +1121,39 @@ export default function WebDevStore() {
         {/* ══ SECTION 5: CLIMAX PRICING (SELLING ONLY THE ₹199 ALL-IN-ONE MASTER SUITE) ══ */}
         <section id="noir-pricing" className="noir-pricing-section">
           <div className="noir-pricing-card">
-            {/* Left Column: Feature Highlights */}
+            {/* Left Column: Feature Highlights & Value Stack */}
             <div>
-              <span className="noir-pricing-kicker">🔥 1,000+ EXCEL TEMPLATES — ₹199 ONLY</span>
-              <h2 className="noir-pricing-title">{PRODUCTS[0].name}</h2>
-              <p className="noir-pricing-tagline">{PRODUCTS[0].tagline}</p>
+              <span className="noir-pricing-kicker">🔥 MEGA SALE · 80% OFF · INSTANT ACCESS</span>
+              <h2 className="noir-pricing-title">aIn — Excel All-in-One Master Suite</h2>
+              <p className="noir-pricing-tagline">
+                The Complete Executive Intelligence & Automated Spreadsheet Arsenal
+              </p>
 
               <div className="noir-pricing-features">
-                {PRODUCTS[0].features.map((feat, fIdx) => (
-                  <div key={fIdx} className="noir-feature-item">
-                    <span className="noir-feature-check">✓</span>
-                    <span>{feat}</span>
-                  </div>
-                ))}
+                <div className="noir-feature-item">
+                  <span className="noir-feature-check">✓</span>
+                  <span>10 Executive BI Cockpits (Sales, Finance, HR, KPI) — <strong style={{ color: '#38bdf8' }}>Worth ₹4,999</strong></span>
+                </div>
+                <div className="noir-feature-item">
+                  <span className="noir-feature-check">✓</span>
+                  <span>1,000+ Ready Business Spreadsheets for 100+ Industries — <strong style={{ color: '#38bdf8' }}>Worth ₹3,500</strong></span>
+                </div>
+                <div className="noir-feature-item">
+                  <span className="noir-feature-check">✓</span>
+                  <span>5 VIP Bonus Toolkits (Shortcuts, Resumes, Habit Trackers) — <strong style={{ color: '#38bdf8' }}>Worth ₹1,500</strong></span>
+                </div>
+                <div className="noir-feature-item">
+                  <span className="noir-feature-check">✓</span>
+                  <span>Curated & Audited by Microsoft Verified Architect Hariharan.D</span>
+                </div>
+                <div className="noir-feature-item">
+                  <span className="noir-feature-check">✓</span>
+                  <span>100% Fully Editable in MS Excel (.xlsx) & Google Sheets</span>
+                </div>
+                <div className="noir-feature-item">
+                  <span className="noir-feature-check">✓</span>
+                  <span>Instant 60-Second Email Delivery + Lifetime Google Drive Access</span>
+                </div>
               </div>
             </div>
 
@@ -1037,9 +1161,9 @@ export default function WebDevStore() {
             <div className="noir-pricing-box">
               <div className="noir-price-row">
                 <span className="noir-price-val">{currency === 'INR' ? '₹199' : '$2.49'}</span>
-                <span className="noir-price-original">{currency === 'INR' ? '₹999' : '$12.99'}</span>
+                <span className="noir-price-original">{currency === 'INR' ? '₹9,999' : '$120.00'}</span>
               </div>
-              <span className="noir-price-savings">80% OFF TODAY · ZERO SUBSCRIPTION FEES</span>
+              <span className="noir-price-savings">98% VALUE SAVINGS · ZERO RECURRING SUBSCRIPTIONS</span>
 
               <button
                 className="noir-checkout-cta interactive"
