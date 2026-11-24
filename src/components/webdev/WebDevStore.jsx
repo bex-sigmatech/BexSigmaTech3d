@@ -17,45 +17,6 @@ const BACKEND_URL = import.meta.env.VITE_BACKEND_URL
     ? 'http://localhost:5001'
     : 'https://bexsigmatech3d.onrender.com')
 
-const SERVICES_PILLARS = [
-  {
-    num: '01',
-    badge: '01',
-    title: '300+ Financial & Valuation Models',
-    subtitle: '3-Statement Models, DCF Engines & Cash Runway',
-    desc: 'Battle-tested corporate 3-statement financial models, automated DCF valuation, scenario & sensitivity tables, monthly balance sheet variance, and investor pitch deck metrics.',
-    accent: '#ff4d29',
-    specs: ['3-Statement Models', 'Cash Runway Forecasts', 'DCF Valuation Engine', 'Sensitivity Tables']
-  },
-  {
-    num: '02',
-    badge: '02',
-    title: '10 Executive BI Dashboards',
-    subtitle: 'Automated Sales Cockpits & Dynamic Slicers',
-    desc: 'Automated executive cockpits with interactive regional slicers, dynamic win-rate calculations, customer acquisition cost (CAC) trackers, and board-ready KPI trendlines.',
-    accent: '#10b981',
-    specs: ['Interactive Slicers', 'Sales Funnel Math', 'CAC & LTV Matrix', 'Executive Board Views']
-  },
-  {
-    num: '03',
-    badge: '03',
-    title: '250+ Operations & HR Systems',
-    subtitle: 'Automated Payroll, Shift Rosters & Workload Roadmaps',
-    desc: 'Full workforce management sheets. Calculates overtime, automated tax deductions, employee attrition metrics, 360 performance reviews, and monthly payroll summaries in one click.',
-    accent: '#38bdf8',
-    specs: ['Automated Leaves & OT', 'Shift Scheduling Grid', '9-Box Talent Matrix', '1-Click Payroll Generator']
-  },
-  {
-    num: '04',
-    badge: '04',
-    title: '450+ Sales & Marketing Engines',
-    subtitle: 'Pipeline Forecasters, Gantt Timelines & Ad ROI',
-    desc: 'Full-funnel pipeline forecaster with automated conversion probabilities, rep quota leaderboards, sales commission tiered matrix, and multi-currency billing logs.',
-    accent: '#f59e0b',
-    specs: ['Cohort Retention Heatmap', 'MRR/ARR Waterfall', 'Sales Quota Pacing', 'Commission Calculator']
-  }
-]
-
 const HABITO_REVIEWS = [
   {
     author: 'Vikram S.',
@@ -75,67 +36,6 @@ const HABITO_REVIEWS = [
     quote: 'The executive sales cockpit with regional slicers is boardroom gold. Our CEO now relies on this exact dashboard for Monday morning leadership reviews.',
     tag: 'Executive BI Dashboard',
   },
-]
-
-const HYPERFIT_STEPS = [
-  {
-    num: '01',
-    title: '1,000+ PRE-BUILT BUSINESS TEMPLATES',
-    tagline: 'Universal architectures for 100+ industries',
-    desc: 'Eliminate manual spreadsheet busywork with battle-tested templates for finance, operations, marketing, and sales.',
-    status: 'INCLUDED'
-  },
-  {
-    num: '02',
-    title: '10 EXECUTIVE BI INTERACTIVE DASHBOARDS',
-    tagline: 'Dynamic regional slicers & board-ready visuals',
-    desc: 'Present with absolute confidence. Pre-linked interactive charts, KPI cards, and trendlines that impress executive leadership.',
-    status: 'INCLUDED'
-  },
-  {
-    num: '03',
-    title: '5 VIP BONUS PROFESSIONAL TOOLKITS',
-    tagline: 'Shortcuts, resumes, daily trackers & habits',
-    desc: 'Includes essential productivity boosters: Excel shortcut cheat sheets, executive resume templates, and daily trackers.',
-    status: 'INCLUDED'
-  },
-  {
-    num: '04',
-    title: '100% MICROSOFT EXCEL & GOOGLE SHEETS READY',
-    tagline: 'Universal cross-platform compatibility',
-    desc: 'Fully unlocked .xlsx files with automated XLOOKUP and dynamic arrays. Works seamlessly on desktop Excel, Mac, and Google Sheets.',
-    status: 'INCLUDED'
-  },
-  {
-    num: '05',
-    title: 'INSTANT EMAIL + LIFETIME GOOGLE DRIVE LINK',
-    tagline: 'Zero waiting · 60-second automated delivery',
-    desc: 'Instant delivery to your email upon checkout with permanent access to our master Google Drive cloud repository.',
-    status: 'LIFETIME'
-  }
-]
-
-const PROCESS_STEPS = [
-  {
-    step: '01',
-    title: 'Choose the Master Suite',
-    desc: '1-click encrypted checkout at just ₹199 / $2.49 with zero subscriptions or hidden fees.'
-  },
-  {
-    step: '02',
-    title: 'Instant 60s Delivery',
-    desc: 'Receive master Google Drive link and email pack in under 60 seconds.'
-  },
-  {
-    step: '03',
-    title: 'Input Your Numbers',
-    desc: 'Enter numbers and all automated formulas, KPIs, and charts calculate dynamically.'
-  },
-  {
-    step: '04',
-    title: 'Export Boardroom Visuals',
-    desc: 'Share high-impact reports with investors, stakeholders, and executive leadership.'
-  }
 ]
 
 const FONTO_WORDS = [
@@ -178,92 +78,6 @@ const PRODUCTS = [
   },
 ]
 
-const WORKS = [
-  {
-    id: 'normal',
-    code: 'HUB-01',
-    coord: '37.77° N, 122.41° W',
-    region: 'Silicon Valley, USA',
-    mapX: 20,
-    mapY: 38,
-    title: 'Normal Business Website',
-    subtitle: 'High-Performance Corporate & Conversion Portals',
-    meta: '01 / 04 · ESSENTIAL WEB',
-    desc: 'Clean, fast, and mobile-ready websites for businesses and personal brands. SEO-optimized, easy to manage, and engineered to convert — landing pages, portfolios, and corporate hubs that load in under a second.',
-    image: '/pathway_normal_website.jpg',
-    models: 'Frontend Static vs Full Stack Dynamic CMS',
-    timeline: '3-5 Days Delivery',
-    specs: ['< 1.2s Page Load', '100% Mobile & Tablet Responsive', 'SEO Core Integrated', 'Custom CMS & Lead Capture'],
-    tags: ['Corporate', 'Landing Page', 'Portfolio', 'Next.js', 'Tailwind'],
-    accent: '#38bdf8',
-    glow: 'rgba(56,189,248,0.35)',
-    icon: '◈',
-    num: '01'
-  },
-  {
-    id: 'threed',
-    code: 'HUB-02',
-    coord: '51.50° N, 0.12° W',
-    region: 'London, UK',
-    mapX: 47,
-    mapY: 28,
-    title: '3D Interactive Website',
-    subtitle: 'Spatial WebGL & Cinematic Storytelling',
-    meta: '02 / 04 · 3D SPATIAL WEB',
-    desc: 'Immersive 3D spatial web experiences with Three.js, WebGL, and cinematic scroll. Premium interactive visual journeys — 3D product visualizers and Apple Vision-style interfaces that make your brand unforgettable.',
-    image: '/pathway_3d_website.jpg',
-    models: 'Normal 3D Showcase vs Full Stack 3D',
-    timeline: '7-14 Days Delivery',
-    specs: ['60 FPS WebGL Engine', 'Draco 3D Mesh Compression', 'Spatial Camera Rigs', 'Hardware Accelerated'],
-    tags: ['Three.js', 'WebGL', 'R3F', 'Shader Motion', 'Blender'],
-    accent: '#a78bfa',
-    glow: 'rgba(167,139,250,0.35)',
-    icon: '⬢',
-    num: '02'
-  },
-  {
-    id: 'software',
-    code: 'HUB-03',
-    coord: '35.67° N, 139.65° E',
-    region: 'Tokyo, Japan',
-    mapX: 84,
-    mapY: 36,
-    title: 'Custom Software Application',
-    subtitle: 'Enterprise SaaS, Dashboards & Microservices',
-    meta: '03 / 04 · SAAS & SOFTWARE',
-    desc: 'Tailored web applications, administrative dashboards, portals, and SaaS tools. From initial concept to cloud deployment — secure, scalable, and engineered around your exact workflow.',
-    image: '/pathway_software.jpg',
-    models: 'Custom Portal vs Multi-Tenant SaaS',
-    timeline: '1-3 Weeks Sprint',
-    specs: ['REST / GraphQL APIs', 'Post-Quantum Auth & Storage', 'Real-Time WebSockets', 'Automated CI/CD Pipelines'],
-    tags: ['Web App', 'Admin Dashboard', 'SaaS Architecture', 'Node / Express', 'Cloud DB'],
-    accent: '#34d399',
-    glow: 'rgba(52,211,153,0.35)',
-    icon: '⬣',
-    num: '03'
-  },
-  {
-    id: 'custom',
-    code: 'HUB-04',
-    coord: '12.97° N, 77.59° E',
-    region: 'Bengaluru, India (HQ)',
-    mapX: 68,
-    mapY: 56,
-    title: 'Your Unique Idea — We Build It',
-    subtitle: 'Bespoke R&D, AI Agents & First-of-Kind Products',
-    meta: '04 / 04 · BESPOKE INNOVATION',
-    desc: 'Have a breakthrough vision or unique concept? Share your idea and our engineering pod architects it into reality. Experimental builds, custom AI pipelines, and uncharted digital platforms.',
-    image: '/pathway_bespoke_idea.jpg',
-    models: 'Concept Prototype to Full Production',
-    timeline: 'Bespoke Engineering Sprint',
-    specs: ['Dedicated Engineering Pod', 'Weekly Milestone Demos', '100% Custom IP', 'Direct Architecture Line'],
-    tags: ['Custom Build', 'AI Pipelines', 'Rapid Prototype', 'Direct Line'],
-    accent: '#f59e0b',
-    glow: 'rgba(245,158,11,0.35)',
-    icon: '✦',
-    num: '04'
-  }
-]
 
 /* ── Cashfree Payment Handler — supports single product OR cart bundle ── */
 async function initiateCashfreePayment(product, customerName, customerEmail, customerPhone, onSuccess, onError) {
@@ -715,7 +529,7 @@ export default function WebDevStore() {
             className="habito-nav-link"
             onClick={() => document.getElementById('our-products')?.scrollIntoView({ behavior: 'smooth' })}
           >
-            Products
+            Showcase
           </button>
           <button
             className="habito-nav-link"
@@ -725,15 +539,9 @@ export default function WebDevStore() {
           </button>
           <button
             className="habito-nav-link"
-            onClick={() => document.getElementById('noir-system')?.scrollIntoView({ behavior: 'smooth' })}
+            onClick={() => document.getElementById('noir-reviews')?.scrollIntoView({ behavior: 'smooth' })}
           >
-            System
-          </button>
-          <button
-            className="habito-nav-link"
-            onClick={() => document.getElementById('noir-process')?.scrollIntoView({ behavior: 'smooth' })}
-          >
-            Process
+            Reviews
           </button>
           <button
             className="habito-nav-link"
@@ -843,45 +651,9 @@ export default function WebDevStore() {
               className="noir-btn-secondary interactive"
               onClick={() => document.getElementById('our-products')?.scrollIntoView({ behavior: 'smooth' })}
             >
-              <span>Explore Products</span>
+              <span>Explore Dashboard Showcase</span>
               <span>↓</span>
             </button>
-          </div>
-
-          {/* 3D Product Box Advertisement Showcase */}
-          <div className="ad-hero-product-showcase">
-            <span className="ad-float-badge-left">🔥 1,000+ TEMPLATES INCLUDED</span>
-            <span className="ad-float-badge-right">📁 INSTANT GOOGLE DRIVE LINK</span>
-            <div
-              className="ad-product-card-3d interactive"
-              onClick={() => setActiveLightboxPoster({
-                title: 'aIn — Excel All-in-One Master Suite',
-                image: '/ain_excel_pack.jpg',
-                tag: 'Master Pack'
-              })}
-              title="Click to inspect Master Suite preview"
-            >
-              <img
-                src="/ain_excel_pack.jpg"
-                alt="aIn Excel Master Pack 3D Preview"
-                className="ad-product-img"
-              />
-              <div className="ad-product-card-bar">
-                <div className="ad-product-card-info">
-                  <span className="ad-product-card-tag">★ FLAGSHIP SPREADSHEET VAULT</span>
-                  <span className="ad-product-card-title">1,000+ Formulas & 10 Executive Dashboards</span>
-                </div>
-                <button
-                  className="ad-product-card-btn interactive"
-                  onClick={(e) => {
-                    e.stopPropagation()
-                    handleOpenCheckoutModal(PRODUCTS[0])
-                  }}
-                >
-                  Quick Buy ({currency === 'INR' ? '₹199' : '$2.49'})
-                </button>
-              </div>
-            </div>
           </div>
 
           {/* Hero Credibility Chips */}
@@ -1054,7 +826,7 @@ export default function WebDevStore() {
                         <div className="lumos-item-specs">
                           <span className="lumos-specs-title">VERIFIED CAPABILITIES</span>
                           <div className="lumos-specs-grid">
-                            {(prod.features?.slice(0, 4) || []).map((feat, fIdx) => (
+                            {(prod.features?.slice(0, 6) || []).map((feat, fIdx) => (
                               <div key={fIdx} className="lumos-spec-item">
                                 <span className="lumos-spec-bullet">✦</span>
                                 <span>{feat}</span>
@@ -1087,6 +859,29 @@ export default function WebDevStore() {
                                 : `ACQUIRE LICENSE · ${currency === 'INR' ? prod.priceDisplay : `$${(prod.price * 0.0125).toFixed(2)}`}`}
                             </span>
                             <span className="lumos-btn-arrow">→</span>
+                          </button>
+
+                          <button
+                            type="button"
+                            className="interactive"
+                            onClick={() => addToCart(prod)}
+                            style={{
+                              background: 'rgba(255, 255, 255, 0.05)',
+                              border: '1px solid rgba(255, 255, 255, 0.15)',
+                              color: '#cbd5e1',
+                              padding: '12px 18px',
+                              borderRadius: '8px',
+                              fontFamily: 'monospace',
+                              fontSize: '11px',
+                              fontWeight: 700,
+                              cursor: 'pointer',
+                              display: 'inline-flex',
+                              alignItems: 'center',
+                              gap: '6px',
+                              letterSpacing: '0.05em'
+                            }}
+                          >
+                            🛒 + ADD TO CART
                           </button>
 
                           <div className="lumos-action-guarantee">
@@ -1186,127 +981,40 @@ export default function WebDevStore() {
           </div>
         </section>
 
-        {/* ══ SECTION 4: BRUTALIST EDITORIAL STATEMENT (IMAGE 1 CENTER: JASON MILLER STYLE) ══ */}
-        <section id="noir-manifesto" className="noir-statement-section">
-          <div className="noir-statement-tabs">
-            <span className="noir-statement-tab active">Financial Models</span>
-            <span className="noir-statement-tab">BI Cockpits</span>
-            <span className="noir-statement-tab">Workforce Matrix</span>
-            <span className="noir-statement-tab">Revenue Engines</span>
-          </div>
+        {/* Backward Compatibility Anchors */}
+        <div id="noir-system" style={{ display: 'none' }} />
+        <div id="noir-process" style={{ display: 'none' }} />
+        <div id="noir-manifesto" style={{ display: 'none' }} />
 
-          <h2 className="noir-statement-giant-heading">
-            BUILD ACCURACY<br />
-            SCALE YOUR BUSINESS<br />
-            TODAY
-          </h2>
-
-          <div className="noir-statement-lead-block">
-            <p className="noir-statement-lead-text">
-              HELPING YOU BUILD FINANCIAL CONFIDENCE AND BOARD-READY DISCIPLINE THROUGH AUTOMATED SPREADSHEETS AND EXECUTIVE INTELLIGENCE.
-            </p>
-
-            <div className="noir-statement-meta-col">
-              <div className="noir-statement-scroll-indicator">
-                <span className="noir-statement-scroll-dot" />
-                <span>.SCROLL TO EXPLORE</span>
-              </div>
-
-              <div className="noir-statement-creator-card">
-                <img
-                  src="/ceo_hariharan.jpg"
-                  alt="Hariharan.D"
-                  className="noir-statement-avatar"
-                />
-                <div>
-                  <div className="noir-statement-creator-name">HARIHARAN.D</div>
-                  <div className="noir-statement-creator-role">Lead Excel Architect & Founder</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* FONTO SLIDE TEXTURED GIANT (IMAGE 1 "FOUR PATHS TO TRANSFORMATION" STYLE) */}
-          <div className="fonto-textured-giant-wrap">
-            <span className="fonto-textured-giant">FOUR PATHS TO AUTOMATION</span>
-          </div>
-        </section>
-
-        {/* ══ SECTION 5: HYPERFIT NUMBERED SYSTEM (IMAGE 1 LEFT STYLE) ══ */}
-        <section id="noir-system" className="noir-hyperfit-section">
+        {/* ══ SECTION 4: REVIEWS & TESTIMONIALS ══ */}
+        <section id="noir-reviews" className="noir-reviews-section">
           <div className="noir-section-header">
             <div className="noir-section-kicker">
-              <span>● THE COMPLETE SYSTEM</span>
+              <span>● TESTIMONIALS</span>
             </div>
-            <h2 className="noir-section-heading">NOT JUST SPREADSHEETS — A FULL BUSINESS ARSENAL</h2>
+            <h2 className="noir-section-heading">WHAT OUR PARTNERS SAY</h2>
             <p className="noir-section-subtitle">
-              Every formula, dynamic array, and executive chart is structured for turnkey execution with zero setup.
+              ⭐ 4.9/5 Rating across 12,400+ corporate professionals and startup operators.
             </p>
           </div>
 
-          <div className="noir-hyperfit-list">
-            {HYPERFIT_STEPS.map((step) => (
-              <div key={step.num} className="noir-hyperfit-row">
-                <div className="noir-hyperfit-num">{step.num}</div>
-                <div>
-                  <h3 className="noir-hyperfit-title">{step.title}</h3>
-                  <div className="noir-hyperfit-tagline">{step.tagline}</div>
-                </div>
-                <p className="noir-hyperfit-desc">{step.desc}</p>
-                <div className="noir-hyperfit-status">{step.status}</div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* ══ SECTION 7: COURSEKIT STEP PROCESS (IMAGE 1 RIGHT STYLE) ══ */}
-        <section id="noir-process" className="noir-process-section">
-          <div className="noir-section-header">
-            <div className="noir-section-kicker">
-              <span>● HOW IT WORKS</span>
-            </div>
-            <h2 className="noir-section-heading">STOP PAYING FOR DISJOINTED FREELANCERS</h2>
-            <p className="noir-section-subtitle">
-              One master architecture replaces dozens of expensive freelancer gigs. Simple, automated 4-stage process.
-            </p>
-          </div>
-
-          <div className="noir-process-grid">
-            {PROCESS_STEPS.map((st) => (
-              <div key={st.step} className="noir-process-card">
-                <span className="noir-process-step">[{st.step}]</span>
-                <div>
-                  <h3 className="noir-process-title">{st.title}</h3>
-                  <p className="noir-process-desc">{st.desc}</p>
+          <div className="noir-reviews-grid">
+            {HABITO_REVIEWS.map((rev, rIdx) => (
+              <div key={rIdx} className="noir-review-card">
+                <p className="noir-review-quote">"{rev.quote}"</p>
+                <div className="noir-review-bottom">
+                  <div>
+                    <div className="noir-review-author">{rev.author}</div>
+                    <div className="noir-review-company">{rev.company}</div>
+                  </div>
+                  <span className="noir-review-tag">[{rev.tag}]</span>
                 </div>
               </div>
             ))}
           </div>
         </section>
 
-        {/* ══ LUMOS INFINITE SLIDING MARQUEE TICKER 2 (REVERSE) ══ */}
-        <div className="lumos-marquee-wrap is--reverse">
-          <div className="lumos-marquee-track is--reverse">
-            <div className="lumos-marquee-content is--outline">
-              <span>✦ PUT SPREADSHEETS ON AUTOPILOT</span>
-              <span>✦ SAVE 15+ HOURS WEEKLY</span>
-              <span>✦ 5 VIP BONUS TOOLKITS</span>
-              <span>✦ 100% EDITABLE IN EXCEL & GOOGLE SHEETS</span>
-              <span>✦ ZERO RECURRING SUBSCRIPTIONS</span>
-              <span>✦ LIFETIME ACCESS GUARANTEE</span>
-            </div>
-            <div className="lumos-marquee-content is--outline" aria-hidden="true">
-              <span>✦ PUT SPREADSHEETS ON AUTOPILOT</span>
-              <span>✦ SAVE 15+ HOURS WEEKLY</span>
-              <span>✦ 5 VIP BONUS TOOLKITS</span>
-              <span>✦ 100% EDITABLE IN EXCEL & GOOGLE SHEETS</span>
-              <span>✦ ZERO RECURRING SUBSCRIPTIONS</span>
-              <span>✦ LIFETIME ACCESS GUARANTEE</span>
-            </div>
-          </div>
-        </div>
-
-        {/* ══ SECTION 8: CLIMAX PRICING (SELLING ONLY THE ₹199 ALL-IN-ONE MASTER SUITE) ══ */}
+        {/* ══ SECTION 5: CLIMAX PRICING (SELLING ONLY THE ₹199 ALL-IN-ONE MASTER SUITE) ══ */}
         <section id="noir-pricing" className="noir-pricing-section">
           <div className="noir-pricing-card">
             {/* Left Column: Feature Highlights */}
@@ -1364,34 +1072,6 @@ export default function WebDevStore() {
                 <span>📁 Lifetime Google Drive Access Guarantee</span>
               </div>
             </div>
-          </div>
-        </section>
-
-        {/* ══ SECTION 9: REVIEWS & TESTIMONIALS ══ */}
-        <section className="noir-reviews-section">
-          <div className="noir-section-header">
-            <div className="noir-section-kicker">
-              <span>● TESTIMONIALS</span>
-            </div>
-            <h2 className="noir-section-heading">WHAT OUR PARTNERS SAY</h2>
-            <p className="noir-section-subtitle">
-              ⭐ 4.9/5 Rating across 500+ corporate professionals and startup operators.
-            </p>
-          </div>
-
-          <div className="noir-reviews-grid">
-            {HABITO_REVIEWS.map((rev, rIdx) => (
-              <div key={rIdx} className="noir-review-card">
-                <p className="noir-review-quote">"{rev.quote}"</p>
-                <div className="noir-review-bottom">
-                  <div>
-                    <div className="noir-review-author">{rev.author}</div>
-                    <div className="noir-review-company">{rev.company}</div>
-                  </div>
-                  <span className="noir-review-tag">[{rev.tag}]</span>
-                </div>
-              </div>
-            ))}
           </div>
         </section>
 
