@@ -52,51 +52,62 @@ const PRODUCTS = [
   },
 ]
 
-// Lumos 4 Linear Rows for All Products Section
+// Lumos Linear Rows: What's included in the ₹199 aIn All-in-One Master Suite
 const LUMOS_PRODUCTS = [
   {
     id: 'sales-dashboard',
     index: '01',
-    name: 'Sales Dashboard',
-    tagline: 'Automated Regional Slicers, Win-Rates, Quotas & Revenue Velocity',
-    category: 'EXECUTIVE BI',
+    name: 'Executive BI & Sales Dashboards',
+    tagline: 'Automated Regional Slicers, Win-Rates, Quotas & Revenue Velocity (.xlsx)',
+    category: 'INCLUDED IN ₹199 SUITE',
     price: 199,
-    priceDisplay: 'Rs 199',
+    priceDisplay: '₹199',
     originalPrice: 'Rs 1,999',
     image: '/sales_dashboard.jpg',
   },
   {
     id: 'finance-tracker',
     index: '02',
-    name: 'Finance Tracker',
-    tagline: 'Linked 3-Statement GAAP Models, Cash Runway & Investor DCF',
-    category: 'FINANCIAL ARCHITECTURE',
+    name: '3-Statement GAAP Financial Architecture',
+    tagline: 'Linked P&L, Balance Sheet, Cash Runway & Investor DCF Valuation Engines',
+    category: 'INCLUDED IN ₹199 SUITE',
     price: 199,
-    priceDisplay: 'Rs 199',
+    priceDisplay: '₹199',
     originalPrice: 'Rs 2,499',
     image: '/financial_trend.jpg',
   },
   {
     id: 'inventory-manager',
     index: '03',
-    name: 'Inventory Manager',
-    tagline: 'Automated SKU Reorder Points, Turnover Math & Stock Matrix',
-    category: 'OPERATIONS',
+    name: 'Operations & Automated SKU Inventory',
+    tagline: 'Automated Reorder Alerts, Stock Turnover Math & Supplier Logistics',
+    category: 'INCLUDED IN ₹199 SUITE',
     price: 199,
-    priceDisplay: 'Rs 199',
+    priceDisplay: '₹199',
     originalPrice: 'Rs 1,499',
     image: '/one_dashboard_suite.jpg',
   },
   {
     id: 'kpi-report',
     index: '04',
-    name: 'KPI Report',
-    tagline: 'HR Payroll Runs, 9-Box Grid, Project Gantt Timelines & Exec Metrics',
-    category: 'ENTERPRISE METRICS',
+    name: 'HR & Enterprise KPI Scorecards',
+    tagline: 'Payroll Runs, 9-Box Grid, Project Gantt Timelines & Executive Metrics',
+    category: 'INCLUDED IN ₹199 SUITE',
     price: 199,
-    priceDisplay: 'Rs 199',
+    priceDisplay: '₹199',
     originalPrice: 'Rs 1,999',
     image: '/project_scorecard.jpg',
+  },
+  {
+    id: 'templates-vault',
+    index: '05',
+    name: '1,000+ Ready-To-Use Industry Spreadsheets',
+    tagline: 'E-commerce, Invoicing, CRM, Agency, Real Estate & Lifetime Google Drive Access',
+    category: 'INCLUDED IN ₹199 SUITE',
+    price: 199,
+    priceDisplay: '₹199',
+    originalPrice: 'Rs 9,999',
+    image: '/ain_excel_pack.jpg',
   },
 ]
 
@@ -894,8 +905,8 @@ export default function WebDevStore() {
       <section ref={productsRef} className="lumos-products-section">
         <div className="lumos-products-inner">
           <div className="lumos-products-header">
-            <h2 className="lumos-products-title">All Products</h2>
-            <span className="lumos-products-sub">Curated Executive Excel Architecture</span>
+            <h2 className="lumos-products-title">The All-in-One Suite</h2>
+            <span className="lumos-products-sub">Only ₹199 • All 5 Core Modules & 1,000+ Spreadsheets Included in 1 Single Master Download</span>
           </div>
 
           <div className="lumos-products-split-layout">
@@ -913,9 +924,9 @@ export default function WebDevStore() {
               <p className="lumos-preview-tagline">{activePreviewProd.tagline}</p>
               <button
                 className="lumos-preview-btn interactive"
-                onClick={() => handleOpenCheckoutModal(activePreviewProd)}
+                onClick={() => handleOpenCheckoutModal(PRODUCTS[0])}
               >
-                <span>Quick Buy ₹199</span>
+                <span>⚡ Get All-in-One — {currency === 'INR' ? '₹199' : '$2.49'}</span>
                 <span>→</span>
               </button>
             </div>
@@ -927,7 +938,7 @@ export default function WebDevStore() {
                   key={prod.id}
                   className={`lumos-product-row interactive ${activePreviewProd.id === prod.id ? 'active' : ''}`}
                   onMouseEnter={() => setActivePreviewProd(prod)}
-                  onClick={() => handleOpenCheckoutModal(prod)}
+                  onClick={() => handleOpenCheckoutModal(PRODUCTS[0])}
                 >
                   <span className="lumos-row-index">{prod.index}</span>
                   <div className="lumos-row-name-wrap">
@@ -936,17 +947,17 @@ export default function WebDevStore() {
                   </div>
                   <span className="lumos-row-category">{prod.category}</span>
                   <span className="lumos-row-price">
-                    {currency === 'INR' ? prod.priceDisplay : '$2.49'}
+                    {currency === 'INR' ? '₹199' : '$2.49'}
                   </span>
                   <div className="lumos-row-action">
                     <button
                       className="lumos-buy-pill-btn interactive"
                       onClick={(e) => {
                         e.stopPropagation()
-                        handleOpenCheckoutModal(prod)
+                        handleOpenCheckoutModal(PRODUCTS[0])
                       }}
                     >
-                      <span>Buy Now</span>
+                      <span>Get Suite</span>
                       <span>→</span>
                     </button>
                   </div>
