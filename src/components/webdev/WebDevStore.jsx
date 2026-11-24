@@ -176,141 +176,6 @@ const PRODUCTS = [
     deliveryDays: 0,
     popular: true,
   },
-  {
-    id: 'omnicoder-ai',
-    badge: '🤖 RECOMMENDED',
-    name: 'OmniCoder AI Agent',
-    category: 'AI & DEV HUB',
-    tagline: 'Autonomous Repository Developer Hub',
-    shortDesc: 'Autonomous multi-agent repository developer hub with automated test guards and natural language code manipulation.',
-    price: 299,
-    priceDisplay: '₹299',
-    originalPrice: '₹599',
-    currency: 'INR',
-    color: '#7c3aed',
-    glowColor: 'rgba(124, 58, 237, 0.25)',
-    image: '/omnicoder_ai.jpg',
-    imageFit: 'cover',
-    features: [
-      'Multi-Agent Collaborative Coding',
-      'Automated Test & Build Integrity Guard',
-      'Git Integration (GitHub/GitLab)',
-      'Natural Language Code Manipulation',
-      'Semantic Codebase Indexing',
-      '1 Month Free Support',
-    ],
-    tech: ['Multi-Agent AI', 'Git Hooks', 'NodeJS', 'React'],
-    deliveryDays: 7,
-    popular: false,
-  },
-  {
-    id: 'quantum-shield',
-    badge: '🛡️ SECURITY 10/10',
-    name: 'QuantumShield Crypt Vault',
-    category: 'POST-QUANTUM CRYPT',
-    tagline: 'Post-Quantum Shield & Telemetry Armor',
-    shortDesc: 'NIST-approved post-quantum encryption, zero-trust telemetry armor, and real-time threat sentinel node.',
-    price: 291,
-    priceDisplay: '₹291',
-    originalPrice: '₹582',
-    currency: 'INR',
-    color: '#f43f5e',
-    glowColor: 'rgba(244, 63, 94, 0.25)',
-    image: '/quantum_shield.jpg',
-    imageFit: 'cover',
-    features: [
-      'NIST-Approved Post-Quantum Cryptography',
-      'End-to-End Encrypted Telemetry',
-      'Zero-Trust Biometric Access Controls',
-      'Real-time Threat Sentinel Node',
-      'Tamper-proof Observability Logs',
-      '3 Months Priority Support',
-    ],
-    tech: ['Kyber / Dilithium', 'Zero-Trust', 'Rust Core'],
-    deliveryDays: 12,
-    popular: false,
-  },
-  {
-    id: 'spacemesh-iot',
-    badge: '🛰️ REAL-TIME DATA',
-    name: 'SpaceMesh IoT Gateway',
-    category: 'PLANETARY TELEMETRY',
-    tagline: 'Planetary Device Telemetry Aggregator',
-    shortDesc: 'Planetary device telemetry aggregator with zero-latency Timescale database sync and WebSockets broker protocol.',
-    price: 359,
-    priceDisplay: '₹359',
-    originalPrice: '₹718',
-    currency: 'INR',
-    color: '#38bdf8',
-    glowColor: 'rgba(56, 189, 248, 0.25)',
-    image: '/spacemesh_iot.jpg',
-    imageFit: 'cover',
-    features: [
-      'Zero-Latency Planetary Sync',
-      'High-Throughput Timescale Database',
-      'MQTT / WebSockets Broker Protocol',
-      'Automated Hardware Sensor Failover',
-      'Interactive 3D Telemetry Canvas',
-      '3 Months Tech Assistance',
-    ],
-    tech: ['IoT Mesh', 'WebSockets', 'Go', 'TimescaleDB'],
-    deliveryDays: 10,
-    popular: false,
-  },
-  {
-    id: 'vision-spatial',
-    badge: '🕶️ SPATIAL WEB',
-    name: 'VisionSpatial Designer',
-    category: 'SPATIAL 3D',
-    tagline: 'Apple Vision Pro Web UI Canvas',
-    shortDesc: 'Interactive WebXR spatial canvas with depth-based UI layout engines and optimized 3D model asset loaders.',
-    price: 289,
-    priceDisplay: '₹289',
-    originalPrice: '₹578',
-    currency: 'INR',
-    color: '#e879f9',
-    glowColor: 'rgba(232, 121, 249, 0.25)',
-    image: '/vision_spatial.jpg',
-    imageFit: 'cover',
-    features: [
-      'Interactive WebXR Sandbox Creator',
-      'Depth-Based UI Layout Engines',
-      'Framer Spatial Motion Core',
-      'Optimized 3D Model Assets Loader',
-      'Glassmorphic Style Tokens Exporter',
-      '6 Months Premium Support',
-    ],
-    tech: ['Three.js', 'React Three Fiber', 'WebXR'],
-    deliveryDays: 14,
-    popular: false,
-  },
-  {
-    id: 'biosync-health',
-    badge: '🩺 HEALTHCARE NODE',
-    name: 'BioSync Telehealth Engine',
-    category: 'CLINICAL MATRIX',
-    tagline: 'Decentralized Clinical Matrix Console',
-    shortDesc: 'HIPAA-compliant patient telemetry with distributed node consultation logs and real-time biosignals streaming.',
-    price: 291,
-    priceDisplay: '₹291',
-    originalPrice: '₹582',
-    currency: 'INR',
-    color: '#34d399',
-    glowColor: 'rgba(52, 211, 153, 0.25)',
-    image: '/biosync_health.jpg',
-    imageFit: 'cover',
-    features: [
-      'HIPAA Compliant Patient Telemetry',
-      'Distributed Node Consultation Logs',
-      'Real-Time Biosignals Streaming',
-      'Automated Emergency Alert Triggers',
-      'Integrative Diagnostic Interface',
-      '1 Month Operational Sync',
-    ],
-    tech: ['HL7 / FHIR API', 'Distributed Ledger', 'WebRTC Core'],
-    deliveryDays: 10,
-    popular: false,
-  },
 ]
 
 const WORKS = [
@@ -1082,8 +947,8 @@ export default function WebDevStore() {
             {/* ── SECTION HEADER: OVERSIZED CONDENSED TYPOGRAPHY ── */}
             <header className="lumos-section-header">
               <div className="lumos-header-meta">
-                <span className="lumos-index-badge">[ 01 — 06 ]</span>
-                <span className="lumos-section-tag">SELECTED COMMERCIAL RELEASES</span>
+                <span className="lumos-index-badge">[ 01 / 01 ]</span>
+                <span className="lumos-section-tag">FLAGSHIP COMMERCIAL RELEASE</span>
                 <span className="lumos-curation-pill">ARCHITECT VERIFIED</span>
               </div>
 
@@ -1092,23 +957,23 @@ export default function WebDevStore() {
                 <h2 className="lumos-giant-headline">
                   <span className="lumos-headline-row">
                     <span className="lumos-headline-word">PROVEN</span>
-                    <span className="lumos-headline-word lumos-text-outline">DIGITAL</span>
+                    <span className="lumos-headline-word mc-title-gradient">EXCEL BI</span>
                   </span>
                   <span className="lumos-headline-row">
-                    <span className="lumos-headline-word lumos-text-accent">ARCHITECTURES</span>
-                    <span className="lumos-headline-word">& ENGINES</span>
+                    <span className="lumos-headline-word mc-title-gradient">ARCHITECTURE</span>
+                    <span className="lumos-headline-word">& COCKPITS</span>
                   </span>
                 </h2>
               </div>
 
               <div className="lumos-header-desc-row">
                 <p className="lumos-header-desc">
-                  Curated business spreadsheets, autonomous AI developers, post-quantum telemetry, and spatial WebXR engines.
-                  Engineered with zero technical debt and turnkey executive execution.
+                  1,000+ battle-tested business spreadsheets, 10 automated executive BI dashboards, and 5 VIP bonus toolkits.
+                  Curated with automated dynamic formulas, zero technical debt, and instant lifetime Google Drive access.
                 </p>
                 <div className="lumos-header-aside">
-                  <span className="lumos-aside-number">06</span>
-                  <span className="lumos-aside-label">PRODUCTION PRODUCTS</span>
+                  <span className="lumos-aside-number">01</span>
+                  <span className="lumos-aside-label">FLAGSHIP MASTER SUITE</span>
                 </div>
               </div>
 
@@ -1131,7 +996,7 @@ export default function WebDevStore() {
                     {/* Top Index & Classification Bar */}
                     <div className="lumos-item-topbar">
                       <div className="lumos-item-top-left">
-                        <span className="lumos-item-num">[{productNumber} / 06]</span>
+                        <span className="lumos-item-num">[{productNumber} / 01]</span>
                         <span className="lumos-item-category">{prod.category || 'ARCHITECTURE'}</span>
                         {prod.popular && <span className="lumos-flagship-tag">FLAGSHIP SUITE</span>}
                       </div>
@@ -1244,7 +1109,7 @@ export default function WebDevStore() {
             <div className="lumos-section-bottom">
               <div className="lumos-bottom-left">
                 <span className="lumos-bottom-mark">BEx ARCHITECTURES</span>
-                <span className="lumos-bottom-meta">ALL 6 PRODUCTS READY FOR TURNKEY DEPLOYMENT</span>
+                <span className="lumos-bottom-meta">FLAGSHIP MASTER SUITE READY FOR TURNKEY DEPLOYMENT</span>
               </div>
               <div className="lumos-bottom-right">
                 <button
