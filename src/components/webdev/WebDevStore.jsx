@@ -20,15 +20,15 @@ const BACKEND_URL = import.meta.env.VITE_BACKEND_URL
     ? 'http://localhost:5001'
     : 'https://bexsigmatech3d.onrender.com')
 
-// Flagship master product for Cashfree & Cart
+// Flagship single product: ₹199 All-in-One Master Suite (No other products sold)
 const PRODUCTS = [
   {
     id: 'ain-excel-pack',
     badge: '🔥 1,000+ EXCEL TEMPLATES — ₹199 ONLY',
     name: 'aIn — Excel All-in-One Master Suite',
-    category: 'BI & FINANCE',
-    tagline: 'From Manual To Smart Work — Pro Dashboards, Auto Calculation & Business Templates (.xlsx)',
-    shortDesc: '1,000+ ready-to-use business spreadsheets, 10 automated BI dashboards & 5 VIP bonus toolkits with lifetime Drive access.',
+    category: 'ALL-IN-ONE SUITE',
+    tagline: 'From Manual To Smart Work — 1,000+ Pro Dashboards, Financial Engines & Business Templates (.xlsx)',
+    shortDesc: 'One complete ₹199 download containing 1,000+ automated Excel & Google Sheets templates with lifetime Drive access.',
     price: 199,
     priceDisplay: 'Rs 199',
     originalPrice: 'Rs 9,999',
@@ -52,62 +52,102 @@ const PRODUCTS = [
   },
 ]
 
-// Lumos Linear Rows: What's included in the ₹199 aIn All-in-One Master Suite
-const LUMOS_PRODUCTS = [
+// 5 Core Pillars Included INSIDE the Single ₹199 All-in-One Suite (Not separate products)
+const SUITE_PILLARS = [
   {
     id: 'sales-dashboard',
     index: '01',
+    watermark: 'SALES BI',
     name: 'Executive BI & Sales Dashboards',
     tagline: 'Automated Regional Slicers, Win-Rates, Quotas & Revenue Velocity (.xlsx)',
-    category: 'INCLUDED IN ₹199 SUITE',
-    price: 199,
-    priceDisplay: '₹199',
-    originalPrice: 'Rs 1,999',
+    category: 'PILLAR 01 · INCLUDED',
+    highlights: ['Regional Heatmaps', 'Pipeline Velocity', 'Executive Summary Slicers'],
+    outcome: 'Turns raw CRM & POS exports into board-ready charts in 15 seconds.',
     image: '/sales_dashboard.jpg',
   },
   {
     id: 'finance-tracker',
     index: '02',
+    watermark: 'FINANCE',
     name: '3-Statement GAAP Financial Architecture',
     tagline: 'Linked P&L, Balance Sheet, Cash Runway & Investor DCF Valuation Engines',
-    category: 'INCLUDED IN ₹199 SUITE',
-    price: 199,
-    priceDisplay: '₹199',
-    originalPrice: 'Rs 2,499',
+    category: 'PILLAR 02 · INCLUDED',
+    highlights: ['Auto-Linked P&L', '13-Week Cashflow', 'GST & Expense Ledger'],
+    outcome: 'Zero broken formulas — audit-proof P&L and cash runway visibility.',
     image: '/financial_trend.jpg',
   },
   {
     id: 'inventory-manager',
     index: '03',
+    watermark: 'INVENTORY',
     name: 'Operations & Automated SKU Inventory',
     tagline: 'Automated Reorder Alerts, Stock Turnover Math & Supplier Logistics',
-    category: 'INCLUDED IN ₹199 SUITE',
-    price: 199,
-    priceDisplay: '₹199',
-    originalPrice: 'Rs 1,499',
+    category: 'PILLAR 03 · INCLUDED',
+    highlights: ['Low-Stock Alerts', 'FIFO Valuation', 'Vendor Purchase Tracker'],
+    outcome: 'Eliminates stockouts & dead inventory across warehouses and retail.',
     image: '/one_dashboard_suite.jpg',
   },
   {
     id: 'kpi-report',
     index: '04',
+    watermark: 'HR & KPI',
     name: 'HR & Enterprise KPI Scorecards',
-    tagline: 'Payroll Runs, 9-Box Grid, Project Gantt Timelines & Executive Metrics',
-    category: 'INCLUDED IN ₹199 SUITE',
-    price: 199,
-    priceDisplay: '₹199',
-    originalPrice: 'Rs 1,999',
+    tagline: 'Payroll Runs, Attendance Calendars, Project Gantt Timelines & Team Metrics',
+    category: 'PILLAR 04 · INCLUDED',
+    highlights: ['Automated Payroll', 'Dynamic Gantt Charts', '9-Box Performance Grid'],
+    outcome: 'Instant visibility across attendance, project deadlines, and SLA KPIs.',
     image: '/project_scorecard.jpg',
   },
   {
     id: 'templates-vault',
     index: '05',
+    watermark: '1000+ VAULT',
     name: '1,000+ Ready-To-Use Industry Spreadsheets',
-    tagline: 'E-commerce, Invoicing, CRM, Agency, Real Estate & Lifetime Google Drive Access',
-    category: 'INCLUDED IN ₹199 SUITE',
-    price: 199,
-    priceDisplay: '₹199',
-    originalPrice: 'Rs 9,999',
+    tagline: 'E-commerce, Invoicing, CRM, Agency, Real Estate & Lifetime Google Drive Vault',
+    category: 'PILLAR 05 · INCLUDED',
+    highlights: ['100+ Verticals', 'Bonus Shortcuts Pack', 'Lifetime Drive Updates'],
+    outcome: 'Every business spreadsheet you will ever need — unlocked forever for ₹199.',
     image: '/ain_excel_pack.jpg',
+  },
+]
+
+// Lumos-Style 3D Depth Review Cards ("What people say about BEX")
+const SUITE_REVIEWS = [
+  {
+    id: 'rev-1',
+    quote: 'BEX replaced 14 broken company spreadsheets in one afternoon!',
+    body: 'We bought the ₹199 All-in-One Master Suite expecting a few basic sheets. Instead we got complete 3-statement financial models and automated sales dashboards we now present in every Monday review.',
+    author: 'Rohan Kulkarni',
+    role: 'Founder, FinEdge Commerce',
+    tags: ['Sales Dashboard', '₹199 All-in-One', 'Instant Drive'],
+    image: '/lumos/card_coop.webp',
+  },
+  {
+    id: 'rev-2',
+    quote: 'Zero VBA headaches. Clean XLOOKUP & dynamic formulas out of the box.',
+    body: 'Our finance team used to spend 12 hours a week reconciling inventory and GST trackers manually. The inventory & GAAP templates saved us over 40 hours every month immediately.',
+    author: 'Ananya Iyer',
+    role: 'Finance Lead, Kaveri Retail',
+    tags: ['Finance Model', '1000+ Vault', 'Lifetime Access'],
+    image: '/financial_trend.jpg',
+  },
+  {
+    id: 'rev-3',
+    quote: 'Best ₹199 business investment we made all year.',
+    body: 'Every folder inside the Google Drive archive is cleanly structured for Microsoft Excel and Google Sheets. The HR payroll and project scorecard alone are worth 50x the suite price.',
+    author: 'Karthik Nair',
+    role: 'Operations Director, SwiftLogix',
+    tags: ['HR & KPI', 'Inventory Tracker', 'Zero Coding'],
+    image: '/lumos/card_picnic.webp',
+  },
+  {
+    id: 'rev-4',
+    quote: 'Executive-grade dashboards ready for client & board presentations.',
+    body: 'Instead of building slicers from scratch for clients, our analytics pod customizes BEX templates in minutes. Crisp layout, rock-solid formulas, and lifetime updates included.',
+    author: 'Sneha Verma',
+    role: 'BI Consultant, PeakMetrics',
+    tags: ['Executive BI', 'Project Gantt', 'Verified'],
+    image: '/sales_dashboard.jpg',
   },
 ]
 
@@ -231,7 +271,7 @@ export default function WebDevStore() {
     return () => clearTimeout(timer)
   }, [])
 
-  // Draggable Sticker Cards State (Scroll 2 "Why We Are Loved")
+  // Draggable Sticker Cards State (Scroll 2 "Why We Are Loved" - all 7 cards from Lumos)
   const [activeCardKey, setActiveCardKey] = useState(null)
   const [cardOffsets, setCardOffsets] = useState({
     card1: { x: 0, y: 0 },
@@ -240,6 +280,7 @@ export default function WebDevStore() {
     card4: { x: 0, y: 0 },
     card5: { x: 0, y: 0 },
     card6: { x: 0, y: 0 },
+    card7: { x: 0, y: 0 },
   })
   const activeDragRef = useRef(null)
 
@@ -270,10 +311,34 @@ export default function WebDevStore() {
     activeDragRef.current = null
   }
 
-  // Active Product for Side Preview Pane (Scroll 3)
-  const [activePreviewProd, setActivePreviewProd] = useState(LUMOS_PRODUCTS[0])
+  // Hero Dripping Centerpiece Mouse Parallax
+  const [logoTilt, setLogoTilt] = useState({ x: 0, y: 0 })
+  const handleHeroMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect()
+    const x = (e.clientX - rect.left) / rect.width - 0.5
+    const y = (e.clientY - rect.top) / rect.height - 0.5
+    setLogoTilt({ x: -y * 10, y: x * 12 })
+  }
+  const handleHeroMouseLeave = () => {
+    setLogoTilt({ x: 0, y: 0 })
+  }
 
-  // 3D Tilt for Expert Photo Card (Scroll 4)
+  // Active Pillar for Side Preview Pane ("Text Behind Image" in Scroll 3)
+  const [activePreviewProd, setActivePreviewProd] = useState(SUITE_PILLARS[0])
+  const [expandedPillarId, setExpandedPillarId] = useState(null)
+
+  // Lumos Line Tilt Effect on Product Rows (initTilt)
+  const [rowTilts, setRowTilts] = useState({})
+  const handleRowMouseMove = (id, e) => {
+    const rect = e.currentTarget.getBoundingClientRect()
+    const rot = ((e.clientX - rect.left) / rect.width - 0.5) * -6
+    setRowTilts((prev) => ({ ...prev, [id]: rot }))
+  }
+  const handleRowMouseLeave = (id) => {
+    setRowTilts((prev) => ({ ...prev, [id]: 0 }))
+  }
+
+  // 3D Cube / Card Tilt for Expert Photo Card (Scroll 4)
   const [expertTilt, setExpertTilt] = useState({ x: 0, y: 0 })
   const handleExpertMouseMove = (e) => {
     const rect = e.currentTarget.getBoundingClientRect()
@@ -285,13 +350,18 @@ export default function WebDevStore() {
     setExpertTilt({ x: 0, y: 0 })
   }
 
-  // Refs for Sections
+  // Refs for Store Sections
   const containerRef = useRef(null)
   const heroRef = useRef(null)
   const tornRef = useRef(null)
   const lovedRef = useRef(null)
   const productsRef = useRef(null)
   const expertRef = useRef(null)
+  const reviewsRef = useRef(null)
+  const footerRef = useRef(null)
+
+  // 3D Depth Progress for Reviews ("What people say about BEX")
+  const [reviewDepth, setReviewDepth] = useState(0)
 
   // Checkout States
   const [checkoutMode, setCheckoutMode] = useState(null)
@@ -320,9 +390,8 @@ export default function WebDevStore() {
     }
   }, [])
 
-  // ── GSAP + Lenis Smooth Scroll Setup (Strictly Scoped) ──
+  // ── Lumos Animations: GSAP + Lenis + Cube Text + Digit Roll + 3D Review Zoom + Box Rounding ──
   useEffect(() => {
-    // Only init if in browser
     if (typeof window === 'undefined') return
 
     const scrollContainer = containerRef.current
@@ -339,12 +408,25 @@ export default function WebDevStore() {
       wheelMultiplier: 1.0,
     })
 
-    if (scrollContainer) {
-      ScrollTrigger.defaults({ scroller: scrollContainer })
-      scrollContainer.addEventListener('scroll', () => ScrollTrigger.update())
+    const updateReviews3DDepth = () => {
+      if (!reviewsRef.current || window.innerWidth < 768) return
+      const rect = reviewsRef.current.getBoundingClientRect()
+      const winH = window.innerHeight || 900
+      const progress = Math.max(0, Math.min(1, (winH - rect.top) / (winH + rect.height * 0.72)))
+      setReviewDepth(progress)
     }
 
-    lenis.on('scroll', ScrollTrigger.update)
+    const onScrollUpdate = () => {
+      ScrollTrigger.update()
+      updateReviews3DDepth()
+    }
+
+    if (scrollContainer) {
+      ScrollTrigger.defaults({ scroller: scrollContainer })
+      scrollContainer.addEventListener('scroll', onScrollUpdate, { passive: true })
+    }
+
+    lenis.on('scroll', onScrollUpdate)
 
     const tickerCb = (time) => {
       lenis.raf(time * 1000)
@@ -354,7 +436,7 @@ export default function WebDevStore() {
 
     lenis.scrollTo(0, { immediate: true })
 
-    // 1. Hero Melt / Drip on Scroll
+    // 1. Hero Melt / Drip + Watermark Parallax on Scroll
     if (heroRef.current) {
       const dripTl = gsap.timeline({
         scrollTrigger: {
@@ -364,13 +446,14 @@ export default function WebDevStore() {
           scrub: 1,
         }
       })
-      dripTl.to('.lumos-drip-neck', { scaleY: 2.5, transformOrigin: 'top center', ease: 'none' }, 0)
-      dripTl.to('.lumos-drip-drop-1', { y: 130, opacity: 0, ease: 'power1.in' }, 0.05)
-      dripTl.to('.lumos-drip-drop-2', { y: 160, opacity: 0, ease: 'power1.in' }, 0.15)
-      dripTl.to('.lumos-drip-drop-3', { y: 125, opacity: 0, ease: 'power1.in' }, 0.1)
+      dripTl.to('.lumos-drip-neck', { scaleY: 3.2, transformOrigin: 'top center', ease: 'none' }, 0)
+      dripTl.to('.lumos-drip-drop-1', { y: 150, opacity: 0.15, ease: 'power1.in' }, 0.05)
+      dripTl.to('.lumos-drip-drop-2', { y: 210, opacity: 0.2, ease: 'power1.in' }, 0.12)
+      dripTl.to('.lumos-drip-drop-3', { y: 140, opacity: 0.15, ease: 'power1.in' }, 0.08)
+      dripTl.to('.lumos-bex-watermark', { y: -45, scale: 1.08, ease: 'none' }, 0)
     }
 
-    // 2. Torn Paper Reveal & Pink Flash
+    // 2. Torn Paper Reveal, Pink Flash, 3D Cube Text Flip & Stat Box Rounding + Digit Flip
     if (tornRef.current) {
       ScrollTrigger.create({
         trigger: tornRef.current,
@@ -378,17 +461,49 @@ export default function WebDevStore() {
         onEnter: () => triggerPinkFlash(),
         onEnterBack: () => triggerPinkFlash(),
       })
+
+      const ioTorn = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              tornRef.current?.classList.add('is-revealed')
+              ioTorn.disconnect()
+            }
+          })
+        },
+        { root: scrollContainer || null, threshold: 0.08 }
+      )
+      ioTorn.observe(tornRef.current)
+
+      // Stat Box Rounding + Lift Morph on Scroll
+      gsap.fromTo(
+        '.lumos-stat-item',
+        { borderRadius: '0px', y: 20 },
+        {
+          borderRadius: '22px',
+          y: 0,
+          stagger: 0.08,
+          duration: 0.75,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: '.lumos-stats-row',
+            start: 'top 95%',
+            toggleActions: 'play none none none',
+          }
+        }
+      )
     }
 
-    // 3. Why We Are Loved — Front Cards & Giant Background Text Entrance
+    // 3. Why We Are Loved — 7 Cards Fly-In + Rounding Morph + Background Scale
     if (lovedRef.current) {
-      gsap.from(
+      gsap.fromTo(
         '.lumos-drag-card',
+        { y: 55, scale: 0.92 },
         {
-          y: 70,
-          scale: 0.9,
-          stagger: 0.08,
-          duration: 0.85,
+          y: 0,
+          scale: 1,
+          stagger: 0.06,
+          duration: 0.8,
           ease: 'power3.out',
           scrollTrigger: {
             trigger: lovedRef.current,
@@ -397,63 +512,99 @@ export default function WebDevStore() {
           }
         }
       )
-      gsap.from(
-        '.lumos-heading-xlarge',
+    }
+
+    // 4. Inside All-in-One Suite — Sticky Left Preview Box Rounding Morph + Rows Slide
+    if (productsRef.current) {
+      gsap.fromTo(
+        '.lumos-product-preview-pane',
+        { borderRadius: '6px' },
         {
-          y: 40,
-          scale: 0.95,
-          duration: 1.0,
-          ease: 'power2.out',
+          borderRadius: '26px',
+          ease: 'none',
           scrollTrigger: {
-            trigger: lovedRef.current,
-            start: 'top 95%',
+            trigger: productsRef.current,
+            start: 'top 85%',
+            end: 'center center',
+            scrub: 0.6,
+          }
+        }
+      )
+    }
+
+    // 5. Expert Dual 3D Cube Rotation + Corner Rounding Morph on Scroll
+    if (expertRef.current) {
+      gsap.fromTo(
+        '.lumos-expert-cube-left',
+        { borderRadius: '4px', y: 24 },
+        {
+          borderRadius: '28px',
+          y: 0,
+          duration: 0.9,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: expertRef.current,
+            start: 'top 92%',
+            toggleActions: 'play none none none',
+          }
+        }
+      )
+      gsap.fromTo(
+        '.lumos-expert-cube-right',
+        { borderRadius: '4px', y: 28 },
+        {
+          borderRadius: '28px',
+          y: 0,
+          duration: 0.9,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: expertRef.current,
+            start: 'top 92%',
             toggleActions: 'play none none none',
           }
         }
       )
     }
 
-    // 4. All Products List Stagger Rows
-    if (productsRef.current) {
-      gsap.from('.lumos-product-row', {
-        x: -40,
-        opacity: 0,
-        stagger: 0.12,
-        duration: 0.65,
-        ease: 'power2.out',
-        scrollTrigger: {
-          trigger: productsRef.current,
-          start: 'top 75%',
-        }
-      })
+    // 6. Reviews Heading Cube Reveal (via reliable IntersectionObserver inside scroller)
+    if (reviewsRef.current) {
+      const ioReviews = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              reviewsRef.current?.classList.add('is-revealed')
+              ioReviews.disconnect()
+            }
+          })
+        },
+        { root: scrollContainer || null, threshold: 0.08 }
+      )
+      ioReviews.observe(reviewsRef.current)
     }
 
-    // 5. Expert Section Entrance
-    if (expertRef.current) {
-      gsap.from('.lumos-expert-photo-wrap', {
-        x: -50,
-        opacity: 0,
-        duration: 0.8,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: expertRef.current,
-          start: 'top 75%',
+    // 7. Footer HELLO BEX Dripping Melt Elongation on Scroll (Matching Lumos Frames 10 -> 11)
+    if (footerRef.current) {
+      gsap.fromTo(
+        '.lumos-footer-letter-drip',
+        { scaleY: 0.65, transformOrigin: 'top center' },
+        {
+          scaleY: 1.3,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: footerRef.current,
+            start: 'top 90%',
+            end: 'bottom bottom',
+            scrub: 0.7,
+          }
         }
-      })
-      gsap.from('.lumos-expert-info', {
-        x: 50,
-        opacity: 0,
-        duration: 0.8,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: expertRef.current,
-          start: 'top 75%',
-        }
-      })
+      )
     }
 
     // CLEANUP ON UNMOUNT: Guarantee zero bleed to other pages
     return () => {
+      if (scrollContainer) {
+        scrollContainer.removeEventListener('scroll', onScrollUpdate)
+      }
       lenis.destroy()
       gsap.ticker.remove(tickerCb)
       ScrollTrigger.getAll().forEach((t) => t.kill())
@@ -578,18 +729,26 @@ export default function WebDevStore() {
       <div className="lumos-paper-grain" />
 
       {/* ══════════════════════════════════════════════════════════════════════════
-         1. STORE PAGE HERO - OFF-WHITE PAPER #F2EFE9
+         1. STORE PAGE HERO - OFF-WHITE PAPER #F2EFE9 (MATCHING LUMOS SCREEN RECORDING)
          ══════════════════════════════════════════════════════════════════════════ */}
-      <section ref={heroRef} className="lumos-hero-section">
-        {/* Top of Store Page: Small text BEX STORE */}
+      <section
+        ref={heroRef}
+        className="lumos-hero-section"
+        onMouseMove={handleHeroMouseMove}
+        onMouseLeave={handleHeroMouseLeave}
+      >
+        {/* Top Nav Bar: BEX STORE left, internal section anchors center, Pink CTA right */}
         <header className="lumos-hero-top-bar">
           <div className="lumos-brand-pill">
             BEX STORE
           </div>
 
-          <div className="lumos-center-pill">
-            Excel Master Suite
-          </div>
+          <nav className="lumos-hero-nav-links" aria-label="Store sections">
+            <a href="#about-suite" onClick={(e) => { e.preventDefault(); tornRef.current?.scrollIntoView({ behavior: 'smooth' }) }}>About</a>
+            <a href="#inside-suite" onClick={(e) => { e.preventDefault(); productsRef.current?.scrollIntoView({ behavior: 'smooth' }) }}>Inside Suite</a>
+            <a href="#suite-reviews" onClick={(e) => { e.preventDefault(); reviewsRef.current?.scrollIntoView({ behavior: 'smooth' }) }}>Reviews</a>
+            <a href="#architect" onClick={(e) => { e.preventDefault(); expertRef.current?.scrollIntoView({ behavior: 'smooth' }) }}>Architect</a>
+          </nav>
 
           <div className="lumos-top-actions">
             <button
@@ -604,7 +763,7 @@ export default function WebDevStore() {
               className="lumos-cart-btn interactive"
               onClick={() => setIsCartOpen(true)}
             >
-              <span>🛒 CART</span>
+              <span>🛒</span>
               {cart.length > 0 && (
                 <span className="lumos-cart-badge-count">{cart.reduce((s, i) => s + i.quantity, 0)}</span>
               )}
@@ -614,7 +773,8 @@ export default function WebDevStore() {
               className="lumos-get-started-btn interactive"
               onClick={() => handleOpenCheckoutModal(PRODUCTS[0])}
             >
-              Get Started
+              <span>Get Suite · {currency === 'INR' ? '₹199' : '$2.49'}</span>
+              <span className="lumos-btn-plus">+</span>
             </button>
 
             {/* Exit Store button to return to HQ */}
@@ -650,30 +810,36 @@ export default function WebDevStore() {
             <span className="lumos-bracket-tag">[bex store]</span>
             For every business.
             <span className="lumos-hero-side-micro">
-              a quick and effective enterprise solution can be found. Instant download & lifetime access included.
+              1 All-in-One Master Suite with 1,000+ ready templates for {currency === 'INR' ? '₹199' : '$2.49'}. Instant Google Drive & lifetime access.
             </span>
+            <div className="lumos-hero-side-divider" />
           </div>
         </div>
 
-        {/* Center: BEX Watermark + Metallic Teal Logo + Viscous Drips */}
+        {/* Center: BEX Watermark BEHIND + Dripping Metallic Teal Logo */}
         <div className="lumos-centerpiece-wrap">
-          {/* Behind logo: Huge light grey BEX watermark */}
+          {/* Text Behind Image: Huge light grey BEX watermark */}
           <div className="lumos-bex-watermark" aria-hidden="true">
             BEX
           </div>
 
-          {/* Center: Uploaded glossy metallic teal BEX SIGMA TECH logo */}
-          <div className="lumos-logo-container">
+          {/* Foreground: Glossy metallic teal BEX SIGMA TECH logo with mouse parallax & melting drips */}
+          <div
+            className="lumos-logo-container"
+            style={{
+              transform: `perspective(1000px) rotateX(${logoTilt.x}deg) rotateY(${logoTilt.y}deg)`,
+            }}
+          >
             <img
               src="/bex_metallic_logo_clean.png"
               alt="BEx SIGMA TECH"
               className="lumos-metallic-logo"
             />
 
-            {/* Viscous Teal Melting / Dripping SVG */}
+            {/* Viscous Teal Melting / Dripping SVG extending toward bottom barcode */}
             <svg
               className="lumos-drips-svg"
-              viewBox="0 0 700 90"
+              viewBox="0 0 700 115"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
@@ -690,51 +856,48 @@ export default function WebDevStore() {
                 </filter>
               </defs>
 
-              {/* Drip 1 (Under Sigma Loop) */}
               <g className="lumos-drip-group-1">
                 <path
                   className="lumos-drip-neck"
-                  d="M 142 0 Q 150 25 150 45 Q 150 25 158 0 Z"
+                  d="M 142 0 Q 150 28 150 50 Q 150 28 158 0 Z"
                   fill="url(#tealDripGrad)"
                 />
                 <circle
                   className="lumos-drip-drop lumos-drip-drop-1"
                   cx="150"
-                  cy="48"
+                  cy="54"
                   r="7.5"
                   fill="url(#tealDripGrad)"
                   filter="url(#dripGlow)"
                 />
               </g>
 
-              {/* Drip 2 (Under BEX letters center) */}
               <g className="lumos-drip-group-2">
                 <path
                   className="lumos-drip-neck"
-                  d="M 338 0 Q 350 35 350 62 Q 350 35 362 0 Z"
+                  d="M 336 0 Q 350 45 350 86 Q 350 45 364 0 Z"
                   fill="url(#tealDripGrad)"
                 />
                 <circle
                   className="lumos-drip-drop lumos-drip-drop-2"
                   cx="350"
-                  cy="66"
-                  r="9.5"
+                  cy="92"
+                  r="10"
                   fill="url(#tealDripGrad)"
                   filter="url(#dripGlow)"
                 />
               </g>
 
-              {/* Drip 3 (Under SIGMA TECH bar right) */}
               <g className="lumos-drip-group-3">
                 <path
                   className="lumos-drip-neck"
-                  d="M 514 0 Q 522 22 522 38 Q 522 22 530 0 Z"
+                  d="M 514 0 Q 522 24 522 44 Q 522 24 530 0 Z"
                   fill="url(#tealDripGrad)"
                 />
                 <circle
                   className="lumos-drip-drop lumos-drip-drop-3"
                   cx="522"
-                  cy="42"
+                  cy="48"
                   r="7"
                   fill="url(#tealDripGrad)"
                   filter="url(#dripGlow)"
@@ -748,11 +911,10 @@ export default function WebDevStore() {
         <div className="lumos-hero-bottom-bar">
           <div className="lumos-hero-bottom-left">
             <span className="lumos-smiley-icon">㋡</span>
-            <span>Illuminate Enterprise BI Potential</span>
+            <span>Illuminate Commercial Power</span>
           </div>
 
           <div className="lumos-hero-bottom-center">
-            {/* Authentic Lumos Barcode Signature */}
             <svg className="lumos-barcode-svg" viewBox="0 0 160 36" fill="currentColor">
               <rect x="0" y="0" width="3" height="36" />
               <rect x="5" y="0" width="2" height="36" />
@@ -787,52 +949,82 @@ export default function WebDevStore() {
             className="lumos-hero-bottom-right interactive"
             onClick={() => productsRef.current?.scrollIntoView({ behavior: 'smooth' })}
           >
-            <span className="lumos-bracket-tag">[bex suite]</span>
+            <span className="lumos-bracket-tag">[all-in-one]</span>
             <span className="lumos-bottom-line" />
-            <span>Enhance Commercial Power</span>
+            <span>One Suite · {currency === 'INR' ? '₹199' : '$2.49'}</span>
             <span className="lumos-arrow-down">↓</span>
           </div>
         </div>
       </section>
 
       {/* ══════════════════════════════════════════════════════════════════════════
-         2. STORE PAGE SCROLL 1 - TORN PAPER & STATS
+         2. STORE PAGE SCROLL 1 - TORN PAPER, 3D CUBE TEXT & FLIPPING DIGIT BOXES
          ══════════════════════════════════════════════════════════════════════════ */}
-      <section ref={tornRef} className="lumos-torn-section">
-        {/* Torn paper edge peeling from bottom of hero */}
+      <section ref={tornRef} id="about-suite" className="lumos-torn-section">
         <div className="lumos-torn-paper-edge" />
 
         <div className="lumos-torn-content">
-          <h2 className="lumos-torn-headline">
-            We offer only personalized templates.
+          <div className="lumos-torn-top-meta">
+            <span className="lumos-scramble-tag">[ Nothing tells us better than the numbers achieved ]</span>
+          </div>
+
+          <h2 className="lumos-torn-headline lumos-cube-wrap">
+            <span className="lumos-cube-line">
+              <span className="lumos-ghost-word">We</span> offer
+            </span>
+            <span className="lumos-cube-line">only personalized</span>
+            <span className="lumos-cube-line">
+              <span className="lumos-ghost-word">templates</span>
+            </span>
           </h2>
-          <p className="lumos-torn-sub">
-            To bring you automated executive clarity and the rapid commercial growth of your enterprise.
-          </p>
+
+          <div className="lumos-torn-sub-row">
+            <span className="lumos-scramble-tag">[about the suite]</span>
+            <p className="lumos-torn-sub">
+              One complete <strong>All-in-One Suite</strong> replacing messy manual sheets — bringing quality growth and instant business clarity for a one-time {currency === 'INR' ? '₹199' : '$2.49'}.
+            </p>
+          </div>
 
           <div className="lumos-stats-row">
             <div className="lumos-stat-item">
-              <span className="lumos-stat-val">200%</span>
+              <span className="lumos-stat-val">
+                <span className="lumos-digit-cube">2</span>
+                <span className="lumos-digit-cube">0</span>
+                <span className="lumos-digit-cube">0</span>%
+              </span>
               <span className="lumos-stat-label">Growth</span>
               <span className="lumos-stat-bracket">[client roi]</span>
             </div>
             <div className="lumos-stat-divider" />
             <div className="lumos-stat-item">
-              <span className="lumos-stat-val">120+</span>
+              <span className="lumos-stat-val">
+                <span className="lumos-digit-cube">1</span>
+                <span className="lumos-digit-cube">2</span>
+                <span className="lumos-digit-cube">0</span>+
+              </span>
               <span className="lumos-stat-label">Projects</span>
               <span className="lumos-stat-bracket">[completed works]</span>
             </div>
             <div className="lumos-stat-divider" />
             <div className="lumos-stat-item">
-              <span className="lumos-stat-val">100%</span>
+              <span className="lumos-stat-val">
+                <span className="lumos-digit-cube">1</span>
+                <span className="lumos-digit-cube">0</span>
+                <span className="lumos-digit-cube">0</span>%
+              </span>
               <span className="lumos-stat-label">Success</span>
               <span className="lumos-stat-bracket">[satisfaction rate]</span>
             </div>
             <div className="lumos-stat-divider" />
-            <div className="lumos-stat-item">
-              <span className="lumos-stat-val">₹199</span>
-              <span className="lumos-stat-label">Master Suite</span>
-              <span className="lumos-stat-bracket">[one-time lifetime]</span>
+            <div className="lumos-stat-item is-suite-pill" onClick={() => handleOpenCheckoutModal(PRODUCTS[0])}>
+              <span className="lumos-stat-val">
+                {currency === 'INR' ? '₹' : '$'}
+                <span className="lumos-digit-cube">{currency === 'INR' ? '1' : '2'}</span>
+                <span className="lumos-digit-cube">{currency === 'INR' ? '9' : '.4'}</span>
+                <span className="lumos-digit-cube">{currency === 'INR' ? '9' : '9'}</span>
+              </span>
+              <span className="lumos-stat-label">All-in-One Suite</span>
+              <span className="lumos-stat-bracket">[1,000+ sheets lifetime]</span>
             </div>
           </div>
         </div>
@@ -868,6 +1060,32 @@ export default function WebDevStore() {
 
           {/* FOREGROUND OVERLAPPING CARDS CLUSTER (Layer 2 - Sits Directly in Front of Giant Text) */}
           <div className="lumos-drag-stage">
+            {/* Card 7: Hot Pink Peeking Sticker ("We create worldwide" - matching Lumos Video Frame 5) */}
+            <div
+              className={`lumos-drag-card card-pink-worldwide interactive ${activeCardKey === 'card7' ? 'is-dragging' : ''}`}
+              style={{
+                transform: `translate(${cardOffsets.card7.x}px, ${cardOffsets.card7.y}px) rotate(-10deg)`,
+                zIndex: activeCardKey === 'card7' ? 30 : 4,
+              }}
+              onPointerDown={(e) => handlePointerDown('card7', e)}
+              onPointerUp={handlePointerUp}
+            >
+              <span className="lumos-drag-pill">DRAG</span>
+              <img
+                src="/lumos/paper_top.webp"
+                alt="Paper texture"
+                className="lumos-paper-topper"
+                draggable={false}
+              />
+              <span className="lumos-sticker-badge is-pink">[100+ industries]</span>
+              <h3 className="lumos-sticker-title">
+                We build <br />worldwide
+              </h3>
+              <p className="lumos-sticker-desc">
+                Ready for any business vertical across retail, finance, SaaS, logistics & services.
+              </p>
+            </div>
+
             {/* Card 1: Left Polaroid (Cooperative) */}
             <div
               className={`lumos-drag-card card-polaroid-1 interactive ${activeCardKey === 'card1' ? 'is-dragging' : ''}`}
@@ -1050,118 +1268,202 @@ export default function WebDevStore() {
       </section>
 
       {/* ══════════════════════════════════════════════════════════════════════════
-         4. STORE PAGE SCROLL 3 - ALL PRODUCTS LIST (SPLIT PREVIEW LAYOUT)
+         4. STORE PAGE SCROLL 3 - SINGLE ALL-IN-ONE SUITE (TEXT BEHIND IMAGE + TILT ROWS + TORN BLACK)
          ══════════════════════════════════════════════════════════════════════════ */}
-      <section ref={productsRef} className="lumos-products-section">
+      <section ref={productsRef} id="inside-suite" className="lumos-products-section">
         <div className="lumos-products-inner">
+          {/* Top Lumos Header Bar with Counter [ 05 ] & Rotating Crosshair */}
           <div className="lumos-products-header">
-            <h2 className="lumos-products-title">The All-in-One Suite</h2>
-            <span className="lumos-products-sub">Only ₹199 • All 5 Core Modules & 1,000+ Spreadsheets Included in 1 Single Master Download</span>
+            <div className="lumos-header-left-group">
+              <span className="lumos-suite-count-bracket">[ 0{SUITE_PILLARS.length} ]</span>
+              <h2 className="lumos-products-title">ONE ALL-IN-ONE SUITE</h2>
+            </div>
+            <div className="lumos-header-right-group">
+              <span className="lumos-products-sub">
+                Only 1 Product · Everything Included for {currency === 'INR' ? '₹199' : '$2.49'}
+              </span>
+              <span className="lumos-rotating-cross">+</span>
+            </div>
           </div>
 
           <div className="lumos-products-split-layout">
-            {/* Left Floating Preview Pane (Matching Lumos Video Frame 6!) */}
+            {/* Left Sticky Preview Box (Matching Lumos Video Frame 6: TEXT BEHIND IMAGE + BOX ROUNDING!) */}
             <div className="lumos-product-preview-pane">
               <div className="lumos-preview-thumb-wrap">
+                <div className="lumos-preview-bg-text" aria-hidden="true">
+                  {activePreviewProd.watermark}
+                </div>
                 <img
                   src={activePreviewProd.image}
                   alt={activePreviewProd.name}
                   className="lumos-preview-img"
                 />
+                <div className="lumos-preview-specs-overlay">
+                  <div className="lumos-spec-item">
+                    <span className="lumos-spec-label">Included In:</span>
+                    <span className="lumos-spec-val">All-in-One ₹199 Master Suite</span>
+                  </div>
+                  <div className="lumos-spec-item">
+                    <span className="lumos-spec-label">Format:</span>
+                    <span className="lumos-spec-val">.XLSX + Google Sheets</span>
+                  </div>
+                  <div className="lumos-spec-item">
+                    <span className="lumos-spec-label is-pink">Outcome:</span>
+                    <span className="lumos-spec-val">{activePreviewProd.outcome}</span>
+                  </div>
+                </div>
               </div>
+
               <span className="lumos-preview-tag">{activePreviewProd.category}</span>
               <h3 className="lumos-preview-name">{activePreviewProd.name}</h3>
               <p className="lumos-preview-tagline">{activePreviewProd.tagline}</p>
+
               <button
                 className="lumos-preview-btn interactive"
                 onClick={() => handleOpenCheckoutModal(PRODUCTS[0])}
               >
-                <span>⚡ Get All-in-One — {currency === 'INR' ? '₹199' : '$2.49'}</span>
-                <span>→</span>
+                <span>⚡ Buy Complete Suite — {currency === 'INR' ? '₹199' : '$2.49'}</span>
+                <span>+</span>
               </button>
             </div>
 
-            {/* Right Horizontal Linear Rows */}
-            <div className="lumos-products-list">
-              {LUMOS_PRODUCTS.map((prod) => (
-                <div
-                  key={prod.id}
-                  className={`lumos-product-row interactive ${activePreviewProd.id === prod.id ? 'active' : ''}`}
-                  onMouseEnter={() => setActivePreviewProd(prod)}
-                  onClick={() => handleOpenCheckoutModal(PRODUCTS[0])}
-                >
-                  <span className="lumos-row-index">{prod.index}</span>
-                  <div className="lumos-row-name-wrap">
-                    <h3 className="lumos-row-name">{prod.name}</h3>
-                    <span className="lumos-row-tagline">{prod.tagline}</span>
-                  </div>
-                  <span className="lumos-row-category">{prod.category}</span>
-                  <span className="lumos-row-price">
-                    {currency === 'INR' ? '₹199' : '$2.49'}
-                  </span>
-                  <div className="lumos-row-action">
-                    <button
-                      className="lumos-buy-pill-btn interactive"
-                      onClick={(e) => {
-                        e.stopPropagation()
-                        handleOpenCheckoutModal(PRODUCTS[0])
+            {/* Right Interactive Pillars List (Zero Separate Product Prices — Strictly Everything Included in the 1 Suite) */}
+            <div className="lumos-products-right-col">
+              <div className="lumos-products-list">
+                {SUITE_PILLARS.map((pillar) => {
+                  const isActive = activePreviewProd.id === pillar.id
+                  const isExpanded = expandedPillarId === pillar.id
+                  const rowTilt = rowTilts[pillar.id] || 0
+                  return (
+                    <div
+                      key={pillar.id}
+                      className={`lumos-product-row interactive ${isActive ? 'active' : ''} ${isExpanded ? 'expanded' : ''}`}
+                      onMouseEnter={() => setActivePreviewProd(pillar)}
+                      onMouseMove={(e) => handleRowMouseMove(pillar.id, e)}
+                      onMouseLeave={() => handleRowMouseLeave(pillar.id)}
+                      onClick={() => {
+                        setActivePreviewProd(pillar)
+                        setExpandedPillarId(isExpanded ? null : pillar.id)
                       }}
                     >
-                      <span>Get Suite</span>
-                      <span>→</span>
-                    </button>
-                  </div>
+                      {/* Lumos Rotating Top Divider Line */}
+                      <div
+                        className="lumos-row-tilt-divider"
+                        style={{ transform: `rotateZ(${rowTilt}deg)` }}
+                      />
+
+                      <div className="lumos-row-main-grid">
+                        <span className="lumos-row-index">{pillar.index}</span>
+                        <div className="lumos-row-name-wrap">
+                          <h3 className="lumos-row-name">{pillar.name}</h3>
+                          <span className="lumos-row-tagline">{pillar.tagline}</span>
+                        </div>
+                        <span className="lumos-row-category">{pillar.category}</span>
+                        <div className="lumos-row-action">
+                          <span className="lumos-row-plus-icon">
+                            {isExpanded ? '−' : '+'}
+                          </span>
+                        </div>
+                      </div>
+
+                      {isExpanded && (
+                        <div className="lumos-row-expanded-details">
+                          <div className="lumos-expanded-chips">
+                            {pillar.highlights.map((h) => (
+                              <span key={h} className="lumos-expanded-chip">✓ {h}</span>
+                            ))}
+                          </div>
+                          <button
+                            className="lumos-buy-pill-btn interactive"
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              handleOpenCheckoutModal(PRODUCTS[0])
+                            }}
+                          >
+                            <span>Unlock All 5 Pillars · {currency === 'INR' ? '₹199' : '$2.49'}</span>
+                            <span>→</span>
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  )
+                })}
+              </div>
+
+              {/* Bottom CTA Banner Matching Lumos Video Frame 7 */}
+              <div className="lumos-suite-callout-bar">
+                <div className="lumos-callout-left">
+                  <strong>All 5 pillars + 1,000+ templates in one download.</strong>
+                  <span>No subscriptions. No upsells. Lifetime access.</span>
                 </div>
-              ))}
+                <button
+                  className="lumos-callout-pink-btn interactive"
+                  onClick={() => handleOpenCheckoutModal(PRODUCTS[0])}
+                >
+                  <span>Buy All-in-One<br />Suite · {currency === 'INR' ? '₹199' : '$2.49'}</span>
+                  <span className="lumos-callout-plus">+</span>
+                </button>
+              </div>
             </div>
           </div>
         </div>
+
+        {/* Torn White-to-Black Paper Edge Peeling Down into Expert Section (Video Frame 7) */}
+        <div className="lumos-torn-bottom-black-edge" />
       </section>
 
       {/* ══════════════════════════════════════════════════════════════════════════
-         5. STORE PAGE SCROLL 4 - EXPERT (3D PERSPECTIVE TILT)
+         5. STORE PAGE SCROLL 4 - ARCHITECT DUAL 3D CUBE FLIP & BOX ROUNDING
          ══════════════════════════════════════════════════════════════════════════ */}
-      <section ref={expertRef} className="lumos-expert-section">
-        <div className="lumos-expert-inner">
-          <div
-            className="lumos-expert-photo-wrap"
-            style={{
-              transform: `perspective(1000px) rotateX(${expertTilt.x}deg) rotateY(${expertTilt.y}deg)`,
-            }}
-            onMouseMove={handleExpertMouseMove}
-            onMouseLeave={handleExpertMouseLeave}
-          >
-            <img
-              src="/ceo_hariharan.jpg"
-              alt="Hariharan D"
-              className="lumos-expert-img"
-            />
+      <section ref={expertRef} id="architect" className="lumos-expert-section">
+        <div className="lumos-expert-container">
+          <div className="lumos-expert-meta-center">
+            <span className="lumos-expert-meta-header">[Who will you cooperate with?]</span>
           </div>
 
-          <div className="lumos-expert-info">
-            <span className="lumos-expert-meta-header">[Who will you cooperate with?]</span>
-            <span className="lumos-expert-tag">Microsoft Verified Architect</span>
-            <h2 className="lumos-expert-title">
-              Hariharan D — Excel Expert, 10+ Years.
-            </h2>
-            <div className="lumos-expert-quote">
-              "[H] I architected this suite because businesses bleed time and capital on broken spreadsheet models, never on lack of vision."
+          <div className="lumos-expert-inner">
+            {/* Cube 1 Left: 3D Tilt & Box Rounding Portrait */}
+            <div
+              className="lumos-expert-photo-wrap lumos-expert-cube-left"
+              style={{
+                transform: `perspective(1000px) rotateX(${expertTilt.x}deg) rotateY(${expertTilt.y}deg)`,
+              }}
+              onMouseMove={handleExpertMouseMove}
+              onMouseLeave={handleExpertMouseLeave}
+            >
+              <img
+                src="/ceo_hariharan.jpg"
+                alt="Hariharan D"
+                className="lumos-expert-img"
+              />
+              <div className="lumos-expert-corner-badge">Founder & Chief Architect</div>
             </div>
-            <p className="lumos-expert-bio">
-              Lead technical consultant and architect behind 120+ mission-critical enterprise spreadsheet systems, 3-statement GAAP valuation engines, and executive BI command centers.
-            </p>
-            <div className="lumos-expert-bullets">
-              <div className="lumos-expert-bullet-item">
-                <span className="lumos-bullet-icon">✓</span>
-                <span>10+ Years Building Enterprise-Grade Financial & BI Architectures</span>
+
+            {/* Cube 2 Right: Editorial Quote & Credentials Box */}
+            <div className="lumos-expert-info lumos-expert-cube-right">
+              <span className="lumos-expert-tag">Microsoft Verified Architect</span>
+              <h2 className="lumos-expert-title">
+                Hariharan D — Excel Expert, 10+ Years.
+              </h2>
+              <div className="lumos-expert-quote">
+                "[H] I built this all-in-one suite because teams bleed hours and capital on broken spreadsheet models — never on lack of vision."
               </div>
-              <div className="lumos-expert-bullet-item">
-                <span className="lumos-bullet-icon">✓</span>
-                <span>Official Microsoft Verified Excel Standard & GAAP Modeling</span>
-              </div>
-              <div className="lumos-expert-bullet-item">
-                <span className="lumos-bullet-icon">✓</span>
-                <span>Direct 1-on-1 WhatsApp Support Included with Lifetime Access</span>
+              <p className="lumos-expert-bio">
+                Lead technical architect behind 120+ mission-critical enterprise spreadsheet systems, 3-statement GAAP valuation engines, and automated BI command centers.
+              </p>
+              <div className="lumos-expert-bullets">
+                <div className="lumos-expert-bullet-item">
+                  <span className="lumos-bullet-icon">✓</span>
+                  <span>10+ Years Building Enterprise-Grade Financial & BI Architectures</span>
+                </div>
+                <div className="lumos-expert-bullet-item">
+                  <span className="lumos-bullet-icon">✓</span>
+                  <span>Official Microsoft Verified Excel Standard & GAAP Modeling</span>
+                </div>
+                <div className="lumos-expert-bullet-item">
+                  <span className="lumos-bullet-icon">✓</span>
+                  <span>Direct 1-on-1 WhatsApp Support Included with Lifetime Access</span>
+                </div>
               </div>
             </div>
           </div>
@@ -1169,11 +1471,94 @@ export default function WebDevStore() {
       </section>
 
       {/* ══════════════════════════════════════════════════════════════════════════
-         6. STORE PAGE BUY BOX (CLIMAX SECTION)
+         6. STORE PAGE SCROLL 5 - "WHAT PEOPLE SAY ABOUT BEX" (3D DEPTH ZOOM REVIEWS - VIDEO FRAMES 8 & 9)
+         ══════════════════════════════════════════════════════════════════════════ */}
+      <section ref={reviewsRef} id="suite-reviews" className="lumos-reviews-section">
+        <div className="lumos-reviews-top-wrap">
+          <span className="lumos-scramble-tag">[reviews]</span>
+          <div className="lumos-reviews-dividers">
+            <div className="lumos-rev-line" />
+            <div className="lumos-rev-line" />
+            <div className="lumos-rev-line" />
+            <div className="lumos-rev-line" />
+          </div>
+
+          {/* Matching Video Frame 8 Typography & Cube/Ghost Fade Reveal */}
+          <h2 className="lumos-reviews-heading">
+            <span className="lumos-review-cube-word ghost-top">What</span><br />
+            <span className="lumos-review-cube-word ghost-left">people </span>
+            <span className="lumos-review-cube-word solid-black">say about</span><br />
+            <span className="lumos-review-cube-word solid-black">BEX</span>
+          </h2>
+        </div>
+
+        {/* Sticky 3D Perspective Zoom Stage (Matching Video Frame 9) */}
+        <div className="lumos-reviews-relative-block">
+          <div className="lumos-reviews-sticky-stage">
+            <div className="lumos-reviews-cards-grid">
+              {SUITE_REVIEWS.map((rev, idx) => {
+                const isLeft = idx % 2 === 1
+                const progress = Math.min(1, Math.max(0, reviewDepth * 1.15 - idx * 0.14))
+                const translateZ = -220 + progress * 260
+                const translateX = isLeft ? -progress * 45 : progress * 45
+                const radiusMorph = `${6 + Math.round(progress * 18)}px`
+
+                return (
+                  <article
+                    key={rev.id}
+                    className={`lumos-review-card ${isLeft ? 'is-left' : 'is-right'}`}
+                    style={{
+                      transform: typeof window !== 'undefined' && window.innerWidth >= 768
+                        ? `translateX(${translateX}px) translateZ(${translateZ}px) rotate(${isLeft ? -1.5 : 1.5}deg)`
+                        : undefined,
+                      borderRadius: radiusMorph,
+                    }}
+                  >
+                    <div className="lumos-review-card-top">
+                      <img
+                        src={rev.image}
+                        alt={rev.author}
+                        className="lumos-review-photo"
+                        loading="lazy"
+                      />
+                      <div className="lumos-review-quote-col">
+                        <div className="lumos-review-bracket-row">
+                          <span className="lumos-review-big-bracket">[</span>
+                          <h3 className="lumos-review-headline">{rev.quote}</h3>
+                        </div>
+                        <p className="lumos-review-body">{rev.body}</p>
+                        <div className="lumos-review-divider-line" />
+                      </div>
+                    </div>
+
+                    <div className="lumos-review-card-bottom">
+                      <div className="lumos-review-author-wrap">
+                        <strong className="lumos-review-author">{rev.author}</strong>
+                        <span className="lumos-review-role">{rev.role}</span>
+                      </div>
+                      <div className="lumos-review-tags">
+                        {rev.tags.map((t) => (
+                          <span key={t} className="lumos-review-pill">{t}</span>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Signature Diagonal Hazard Stripes Along Card Bottom */}
+                    <div className="lumos-hazard-stripe-tape lumos-review-hazard" />
+                  </article>
+                )
+              })}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ══════════════════════════════════════════════════════════════════════════
+         7. STORE PAGE BUY BOX (SINGLE ALL-IN-ONE PRODUCT CLIMAX SECTION)
          ══════════════════════════════════════════════════════════════════════════ */}
       <section className="lumos-buybox-section">
         <div className="lumos-buybox-card">
-          <span className="lumos-buybox-pill">⚡ Lifetime Master Access</span>
+          <span className="lumos-buybox-pill">⚡ 1 All-in-One Suite · Zero Upsells</span>
           <h2 className="lumos-buybox-heading">
             GET THE SUITE — {currency === 'INR' ? 'Rs 199' : '$2.49'}
           </h2>
@@ -1183,14 +1568,14 @@ export default function WebDevStore() {
               className="lumos-action-btn-primary interactive"
               onClick={() => handleOpenCheckoutModal(PRODUCTS[0])}
             >
-              <span>⚡ Buy Now</span>
+              <span>⚡ Buy All-in-One Now</span>
             </button>
 
             <button
               className="lumos-action-btn-cart interactive"
               onClick={() => addToCart(PRODUCTS[0])}
             >
-              <span>+ Add to Cart</span>
+              <span>+ Add Suite to Cart</span>
             </button>
 
             <a
@@ -1204,37 +1589,37 @@ export default function WebDevStore() {
           </div>
 
           <div className="lumos-buybox-guarantee">
-            1000+ Templates • Instant Download • Lifetime Access • 100% Secure Checkout
+            1,000+ Templates • 5 Automated Business Pillars • Instant Google Drive • Lifetime Access
           </div>
         </div>
       </section>
 
       {/* ══════════════════════════════════════════════════════════════════════════
-         7. STORE PAGE FOOTER (INSIDE STORE PAGE) — WITH MELTING LETTER DRIPS!
+         8. STORE PAGE FOOTER (INSIDE STORE PAGE) — HELLO BEX WITH MELTING DRIPS!
          ══════════════════════════════════════════════════════════════════════════ */}
-      <footer className="lumos-footer-section">
+      <footer ref={footerRef} className="lumos-footer-section">
         <div className="lumos-footer-statement">
           <span className="lumos-footer-hello">
             HELLO
             {/* Melting SVG Drip on H */}
-            <svg className="lumos-footer-letter-drip" style={{ left: '6%', bottom: '-22px' }} viewBox="0 0 16 36">
-              <path d="M 4 0 Q 8 18 8 28 Q 8 36 12 28 Q 12 18 12 0 Z" />
+            <svg className="lumos-footer-letter-drip" style={{ left: '5%', bottom: '-18px' }} viewBox="0 0 24 56">
+              <path d="M 6 0 L 18 0 Q 17 26 17 38 C 17 48 15 54 12 54 C 9 54 7 48 7 38 Q 7 26 6 0 Z" />
             </svg>
             {/* Melting SVG Drip on O */}
-            <svg className="lumos-footer-letter-drip" style={{ right: '8%', bottom: '-26px' }} viewBox="0 0 16 36">
-              <path d="M 4 0 Q 8 20 8 32 Q 8 36 12 32 Q 12 20 12 0 Z" />
+            <svg className="lumos-footer-letter-drip" style={{ right: '7%', bottom: '-20px' }} viewBox="0 0 24 56">
+              <path d="M 6 0 L 18 0 Q 17 28 17 40 C 17 49 15 55 12 55 C 9 55 7 49 7 40 Q 7 28 6 0 Z" />
             </svg>
           </span>
 
           <span className="lumos-footer-bex">
             BEX
             {/* Melting SVG Drip on B */}
-            <svg className="lumos-footer-letter-drip" style={{ left: '12%', bottom: '-26px', fill: '#A6F4E0' }} viewBox="0 0 16 36">
-              <path d="M 4 0 Q 8 22 8 34 Q 8 38 12 34 Q 12 22 12 0 Z" />
+            <svg className="lumos-footer-letter-drip" style={{ left: '10%', bottom: '-20px', fill: '#A6F4E0' }} viewBox="0 0 24 56">
+              <path d="M 6 0 L 18 0 Q 17 28 17 41 C 17 50 15 55 12 55 C 9 55 7 50 7 41 Q 7 28 6 0 Z" />
             </svg>
             {/* Melting SVG Drip on X */}
-            <svg className="lumos-footer-letter-drip" style={{ right: '14%', bottom: '-28px', fill: '#A6F4E0' }} viewBox="0 0 16 36">
-              <path d="M 4 0 Q 8 24 8 36 Q 8 40 12 36 Q 12 24 12 0 Z" />
+            <svg className="lumos-footer-letter-drip" style={{ right: '11%', bottom: '-22px', fill: '#A6F4E0' }} viewBox="0 0 24 56">
+              <path d="M 6 0 L 18 0 Q 17 30 17 42 C 17 51 15 56 12 56 C 9 56 7 51 7 42 Q 7 30 6 0 Z" />
             </svg>
           </span>
         </div>
@@ -1242,10 +1627,10 @@ export default function WebDevStore() {
         {/* 3-Column Meta Grid (Matching Lumos Video Frames 10 & 11) */}
         <div className="lumos-footer-meta-grid">
           <div className="lumos-footer-col-left">
-            <a href="#about" onClick={(e) => { e.preventDefault(); heroRef.current?.scrollIntoView({ behavior: 'smooth' }) }}>About Suite</a>
-            <a href="#products" onClick={(e) => { e.preventDefault(); productsRef.current?.scrollIntoView({ behavior: 'smooth' }) }}>Products & Slicers</a>
-            <a href="#expert" onClick={(e) => { e.preventDefault(); expertRef.current?.scrollIntoView({ behavior: 'smooth' }) }}>Technical Architect</a>
-            <a href="https://wa.me/919361657929" target="_blank" rel="noreferrer">Direct WhatsApp</a>
+            <a href="#about-suite" onClick={(e) => { e.preventDefault(); tornRef.current?.scrollIntoView({ behavior: 'smooth' }) }}>About Suite</a>
+            <a href="#inside-suite" onClick={(e) => { e.preventDefault(); productsRef.current?.scrollIntoView({ behavior: 'smooth' }) }}>Inside All-in-One</a>
+            <a href="#suite-reviews" onClick={(e) => { e.preventDefault(); reviewsRef.current?.scrollIntoView({ behavior: 'smooth' }) }}>Reviews</a>
+            <a href="#architect" onClick={(e) => { e.preventDefault(); expertRef.current?.scrollIntoView({ behavior: 'smooth' }) }}>Architect</a>
           </div>
 
           <div className="lumos-footer-col-center">
@@ -1300,7 +1685,7 @@ export default function WebDevStore() {
           {cart.length === 0 ? (
             <div className="webdev-cart-empty">
               <div className="webdev-cart-empty-icon">📭</div>
-              <div>Your cart is empty. Add the aIn Pack to get started!</div>
+              <div>Your cart is empty. Add the All-in-One Suite (₹199) to get started!</div>
             </div>
           ) : (
             cart.map((item) => (
