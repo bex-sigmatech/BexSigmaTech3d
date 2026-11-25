@@ -15,8 +15,7 @@
   background: #FFFFFF;
   color: #111111;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  opacity: 0;
-  transition: opacity 0.35s ease;
+  opacity: 1;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -440,6 +439,39 @@
   justify-content: space-between;
 }
 
+/* 0:00 NATURE Dual Flying Rotated Photos (-15deg -> 0deg) */
+.mc-hero-dual-stage {
+  position: relative;
+  min-height: 450px;
+  overflow: hidden;
+}
+
+.mc-hero-fly-photo {
+  position: absolute;
+  background: #FFFFFF;
+  will-change: transform, opacity;
+}
+
+.mc-hero-fly-photo--back {
+  width: min(72%, 340px);
+  aspect-ratio: 4 / 3;
+  z-index: 2;
+}
+
+.mc-hero-fly-photo--back .mc-photo-sepia {
+  height: calc(100% - 24px);
+}
+
+.mc-hero-fly-photo--front {
+  width: min(78%, 390px);
+  aspect-ratio: 4 / 2.65;
+  padding: 18px 20px 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  z-index: 4;
+}
+
 .mc-hero-logo-img {
   width: 100%;
   height: calc(100% - 28px);
@@ -568,6 +600,15 @@
   z-index: 7;
 }
 
+.mc-note-stamp--hero {
+  top: 28px;
+  right: 28px;
+  bottom: auto;
+  background: #FFFFFF;
+  transform: rotate(6deg);
+  z-index: 7;
+}
+
 .mc-obys-showcase-right {
   background: #FFFFFF;
   display: flex;
@@ -685,41 +726,56 @@
   padding-top: 10px;
 }
 
-/* 00:01-00:02 Giant Beige Word Behind Striped Contour Mountain Ridges */
+/* 00:01-00:04 LANGUAGE Black Marquee: Huge HARIHARAN R->L + Hairline Birds + Striped Ridges */
 .mc-ridge-transition {
   position: relative;
   width: 100%;
-  height: 220px;
+  height: 250px;
   background: #111111;
   overflow: hidden;
   border-top: 1px solid #111111;
 }
 
-.mc-ridge-giant-word {
+.mc-ridge-marquee-wrap {
   position: absolute;
-  top: 6px;
+  top: 8px;
   left: 0;
   right: 0;
-  text-align: center;
+  overflow: hidden;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.mc-ridge-marquee-track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+}
+
+.mc-ridge-giant-word {
   font-family: 'Anton', sans-serif;
-  font-size: clamp(4.2rem, 14vw, 200px);
+  font-size: clamp(5.2rem, 15.5vw, 220px);
   line-height: 0.85;
   letter-spacing: -0.02em;
   text-transform: uppercase;
   color: #D8CCB0;
   white-space: nowrap;
-  z-index: 1;
-  pointer-events: none;
+  flex-shrink: 0;
 }
 
-.mc-ridge-giant-script {
-  font-family: 'Caveat', cursive;
-  font-style: italic;
-  text-transform: lowercase;
-  font-weight: 700;
-  font-size: 0.92em;
-  color: #D8CCB0;
+.mc-sky-bird {
+  position: absolute;
+  left: 0;
+  width: 38px;
+  height: 20px;
+  z-index: 4;
+  pointer-events: none;
+  will-change: transform, opacity;
 }
+
+.mc-sky-bird--1 { top: 24px; }
+.mc-sky-bird--2 { top: 68px; }
+.mc-sky-bird--3 { top: 112px; }
 
 .mc-ridge-svg {
   position: absolute;
@@ -867,7 +923,159 @@
   color: #111111;
 }
 
-/* ── 3. WHAT WE BUILD: SPLIT SCROLL (LEFT STICKY + FALLING ICONS, RIGHT SERVICES 01-04) ── */
+/* ── 3. WHAT WE BUILD: FULL-WIDTH CENTER BOWL (0:05-0:07) + SPLIT ACCORDION ── */
+.mc-services-wrapper {
+  width: 100%;
+  background: #FFFFFF;
+}
+
+.mc-bowl-showcase-stage {
+  position: relative;
+  width: 100%;
+  min-height: 600px;
+  background: #FFFFFF;
+  border-bottom: 1px solid #111111;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 58px 20px 32px;
+}
+
+.mc-bowl-stage-topbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 12px clamp(20px, 3.6vw, 48px);
+  border-bottom: 1px solid #111111;
+  background: #EAE3D0;
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #111111;
+  z-index: 6;
+}
+
+.mc-bowl-marquee-bg {
+  position: absolute;
+  top: 46%;
+  left: 0;
+  right: 0;
+  transform: translateY(-50%);
+  overflow: hidden;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.mc-bowl-marquee-track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+}
+
+.mc-bowl-marquee-word {
+  font-family: 'Anton', 'Archivo Black', sans-serif;
+  font-size: clamp(5rem, 14vw, 210px);
+  line-height: 0.85;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: #111111;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.mc-bowl-drop-zone {
+  position: relative;
+  z-index: 3;
+  width: min(920px, 100%);
+  height: 470px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.mc-falling-tech-item {
+  position: absolute;
+  bottom: 162px;
+  left: 50%;
+  margin-left: -48px;
+  width: 96px;
+  padding: 8px 6px 6px;
+  background: #FFFFFF;
+  border: 1.5px solid #111111;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  z-index: 4;
+  will-change: transform, opacity;
+}
+
+.mc-falling-tech-art {
+  width: 56px;
+  height: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mc-falling-tech-label {
+  font-family: 'Anton', sans-serif;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #111111;
+  line-height: 1;
+}
+
+.mc-bowl-steam {
+  position: relative;
+  z-index: 5;
+  width: 220px;
+  height: 54px;
+  margin-bottom: -12px;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.mc-steam-path {
+  will-change: transform, opacity;
+}
+
+.mc-bowl-vessel {
+  position: relative;
+  z-index: 5;
+  width: min(560px, 86vw);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.mc-bowl-svg {
+  width: 100%;
+  height: 156px;
+  display: block;
+}
+
+.mc-bowl-caption {
+  margin-top: -2px;
+  background: #111111;
+  color: #EAE3D0;
+  padding: 6px 16px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-align: center;
+}
+
 .mc-split-scroll-section {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -893,128 +1101,10 @@
   gap: 24px;
 }
 
-/* 0:23 Falling Icons + Architectural Bowl Scene */
-.mc-falling-bowl-stage {
-  position: relative;
-  height: 310px;
-  width: 100%;
-  border: 1px solid #111111;
-  background: #EAE3D0;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-end;
-  padding-bottom: 18px;
-}
-
-.mc-bowl-bg-word {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -56%);
-  font-family: 'Anton', sans-serif;
-  font-size: clamp(2.8rem, 6vw, 4.8rem);
-  line-height: 0.9;
-  letter-spacing: -0.02em;
-  text-transform: uppercase;
-  color: #111111;
-  opacity: 0.14;
-  white-space: nowrap;
-  z-index: 1;
-  pointer-events: none;
-}
-
-.mc-bowl-steam {
-  position: relative;
-  z-index: 4;
-  width: 170px;
-  height: 42px;
-  margin-bottom: -8px;
-  pointer-events: none;
-  overflow: visible;
-}
-
-.mc-steam-path {
-  will-change: transform, opacity;
-}
-
-.mc-falling-stage-label {
-  position: absolute;
-  top: 10px;
-  left: 14px;
-  right: 14px;
-  display: flex;
-  justify-content: space-between;
-  font-size: 12px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  color: #111111;
-  z-index: 4;
-}
-
-.mc-falling-icon {
-  position: absolute;
-  top: 28px;
-  width: 68px;
-  height: 68px;
-  background: #FFFFFF;
-  border: 1px solid #111111;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.mc-sticky-inner--compact {
+  min-height: auto;
   justify-content: center;
-  gap: 3px;
-  z-index: 3;
-  will-change: transform, opacity;
-}
-
-.mc-falling-icon--1 { left: 10%; }
-.mc-falling-icon--2 { left: 28%; }
-.mc-falling-icon--3 { left: 45%; }
-.mc-falling-icon--4 { left: 62%; }
-.mc-falling-icon--5 { left: 78%; }
-
-.mc-falling-icon-code {
-  font-family: 'Anton', sans-serif;
-  font-size: 18px;
-  line-height: 1;
-  color: #111111;
-}
-
-.mc-falling-icon-sub {
-  font-size: 9px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  color: #111111;
-}
-
-.mc-bowl-vessel {
-  position: relative;
-  z-index: 5;
-  width: min(82%, 340px);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.mc-bowl-svg {
-  width: 100%;
-  height: 92px;
-  display: block;
-}
-
-.mc-bowl-caption {
-  margin-top: -4px;
-  background: #111111;
-  color: #EAE3D0;
-  padding: 5px 14px;
-  font-size: 11px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 2px;
+  padding: clamp(44px, 5vw, 72px) clamp(24px, 3.6vw, 48px);
 }
 
 /* Right Scrolling Accordion (01-04) */
@@ -1128,17 +1218,29 @@
   margin-bottom: 44px;
 }
 
-/* 00:10 Circular Monochrome Medallion Nodes Row */
-.mc-circles-row {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: clamp(16px, 2.5vw, 32px);
-  max-width: 980px;
-  margin: 0 auto 48px;
+/* 00:08 CREATION: Circles Scrolling LEFT TO RIGHT Continuously */
+.mc-circles-marquee-wrap {
+  width: 100%;
+  overflow: hidden;
+  border-top: 1px solid #111111;
+  border-bottom: 1px solid #111111;
+  background: #FFFFFF;
+  padding: 28px 0;
+  margin-bottom: 48px;
 }
 
-.mc-circle-node {
-  aspect-ratio: 1;
+.mc-circles-marquee-track {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  width: max-content;
+  will-change: transform;
+}
+
+.mc-editorial-overlay .mc-circle-node {
+  width: 210px;
+  height: 210px;
+  flex-shrink: 0;
   border: 1px solid #111111;
   border-radius: 50% !important;
   background: #FFFFFF;
@@ -1147,23 +1249,22 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
-  will-change: transform, opacity;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-.mc-circle-node:hover,
-.mc-circle-node.is-inverted {
+.mc-editorial-overlay .mc-circle-node:hover,
+.mc-editorial-overlay .mc-circle-node.is-inverted {
   background: #111111;
   color: #EAE3D0;
 }
 
 .mc-circle-text {
   font-family: 'Anton', sans-serif;
-  font-size: clamp(1rem, 1.8vw, 1.45rem);
+  font-size: clamp(1.05rem, 1.8vw, 1.45rem);
   letter-spacing: 0.04em;
   text-transform: uppercase;
   text-align: center;
-  padding: 12px;
+  padding: 14px;
 }
 
 .mc-courses-grid-2 {
@@ -1633,12 +1734,26 @@
   }
 
   .mc-ridge-transition {
-    height: 130px;
+    height: 150px;
   }
 
-  .mc-circles-row {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
+  .mc-hero-dual-stage {
+    min-height: 360px;
+  }
+
+  .mc-bowl-showcase-stage {
+    min-height: 430px;
+  }
+
+  .mc-bowl-drop-zone {
+    height: 350px;
+    transform: scale(0.68);
+    transform-origin: center bottom;
+  }
+
+  .mc-editorial-overlay .mc-circle-node {
+    width: 148px;
+    height: 148px;
   }
 
   .mc-counter-col {
@@ -1658,14 +1773,5 @@
 
   .mc-division-body {
     padding: 0 12px 20px;
-  }
-
-  .mc-falling-bowl-stage {
-    height: 250px;
-  }
-
-  .mc-falling-icon {
-    width: 50px;
-    height: 50px;
   }
 }

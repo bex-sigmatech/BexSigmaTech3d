@@ -11,38 +11,37 @@ gsap.registerPlugin(ScrollTrigger)
 
 /* ==========================================================================
    BEX SIGMA TECH — MISSION PAGE (themessageukraine.obys.agency 1:1)
-   Colors ONLY: #FFFFFF | #EAE3D0 | #111111 | #D8CCB0
+   Colors ONLY: #FFFFFF | #EAE3D0 | #111111 | #D8CCB0 (+ green Excel accent)
    Fonts: Anton (Condensed Extra Bold) + Caveat (Handwritten Script) + Inter
    Animations: GSAP + ScrollTrigger (transform + opacity only, continuous motion)
-   NO birds / NO crow animations.
    ========================================================================== */
 
 const BUILD_SERVICES = [
   {
     num: '01',
-    title: 'Website Development',
-    summary: 'Modern, Animated, 3D Websites, 60 FPS, Fast Loading',
-    details: 'High-speed responsive websites built with clean architecture, interactive motion, and zero layout bloat.',
+    title: 'Website',
+    summary: 'Modern Animated 3D Websites',
+    details: 'High-speed responsive websites built with clean architecture, interactive 3D motion, and zero layout bloat.',
     route: 'web_dev',
   },
   {
     num: '02',
-    title: 'App Development',
-    summary: 'iOS & Android Apps, Clean UI, Smooth Animation',
+    title: 'App',
+    summary: 'iOS & Android',
     details: 'Native-feel mobile applications engineered for smooth gestures, offline reliability, and app store deployment.',
     route: 'apps',
   },
   {
     num: '03',
-    title: 'Software Development',
-    summary: 'Custom Software, Cloud Software, Business Tools',
+    title: 'Software',
+    summary: 'Custom Cloud Software',
     details: 'Tailored portals, cloud APIs, and internal automation systems built directly for your operational workflow.',
     route: 'apps',
   },
   {
     num: '04',
-    title: '3D & Animated Websites',
-    summary: '3D WebGL, Animated Landing Pages, Interactive Sites',
+    title: '3D Websites',
+    summary: 'WebGL 60 FPS',
     details: 'Hardware-accelerated Three.js scenes, scroll-linked GSAP choreography, and 60 FPS visual storytelling.',
     route: 'web_dev',
   },
@@ -53,14 +52,23 @@ const COURSES = [
     num: '01',
     tag: 'LIVE + PRACTICAL',
     title: 'EXCEL COURSE',
-    desc: 'From Basics to Advanced, Dashboard, Automation, Job Ready',
+    desc: 'Basics to Dashboard Job Ready',
   },
   {
     num: '02',
     tag: 'CAREER TRACK',
     title: 'DSA COURSE',
-    desc: 'Data Structures & Algorithms, Interview Ready, Coding Practice',
+    desc: 'Data Structures Interview Ready',
   },
+]
+
+const COURSE_CIRCLE_LABELS = [
+  'EXCEL COURSE',
+  'DSA COURSE',
+  'DASHBOARDS',
+  'INTERVIEW PREP',
+  'AUTOMATION',
+  'BEX ACADEMY',
 ]
 
 const DASHBOARD_PREVIEWS = [
@@ -119,13 +127,106 @@ const QUADRANT_TILES = [
   { id: '04', title: 'COURSES', sub: 'EXCEL & DSA · JOB READY', sticker: '/ain_excel_pack.jpg' },
 ]
 
-const FALLING_ICONS = [
-  { code: 'XLS', sub: 'EXCEL', targetX: -6, targetY: 120, rot: -12 },
-  { code: 'WEB', sub: 'WEBSITE', targetX: 4, targetY: 110, rot: 8 },
-  { code: 'APP', sub: 'APPS', targetX: -2, targetY: 104, rot: -6 },
-  { code: '3D', sub: 'WEBGL', targetX: 6, targetY: 116, rot: 11 },
-  { code: 'DEV', sub: 'SOFTWARE', targetX: -8, targetY: 122, rot: -9 },
+const FALLING_TECH_ITEMS = [
+  { kind: 'website', label: 'WEBSITE', dropX: -190, dropY: 0, rot: -10 },
+  { kind: 'app', label: 'APP', dropX: -135, dropY: 12, rot: 7 },
+  { kind: 'software', label: 'SOFTWARE', dropX: -78, dropY: -4, rot: -6 },
+  { kind: '3d', label: '3D WEBGL', dropX: -22, dropY: 16, rot: 9 },
+  { kind: 'excel', label: 'EXCEL', dropX: 34, dropY: 2, rot: -8 },
+  { kind: 'dsa', label: 'DSA', dropX: 88, dropY: 14, rot: 6 },
+  { kind: 'marketing', label: 'MARKETING', dropX: 142, dropY: -2, rot: -11 },
+  { kind: 'camera', label: 'SHOOTING', dropX: 194, dropY: 10, rot: 8 },
 ]
+
+/** Render clean vector tech illustrations for each item falling into the services bowl. */
+function renderBowlTechSvg(kind) {
+  switch (kind) {
+    case 'website':
+      return (
+        <svg viewBox="0 0 64 64" width="52" height="52" fill="none" aria-hidden="true">
+          <rect x="8" y="12" width="48" height="32" fill="#FFFFFF" stroke="#111111" strokeWidth="2.5" />
+          <line x1="8" y1="21" x2="56" y2="21" stroke="#111111" strokeWidth="2" />
+          <circle cx="13" cy="16.5" r="1.5" fill="#111111" />
+          <circle cx="18" cy="16.5" r="1.5" fill="#111111" />
+          <rect x="14" y="26" width="18" height="12" fill="#EAE3D0" stroke="#111111" strokeWidth="1.5" />
+          <line x1="36" y1="28" x2="50" y2="28" stroke="#111111" strokeWidth="2" />
+          <line x1="36" y1="34" x2="46" y2="34" stroke="#111111" strokeWidth="2" />
+          <path d="M4 44 H60 L56 50 H8 L4 44 Z" fill="#111111" />
+        </svg>
+      )
+    case 'app':
+      return (
+        <svg viewBox="0 0 64 64" width="52" height="52" fill="none" aria-hidden="true">
+          <rect x="19" y="8" width="26" height="48" fill="#FFFFFF" stroke="#111111" strokeWidth="2.5" />
+          <rect x="23" y="14" width="18" height="32" fill="#EAE3D0" stroke="#111111" strokeWidth="1.5" />
+          <rect x="26" y="18" width="12" height="8" fill="#111111" />
+          <rect x="26" y="30" width="5" height="10" fill="#FFFFFF" stroke="#111111" strokeWidth="1.5" />
+          <rect x="33" y="30" width="5" height="10" fill="#FFFFFF" stroke="#111111" strokeWidth="1.5" />
+          <circle cx="32" cy="51" r="2" fill="#111111" />
+        </svg>
+      )
+    case 'software':
+      return (
+        <svg viewBox="0 0 64 64" width="52" height="52" fill="none" aria-hidden="true">
+          <rect x="8" y="12" width="48" height="40" fill="#111111" stroke="#111111" strokeWidth="2.5" />
+          <rect x="8" y="12" width="48" height="9" fill="#EAE3D0" stroke="#111111" strokeWidth="2" />
+          <path d="M23 29 L16 35 L23 41" stroke="#D8CCB0" strokeWidth="3" strokeLinecap="square" />
+          <path d="M41 29 L48 35 L41 41" stroke="#D8CCB0" strokeWidth="3" strokeLinecap="square" />
+          <line x1="35" y1="27" x2="29" y2="43" stroke="#FFFFFF" strokeWidth="2.8" />
+        </svg>
+      )
+    case '3d':
+      return (
+        <svg viewBox="0 0 64 64" width="52" height="52" fill="none" aria-hidden="true">
+          <polygon points="32,8 54,20 54,44 32,56 10,44 10,20" fill="#EAE3D0" stroke="#111111" strokeWidth="2.5" />
+          <polygon points="32,8 54,20 32,32 10,20" fill="#FFFFFF" stroke="#111111" strokeWidth="2" />
+          <polygon points="32,32 54,20 54,44 32,56" fill="#D8CCB0" stroke="#111111" strokeWidth="2" />
+          <line x1="32" y1="32" x2="32" y2="56" stroke="#111111" strokeWidth="2.5" />
+        </svg>
+      )
+    case 'excel':
+      return (
+        <svg viewBox="0 0 64 64" width="52" height="52" fill="none" aria-hidden="true">
+          <rect x="10" y="10" width="44" height="44" fill="#FFFFFF" stroke="#111111" strokeWidth="2.5" />
+          <rect x="10" y="10" width="44" height="12" fill="#1D6F42" stroke="#111111" strokeWidth="2" />
+          <text x="15" y="19" fill="#FFFFFF" fontSize="9" fontWeight="800" fontFamily="Inter, sans-serif">XLS</text>
+          <rect x="16" y="36" width="7" height="12" fill="#1D6F42" stroke="#111111" strokeWidth="1.5" />
+          <rect x="28" y="29" width="7" height="19" fill="#1D6F42" stroke="#111111" strokeWidth="1.5" />
+          <rect x="40" y="24" width="7" height="24" fill="#111111" stroke="#111111" strokeWidth="1.5" />
+        </svg>
+      )
+    case 'dsa':
+      return (
+        <svg viewBox="0 0 64 64" width="52" height="52" fill="none" aria-hidden="true">
+          <rect x="8" y="12" width="48" height="40" fill="#FFFFFF" stroke="#111111" strokeWidth="2.5" />
+          <text x="13" y="34" fill="#111111" fontSize="18" fontWeight="800" fontFamily="monospace">{'{ }'}</text>
+          <text x="17" y="47" fill="#111111" fontSize="10" fontWeight="700" fontFamily="monospace">010110</text>
+        </svg>
+      )
+    case 'marketing':
+      return (
+        <svg viewBox="0 0 64 64" width="52" height="52" fill="none" aria-hidden="true">
+          <polygon points="14,28 46,14 46,44 14,34" fill="#EAE3D0" stroke="#111111" strokeWidth="2.5" />
+          <rect x="10" y="26" width="8" height="10" fill="#111111" />
+          <path d="M22 36 L26 50 H19 L16 35" fill="#FFFFFF" stroke="#111111" strokeWidth="2" />
+          <line x1="51" y1="22" x2="57" y2="18" stroke="#111111" strokeWidth="2.5" />
+          <line x1="51" y1="29" x2="58" y2="29" stroke="#111111" strokeWidth="2.5" />
+          <line x1="51" y1="36" x2="57" y2="40" stroke="#111111" strokeWidth="2.5" />
+        </svg>
+      )
+    case 'camera':
+    default:
+      return (
+        <svg viewBox="0 0 64 64" width="52" height="52" fill="none" aria-hidden="true">
+          <rect x="8" y="20" width="34" height="26" fill="#111111" stroke="#111111" strokeWidth="2.5" />
+          <polygon points="42,27 56,19 56,47 42,39" fill="#EAE3D0" stroke="#111111" strokeWidth="2.5" />
+          <circle cx="19" cy="14" r="6" fill="#FFFFFF" stroke="#111111" strokeWidth="2" />
+          <circle cx="32" cy="14" r="6" fill="#FFFFFF" stroke="#111111" strokeWidth="2" />
+          <circle cx="25" cy="33" r="6" fill="#D8CCB0" />
+        </svg>
+      )
+  }
+}
 
 const TOP_NAV_ITEMS = [
   { label: 'Website', target: 'services' },
@@ -160,11 +261,13 @@ export default function MissionControl() {
     const root = overlayRef.current
     if (!scroller || !root) return
 
+    gsap.ticker.lagSmoothing(0)
+
     const ctx = gsap.context(() => {
-      // 1. Hero Line-by-Line Reveal (0.8s) + Team Photo Fade (1s) + Subtle Idle Breathe
+      // 1. Hero Line-by-Line Reveal (0.8s) + 2 Flying Photos (-15deg -> settled angle) + Idle Breathe
       gsap.fromTo(
         '.mc-hero-line',
-        { y: 88, opacity: 0 },
+        { y: 56, opacity: 1 },
         {
           y: 0,
           opacity: 1,
@@ -175,19 +278,35 @@ export default function MissionControl() {
       )
 
       gsap.fromTo(
-        '.mc-hero-portrait-frame',
-        { opacity: 0, y: 24, scale: 0.96, rotation: -3 },
+        '.mc-hero-fly-photo--back',
+        { opacity: 1, x: -110, y: -76, rotation: -15, scale: 0.9 },
         {
           opacity: 1,
-          y: 0,
+          x: -44,
+          y: -48,
+          rotation: -11,
           scale: 1,
+          duration: 0.95,
+          ease: 'power3.out',
+        }
+      )
+
+      gsap.fromTo(
+        '.mc-hero-fly-photo--front',
+        { opacity: 1, x: 100, y: 60, rotation: -15, scale: 0.92 },
+        {
+          opacity: 1,
+          x: 16,
+          y: 24,
           rotation: 0,
+          scale: 1,
           duration: 1.0,
-          ease: 'power2.out',
+          delay: 0.12,
+          ease: 'power3.out',
           onComplete: () => {
-            gsap.to('.mc-hero-portrait-frame', {
-              y: -8,
-              rotation: 1.2,
+            gsap.to('.mc-hero-fly-photo--front', {
+              y: 16,
+              rotation: 1.5,
               duration: 3.0,
               yoyo: true,
               repeat: -1,
@@ -197,7 +316,7 @@ export default function MissionControl() {
         }
       )
 
-      // 2. Marquee Continuous RIGHT-TO-LEFT Loop (20s linear, never stops)
+      // 2. Marquees Continuous RIGHT-TO-LEFT Loop (20s linear, never stops)
       gsap.fromTo(
         '.mc-marquee-track',
         { xPercent: 0 },
@@ -208,6 +327,57 @@ export default function MissionControl() {
           ease: 'none',
         }
       )
+
+      gsap.fromTo(
+        '.mc-ridge-marquee-track',
+        { xPercent: 0 },
+        {
+          xPercent: -50,
+          duration: 18,
+          repeat: -1,
+          ease: 'none',
+        }
+      )
+
+      gsap.fromTo(
+        '.mc-bowl-marquee-track',
+        { xPercent: 0 },
+        {
+          xPercent: -50,
+          duration: 20,
+          repeat: -1,
+          ease: 'none',
+        }
+      )
+
+      // 2B. Courses Circles Marquee Continuous LEFT-TO-RIGHT Loop (0:08 CREATION)
+      gsap.fromTo(
+        '.mc-circles-marquee-track',
+        { xPercent: -50 },
+        {
+          xPercent: 0,
+          duration: 22,
+          repeat: -1,
+          ease: 'none',
+        }
+      )
+
+      // 2C. Minimal Hairline Birds Gliding Across Black Sky Marquee (0:01-0:04)
+      gsap.utils.toArray('.mc-sky-bird').forEach((bird, idx) => {
+        gsap.fromTo(
+          bird,
+          { xPercent: -18, y: idx % 2 === 0 ? 6 : -6, opacity: 0.65 },
+          {
+            xPercent: 118,
+            y: idx % 2 === 0 ? -12 : 12,
+            opacity: 1,
+            duration: 9 + idx * 2.5,
+            repeat: -1,
+            delay: idx * 2.2,
+            ease: 'none',
+          }
+        )
+      })
 
       // 3B. Obys Stacked Polaroid Collage (00:03 -> 00:05 cards fly in and pile atop each other on sticky left)
       if (obysShowcaseRef.current) {
@@ -329,47 +499,37 @@ export default function MissionControl() {
         )
       })
 
-      // 3C. Circular Medallions Reveal (00:10)
-      gsap.fromTo(
-        '.mc-circle-node',
-        { scale: 0.72, opacity: 0 },
-        {
-          scale: 1,
-          opacity: 1,
-          duration: 0.65,
-          stagger: 0.08,
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: '.mc-circles-row',
-            scroller,
-            start: 'top 90%',
-          },
-        }
-      )
-
-      // 3. Falling Icons (Excel / Website / App) Gravity + Bounce Loop (stagger 0.2s, infinite)
-      const fallTl = gsap.timeline({ repeat: -1, repeatDelay: 0.85 })
-      FALLING_ICONS.forEach((item, i) => {
-        const sel = `.mc-falling-icon--${i + 1}`
+      // 3. Falling Tech Icons Into Center Big Bowl (translateY -500 -> 0, rotate 20 -> 0, stagger 0.3s, infinite loop)
+      const fallTl = gsap.timeline({ repeat: -1, repeatDelay: 0.65 })
+      FALLING_TECH_ITEMS.forEach((item, i) => {
+        const sel = `.mc-falling-tech-item--${i + 1}`
         fallTl.fromTo(
           sel,
-          { y: -85, x: item.targetX, rotation: item.rot * 2, opacity: 0 },
+          { y: -500, x: item.dropX, rotation: 20, opacity: 1 },
           {
-            y: item.targetY,
-            x: item.targetX,
+            y: item.dropY,
+            x: item.dropX,
             rotation: item.rot,
             opacity: 1,
-            duration: 1.05,
+            duration: 0.95,
             ease: 'bounce.out',
           },
-          i * 0.2
+          i * 0.3
         )
       })
       fallTl.to(
-        '.mc-falling-icon',
-        { opacity: 0, y: '+=16', duration: 0.35, stagger: 0.05, ease: 'power2.in' },
+        '.mc-falling-tech-item',
+        { opacity: 0, y: '+=24', duration: 0.35, stagger: 0.04, ease: 'power2.in' },
         '+=1.4'
       )
+      fallTl.seek(1.6)
+
+      ScrollTrigger.create({
+        trigger: '.mc-bowl-showcase-stage',
+        scroller,
+        start: 'top 90%',
+        onEnter: () => fallTl.play(),
+      })
 
       // 4. Black Section Huge Beige Numbers Scale 0.5 -> 1.2
       gsap.fromTo(
@@ -609,7 +769,7 @@ export default function MissionControl() {
               </h1>
 
               <p className="mc-body-sub">
-                We are BEX Sigma Tech. We build Websites, Apps &amp; Software that are Modern, Animated &amp; 3D.
+                We are BEX Sigma Tech. We build Websites, Apps &amp; Software - Modern, Animated &amp; 3D.
               </p>
             </div>
 
@@ -632,15 +792,27 @@ export default function MissionControl() {
             </div>
           </div>
 
-          {/* Right 50% Beige #EAE3D0 */}
+          {/* Right 50% Beige #EAE3D0 (0:00 NATURE: 2 Photos Fly In with rotate -15deg -> 0deg) */}
           <div className="mc-hero-right-beige">
             <div className="mc-hero-sub-bar">
               <span>Website | Apps | Software | Courses</span>
               <span>BEX SIGMA TECH</span>
             </div>
 
-            <div className="mc-hero-photo-stage">
-              <div className="mc-photo-torn-wrap mc-hero-portrait-frame mc-hero-logo-frame">
+            <div className="mc-hero-photo-stage mc-hero-dual-stage">
+              <div className="mc-photo-torn-wrap mc-hero-fly-photo mc-hero-fly-photo--back">
+                <img
+                  src="/sector_website.jpg"
+                  alt="Modern 3D & Animated Websites at BEX Sigma Tech"
+                  className="mc-photo-sepia"
+                />
+                <div className="mc-photo-halftone-caption">
+                  <span>MODERN &amp; 3D WEB</span>
+                  <span>60 FPS</span>
+                </div>
+              </div>
+
+              <div className="mc-photo-torn-wrap mc-hero-fly-photo mc-hero-fly-photo--front">
                 <img
                   src="/bex_metallic_logo_clean.png"
                   alt="BEX Sigma Tech Official Logo"
@@ -650,6 +822,10 @@ export default function MissionControl() {
                   <span>BEX SIGMA TECH</span>
                   <span>WHO WE ARE</span>
                 </div>
+              </div>
+
+              <div className="mc-note-stamp mc-note-stamp--hero">
+                <span>Built Modern.</span>
               </div>
             </div>
           </div>
@@ -761,11 +937,34 @@ export default function MissionControl() {
           </div>
         </section>
 
-        {/* ── 00:01-00:02 GIANT BEIGE WORD BEHIND STRIPED CONTOUR MOUNTAIN RIDGES ── */}
+        {/* ── 0:01-0:04 LANGUAGE BLACK MARQUEE: HUGE HARIHARAN R->L + GLIDING BIRDS + STRIPED RIDGES ── */}
         <div className="mc-ridge-transition" aria-hidden="true">
-          <div className="mc-ridge-giant-word">
-            MODERN <span className="mc-ridge-giant-script">craft</span>
+          <div className="mc-ridge-marquee-wrap">
+            <div className="mc-ridge-marquee-track">
+              {Array.from({ length: 8 }).map((_, rIdx) => (
+                <span key={rIdx} className="mc-ridge-giant-word">
+                  HARIHARAN ·&nbsp;
+                </span>
+              ))}
+            </div>
           </div>
+
+          {/* 3 Minimalist Geometric Hairline Birds Flying Across Black Ridge Sky */}
+          {[1, 2, 3].map((bNum) => (
+            <svg
+              key={bNum}
+              className={`mc-sky-bird mc-sky-bird--${bNum}`}
+              viewBox="0 0 48 24"
+              fill="none"
+            >
+              <path
+                d="M2 14 C10 6, 18 6, 24 14 C30 6, 38 6, 46 14 C38 11, 30 12, 24 17 C18 12, 10 11, 2 14 Z"
+                stroke="#D8CCB0"
+                strokeWidth="1.6"
+                fill="#111111"
+              />
+            </svg>
+          ))}
           <svg className="mc-ridge-svg mc-ridge-layer--back" viewBox="0 0 1440 200" preserveAspectRatio="none">
             <defs>
               <pattern id="mcRidgeLinesBack" width="12" height="8" patternUnits="userSpaceOnUse">
@@ -825,7 +1024,7 @@ export default function MissionControl() {
                 MANAGER. <span className="mc-script-overlap mc-script-overlap--beige">Hariharan</span>
               </h2>
               <p className="mc-body-sub mc-body-sub--beige">
-                Led by Hariharan. He leads design, development &amp; delivery. Direct line with him, no middlemen.
+                Led by Hariharan. Direct line with him.
               </p>
 
               <div className="mc-hero-actions" style={{ marginTop: '28px' }}>
@@ -872,77 +1071,103 @@ export default function MissionControl() {
           </div>
         </section>
 
-        {/* ── 3. WHAT WE BUILD - SERVICES (SPLIT SCROLL + 0:23 FALLING ICONS + ACCORDION) ── */}
-        <section id="services" ref={splitSectionRef} className="mc-split-scroll-section">
-          {/* Left Sticky White Column */}
-          <div className="mc-split-sticky-left">
-            <div className="mc-sticky-inner">
-              <div>
-                <span className="mc-kicker-label">SERVICES 01 — 04 · MODERN ENGINEERING</span>
-                <h2 className="mc-display-mega" style={{ marginTop: '16px' }}>
-                  WHAT WE BUILD. <span className="mc-script-overlap">We Build</span>
-                </h2>
-                <p className="mc-body-sub">
-                  Modern, animated, 3D websites, mobile apps, and custom business software engineered for speed and visual craft.
-                </p>
+        {/* ── 3. WHAT WE BUILD - FULL-WIDTH CENTER BOWL ANIMATION (0:05-0:07) + SPLIT ACCORDION ── */}
+        <section id="services" ref={splitSectionRef} className="mc-services-wrapper">
+          {/* 0:05-0:07 FULL-WIDTH CENTER BIG BOWL SHOWCASE */}
+          <div className="mc-bowl-showcase-stage">
+            <div className="mc-bowl-stage-topbar">
+              <span>WHAT WE BUILD · DIGITAL STACK</span>
+              <span>GRAVITY CASCADE · INFINITE LOOP</span>
+            </div>
 
-                <div style={{ marginTop: '22px' }}>
-                  <button
-                    type="button"
-                    className="mc-btn-solid interactive"
-                    onClick={() => setDemoModalOpen(true)}
-                  >
-                    Book A Call →
-                  </button>
+            {/* Huge Black Word "WE BUILD WEBSITES" Scrolling RIGHT TO LEFT Behind Bowl */}
+            <div className="mc-bowl-marquee-bg" aria-hidden="true">
+              <div className="mc-bowl-marquee-track">
+                {Array.from({ length: 8 }).map((_, bIdx) => (
+                  <span key={bIdx} className="mc-bowl-marquee-word">
+                    WE BUILD WEBSITES ·&nbsp;
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* 8 Website/Tech Items Falling With Gravity + Bounce From -500px -> 0, Stagger 0.3s */}
+            <div className="mc-bowl-drop-zone">
+              {FALLING_TECH_ITEMS.map((item, idx) => (
+                <div
+                  key={item.kind}
+                  className={`mc-falling-tech-item mc-falling-tech-item--${idx + 1}`}
+                >
+                  <div className="mc-falling-tech-art">{renderBowlTechSvg(item.kind)}</div>
+                  <span className="mc-falling-tech-label">{item.label}</span>
                 </div>
+              ))}
+
+              {/* Rising Wavy Steam Wisps Above Center Bowl */}
+              <svg className="mc-bowl-steam" viewBox="0 0 220 54" fill="none" aria-hidden="true">
+                <path className="mc-steam-path" d="M50 48 Q40 34 52 22 Q62 10 50 2" stroke="#111111" strokeWidth="2.5" />
+                <path className="mc-steam-path" d="M110 48 Q100 34 112 22 Q122 10 110 2" stroke="#111111" strokeWidth="2.5" />
+                <path className="mc-steam-path" d="M170 48 Q160 34 172 22 Q182 10 170 2" stroke="#111111" strokeWidth="2.5" />
+              </svg>
+
+              {/* Center Big Monochrome Engraved Bowl */}
+              <div className="mc-bowl-vessel">
+                <svg className="mc-bowl-svg" viewBox="0 0 520 156" fill="none" aria-hidden="true">
+                  <defs>
+                    <pattern id="mcBowlCrossHatch" width="8" height="8" patternUnits="userSpaceOnUse">
+                      <line x1="0" y1="2" x2="8" y2="2" stroke="#111111" strokeWidth="1" opacity="0.22" />
+                      <line x1="4" y1="0" x2="4" y2="8" stroke="#111111" strokeWidth="1" opacity="0.14" />
+                    </pattern>
+                  </defs>
+                  <path
+                    d="M16 14 H504 C492 102 406 144 260 144 C114 144 28 102 16 14 Z"
+                    fill="#EAE3D0"
+                    stroke="#111111"
+                    strokeWidth="3.5"
+                  />
+                  <path
+                    d="M16 14 H504 C492 102 406 144 260 144 C114 144 28 102 16 14 Z"
+                    fill="url(#mcBowlCrossHatch)"
+                  />
+                  <ellipse cx="260" cy="14" rx="244" ry="11" fill="#FFFFFF" stroke="#111111" strokeWidth="2.5" />
+                  <path d="M44 48 H476" stroke="#111111" strokeWidth="1.5" strokeDasharray="6 6" />
+                  <path d="M96 92 H424" stroke="#111111" strokeWidth="1.2" opacity="0.55" />
+                  <rect x="190" y="138" width="140" height="10" fill="#111111" />
+                </svg>
+                <span className="mc-bowl-caption">WEBSITE · APP · SOFTWARE · 3D · EXCEL · DSA · MARKETING · CAMERA</span>
               </div>
 
-              {/* 00:06-00:09 Reference: Giant Word Behind Bowl + Rising Steam + Falling Stack Icons + Pinned Note */}
-              <div className="mc-falling-bowl-stage">
-                <div className="mc-falling-stage-label">
-                  <span>EXCEL · WEBSITE · APP</span>
-                  <span>BOUNCE LOOP</span>
-                </div>
-
-                {/* Massive word behind bowl (00:06 -> 00:09) */}
-                <div className="mc-bowl-bg-word" aria-hidden="true">
-                  BEX STACK:
-                </div>
-
-                {FALLING_ICONS.map((item, idx) => (
-                  <div key={item.code} className={`mc-falling-icon mc-falling-icon--${idx + 1}`}>
-                    <span className="mc-falling-icon-code">{item.code}</span>
-                    <span className="mc-falling-icon-sub">{item.sub}</span>
-                  </div>
-                ))}
-
-                {/* Wavy steam above bowl (00:08) */}
-                <svg className="mc-bowl-steam" viewBox="0 0 180 46" fill="none" aria-hidden="true">
-                  <path className="mc-steam-path" d="M40 42 Q32 30 42 20 Q50 10 40 2" stroke="#111111" strokeWidth="2.2" />
-                  <path className="mc-steam-path" d="M90 42 Q82 30 92 20 Q100 10 90 2" stroke="#111111" strokeWidth="2.2" />
-                  <path className="mc-steam-path" d="M140 42 Q132 30 142 20 Q150 10 140 2" stroke="#111111" strokeWidth="2.2" />
-                </svg>
-
-                <div className="mc-bowl-vessel">
-                  <svg className="mc-bowl-svg" viewBox="0 0 320 96" fill="none" aria-hidden="true">
-                    <path
-                      d="M12 10 H308 C302 62 248 88 160 88 C72 88 18 62 12 10 Z"
-                      fill="#FFFFFF"
-                      stroke="#111111"
-                      strokeWidth="2"
-                    />
-                    <path d="M24 24 H296" stroke="#111111" strokeWidth="1" strokeDasharray="4 4" />
-                    <path d="M52 52 H268" stroke="#111111" strokeWidth="1" opacity="0.4" />
-                  </svg>
-                  <span className="mc-bowl-caption">EXCEL · WEBSITE · APP STACK</span>
-                </div>
-
-                <div className="mc-note-stamp mc-note-stamp--bowl">
-                  <span>All Systems Ready</span>
-                </div>
+              <div className="mc-note-stamp mc-note-stamp--bowl">
+                <span>All Systems Ready!</span>
               </div>
             </div>
           </div>
+
+          <div className="mc-split-scroll-section">
+            {/* Left Sticky White Column */}
+            <div className="mc-split-sticky-left">
+              <div className="mc-sticky-inner mc-sticky-inner--compact">
+                <div>
+                  <span className="mc-kicker-label">SERVICES 01 — 04 · MODERN ENGINEERING</span>
+                  <h2 className="mc-display-mega" style={{ marginTop: '16px' }}>
+                    WHAT WE BUILD. <span className="mc-script-overlap">We Build</span>
+                  </h2>
+                  <p className="mc-body-sub">
+                    Website, App, Software &amp; 3D WebGL systems built cleanly for speed, smooth motion, and business impact.
+                  </p>
+
+                  <div style={{ marginTop: '24px' }}>
+                    <button
+                      type="button"
+                      className="mc-btn-solid interactive"
+                      onClick={() => setDemoModalOpen(true)}
+                    >
+                      Book A Call →
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
 
           {/* Right Beige Column (Scrolls at Independent Speed + 01-04 Accordion) */}
           <div className="mc-split-scroll-right">
@@ -1006,6 +1231,7 @@ export default function MissionControl() {
               </button>
             </div>
           </div>
+          </div>
         </section>
 
         {/* ── 4. COURSES WE PROVIDE (2 BIG CARDS) ── */}
@@ -1029,17 +1255,19 @@ export default function MissionControl() {
             </button>
           </div>
 
-          {/* 00:10 Obys Circular Node Row */}
-          <div className="mc-circles-row">
-            {['EXCEL', 'DSA', 'DASHBOARDS', 'INTERVIEWS'].map((label, cIdx) => (
-              <div
-                key={label}
-                className={`mc-circle-node ${cIdx === 0 ? 'is-inverted' : ''}`}
-                onClick={() => setDemoModalOpen(true)}
-              >
-                <span className="mc-circle-text">{label}</span>
-              </div>
-            ))}
+          {/* 0:08 CREATION: Circles Scrolling LEFT TO RIGHT Continuously */}
+          <div className="mc-circles-marquee-wrap" aria-hidden="true">
+            <div className="mc-circles-marquee-track">
+              {[...COURSE_CIRCLE_LABELS, ...COURSE_CIRCLE_LABELS].map((label, cIdx) => (
+                <div
+                  key={`${label}-${cIdx}`}
+                  className={`mc-circle-node ${cIdx % 3 === 0 ? 'is-inverted' : ''}`}
+                  onClick={() => setDemoModalOpen(true)}
+                >
+                  <span className="mc-circle-text">{label}</span>
+                </div>
+              ))}
+            </div>
           </div>
 
           <div className="mc-courses-grid-2">
@@ -1077,7 +1305,7 @@ export default function MissionControl() {
               EXCEL DASHBOARD. <span className="mc-script-overlap">For Sale</span>
             </h2>
             <p className="mc-body-sub">
-              Ready-made Excel Dashboards for Business. Sales, Finance, HR, Inventory. Buy &amp; Use Today.
+              Ready-made Dashboards - Sales, Finance, HR, Inventory.
             </p>
             <div style={{ marginTop: '8px' }}>
               <button
