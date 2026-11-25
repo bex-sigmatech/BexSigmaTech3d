@@ -357,11 +357,17 @@ export default function WebDevStore() {
   const lovedRef = useRef(null)
   const productsRef = useRef(null)
   const expertRef = useRef(null)
+  const cubeTrackRef = useRef(null)
   const reviewsRef = useRef(null)
   const footerRef = useRef(null)
 
   // 3D Depth Progress for Reviews ("What people say about BEX")
   const [reviewDepth, setReviewDepth] = useState(0)
+
+  // Scroll 4 Dual 3D Cube Rotation State (Hariharan [01] <-> Microsoft [02])
+  const [expertCubeProgress, setExpertCubeProgress] = useState(0)
+  const [cubeFaceOverride, setCubeFaceOverride] = useState(null) // null = scroll-driven, 0 = Face 1, 1 = Face 2
+  const [hoveredCube, setHoveredCube] = useState(false)
 
   // Checkout States
   const [checkoutMode, setCheckoutMode] = useState(null)
@@ -416,9 +422,25 @@ export default function WebDevStore() {
       setReviewDepth(progress)
     }
 
+    const updateExpertCubeRotation = () => {
+      if (!expertRef.current || window.innerWidth < 768) return
+      const winH = window.innerHeight || 900
+      const trackEl = cubeTrackRef.current
+      if (!trackEl) return
+      const trackRect = trackEl.getBoundingClientRect()
+      const stickyEl = trackEl.firstElementChild
+      const stageH = stickyEl ? stickyEl.offsetHeight : Math.min(winH * 0.72, 650)
+      const stickyTop = winH * 0.12
+      const travel = Math.max(1, trackRect.height - stageH)
+      // Rotate smoothly 0 -> 1 over 82% of sticky travel so [01] locks cleanly at start and [02] settles at 90deg before unsticking
+      const progress = Math.max(0, Math.min(1, (stickyTop - trackRect.top) / (travel * 0.82)))
+      setExpertCubeProgress(progress)
+    }
+
     const onScrollUpdate = () => {
       ScrollTrigger.update()
       updateReviews3DDepth()
+      updateExpertCubeRotation()
     }
 
     if (scrollContainer) {
@@ -532,38 +554,9 @@ export default function WebDevStore() {
       )
     }
 
-    // 5. Expert Dual 3D Cube Rotation + Corner Rounding Morph on Scroll
+    // 5. Expert Dual 3D Cube Scroll Initialization
     if (expertRef.current) {
-      gsap.fromTo(
-        '.lumos-expert-cube-left',
-        { borderRadius: '4px', y: 24 },
-        {
-          borderRadius: '28px',
-          y: 0,
-          duration: 0.9,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: expertRef.current,
-            start: 'top 92%',
-            toggleActions: 'play none none none',
-          }
-        }
-      )
-      gsap.fromTo(
-        '.lumos-expert-cube-right',
-        { borderRadius: '4px', y: 28 },
-        {
-          borderRadius: '28px',
-          y: 0,
-          duration: 0.9,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: expertRef.current,
-            start: 'top 92%',
-            toggleActions: 'play none none none',
-          }
-        }
-      )
+      updateExpertCubeRotation()
     }
 
     // 6. Reviews Heading Cube Reveal (via reliable IntersectionObserver inside scroller)
@@ -1413,58 +1406,179 @@ export default function WebDevStore() {
       </section>
 
       {/* ══════════════════════════════════════════════════════════════════════════
-         5. STORE PAGE SCROLL 4 - ARCHITECT DUAL 3D CUBE FLIP & BOX ROUNDING
+         5. STORE PAGE SCROLL 4 - ARCHITECT DUAL 3D CUBE FLIP (MATCHING LUMOS SCREEN RECORDING)
          ══════════════════════════════════════════════════════════════════════════ */}
       <section ref={expertRef} id="architect" className="lumos-expert-section">
-        <div className="lumos-expert-container">
-          <div className="lumos-expert-meta-center">
-            <span className="lumos-expert-meta-header">[Who will you cooperate with?]</span>
-          </div>
-
-          <div className="lumos-expert-inner">
-            {/* Cube 1 Left: 3D Tilt & Box Rounding Portrait */}
-            <div
-              className="lumos-expert-photo-wrap lumos-expert-cube-left"
-              style={{
-                transform: `perspective(1000px) rotateX(${expertTilt.x}deg) rotateY(${expertTilt.y}deg)`,
-              }}
-              onMouseMove={handleExpertMouseMove}
-              onMouseLeave={handleExpertMouseLeave}
+        <div className="lumos-expert-meta-center">
+          <h2 className="lumos-expert-meta-header">[Who will you<br />cooperate with?]</h2>
+          <div className="lumos-cube-face-switcher">
+            <button
+              type="button"
+              className={`lumos-face-tab interactive ${(cubeFaceOverride === 0 || (cubeFaceOverride === null && expertCubeProgress < 0.5)) ? 'active' : ''}`}
+              onClick={() => setCubeFaceOverride(cubeFaceOverride === 0 ? null : 0)}
             >
-              <img
-                src="/ceo_hariharan.jpg"
-                alt="Hariharan D"
-                className="lumos-expert-img"
-              />
-              <div className="lumos-expert-corner-badge">Founder & Chief Architect</div>
-            </div>
+              [01] Hariharan D
+            </button>
+            <button
+              type="button"
+              className={`lumos-face-tab interactive ${(cubeFaceOverride === 1 || (cubeFaceOverride === null && expertCubeProgress >= 0.5)) ? 'active' : ''}`}
+              onClick={() => setCubeFaceOverride(cubeFaceOverride === 1 ? null : 1)}
+            >
+              [02] Microsoft Verified
+            </button>
+          </div>
+        </div>
 
-            {/* Cube 2 Right: Editorial Quote & Credentials Box */}
-            <div className="lumos-expert-info lumos-expert-cube-right">
-              <span className="lumos-expert-tag">Microsoft Verified Architect</span>
-              <h2 className="lumos-expert-title">
-                Hariharan D — Excel Expert, 10+ Years.
-              </h2>
-              <div className="lumos-expert-quote">
-                "[H] I built this all-in-one suite because teams bleed hours and capital on broken spreadsheet models — never on lack of vision."
-              </div>
-              <p className="lumos-expert-bio">
-                Lead technical architect behind 120+ mission-critical enterprise spreadsheet systems, 3-statement GAAP valuation engines, and automated BI command centers.
-              </p>
-              <div className="lumos-expert-bullets">
-                <div className="lumos-expert-bullet-item">
-                  <span className="lumos-bullet-icon">✓</span>
-                  <span>10+ Years Building Enterprise-Grade Financial & BI Architectures</span>
+        {/* Sticky 3D Dual-Cube Stage (Scroll rotates both 3D cubes 0deg -> 90deg!) */}
+        <div ref={cubeTrackRef} className="lumos-cube-scroll-track">
+          <div className="lumos-cube-sticky-stage">
+            {(() => {
+              const effProgress = cubeFaceOverride !== null ? cubeFaceOverride : expertCubeProgress
+              const cube1Deg = Math.min(90, effProgress * 92)
+              // Slight natural phase lag on Cube 2 matching Lumos video frame 3!
+              const cube2Deg = Math.min(90, Math.max(0, (effProgress - 0.04) / 0.96) * 90)
+              const manualClass = cubeFaceOverride !== null ? 'has-manual-transition' : ''
+              return (
+                <div className="lumos-dual-cubes-row">
+                  {/* LEFT 3D CUBE: Portraits [01] & [02] */}
+                  <div
+                    className={`lumos-3d-cube is--cube-1 interactive ${effProgress >= 0.5 ? 'show-face-2' : ''}`}
+                    onMouseEnter={() => setHoveredCube(true)}
+                    onMouseLeave={() => setHoveredCube(false)}
+                    onClick={() => setCubeFaceOverride(effProgress < 0.5 ? 1 : 0)}
+                  >
+                    {hoveredCube && <span className="lumos-cube-hover-pill">@hariharan_d</span>}
+
+                    {/* Face 1 (Front): Hariharan D Portrait */}
+                    <div
+                      className={`lumos-cube-side is--front ${manualClass}`}
+                      style={{
+                        transform: `translate3d(0, 0, calc(var(--cube-half) * -1)) rotateX(${cube1Deg}deg) translate3d(0, 0, var(--cube-half))`,
+                        opacity: cube1Deg > 88 ? 0 : 1,
+                      }}
+                    >
+                      <img
+                        src="/ceo_hariharan.jpg"
+                        alt="Hariharan D"
+                        className="lumos-cube-photo"
+                      />
+                    </div>
+
+                    {/* Face 2 (Bottom): Microsoft Verified / Master Suite Preview */}
+                    <div
+                      className={`lumos-cube-side is--bottom ${manualClass}`}
+                      style={{
+                        transform: `translate3d(0, 0, calc(var(--cube-half) * -1)) rotateX(${cube1Deg - 90}deg) translate3d(0, 0, var(--cube-half))`,
+                        opacity: cube1Deg < 2 ? 0 : 1,
+                      }}
+                    >
+                      <img
+                        src="/ain_excel_pack.jpg"
+                        alt="Microsoft Verified Excel Architecture"
+                        className="lumos-cube-photo is--mono"
+                      />
+                      <div className="lumos-cube-photo-badge">MICROSOFT VERIFIED ARCH</div>
+                    </div>
+                  </div>
+
+                  {/* RIGHT 3D CUBE: Editorial Manifesto Cards [01 Hariharan] <-> [02 Microsoft] */}
+                  <div
+                    className={`lumos-3d-cube is--cube-2 interactive ${effProgress >= 0.5 ? 'show-face-2' : ''}`}
+                    onMouseEnter={() => setHoveredCube(true)}
+                    onMouseLeave={() => setHoveredCube(false)}
+                    onClick={() => setCubeFaceOverride(effProgress < 0.5 ? 1 : 0)}
+                  >
+                    {/* Face 1 (Front): [01] Hariharan */}
+                    <div
+                      className={`lumos-cube-side is--front is--dark-card ${manualClass}`}
+                      style={{
+                        transform: `translate3d(0, 0, calc(var(--cube-half) * -1)) rotateX(${cube2Deg}deg) translate3d(0, 0, var(--cube-half))`,
+                        opacity: cube2Deg > 88 ? 0 : 1,
+                      }}
+                    >
+                      <img
+                        src="/lumos/cube_dark_bg.webp"
+                        alt="Card grain"
+                        className="lumos-cube-card-bg"
+                        draggable={false}
+                      />
+                      <div className="lumos-cube-card-content">
+                        <div className="lumos-cube-left-col">
+                          <h3 className="lumos-cube-name">Hariharan</h3>
+                        </div>
+                        <div className="lumos-cube-right-col">
+                          <div className="lumos-cube-top-row">
+                            <span className="lumos-cube-role">[architect]</span>
+                            <span className="lumos-cube-num">[01]</span>
+                          </div>
+                          <div className="lumos-cube-quote-wrap">
+                            <span className="lumos-cube-letter">[H]</span>
+                            <blockquote className="lumos-cube-quote">
+                              I architected this all-in-one suite because businesses bleed hours and capital on broken spreadsheets — never on lack of vision.
+                            </blockquote>
+                          </div>
+                          <div className="lumos-cube-bottom-row">
+                            <p className="lumos-cube-bio">
+                              Lead technical architect with 10+ years engineering 120+ mission-critical financial models, GAAP 3-statement systems, and automated executive BI dashboards.
+                            </p>
+                            <span className="lumos-cube-arrow">↗</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Face 2 (Bottom): [02] Microsoft Verified */}
+                    <div
+                      className={`lumos-cube-side is--bottom is--dark-card ${manualClass}`}
+                      style={{
+                        transform: `translate3d(0, 0, calc(var(--cube-half) * -1)) rotateX(${cube2Deg - 90}deg) translate3d(0, 0, var(--cube-half))`,
+                        opacity: cube2Deg < 2 ? 0 : 1,
+                      }}
+                    >
+                      <img
+                        src="/lumos/cube_dark_bg.webp"
+                        alt="Card grain"
+                        className="lumos-cube-card-bg"
+                        draggable={false}
+                      />
+                      <div className="lumos-cube-card-content">
+                        <div className="lumos-cube-left-col">
+                          <h3 className="lumos-cube-name">Microsoft<br />10+ Yrs</h3>
+                        </div>
+                        <div className="lumos-cube-right-col">
+                          <div className="lumos-cube-top-row">
+                            <span className="lumos-cube-role">[certified]</span>
+                            <span className="lumos-cube-num">[02]</span>
+                          </div>
+                          <div className="lumos-cube-quote-wrap">
+                            <span className="lumos-cube-letter">[M]</span>
+                            <blockquote className="lumos-cube-quote">
+                              Official Microsoft Verified Excel Standard — instant plug-and-play clarity built to run cleanly with zero VBA headaches.
+                            </blockquote>
+                          </div>
+                          <div className="lumos-cube-bottom-row">
+                            <p className="lumos-cube-bio">
+                              Every template inside the ₹199 All-in-One Suite pairs institutional XLOOKUP math with automated slicers and direct 1-on-1 WhatsApp guidance.
+                            </p>
+                            <span className="lumos-cube-arrow">↗</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div className="lumos-expert-bullet-item">
-                  <span className="lumos-bullet-icon">✓</span>
-                  <span>Official Microsoft Verified Excel Standard & GAAP Modeling</span>
-                </div>
-                <div className="lumos-expert-bullet-item">
-                  <span className="lumos-bullet-icon">✓</span>
-                  <span>Direct 1-on-1 WhatsApp Support Included with Lifetime Access</span>
-                </div>
-              </div>
+              )
+            })()}
+
+            {/* Centered Hot-Pink CTA Below Dual Cubes (Matching Lumos Screen Recording Frames 4 & 5!) */}
+            <div className="lumos-cube-bottom-cta-wrap">
+              <button
+                className="lumos-cube-pink-cta interactive"
+                onClick={() => handleOpenCheckoutModal(PRODUCTS[0])}
+              >
+                <span>Get All-in-One<br />Suite · {currency === 'INR' ? '₹199' : '$2.49'}!</span>
+                <span className="lumos-cta-plus">+</span>
+              </button>
             </div>
           </div>
         </div>
