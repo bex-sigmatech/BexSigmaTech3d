@@ -55,7 +55,7 @@ async function generateQrBuffer(text) {
     width: 300,
     color: {
       dark: '#064e3b',
-      light: '#ffffff'
+      light: '#f9fdff'
     }
   })
 }
@@ -70,7 +70,7 @@ async function generateQrDataUrl(text) {
     width: 300,
     color: {
       dark: '#064e3b',
-      light: '#ffffff'
+      light: '#f9fdff'
     }
   })
 }
@@ -162,207 +162,167 @@ async function generateCertificatePdf(cert) {
   const fromTop = (y) => pageHeight - y
 
   // ── Embed QR Code PNG into PDF ───────────────────────────────────────────
-  // Position: upper-center area (between logo and certified badge), ~x=485, y=38 from top
+  // Positioned in the open whitespace between the BEx logo (ends x≈365) and the Certified seal (starts x≈615)
   const qrBuffer = await generateQrBuffer(verificationUrl)
   const qrImage = await outputDoc.embedPng(qrBuffer)
-  const qrSize = 78  // pt — small square matching the box drawn on certificate
+  const qrSize = 78
   page.drawImage(qrImage, {
-    x: 487,
-    y: fromTop(104 + qrSize),  // top of QR = 104pt from top of page (4pt lower)
+    x: 472,
+    y: 446, // vertically aligned beside BEx SIGMA TECH logo (y=450..540)
     width: qrSize,
     height: qrSize,
   })
 
   // ══════════════════════════════════════════════════════════════════════════
-  // 1. CLEAR dynamic text areas with white rectangles
-  //    (Erases ALL placeholder text from the Canva template image)
+  // Exact PDF bottom-left coordinates measured from Excel_Certificate_template.pdf:
+  //   Card fill color       : rgb(0.976, 0.992, 1) (#f9fdff)
+  //   "CERTIFICATE"         : x=61.01,  y=367.63 (KEEP UNTOUCHED)
+  //   "OF COMPLETION..."    : x=61.01,  y=341.45 (KEEP UNTOUCHED)
+  //   Placeholder Name      : x=64.18,  y=273.72
+  //   Description lines     : x=65.83,  y=237.55 / 214.15 / 190.73
+  //   Metric Labels         : y=152.59           (KEEP UNTOUCHED)
+  //   Metric Values         : y=137.98 / 138.10
+  //   "Verify Authenticity:": x=65.16,  y=70.73  (KEEP UNTOUCHED)
+  //   "link" placeholder    : x=65.16,  y=46.42
+  //   Signatory Name        : x=675.58, y=60.53  (KEEP UNTOUCHED)
+  //   Signatory Title       : x=559.63, y=41.09
   // ══════════════════════════════════════════════════════════════════════════
 
-  const white = rgb(1, 1, 1)
+  const cardBg = rgb(0.976, 0.992, 1)
+  const pureBlack = rgb(0, 0, 0)
+  const slateGray = rgb(0.267, 0.267, 0.267)
+  const darkGreen = rgb(0.0353, 0.318, 0.125)
 
-  // ONE large rect erases the entire dynamic zone:
-  // "CERTIFICATE OF COMPLETION AWARDED TO" + name + description (all baked into template)
+  // 1. Clear ONLY the placeholder Recipient Name ("KANDAVEL J" at y=273.72)
   page.drawRectangle({
     x: 60,
-    y: fromTop(420),   // bottom of area = 420pt from top
-    width: 600,
-    height: 230,       // covers y=190 to y=420 from top — the entire text body zone
-    color: white,
+    y: 263,
+    width: 575,
+    height: 62, // covers y=263..325 cleanly without touching subtitle (341.45) or desc (237.55)
+    color: cardBg,
     opacity: 1,
   })
 
-  // Clear: Badge TEXT areas only (not the icons at left of each badge group)
-  // Icons (calendar, clock, cert) are at x=70-100; text starts at x=100+
-  page.drawRectangle({ x: 100, y: fromTop(468), width: 130, height: 48, color: white, opacity: 1 })
-  page.drawRectangle({ x: 253, y: fromTop(468), width: 155, height: 48, color: white, opacity: 1 })
-  page.drawRectangle({ x: 405, y: fromTop(468), width: 230, height: 48, color: white, opacity: 1 })
-
-  // Clear: Verify Authenticity label + link at bottom (template has both baked in)
-  // fromTop(595) = 0pt from bottom; height 85 covers y=510 to y=595 from top
-  page.drawRectangle({
-    x: 60,
-    y: 1,
-    width: 480,
-    height: 85,
-    color: white,
-    opacity: 1,
-  })
-
-  // ══════════════════════════════════════════════════════════════════════════
-  // 2. RECIPIENT NAME — large bold vector text
-  // ══════════════════════════════════════════════════════════════════════════
-
+  // 2. RECIPIENT NAME — bold vector text auto-fitted to 570pt max width
   const displayName = (cert.studentName && cert.studentName.trim())
     ? cert.studentName.trim().toUpperCase()
     : 'NAME'
 
-  let nameFontSize = 38
-  if (displayName.length > 28) nameFontSize = 24
-  else if (displayName.length > 22) nameFontSize = 28
-  else if (displayName.length > 18) nameFontSize = 32
-  else if (displayName.length > 14) nameFontSize = 35
+  let nameFontSize = 46
+  while (nameFontSize > 20 && fontBold.widthOfTextAtSize(displayName, nameFontSize) > 570) {
+    nameFontSize -= 1
+  }
 
-  // Dark navy: #0f172a = rgb(15/255, 23/255, 42/255)
-  const navyDark = rgb(0.059, 0.09, 0.165)
-
-  // Name goes inside the cleared zone (250–400pt from top), at ~290pt from top
   page.drawText(displayName, {
-    x: 65,
-    y: fromTop(290),
+    x: 64.18,
+    y: 273.72,
     font: fontBold,
     size: nameFontSize,
-    color: navyDark,
+    color: pureBlack,
   })
 
-  // ══════════════════════════════════════════════════════════════════════════
-  // 3. DESCRIPTION TEXT — dynamic course description
-  // ══════════════════════════════════════════════════════════════════════════
-
-  const slateGray = rgb(0.278, 0.337, 0.412)   // #475569
-  const darkGreen = rgb(0.024, 0.306, 0.235)   // #064e3b
-
-  if (isExcel) {
-    // Description lines start at ~355pt from top (after name + gap)
-    const descLine1 = 'For successfully completing the Microsoft Excel Productivity Masterclass and'
-    const descLine2 = 'demonstrating practical skills in data management, formulas and functions,'
-    const descLine3 = 'PivotTables, Charts, and workplace productivity.'
-
-    page.drawText(descLine1, {
-      x: 65, y: fromTop(355),
-      font: fontRegular, size: 10.5, color: slateGray,
+  // 3. DESCRIPTION TEXT
+  // Keep original Canva vector description intact for standard Excel certificates;
+  // replace only for DSA, custom course, or explicit custom additionalDetails.
+  if (!isExcel || (cert.additionalDetails && cert.additionalDetails.trim())) {
+    page.drawRectangle({
+      x: 60,
+      y: 176,
+      width: 585,
+      height: 80, // covers y=176..256 cleanly between name (263) and badge labels (152.59)
+      color: cardBg,
+      opacity: 1,
     })
-    page.drawText(descLine2, {
-      x: 65, y: fromTop(372),
-      font: fontRegular, size: 10.5, color: slateGray,
-    })
-    page.drawText(descLine3, {
-      x: 65, y: fromTop(389),
-      font: fontRegular, size: 10.5, color: slateGray,
-    })
-  } else {
-    // DSA / custom course description
-    const courseTitle = isDsa
-      ? 'Data Structures & Algorithms (DSA) Masterclass'
-      : (cert.courseName || 'Professional Masterclass')
 
-    const skillsText = cert.additionalDetails || (isDsa
-      ? 'data structures, algorithms, problem solving, time complexity analysis, and software development.'
-      : 'core curriculum concepts, practical problem-solving methodologies, and industry-standard applications.')
+    const courseTitle = isExcel
+      ? 'Microsoft Excel Productivity Masterclass'
+      : isDsa
+        ? 'Data Structures & Algorithms (DSA) Masterclass'
+        : (cert.courseName || 'Professional Masterclass')
+
+    const skillsText = (cert.additionalDetails && cert.additionalDetails.trim()) || (isExcel
+      ? 'data management, formulas and functions, PivotTables, Charts, and workplace productivity.'
+      : isDsa
+        ? 'data structures, algorithms, problem solving, time complexity analysis, and software development.'
+        : 'core curriculum concepts, practical problem-solving methodologies, and industry-standard applications.')
 
     const fullDesc = `For successfully completing the ${courseTitle} and demonstrating practical skills in ${skillsText}`
-    const lines = wrapText(fullDesc, 78)
-    let descY = 355
+    const lines = wrapText(fullDesc, 82)
+    const descStep = lines.length > 3 ? 18.5 : 22.5
+    let descY = 237.55
     for (const line of lines.slice(0, 4)) {
       page.drawText(line, {
-        x: 65, y: fromTop(descY),
-        font: fontRegular, size: 10.5, color: slateGray,
+        x: 65.83,
+        y: descY,
+        font: fontRegular,
+        size: 11.8,
+        color: slateGray,
       })
-      descY += 17
+      descY -= descStep
     }
   }
 
-  // ══════════════════════════════════════════════════════════════════════════
-  // 4. THREE METRIC BADGES: Date / Duration / Certificate No.
-  // ══════════════════════════════════════════════════════════════════════════
-
+  // 4. THREE METRIC BADGE VALUES (keep labels at y=152.59 & icons on left untouched!)
   const formattedDate = formatCertificateDate(cert.completionDate || cert.issueDate)
   const durationDisplay = cert.courseDuration || (isExcel ? '12 Hours' : '3 Months (120 Hours)')
   const certNo = cert.certificateId || 'BEX-CERT-EXL-2026-0001'
 
-  // Badge value Y position — from observed screenshot the badges are at ~442pt from top
-  const badgeValY = 442
+  page.drawRectangle({ x: 103, y: 132, width: 122, height: 17, color: cardBg, opacity: 1 })
+  page.drawRectangle({ x: 257, y: 132, width: 135, height: 17, color: cardBg, opacity: 1 })
+  page.drawRectangle({ x: 421, y: 132, width: 225, height: 17, color: cardBg, opacity: 1 })
 
   page.drawText(formattedDate, {
-    x: 104.5,
-    y: fromTop(badgeValY),
+    x: 105.29,
+    y: 137.98,
     font: fontBold,
-    size: 10.5,
-    color: navyDark,
+    size: 10,
+    color: slateGray,
   })
 
   page.drawText(durationDisplay, {
-    x: 259.68,
-    y: fromTop(badgeValY),
+    x: 259.56,
+    y: 137.98,
     font: fontBold,
-    size: 10.5,
-    color: navyDark,
+    size: 10,
+    color: slateGray,
   })
 
   page.drawText(certNo, {
     x: 423.46,
-    y: fromTop(badgeValY),
+    y: 138.10,
     font: fontBold,
-    size: 10.5,
-    color: navyDark,
+    size: 10,
+    color: slateGray,
   })
 
-  // Re-draw badge label text (cleared above with the large badge rect)
-  const slateLight = rgb(0.45, 0.52, 0.60)  // lighter gray for sub-labels
-  page.drawText('Date of Completion', {
-    x: 104.5, y: fromTop(badgeValY + 15),
-    font: fontRegular, size: 7.5, color: slateLight,
+  // 5. VERIFICATION URL (keep "Verify Authenticity:" at y=70.73 untouched, replace only "link" at y=46.42)
+  page.drawRectangle({
+    x: 62,
+    y: 38,
+    width: 340,
+    height: 22,
+    color: cardBg,
+    opacity: 1,
   })
-  page.drawText('Duration', {
-    x: 259.68, y: fromTop(badgeValY + 15),
-    font: fontRegular, size: 7.5, color: slateLight,
-  })
-  page.drawText('Certificate No.', {
-    x: 423.46, y: fromTop(badgeValY + 15),
-    font: fontRegular, size: 7.5, color: slateLight,
-  })
-
-  // ══════════════════════════════════════════════════════════════════════════
-  // 5. VERIFICATION URL — "Verify Authenticity:" label + clickable link
-  // ══════════════════════════════════════════════════════════════════════════
 
   const verifyDisplayUrl = `www.bexsigmatech.com/verify/${cert.certificateId}`
 
-  // Re-draw the "Verify Authenticity:" label (we cleared it above)
-  page.drawText('Verify Authenticity:', {
-    x: 65,
-    y: fromTop(548),
-    font: fontRegular,
-    size: 9.5,
-    color: navyDark,
-  })
-
-  // Draw the clickable URL link below the label
   page.drawText(verifyDisplayUrl, {
-    x: 65,
-    y: fromTop(562),
+    x: 65.16,
+    y: 46.42,
     font: fontBold,
-    size: 10,
+    size: 10.5,
     color: darkGreen,
   })
 
   // Add clickable URI annotation over the URL text
-  const urlTextWidth = fontBold.widthOfTextAtSize(verifyDisplayUrl, 10)
+  const urlTextWidth = fontBold.widthOfTextAtSize(verifyDisplayUrl, 10.5)
   const annotContext = outputDoc.context
   const linkAnnotRef = annotContext.register(
     annotContext.obj({
       Type: 'Annot',
       Subtype: 'Link',
-      Rect: [65, fromTop(565), 65 + urlTextWidth, fromTop(553)],
+      Rect: [65.16, 42, 65.16 + urlTextWidth, 58],
       Border: [0, 0, 0],
       A: {
         Type: 'Action',
@@ -380,41 +340,26 @@ async function generateCertificatePdf(cert) {
     page.node.set(PDFName.of('Annots'), annotContext.obj([linkAnnotRef]))
   }
 
-  // ══════════════════════════════════════════════════════════════════════════
-  // 6. SIGNATORY — Only override for DSA/non-Excel (Excel template already has correct signatory)
-  // ══════════════════════════════════════════════════════════════════════════
-
+  // 6. SIGNATORY TITLE — keep Hariharan Dilli & signature intact; only update title for DSA/custom tracks
   if (!isExcel) {
-    // For DSA: template has Excel signatory, so we clear and replace with DSA title
     page.drawRectangle({
-      x: 490,
-      y: fromTop(564),
-      width: 315,
-      height: 34,
-      color: white,
+      x: 545,
+      y: 33,
+      width: 270,
+      height: 21,
+      color: cardBg,
       opacity: 1,
     })
 
-    const signatoryName = 'Hariharan Dilli'
     const signatoryTitle = isDsa ? 'Founder & Lead Technical Architect' : 'Founder & Technical Director'
-    const sigAreaRight = 798
-
-    const nameWidth = fontBold.widthOfTextAtSize(signatoryName, 11)
-    const titleWidth = fontBold.widthOfTextAtSize(signatoryTitle, 9)
-
-    page.drawText(signatoryName, {
-      x: sigAreaRight - nameWidth,
-      y: fromTop(549),
-      font: fontBold,
-      size: 11,
-      color: navyDark,
-    })
+    const sigAreaRight = 799
+    const titleWidth = fontBold.widthOfTextAtSize(signatoryTitle, 11.5)
 
     page.drawText(signatoryTitle, {
       x: sigAreaRight - titleWidth,
-      y: fromTop(561),
+      y: 41.09,
       font: fontBold,
-      size: 9,
+      size: 11.5,
       color: darkGreen,
     })
   }
