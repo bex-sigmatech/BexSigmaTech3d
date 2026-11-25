@@ -486,15 +486,15 @@ export default function MissionControl() {
             </div>
 
             <div className="mc-hero-photo-stage">
-              <div className="mc-photo-torn-wrap mc-hero-portrait-frame">
+              <div className="mc-photo-torn-wrap mc-hero-portrait-frame mc-hero-logo-frame">
                 <img
-                  src="/sector_website.jpg"
-                  alt="BEX Sigma Tech Engineering Team"
-                  className="mc-photo-sepia"
+                  src="/bex_metallic_logo_clean.png"
+                  alt="BEX Sigma Tech Official Logo"
+                  className="mc-hero-logo-img"
                 />
                 <div className="mc-photo-halftone-caption">
                   <span>BEX SIGMA TECH</span>
-                  <span>OUR TEAM</span>
+                  <span>WHO WE ARE</span>
                 </div>
               </div>
             </div>

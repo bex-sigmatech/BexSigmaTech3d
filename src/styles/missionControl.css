@@ -431,6 +431,23 @@
   height: calc(100% - 26px);
 }
 
+.mc-hero-logo-frame {
+  width: min(100%, 490px);
+  aspect-ratio: 4 / 2.75;
+  padding: 20px 24px 14px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.mc-hero-logo-img {
+  width: 100%;
+  height: calc(100% - 28px);
+  object-fit: contain;
+  object-position: center;
+  display: block;
+}
+
 .mc-hero-actions {
   display: flex;
   flex-wrap: wrap;
