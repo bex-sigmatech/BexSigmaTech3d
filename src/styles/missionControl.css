@@ -3,7 +3,7 @@
    Strict Palette: #FFFFFF | #EAE3D0 | #111111 | #D8CCB0
    Fonts: Anton (Condensed Extra Bold) + Caveat (Thin Handwritten Script) + Inter
    Rules: Zero shadows, zero gradients, zero border-radius, sharp 1px #111111 lines
-   Scoped exclusively to .mc-editorial-overlay (/mission)
+   NO birds / NO crow. Scoped exclusively to .mc-editorial-overlay (/mission)
    ========================================================================== */
 
 @import url('https://fonts.googleapis.com/css2?family=Anton&family=Caveat:wght@500;700&family=Inter:wght@400;500;600;700&display=swap');
@@ -34,7 +34,7 @@
   box-shadow: none !important;
 }
 
-/* Subtle static film grain across viewport (transform/opacity friendly) */
+/* Subtle static film grain across Mission viewport */
 .mc-grain-overlay {
   position: fixed;
   inset: 0;
@@ -43,34 +43,6 @@
   opacity: 0.045;
   background-image: radial-gradient(#111111 0.7px, transparent 0.7px);
   background-size: 4px 4px;
-}
-
-/* Flying Birds Layer (transform + opacity only) */
-.mc-birds-layer {
-  position: fixed;
-  inset: 0;
-  z-index: 80;
-  pointer-events: none;
-  overflow: hidden;
-}
-
-.mc-bird {
-  position: absolute;
-  left: -120px;
-  width: 54px;
-  height: 36px;
-  color: #111111;
-  will-change: transform, opacity;
-}
-
-.mc-bird--1 { top: 14vh; }
-.mc-bird--2 { top: 34vh; width: 42px; height: 28px; }
-.mc-bird--3 { top: 62vh; width: 48px; height: 32px; }
-
-.mc-bird svg {
-  width: 100%;
-  height: 100%;
-  display: block;
 }
 
 /* Main Scrollable Canvas */
@@ -85,7 +57,7 @@
   -webkit-overflow-scrolling: touch;
 }
 
-/* ── 1. TOP STICKY 50/50 EDITORIAL NAV BAR ── */
+/* ── TOP STICKY 50/50 EDITORIAL NAV BAR ── */
 .mc-obys-topbar {
   position: sticky;
   top: 0;
@@ -129,13 +101,19 @@
   cursor: pointer;
 }
 
-.mc-nav-mini-links {
+.mc-top-links {
   display: flex;
   align-items: center;
-  gap: 18px;
+  gap: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #111111;
+  flex-wrap: wrap;
 }
 
-.mc-nav-mini-btn {
+.mc-top-link-btn {
   background: transparent;
   border: none;
   padding: 0;
@@ -146,44 +124,15 @@
   letter-spacing: 2px;
   color: #111111;
   cursor: pointer;
-  transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
-.mc-nav-mini-btn:hover,
-.mc-nav-mini-btn.active {
+.mc-top-link-btn:hover,
+.mc-top-link-btn.active {
   text-decoration: underline;
   text-underline-offset: 4px;
 }
 
-.mc-cities-nav {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 12px;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  color: #111111;
-  flex-wrap: wrap;
-}
-
-.mc-city-link {
-  background: transparent;
-  border: none;
-  padding: 0;
-  font-family: 'Inter', sans-serif;
-  font-size: 12px;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  color: #111111;
-  cursor: pointer;
-}
-
-.mc-city-link:hover {
-  text-decoration: underline;
-}
-
-.mc-city-sep {
+.mc-nav-sep {
   opacity: 0.45;
 }
 
@@ -231,10 +180,10 @@
   color: #FFFFFF;
 }
 
-/* ── 2. TYPOGRAPHY PRIMITIVES (ANTON 110px + CAVEAT 90px OVERLAP) ── */
+/* ── TYPOGRAPHY (ANTON 110px + CAVEAT 90px OVERLAPPING) ── */
 .mc-display-mega {
   font-family: 'Anton', 'Archivo Black', sans-serif;
-  font-size: clamp(2.85rem, 6.2vw, 110px);
+  font-size: clamp(2.9rem, 6.4vw, 110px);
   font-weight: 400;
   line-height: 0.85;
   letter-spacing: -0.02em;
@@ -249,16 +198,16 @@
 
 .mc-script-overlap {
   font-family: 'Caveat', 'Kalam', cursive;
-  font-size: clamp(2.4rem, 5.2vw, 90px);
+  font-size: clamp(2.5rem, 5.4vw, 90px);
   font-weight: 700;
   font-style: italic;
-  line-height: 0.82;
+  line-height: 0.8;
   text-transform: uppercase;
   display: inline-block;
   position: relative;
-  z-index: 3;
+  z-index: 4;
   letter-spacing: 0;
-  margin: -0.14em 0.08em -0.1em -0.04em;
+  margin: -0.18em 0.08em -0.14em -0.26em;
   color: #111111;
 }
 
@@ -266,15 +215,22 @@
   color: #D8CCB0;
 }
 
-.mc-script-overlap--shift {
-  margin-left: -0.35em;
-  margin-top: -0.22em;
+.mc-script-overlap--inline {
+  margin-left: -0.18em;
+}
+
+.mc-script-overlap--lead {
+  margin-left: 0;
+  margin-right: 0.14em;
+  margin-top: -0.06em;
+  margin-bottom: -0.06em;
+  font-size: clamp(2.8rem, 6.2vw, 106px);
 }
 
 .mc-line-mask {
   display: block;
   overflow: hidden;
-  padding: 8px 0 4px;
+  padding: 12px 0 16px;
 }
 
 .mc-hero-line {
@@ -293,6 +249,18 @@
 }
 
 .mc-kicker-label--beige {
+  color: #D8CCB0;
+}
+
+.mc-body-sub {
+  font-size: 15px;
+  line-height: 1.6;
+  color: #111111;
+  max-width: 520px;
+  margin: 18px 0 0;
+}
+
+.mc-body-sub--beige {
   color: #D8CCB0;
 }
 
@@ -348,10 +316,10 @@
 .mc-btn-beige {
   background: #D8CCB0;
   color: #111111;
-  border: 1px solid #111111;
-  padding: 16px 32px;
+  border: 1px solid #D8CCB0;
+  padding: 14px 24px;
   font-family: 'Inter', sans-serif;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 2px;
@@ -359,7 +327,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
+  gap: 10px;
   text-decoration: none;
   transition: background-color 0.2s ease, color 0.2s ease;
 }
@@ -390,7 +358,7 @@
   object-fit: cover;
   object-position: center 20%;
   display: block;
-  filter: grayscale(100%) contrast(1.24) sepia(0.26);
+  filter: grayscale(100%) contrast(1.2) sepia(0.28) brightness(0.94);
 }
 
 .mc-photo-halftone-caption {
@@ -399,13 +367,13 @@
   justify-content: space-between;
   padding-top: 8px;
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 2px;
   color: #111111;
 }
 
-/* ── 3. SECTION 1: 50/50 SPLIT HERO (100vh) ── */
+/* ── 1. HERO: WHO WE ARE (50/50 SPLIT, 100vh) ── */
 .mc-obys-hero {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -417,7 +385,7 @@
 .mc-hero-left-white {
   background: #FFFFFF;
   border-right: 1px solid #111111;
-  padding: clamp(28px, 4vw, 52px) clamp(24px, 3.6vw, 48px) 92px;
+  padding: clamp(28px, 4vw, 52px) clamp(24px, 3.6vw, 48px) 88px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -438,13 +406,14 @@
   align-items: center;
   justify-content: space-between;
   font-size: 12px;
+  font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 2px;
   color: #111111;
 }
 
 .mc-hero-photo-stage {
-  padding: clamp(20px, 3vw, 40px);
+  padding: clamp(20px, 3vw, 40px) clamp(20px, 3vw, 40px) 84px;
   flex: 1;
   display: flex;
   align-items: center;
@@ -452,8 +421,8 @@
 }
 
 .mc-hero-portrait-frame {
-  width: min(100%, 440px);
-  aspect-ratio: 4 / 4.4;
+  width: min(100%, 460px);
+  aspect-ratio: 4 / 3.9;
   background: #FFFFFF;
   will-change: transform, opacity;
 }
@@ -469,48 +438,14 @@
   margin-top: 12px;
 }
 
-.mc-hero-stats-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  border-top: 1px solid #111111;
-  background: #FFFFFF;
-  padding-bottom: 64px;
-}
-
-.mc-hero-stat-cell {
-  padding: 18px 20px;
-  border-right: 1px solid #111111;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.mc-hero-stat-cell:last-child {
-  border-right: none;
-}
-
-.mc-hero-stat-num {
-  font-family: 'Anton', sans-serif;
-  font-size: clamp(1.9rem, 3vw, 2.8rem);
-  line-height: 0.9;
-  color: #111111;
-}
-
-.mc-hero-stat-lbl {
-  font-size: 12px;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  color: #111111;
-}
-
-/* ── 4. CONTINUOUS LOOPING MARQUEE BAR ── */
+/* ── RIGHT-TO-LEFT CONTINUOUS MARQUEE BAND (20s LOOP) ── */
 .mc-marquee-band {
   width: 100%;
   background: #111111;
   color: #D8CCB0;
   border-bottom: 1px solid #D8CCB0;
   overflow: hidden;
-  padding: 16px 0;
+  padding: 18px 0;
 }
 
 .mc-marquee-track {
@@ -521,24 +456,24 @@
 
 .mc-marquee-item {
   font-family: 'Anton', 'Archivo Black', sans-serif;
-  font-size: clamp(2rem, 4.2vw, 3.6rem);
+  font-size: clamp(2.1rem, 4.2vw, 3.8rem);
   line-height: 0.9;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.01em;
   text-transform: uppercase;
   color: #D8CCB0;
   white-space: nowrap;
-  padding-right: 42px;
+  padding-right: 44px;
 }
 
 .mc-marquee-script {
   font-family: 'Caveat', cursive;
   font-style: italic;
   font-weight: 700;
-  font-size: 1.05em;
-  padding: 0 12px;
+  font-size: 1.06em;
+  padding: 0 10px;
 }
 
-/* ── 5. SECTION 2: BLACK ARCHIVE SECTION (#111111 BG, #D8CCB0 TEXT) ── */
+/* ── 2. MANAGER - HARIHARAN (BLACK SECTION #111111 + HUGE BEIGE NUMBERS 0.5 -> 1.2 + FLYING PHOTOS) ── */
 .mc-black-section {
   background: #111111;
   color: #D8CCB0;
@@ -547,12 +482,11 @@
   overflow: hidden;
 }
 
-/* 4-Column Slot Counter Matrix (Obys 1991 Reference Frame) */
 .mc-counter-columns {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   border: 1px solid #D8CCB0;
-  margin-bottom: clamp(48px, 6vw, 84px);
+  margin-bottom: clamp(48px, 6vw, 80px);
 }
 
 .mc-counter-col {
@@ -562,7 +496,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  min-height: 210px;
+  min-height: 200px;
   text-align: center;
 }
 
@@ -584,15 +518,38 @@
   text-transform: uppercase;
   letter-spacing: 2px;
   color: #D8CCB0;
-  margin-top: 14px;
+  margin-top: 12px;
 }
 
-.mc-black-headline-wrap {
-  max-width: 1280px;
-  margin: 0 auto 56px;
+.mc-manager-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: clamp(28px, 4vw, 56px);
+  align-items: center;
+  max-width: 1360px;
+  margin: 0 auto 64px;
 }
 
-/* 4 Flying B&W Sepia Photos (rotate -10deg -> 0deg) */
+.mc-manager-photo-card {
+  background: #EAE3D0;
+  border: 1px solid #D8CCB0;
+  padding: 12px;
+  max-width: 440px;
+  width: 100%;
+  margin: 0 auto;
+  will-change: transform, opacity;
+}
+
+.mc-manager-photo-card img {
+  width: 100%;
+  aspect-ratio: 4 / 4.4;
+  object-fit: cover;
+  object-position: center 15%;
+  display: block;
+  filter: grayscale(100%) contrast(1.22) sepia(0.28);
+}
+
+/* 4 Flying B&W Sepia Showcase Photos (-10deg -> 0deg) */
 .mc-flying-photos-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -628,7 +585,7 @@
   color: #111111;
 }
 
-/* ── 6. SECTION 3: 50/50 SPLIT SCROLL (LEFT STICKY + FALLING ICONS, RIGHT DIVISIONS 01-06) ── */
+/* ── 3. WHAT WE BUILD: SPLIT SCROLL (LEFT STICKY + FALLING ICONS, RIGHT SERVICES 01-04) ── */
 .mc-split-scroll-section {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -652,14 +609,6 @@
   flex-direction: column;
   justify-content: space-between;
   gap: 24px;
-}
-
-.mc-sticky-lead-p {
-  font-size: 14px;
-  line-height: 1.6;
-  color: #111111;
-  max-width: 440px;
-  margin: 18px 0 0;
 }
 
 /* 0:23 Falling Icons + Architectural Bowl Scene */
@@ -695,24 +644,24 @@
 .mc-falling-icon {
   position: absolute;
   top: 28px;
-  width: 62px;
-  height: 62px;
+  width: 68px;
+  height: 68px;
   background: #FFFFFF;
   border: 1px solid #111111;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 2px;
+  gap: 3px;
   z-index: 3;
   will-change: transform, opacity;
 }
 
-.mc-falling-icon--1 { left: 12%; }
+.mc-falling-icon--1 { left: 10%; }
 .mc-falling-icon--2 { left: 28%; }
 .mc-falling-icon--3 { left: 45%; }
 .mc-falling-icon--4 { left: 62%; }
-.mc-falling-icon--5 { left: 77%; }
+.mc-falling-icon--5 { left: 78%; }
 
 .mc-falling-icon-code {
   font-family: 'Anton', sans-serif;
@@ -755,10 +704,14 @@
   letter-spacing: 2px;
 }
 
-/* Right Scrolling Divisions Accordion (01-06) */
+/* Right Scrolling Accordion (01-04) */
 .mc-split-scroll-right {
   background: #EAE3D0;
   padding: clamp(32px, 4vw, 56px) clamp(20px, 3vw, 40px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 28px;
 }
 
 .mc-divisions-list {
@@ -783,12 +736,12 @@
   grid-template-columns: 64px 1fr 44px;
   align-items: center;
   gap: 16px;
-  padding: 22px 16px;
+  padding: 24px 16px;
 }
 
 .mc-division-num {
   font-family: 'Anton', sans-serif;
-  font-size: 2.4rem;
+  font-size: 2.5rem;
   line-height: 0.9;
   color: #111111;
 }
@@ -796,21 +749,12 @@
 .mc-division-meta {
   display: flex;
   flex-direction: column;
-  gap: 4px;
-}
-
-.mc-division-badge {
-  font-size: 11px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  color: #111111;
-  opacity: 0.72;
+  gap: 6px;
 }
 
 .mc-division-title {
   font-family: 'Anton', 'Archivo Black', sans-serif;
-  font-size: clamp(1.35rem, 2.2vw, 2rem);
+  font-size: clamp(1.45rem, 2.4vw, 2.2rem);
   line-height: 0.96;
   text-transform: uppercase;
   letter-spacing: -0.01em;
@@ -819,9 +763,9 @@
 }
 
 .mc-division-tagline {
-  font-size: 13px;
+  font-size: 14px;
   color: #111111;
-  margin: 2px 0 0;
+  margin: 0;
 }
 
 .mc-division-toggle {
@@ -834,7 +778,6 @@
   align-items: center;
   justify-content: center;
   font-size: 20px;
-  font-weight: 400;
   line-height: 1;
 }
 
@@ -856,183 +799,180 @@
   margin: 18px 0 16px;
 }
 
-.mc-division-specs {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  border-top: 1px solid #111111;
-  border-left: 1px solid #111111;
-  margin-bottom: 18px;
-}
-
-.mc-division-spec-cell {
-  border-right: 1px solid #111111;
-  border-bottom: 1px solid #111111;
-  padding: 9px 12px;
-  font-size: 12px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  background: #EAE3D0;
-  color: #111111;
-}
-
-.mc-division-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-/* ── 7. SECTION 4: WHY WORK WITH BEX SIGMA TECH? (3 CARDS) ── */
-.mc-why-obys-section {
+/* ── 4. COURSES WE PROVIDE (2 BIG CARDS) ── */
+.mc-courses-section {
   background: #FFFFFF;
   border-bottom: 1px solid #111111;
   padding: clamp(56px, 7vw, 96px) clamp(24px, 4vw, 56px);
 }
 
-.mc-why-header {
-  margin-bottom: 48px;
+.mc-courses-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 24px;
+  margin-bottom: 44px;
 }
 
-.mc-why-grid-3 {
+.mc-courses-grid-2 {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   border-top: 1px solid #111111;
   border-left: 1px solid #111111;
 }
 
-.mc-why-card-box {
+.mc-course-big-card {
   background: #EAE3D0;
   border-right: 1px solid #111111;
   border-bottom: 1px solid #111111;
-  padding: 36px 28px;
+  padding: clamp(32px, 4vw, 52px);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 20px;
-  min-height: 280px;
+  gap: 28px;
+  min-height: 320px;
   will-change: transform, opacity;
   transition: background-color 0.25s ease;
 }
 
-.mc-why-card-box:hover {
+.mc-course-big-card:hover {
   background: #FFFFFF;
 }
 
-.mc-why-card-top-row {
+.mc-course-card-top {
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
   border-bottom: 1px solid #111111;
   padding-bottom: 12px;
 }
 
-.mc-why-num {
+.mc-course-num {
   font-family: 'Anton', sans-serif;
-  font-size: 2.4rem;
+  font-size: 2.6rem;
   line-height: 0.9;
   color: #111111;
 }
 
-.mc-why-tag {
-  font-size: 12px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  color: #111111;
-}
-
-.mc-why-card-h3 {
-  font-family: 'Anton', sans-serif;
-  font-size: clamp(1.65rem, 2.4vw, 2.3rem);
-  line-height: 0.94;
+.mc-course-title {
+  font-family: 'Anton', 'Archivo Black', sans-serif;
+  font-size: clamp(2.2rem, 3.6vw, 3.4rem);
+  line-height: 0.9;
   text-transform: uppercase;
   color: #111111;
   margin: 0;
 }
 
-.mc-why-card-p {
-  font-size: 14px;
-  line-height: 1.6;
+.mc-course-copy {
+  font-size: 16px;
+  line-height: 1.55;
   color: #111111;
   margin: 0;
 }
 
-/* ── 8. SECTION 5: WORLDWIDE STRATEGIC MAINFRAME (4 BOXES ONLY, NO GALLERY) ── */
-.mc-nodes-obys-section {
+/* ── 5. EXCEL DASHBOARD SALE (50/50 SPLIT) ── */
+.mc-dashboard-sale-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 100%;
+  border-bottom: 1px solid #111111;
+}
+
+.mc-sale-left {
+  background: #EAE3D0;
+  border-right: 1px solid #111111;
+  padding: clamp(48px, 6vw, 88px) clamp(24px, 4vw, 52px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 24px;
+}
+
+.mc-sale-right {
+  background: #FFFFFF;
+  padding: clamp(36px, 5vw, 64px) clamp(24px, 3.6vw, 48px);
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  align-content: center;
+}
+
+/* ── 6. DIGITAL MARKETING + VIDEO (BLACK SECTION + 3 CARDS) ── */
+.mc-marketing-section {
   background: #111111;
   color: #D8CCB0;
   border-bottom: 1px solid #111111;
   padding: clamp(56px, 7vw, 96px) clamp(24px, 4vw, 56px);
 }
 
-.mc-nodes-obys-head {
+.mc-marketing-header {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: 20px;
-  margin-bottom: 44px;
+  gap: 24px;
+  margin-bottom: 48px;
 }
 
-.mc-nodes-grid-4 {
+.mc-marketing-grid-3 {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   border-top: 1px solid #D8CCB0;
   border-left: 1px solid #D8CCB0;
 }
 
-.mc-node-box {
+.mc-marketing-card {
   background: #111111;
   border-right: 1px solid #D8CCB0;
   border-bottom: 1px solid #D8CCB0;
-  padding: 32px 24px;
+  padding: 36px 28px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 28px;
-  min-height: 200px;
+  gap: 22px;
+  min-height: 260px;
   will-change: transform, opacity;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  transition: background-color 0.25s ease, color 0.25s ease;
 }
 
-.mc-node-box:hover {
+.mc-marketing-card:hover {
   background: #EAE3D0;
   color: #111111;
 }
 
-.mc-node-box-top {
+.mc-marketing-card-top {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: 12px;
-  text-transform: uppercase;
-  letter-spacing: 2px;
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 12px;
 }
 
-.mc-node-city-name {
+.mc-marketing-num {
   font-family: 'Anton', sans-serif;
-  font-size: clamp(1.75rem, 2.6vw, 2.6rem);
+  font-size: 2.6rem;
+  line-height: 0.9;
+}
+
+.mc-marketing-title {
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(1.8rem, 2.8vw, 2.6rem);
   line-height: 0.92;
   text-transform: uppercase;
   margin: 0;
 }
 
-.mc-node-box-foot {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-top: 1px solid currentColor;
-  padding-top: 12px;
-  font-size: 12px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 2px;
+.mc-marketing-desc {
+  font-size: 15px;
+  line-height: 1.55;
+  margin: 0;
 }
 
-/* ── 9. SECTION 6: FINAL CTA (BOOK A CALL ₹199) ── */
+/* ── 7. FINAL CTA (LET'S BUILD YOURS. TOGETHER) ── */
 .mc-cta-obys-section {
   display: grid;
-  grid-template-columns: 1.35fr 0.65fr;
+  grid-template-columns: 1.3fr 0.7fr;
   width: 100%;
   background: #EAE3D0;
 }
@@ -1044,7 +984,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 24px;
+  gap: 20px;
 }
 
 .mc-cta-right {
@@ -1069,7 +1009,7 @@
   width: 100%;
 }
 
-/* ── 10. SCHEDULE DEMO MODAL (Unified Editorial 1px Theme, Preserving ScheduleDemoModal.jsx) ── */
+/* ── SCHEDULE DEMO MODAL (Preserved Selectors for ScheduleDemoModal.jsx) ── */
 .mc-modal-backdrop {
   position: fixed;
   inset: 0;
@@ -1257,11 +1197,15 @@
   margin: 0 auto 14px;
 }
 
-/* ── 11. RESPONSIVE BREAKPOINTS ── */
+/* ── RESPONSIVE BREAKPOINTS ── */
 @media (max-width: 1024px) {
   .mc-obys-topbar,
   .mc-obys-hero,
+  .mc-manager-grid,
   .mc-split-scroll-section,
+  .mc-courses-grid-2,
+  .mc-dashboard-sale-section,
+  .mc-marketing-grid-3,
   .mc-cta-obys-section {
     grid-template-columns: 1fr;
   }
@@ -1269,6 +1213,7 @@
   .mc-topbar-left,
   .mc-hero-left-white,
   .mc-split-sticky-left,
+  .mc-sale-left,
   .mc-cta-left {
     border-right: none;
     border-bottom: 1px solid #111111;
@@ -1281,8 +1226,7 @@
   }
 
   .mc-counter-columns,
-  .mc-flying-photos-grid,
-  .mc-nodes-grid-4 {
+  .mc-flying-photos-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 
@@ -1294,10 +1238,6 @@
   .mc-counter-col:nth-child(2) {
     border-bottom: 1px solid #D8CCB0;
   }
-
-  .mc-why-grid-3 {
-    grid-template-columns: 1fr;
-  }
 }
 
 @media (max-width: 700px) {
@@ -1306,37 +1246,22 @@
     padding: 10px 16px;
   }
 
-  .mc-nav-mini-links {
-    display: none;
-  }
-
-  .mc-cities-nav {
+  .mc-top-links {
     font-size: 10px;
     letter-spacing: 1px;
     gap: 6px;
   }
 
-  .mc-city-link {
+  .mc-top-link-btn {
     font-size: 10px;
     letter-spacing: 1px;
   }
 
-  .mc-hero-stats-grid,
   .mc-counter-columns,
   .mc-flying-photos-grid,
-  .mc-nodes-grid-4,
-  .mc-division-specs,
+  .mc-sale-right,
   .mc-modal-row {
     grid-template-columns: 1fr;
-  }
-
-  .mc-hero-stat-cell {
-    border-right: none;
-    border-bottom: 1px solid #111111;
-  }
-
-  .mc-hero-stat-cell:last-child {
-    border-bottom: none;
   }
 
   .mc-counter-col {
@@ -1363,7 +1288,7 @@
   }
 
   .mc-falling-icon {
-    width: 48px;
-    height: 48px;
+    width: 50px;
+    height: 50px;
   }
 }
