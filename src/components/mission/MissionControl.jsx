@@ -105,6 +105,20 @@ const BLACK_SCALE_NUMBERS = [
   { value: '04', label: '60 FPS & 3D Web' },
 ]
 
+const STACKED_POLAROID_CARDS = [
+  { src: '/sector_website.jpg', label: '01 · WEBSITE SYSTEMS', rot: -10, x: -18, y: -12 },
+  { src: '/sector_application.jpg', label: '02 · MOBILE APPS', rot: 7, x: 22, y: 10 },
+  { src: '/sector_software.jpg', label: '03 · CUSTOM SOFTWARE', rot: -5, x: -10, y: 18 },
+  { src: '/sector_3d_website.jpg', label: '04 · 3D & ANIMATED', rot: 2, x: 8, y: 4 },
+]
+
+const QUADRANT_TILES = [
+  { id: '01', title: 'WEBSITE', sub: 'MODERN · 3D · 60 FPS', sticker: '/sector_website.jpg' },
+  { id: '02', title: 'APPS', sub: 'IOS & ANDROID · SMOOTH', sticker: '/sector_application.jpg' },
+  { id: '03', title: 'SOFTWARE', sub: 'CLOUD · CUSTOM TOOLS', sticker: '/sector_software.jpg' },
+  { id: '04', title: 'COURSES', sub: 'EXCEL & DSA · JOB READY', sticker: '/ain_excel_pack.jpg' },
+]
+
 const FALLING_ICONS = [
   { code: 'XLS', sub: 'EXCEL', targetX: -6, targetY: 120, rot: -12 },
   { code: 'WEB', sub: 'WEBSITE', targetX: 4, targetY: 110, rot: 8 },
@@ -126,11 +140,13 @@ export default function MissionControl() {
   const [activeNav, setActiveNav] = useState('services')
   const [demoModalOpen, setDemoModalOpen] = useState(false)
   const [expandedService, setExpandedService] = useState('01')
+  const [activeQuadIdx, setActiveQuadIdx] = useState(0)
 
   const overlayRef = useRef(null)
   const scrollContainerRef = useRef(null)
   const splitRightRef = useRef(null)
   const splitSectionRef = useRef(null)
+  const obysShowcaseRef = useRef(null)
 
   useEffect(() => {
     voiceEmitter.emit('MISSION_BRIEF_VISIBLE')
@@ -192,6 +208,108 @@ export default function MissionControl() {
           ease: 'none',
         }
       )
+
+      // 3B. Obys Stacked Polaroid Collage (00:03 -> 00:05 cards fly in and pile atop each other on sticky left)
+      if (obysShowcaseRef.current) {
+        STACKED_POLAROID_CARDS.forEach((card, i) => {
+          const sel = `.mc-stack-card--${i + 1}`
+          const fromLeft = i % 2 === 0
+          gsap.fromTo(
+            sel,
+            {
+              x: fromLeft ? -220 : 220,
+              y: -140 - i * 40,
+              rotation: fromLeft ? -24 : 22,
+              scale: 0.84,
+              opacity: 0,
+            },
+            {
+              x: card.x,
+              y: card.y,
+              rotation: card.rot,
+              scale: 1,
+              opacity: 1,
+              ease: 'power3.out',
+              scrollTrigger: {
+                trigger: obysShowcaseRef.current,
+                scroller,
+                start: `${i * 18}% 78%`,
+                end: `${i * 18 + 26}% 42%`,
+                scrub: 0.7,
+              },
+            }
+          )
+        })
+
+        // Poetic Manifesto lines slide up inside right scrolling stage
+        gsap.fromTo(
+          '.mc-obys-poetic-line',
+          { y: 42, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            stagger: 0.14,
+            duration: 0.8,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: '.mc-obys-poetic-wrap',
+              scroller,
+              start: 'top 85%',
+            },
+          }
+        )
+
+        // 2x2 Quadrant tiles reveal + cycle active cutout sticker on scroll
+        gsap.fromTo(
+          '.mc-quad-tile',
+          { y: 40, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            stagger: 0.1,
+            duration: 0.65,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: '.mc-quad-grid',
+              scroller,
+              start: 'top 85%',
+              onEnter: () => setActiveQuadIdx(2),
+            },
+          }
+        )
+
+        // Torn-paper halftone ridge contour parallax rise into Black section (00:06 -> 00:07)
+        gsap.fromTo(
+          '.mc-ridge-layer--back',
+          { y: 55 },
+          {
+            y: -10,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: '.mc-ridge-transition',
+              scroller,
+              start: 'top bottom',
+              end: 'bottom 35%',
+              scrub: true,
+            },
+          }
+        )
+        gsap.fromTo(
+          '.mc-ridge-layer--front',
+          { y: 85 },
+          {
+            y: 0,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: '.mc-ridge-transition',
+              scroller,
+              start: 'top bottom',
+              end: 'bottom 35%',
+              scrub: true,
+            },
+          }
+        )
+      }
 
       // 3. Falling Icons (Excel / Website / App) Gravity + Bounce Loop (stagger 0.2s, infinite)
       const fallTl = gsap.timeline({ repeat: -1, repeatDelay: 0.85 })
@@ -510,6 +628,113 @@ export default function MissionControl() {
               </span>
             ))}
           </div>
+        </div>
+
+        {/* ── OBYS 00:03-00:07 REFERENCE: STICKY STACKING POLAROIDS + 2x2 QUADRANT MATRIX + TORN RIDGE ── */}
+        <section ref={obysShowcaseRef} className="mc-obys-showcase-section">
+          {/* Left Sticky White Column: Stacked Polaroid Pile */}
+          <div className="mc-obys-showcase-left">
+            <div className="mc-obys-showcase-sticky">
+              <div className="mc-obys-stack-top-text">
+                <span className="mc-kicker-label">BEX SIGMA TECH · MODERN ARCHIVE</span>
+                <h2 className="mc-display-mega" style={{ marginTop: '10px', fontSize: 'clamp(2.4rem, 4.6vw, 76px)' }}>
+                  WHO <span className="mc-script-overlap">we</span> ARE.
+                </h2>
+              </div>
+
+              <div className="mc-polaroid-pile-stage">
+                {STACKED_POLAROID_CARDS.map((card, idx) => (
+                  <div
+                    key={card.label}
+                    className={`mc-photo-torn-wrap mc-stack-card mc-stack-card--${idx + 1}`}
+                    style={{ zIndex: idx + 2 }}
+                  >
+                    <img src={card.src} alt={card.label} className="mc-photo-sepia" />
+                    <div className="mc-photo-halftone-caption">
+                      <span>{card.label}</span>
+                      <span>BEX</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="mc-obys-stack-bottom-text">
+                <h3 className="mc-display-mega" style={{ fontSize: 'clamp(2.2rem, 4.2vw, 68px)' }}>
+                  BUILD <span className="mc-script-overlap">modern.</span>
+                </h3>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Scrolling Column: Poetic Manifesto + 2x2 Quadrant Matrix */}
+          <div className="mc-obys-showcase-right">
+            <div className="mc-obys-intro-row">
+              <span>Showcase:</span>
+              <span>Website | Apps | Software | Courses</span>
+            </div>
+
+            <div className="mc-obys-poetic-wrap">
+              <p className="mc-obys-poetic-line">
+                We build <strong>Websites, Apps &amp; Software</strong> that move smoothly at 60 FPS.
+              </p>
+              <p className="mc-obys-poetic-line">
+                Interactive 3D web experiences, clean mobile interfaces, and fast cloud systems crafted without middlemen.
+              </p>
+              <p className="mc-obys-poetic-line">
+                Ready-to-use Excel Dashboards, practical Excel &amp; DSA training, and growth marketing under one studio.
+              </p>
+            </div>
+
+            <div className="mc-quad-grid">
+              {QUADRANT_TILES.map((tile, idx) => {
+                const isActive = activeQuadIdx === idx
+                return (
+                  <div
+                    key={tile.id}
+                    className={`mc-quad-tile ${isActive ? 'is-active' : ''}`}
+                    onMouseEnter={() => setActiveQuadIdx(idx)}
+                    onClick={() => scrollToSection(tile.id === '04' ? 'courses' : 'services')}
+                  >
+                    <div className="mc-quad-head">
+                      <span>{tile.title}</span>
+                      <span>{tile.id}</span>
+                    </div>
+
+                    <div className="mc-quad-center">
+                      {isActive ? (
+                        <div className="mc-photo-torn-wrap mc-quad-sticker">
+                          <img src={tile.sticker} alt={tile.title} className="mc-photo-sepia" />
+                        </div>
+                      ) : (
+                        <span className="mc-quad-word">{tile.title}</span>
+                      )}
+                    </div>
+
+                    <div className="mc-quad-foot">
+                      <span>{tile.sub}</span>
+                      <span>→</span>
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+        </section>
+
+        {/* ── 00:06-00:07 TORN-PAPER MOUNTAIN RIDGE TRANSITION INTO BLACK SECTION ── */}
+        <div className="mc-ridge-transition" aria-hidden="true">
+          <svg className="mc-ridge-svg mc-ridge-layer--back" viewBox="0 0 1440 160" preserveAspectRatio="none">
+            <path
+              d="M0 160 L0 112 L90 74 L195 104 L320 48 L470 92 L620 34 L790 88 L960 28 L1130 82 L1295 44 L1440 94 L1440 160 Z"
+              fill="#D8CCB0"
+            />
+          </svg>
+          <svg className="mc-ridge-svg mc-ridge-layer--front" viewBox="0 0 1440 160" preserveAspectRatio="none">
+            <path
+              d="M0 160 L0 124 L110 86 L220 118 L345 64 L490 106 L640 48 L815 100 L985 42 L1155 96 L1315 58 L1440 108 L1440 160 Z"
+              fill="#111111"
+            />
+          </svg>
         </div>
 
         {/* ── 2. MANAGER - HARIHARAN (BLACK SECTION + SCALE 0.5->1.2 + FLYING PHOTOS -10DEG->0) ── */}

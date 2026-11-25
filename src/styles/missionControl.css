@@ -490,6 +490,190 @@
   padding: 0 10px;
 }
 
+/* ── OBYS 00:03-00:07 SPLIT STACKING POLAROIDS + 2x2 QUADRANT GRID + RIDGE ── */
+.mc-obys-showcase-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 100%;
+  background: #FFFFFF;
+  border-bottom: 1px solid #111111;
+}
+
+.mc-obys-showcase-left {
+  background: #FFFFFF;
+  border-right: 1px solid #111111;
+  position: relative;
+}
+
+.mc-obys-showcase-sticky {
+  position: sticky;
+  top: 56px;
+  min-height: calc(100vh - 56px);
+  padding: clamp(24px, 3vw, 40px) clamp(24px, 3.6vw, 44px) 84px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+}
+
+.mc-polaroid-pile-stage {
+  position: relative;
+  flex: 1;
+  min-height: 360px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 12px 0;
+}
+
+.mc-stack-card {
+  position: absolute;
+  width: min(82%, 380px);
+  aspect-ratio: 4 / 3.2;
+  background: #EAE3D0;
+  will-change: transform, opacity;
+}
+
+.mc-stack-card img {
+  height: calc(100% - 24px);
+}
+
+.mc-obys-showcase-right {
+  background: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+}
+
+.mc-obys-intro-row {
+  border-bottom: 1px solid #111111;
+  padding: 14px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #111111;
+  background: #EAE3D0;
+}
+
+.mc-obys-poetic-wrap {
+  padding: clamp(48px, 8vw, 110px) clamp(24px, 4vw, 48px);
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+  border-bottom: 1px solid #111111;
+  background: #FFFFFF;
+}
+
+.mc-obys-poetic-line {
+  font-size: clamp(1.1rem, 1.8vw, 1.55rem);
+  line-height: 1.5;
+  color: #111111;
+  margin: 0;
+  text-align: center;
+  will-change: transform, opacity;
+}
+
+.mc-quad-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  width: 100%;
+}
+
+.mc-quad-tile {
+  border-right: 1px solid #111111;
+  border-bottom: 1px solid #111111;
+  min-height: 300px;
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+  background: #FFFFFF;
+  transition: background-color 0.2s ease;
+  will-change: transform, opacity;
+}
+
+.mc-quad-tile:nth-child(2n) {
+  border-right: none;
+}
+
+.mc-quad-tile:nth-child(3),
+.mc-quad-tile:nth-child(4) {
+  border-bottom: none;
+}
+
+.mc-quad-tile:hover,
+.mc-quad-tile.is-active {
+  background: #EAE3D0;
+}
+
+.mc-quad-head {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #111111;
+}
+
+.mc-quad-center {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 0;
+}
+
+.mc-quad-word {
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(1.8rem, 3vw, 2.8rem);
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  color: #111111;
+}
+
+.mc-quad-sticker {
+  width: min(80%, 220px);
+  aspect-ratio: 4 / 3;
+  transform: rotate(-4deg);
+  padding: 8px;
+}
+
+.mc-quad-foot {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #111111;
+  border-top: 1px solid #111111;
+  padding-top: 10px;
+}
+
+/* Torn-Paper Halftone Mountain Ridge Transition (00:06 -> 00:07) */
+.mc-ridge-transition {
+  position: relative;
+  width: 100%;
+  height: 140px;
+  background: #EAE3D0;
+  overflow: hidden;
+  border-top: 1px solid #111111;
+}
+
+.mc-ridge-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  will-change: transform;
+}
+
 /* ── 2. MANAGER - HARIHARAN (BLACK SECTION #111111 + HUGE BEIGE NUMBERS 0.5 -> 1.2 + FLYING PHOTOS) ── */
 .mc-black-section {
   background: #111111;
@@ -1218,6 +1402,7 @@
 @media (max-width: 1024px) {
   .mc-obys-topbar,
   .mc-obys-hero,
+  .mc-obys-showcase-section,
   .mc-manager-grid,
   .mc-split-scroll-section,
   .mc-courses-grid-2,
@@ -1229,6 +1414,7 @@
 
   .mc-topbar-left,
   .mc-hero-left-white,
+  .mc-obys-showcase-left,
   .mc-split-sticky-left,
   .mc-sale-left,
   .mc-cta-left {
@@ -1236,10 +1422,15 @@
     border-bottom: 1px solid #111111;
   }
 
-  .mc-sticky-inner {
+  .mc-sticky-inner,
+  .mc-obys-showcase-sticky {
     position: relative;
     top: auto;
     min-height: auto;
+  }
+
+  .mc-polaroid-pile-stage {
+    min-height: 290px;
   }
 
   .mc-counter-columns,
@@ -1276,9 +1467,23 @@
 
   .mc-counter-columns,
   .mc-flying-photos-grid,
+  .mc-quad-grid,
   .mc-sale-right,
   .mc-modal-row {
     grid-template-columns: 1fr;
+  }
+
+  .mc-quad-tile {
+    border-right: none;
+    min-height: 230px;
+  }
+
+  .mc-quad-tile:nth-child(3) {
+    border-bottom: 1px solid #111111;
+  }
+
+  .mc-ridge-transition {
+    height: 90px;
   }
 
   .mc-counter-col {
