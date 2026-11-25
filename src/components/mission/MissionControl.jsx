@@ -339,14 +339,20 @@ export default function MissionControl() {
         }
       )
 
+      // 2A. Bowl Section Big Word ("WE BUILD WEBSITES") Scroll-Tied Scrub Only (No Auto Marquee)
       gsap.fromTo(
-        '.mc-bowl-marquee-track',
+        '.mc-bowl-scroll-word',
         { xPercent: 0 },
         {
           xPercent: -50,
-          duration: 20,
-          repeat: -1,
           ease: 'none',
+          scrollTrigger: {
+            trigger: '.mc-bowl-showcase-stage',
+            scroller,
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: 1,
+          },
         }
       )
 
@@ -1080,14 +1086,10 @@ export default function MissionControl() {
               <span>GRAVITY CASCADE · INFINITE LOOP</span>
             </div>
 
-            {/* Huge Black Word "WE BUILD WEBSITES" Scrolling RIGHT TO LEFT Behind Bowl */}
-            <div className="mc-bowl-marquee-bg" aria-hidden="true">
-              <div className="mc-bowl-marquee-track">
-                {Array.from({ length: 8 }).map((_, bIdx) => (
-                  <span key={bIdx} className="mc-bowl-marquee-word">
-                    WE BUILD WEBSITES ·&nbsp;
-                  </span>
-                ))}
+            {/* Huge Black Word "WE BUILD WEBSITES" Scroll-Scrubbed Behind Bowl (z-index: 1) */}
+            <div className="mc-bowl-scroll-word-bg" aria-hidden="true">
+              <div className="mc-bowl-scroll-word">
+                WE BUILD WEBSITES
               </div>
             </div>
 
