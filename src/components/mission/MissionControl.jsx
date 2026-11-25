@@ -487,25 +487,7 @@ export default function MissionControl() {
         )
       }
 
-      // 3B. Animated wavy steam risers above bowl (00:08)
-      gsap.utils.toArray('.mc-steam-path').forEach((line, i) => {
-        gsap.fromTo(
-          line,
-          { y: 12, opacity: 0.15, scaleY: 0.85 },
-          {
-            y: -14,
-            opacity: 0.75,
-            scaleY: 1.12,
-            duration: 1.5 + i * 0.25,
-            repeat: -1,
-            yoyo: true,
-            delay: i * 0.35,
-            ease: 'sine.inOut',
-          }
-        )
-      })
-
-      // 3. Falling Tech Icons Into Center Big Bowl (translateY -500 -> 0, rotate 20 -> 0, stagger 0.3s, infinite loop)
+      // 3. Falling Tech Icons Into Center Glass Box (translateY -500 -> 0, rotate 20 -> 0, stagger 0.3s, infinite loop)
       const fallTl = gsap.timeline({ repeat: -1, repeatDelay: 0.65 })
       FALLING_TECH_ITEMS.forEach((item, i) => {
         const sel = `.mc-falling-tech-item--${i + 1}`
@@ -1093,8 +1075,35 @@ export default function MissionControl() {
               </div>
             </div>
 
-            {/* 8 Website/Tech Items Falling With Gravity + Bounce From -500px -> 0, Stagger 0.3s */}
+            {/* 8 Website/Tech Items Falling With Gravity + Bounce From -500px -> 0 Inside Glass Box */}
             <div className="mc-bowl-drop-zone">
+              {/* Isometric Back Wall of Glass Box (Behind Falling Items) */}
+              <svg className="mc-glass-box-back" viewBox="0 0 560 196" fill="none" aria-hidden="true">
+                <polygon
+                  points="44,10 516,10 546,38 14,38"
+                  fill="rgba(255, 255, 255, 0.55)"
+                  stroke="#111111"
+                  strokeWidth="2"
+                />
+                <polygon
+                  points="44,10 516,10 516,144 44,144"
+                  fill="rgba(234, 227, 208, 0.35)"
+                  stroke="#111111"
+                  strokeWidth="1.5"
+                  strokeDasharray="6 5"
+                />
+                <polygon
+                  points="14,174 44,144 516,144 546,174"
+                  fill="rgba(234, 227, 208, 0.65)"
+                  stroke="#111111"
+                  strokeWidth="2"
+                />
+                <line x1="14" y1="38" x2="44" y2="10" stroke="#111111" strokeWidth="2.5" />
+                <line x1="546" y1="38" x2="516" y2="10" stroke="#111111" strokeWidth="2.5" />
+                <line x1="14" y1="174" x2="44" y2="144" stroke="#111111" strokeWidth="1.5" />
+                <line x1="546" y1="174" x2="516" y2="144" stroke="#111111" strokeWidth="1.5" />
+              </svg>
+
               {FALLING_TECH_ITEMS.map((item, idx) => (
                 <div
                   key={item.kind}
@@ -1105,37 +1114,19 @@ export default function MissionControl() {
                 </div>
               ))}
 
-              {/* Rising Wavy Steam Wisps Above Center Bowl */}
-              <svg className="mc-bowl-steam" viewBox="0 0 220 54" fill="none" aria-hidden="true">
-                <path className="mc-steam-path" d="M50 48 Q40 34 52 22 Q62 10 50 2" stroke="#111111" strokeWidth="2.5" />
-                <path className="mc-steam-path" d="M110 48 Q100 34 112 22 Q122 10 110 2" stroke="#111111" strokeWidth="2.5" />
-                <path className="mc-steam-path" d="M170 48 Q160 34 172 22 Q182 10 170 2" stroke="#111111" strokeWidth="2.5" />
-              </svg>
-
-              {/* Center Big Monochrome Engraved Bowl */}
-              <div className="mc-bowl-vessel">
-                <svg className="mc-bowl-svg" viewBox="0 0 520 156" fill="none" aria-hidden="true">
-                  <defs>
-                    <pattern id="mcBowlCrossHatch" width="8" height="8" patternUnits="userSpaceOnUse">
-                      <line x1="0" y1="2" x2="8" y2="2" stroke="#111111" strokeWidth="1" opacity="0.22" />
-                      <line x1="4" y1="0" x2="4" y2="8" stroke="#111111" strokeWidth="1" opacity="0.14" />
-                    </pattern>
-                  </defs>
-                  <path
-                    d="M16 14 H504 C492 102 406 144 260 144 C114 144 28 102 16 14 Z"
-                    fill="#EAE3D0"
-                    stroke="#111111"
-                    strokeWidth="3.5"
-                  />
-                  <path
-                    d="M16 14 H504 C492 102 406 144 260 144 C114 144 28 102 16 14 Z"
-                    fill="url(#mcBowlCrossHatch)"
-                  />
-                  <ellipse cx="260" cy="14" rx="244" ry="11" fill="#FFFFFF" stroke="#111111" strokeWidth="2.5" />
-                  <path d="M44 48 H476" stroke="#111111" strokeWidth="1.5" strokeDasharray="6 6" />
-                  <path d="M96 92 H424" stroke="#111111" strokeWidth="1.2" opacity="0.55" />
-                  <rect x="190" y="138" width="140" height="10" fill="#111111" />
-                </svg>
+              {/* Center Big Translucent Architectural Glass Box (Front Pane + Bevel Shine) */}
+              <div className="mc-bowl-vessel mc-glass-box-wrap">
+                <div className="mc-glass-box-front" aria-hidden="true">
+                  <svg className="mc-glass-shine-svg" viewBox="0 0 532 136" fill="none">
+                    <polygon points="36,0 92,0 44,136 0,136" fill="rgba(255, 255, 255, 0.56)" />
+                    <polygon points="108,0 128,0 80,136 60,136" fill="rgba(255, 255, 255, 0.45)" />
+                    <polygon points="410,0 456,0 408,136 362,136" fill="rgba(255, 255, 255, 0.38)" />
+                    <line x1="12" y1="12" x2="28" y2="12" stroke="#111111" strokeWidth="2" />
+                    <line x1="12" y1="12" x2="12" y2="28" stroke="#111111" strokeWidth="2" />
+                    <line x1="520" y1="124" x2="504" y2="124" stroke="#111111" strokeWidth="2" />
+                    <line x1="520" y1="124" x2="520" y2="108" stroke="#111111" strokeWidth="2" />
+                  </svg>
+                </div>
                 <span className="mc-bowl-caption">WEBSITE · APP · SOFTWARE · 3D · EXCEL · DSA · MARKETING · CAMERA</span>
               </div>
 
