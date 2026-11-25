@@ -538,6 +538,36 @@
   height: calc(100% - 24px);
 }
 
+/* 00:00 + 00:08 Pinned Handwritten Note Stamps */
+.mc-note-stamp {
+  position: absolute;
+  bottom: 14px;
+  right: 10px;
+  background: #EAE3D0;
+  border: 1px solid #111111;
+  padding: 8px 16px;
+  transform: rotate(-7deg);
+  font-family: 'Caveat', cursive;
+  font-style: italic;
+  font-size: clamp(1.3rem, 2.2vw, 1.85rem);
+  font-weight: 700;
+  color: #111111;
+  line-height: 1;
+  white-space: nowrap;
+  z-index: 8;
+  pointer-events: none;
+}
+
+.mc-note-stamp--bowl {
+  bottom: 12px;
+  right: 12px;
+  background: #FFFFFF;
+  transform: rotate(6deg);
+  font-size: clamp(1.1rem, 1.7vw, 1.4rem);
+  padding: 6px 12px;
+  z-index: 7;
+}
+
 .mc-obys-showcase-right {
   background: #FFFFFF;
   display: flex;
@@ -655,14 +685,40 @@
   padding-top: 10px;
 }
 
-/* Torn-Paper Halftone Mountain Ridge Transition (00:06 -> 00:07) */
+/* 00:01-00:02 Giant Beige Word Behind Striped Contour Mountain Ridges */
 .mc-ridge-transition {
   position: relative;
   width: 100%;
-  height: 140px;
-  background: #EAE3D0;
+  height: 220px;
+  background: #111111;
   overflow: hidden;
   border-top: 1px solid #111111;
+}
+
+.mc-ridge-giant-word {
+  position: absolute;
+  top: 6px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(4.2rem, 14vw, 200px);
+  line-height: 0.85;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: #D8CCB0;
+  white-space: nowrap;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.mc-ridge-giant-script {
+  font-family: 'Caveat', cursive;
+  font-style: italic;
+  text-transform: lowercase;
+  font-weight: 700;
+  font-size: 0.92em;
+  color: #D8CCB0;
 }
 
 .mc-ridge-svg {
@@ -672,6 +728,31 @@
   height: 100%;
   display: block;
   will-change: transform;
+}
+
+.mc-ridge-layer--back {
+  z-index: 2;
+}
+
+.mc-ridge-layer--front {
+  z-index: 3;
+}
+
+/* 00:04-00:05 Diagonal Halftone Contour Flap Break into Services */
+.mc-diagonal-flap-wrap {
+  position: relative;
+  width: calc(100% + (clamp(24px, 4vw, 56px) * 2));
+  margin: 48px calc(-1 * clamp(24px, 4vw, 56px)) calc(-1 * clamp(56px, 7vw, 96px));
+  height: 72px;
+  line-height: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.mc-diagonal-flap-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
 }
 
 /* ── 2. MANAGER - HARIHARAN (BLACK SECTION #111111 + HUGE BEIGE NUMBERS 0.5 -> 1.2 + FLYING PHOTOS) ── */
@@ -815,7 +896,7 @@
 /* 0:23 Falling Icons + Architectural Bowl Scene */
 .mc-falling-bowl-stage {
   position: relative;
-  height: 290px;
+  height: 310px;
   width: 100%;
   border: 1px solid #111111;
   background: #EAE3D0;
@@ -825,6 +906,37 @@
   align-items: center;
   justify-content: flex-end;
   padding-bottom: 18px;
+}
+
+.mc-bowl-bg-word {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -56%);
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(2.8rem, 6vw, 4.8rem);
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: #111111;
+  opacity: 0.14;
+  white-space: nowrap;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.mc-bowl-steam {
+  position: relative;
+  z-index: 4;
+  width: 170px;
+  height: 42px;
+  margin-bottom: -8px;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.mc-steam-path {
+  will-change: transform, opacity;
 }
 
 .mc-falling-stage-label {
@@ -1014,6 +1126,44 @@
   flex-wrap: wrap;
   gap: 24px;
   margin-bottom: 44px;
+}
+
+/* 00:10 Circular Monochrome Medallion Nodes Row */
+.mc-circles-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(16px, 2.5vw, 32px);
+  max-width: 980px;
+  margin: 0 auto 48px;
+}
+
+.mc-circle-node {
+  aspect-ratio: 1;
+  border: 1px solid #111111;
+  border-radius: 50% !important;
+  background: #FFFFFF;
+  color: #111111;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+  will-change: transform, opacity;
+}
+
+.mc-circle-node:hover,
+.mc-circle-node.is-inverted {
+  background: #111111;
+  color: #EAE3D0;
+}
+
+.mc-circle-text {
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(1rem, 1.8vw, 1.45rem);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 12px;
 }
 
 .mc-courses-grid-2 {
@@ -1483,7 +1633,12 @@
   }
 
   .mc-ridge-transition {
-    height: 90px;
+    height: 130px;
+  }
+
+  .mc-circles-row {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
   }
 
   .mc-counter-col {

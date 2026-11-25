@@ -311,6 +311,42 @@ export default function MissionControl() {
         )
       }
 
+      // 3B. Animated wavy steam risers above bowl (00:08)
+      gsap.utils.toArray('.mc-steam-path').forEach((line, i) => {
+        gsap.fromTo(
+          line,
+          { y: 12, opacity: 0.15, scaleY: 0.85 },
+          {
+            y: -14,
+            opacity: 0.75,
+            scaleY: 1.12,
+            duration: 1.5 + i * 0.25,
+            repeat: -1,
+            yoyo: true,
+            delay: i * 0.35,
+            ease: 'sine.inOut',
+          }
+        )
+      })
+
+      // 3C. Circular Medallions Reveal (00:10)
+      gsap.fromTo(
+        '.mc-circle-node',
+        { scale: 0.72, opacity: 0 },
+        {
+          scale: 1,
+          opacity: 1,
+          duration: 0.65,
+          stagger: 0.08,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: '.mc-circles-row',
+            scroller,
+            start: 'top 90%',
+          },
+        }
+      )
+
       // 3. Falling Icons (Excel / Website / App) Gravity + Bounce Loop (stagger 0.2s, infinite)
       const fallTl = gsap.timeline({ repeat: -1, repeatDelay: 0.85 })
       FALLING_ICONS.forEach((item, i) => {
@@ -656,6 +692,10 @@ export default function MissionControl() {
                     </div>
                   </div>
                 ))}
+                {/* 00:00 Pinned Handwritten Note Tag */}
+                <div className="mc-note-stamp" style={{ zIndex: 8 }}>
+                  <span>Built Modern.</span>
+                </div>
               </div>
 
               <div className="mc-obys-stack-bottom-text">
@@ -721,18 +761,43 @@ export default function MissionControl() {
           </div>
         </section>
 
-        {/* ── 00:06-00:07 TORN-PAPER MOUNTAIN RIDGE TRANSITION INTO BLACK SECTION ── */}
+        {/* ── 00:01-00:02 GIANT BEIGE WORD BEHIND STRIPED CONTOUR MOUNTAIN RIDGES ── */}
         <div className="mc-ridge-transition" aria-hidden="true">
-          <svg className="mc-ridge-svg mc-ridge-layer--back" viewBox="0 0 1440 160" preserveAspectRatio="none">
+          <div className="mc-ridge-giant-word">
+            MODERN <span className="mc-ridge-giant-script">craft</span>
+          </div>
+          <svg className="mc-ridge-svg mc-ridge-layer--back" viewBox="0 0 1440 200" preserveAspectRatio="none">
+            <defs>
+              <pattern id="mcRidgeLinesBack" width="12" height="8" patternUnits="userSpaceOnUse">
+                <line x1="0" y1="3" x2="12" y2="3" stroke="#D8CCB0" strokeWidth="1" opacity="0.45" />
+              </pattern>
+            </defs>
             <path
-              d="M0 160 L0 112 L90 74 L195 104 L320 48 L470 92 L620 34 L790 88 L960 28 L1130 82 L1295 44 L1440 94 L1440 160 Z"
-              fill="#D8CCB0"
+              d="M0 200 L0 124 L110 74 L240 112 L380 44 L540 98 L700 28 L875 94 L1055 24 L1230 88 L1375 46 L1440 94 L1440 200 Z"
+              fill="#111111"
+              stroke="#D8CCB0"
+              strokeWidth="2.5"
+            />
+            <path
+              d="M0 200 L0 124 L110 74 L240 112 L380 44 L540 98 L700 28 L875 94 L1055 24 L1230 88 L1375 46 L1440 94 L1440 200 Z"
+              fill="url(#mcRidgeLinesBack)"
             />
           </svg>
-          <svg className="mc-ridge-svg mc-ridge-layer--front" viewBox="0 0 1440 160" preserveAspectRatio="none">
+          <svg className="mc-ridge-svg mc-ridge-layer--front" viewBox="0 0 1440 200" preserveAspectRatio="none">
+            <defs>
+              <pattern id="mcRidgeLinesFront" width="14" height="7" patternUnits="userSpaceOnUse">
+                <path d="M0 3.5 Q7 1 14 3.5" stroke="#D8CCB0" strokeWidth="1" fill="none" opacity="0.55" />
+              </pattern>
+            </defs>
             <path
-              d="M0 160 L0 124 L110 86 L220 118 L345 64 L490 106 L640 48 L815 100 L985 42 L1155 96 L1315 58 L1440 108 L1440 160 Z"
+              d="M0 200 L0 146 L130 98 L255 138 L405 78 L560 128 L725 60 L900 122 L1080 54 L1250 116 L1390 74 L1440 118 L1440 200 Z"
               fill="#111111"
+              stroke="#D8CCB0"
+              strokeWidth="3"
+            />
+            <path
+              d="M0 200 L0 146 L130 98 L255 138 L405 78 L560 128 L725 60 L900 122 L1080 54 L1250 116 L1390 74 L1440 118 L1440 200 Z"
+              fill="url(#mcRidgeLinesFront)"
             />
           </svg>
         </div>
@@ -798,6 +863,13 @@ export default function MissionControl() {
               </div>
             ))}
           </div>
+          {/* 00:04-00:05 Diagonal Halftone Contour Flap Break into Services Split */}
+          <div className="mc-diagonal-flap-wrap" aria-hidden="true">
+            <svg viewBox="0 0 1440 72" preserveAspectRatio="none" className="mc-diagonal-flap-svg">
+              <polygon points="0,72 0,14 960,72" fill="#EAE3D0" />
+              <polygon points="0,72 0,24 930,72" fill="#FFFFFF" />
+            </svg>
+          </div>
         </section>
 
         {/* ── 3. WHAT WE BUILD - SERVICES (SPLIT SCROLL + 0:23 FALLING ICONS + ACCORDION) ── */}
@@ -825,11 +897,16 @@ export default function MissionControl() {
                 </div>
               </div>
 
-              {/* 0:23 Reference: Falling Excel / Website / App Icons with Gravity + Bounce */}
+              {/* 00:06-00:09 Reference: Giant Word Behind Bowl + Rising Steam + Falling Stack Icons + Pinned Note */}
               <div className="mc-falling-bowl-stage">
                 <div className="mc-falling-stage-label">
                   <span>EXCEL · WEBSITE · APP</span>
                   <span>BOUNCE LOOP</span>
+                </div>
+
+                {/* Massive word behind bowl (00:06 -> 00:09) */}
+                <div className="mc-bowl-bg-word" aria-hidden="true">
+                  BEX STACK:
                 </div>
 
                 {FALLING_ICONS.map((item, idx) => (
@@ -838,6 +915,13 @@ export default function MissionControl() {
                     <span className="mc-falling-icon-sub">{item.sub}</span>
                   </div>
                 ))}
+
+                {/* Wavy steam above bowl (00:08) */}
+                <svg className="mc-bowl-steam" viewBox="0 0 180 46" fill="none" aria-hidden="true">
+                  <path className="mc-steam-path" d="M40 42 Q32 30 42 20 Q50 10 40 2" stroke="#111111" strokeWidth="2.2" />
+                  <path className="mc-steam-path" d="M90 42 Q82 30 92 20 Q100 10 90 2" stroke="#111111" strokeWidth="2.2" />
+                  <path className="mc-steam-path" d="M140 42 Q132 30 142 20 Q150 10 140 2" stroke="#111111" strokeWidth="2.2" />
+                </svg>
 
                 <div className="mc-bowl-vessel">
                   <svg className="mc-bowl-svg" viewBox="0 0 320 96" fill="none" aria-hidden="true">
@@ -851,6 +935,10 @@ export default function MissionControl() {
                     <path d="M52 52 H268" stroke="#111111" strokeWidth="1" opacity="0.4" />
                   </svg>
                   <span className="mc-bowl-caption">EXCEL · WEBSITE · APP STACK</span>
+                </div>
+
+                <div className="mc-note-stamp mc-note-stamp--bowl">
+                  <span>All Systems Ready</span>
                 </div>
               </div>
             </div>
@@ -939,6 +1027,19 @@ export default function MissionControl() {
             >
               Join Course →
             </button>
+          </div>
+
+          {/* 00:10 Obys Circular Node Row */}
+          <div className="mc-circles-row">
+            {['EXCEL', 'DSA', 'DASHBOARDS', 'INTERVIEWS'].map((label, cIdx) => (
+              <div
+                key={label}
+                className={`mc-circle-node ${cIdx === 0 ? 'is-inverted' : ''}`}
+                onClick={() => setDemoModalOpen(true)}
+              >
+                <span className="mc-circle-text">{label}</span>
+              </div>
+            ))}
           </div>
 
           <div className="mc-courses-grid-2">
