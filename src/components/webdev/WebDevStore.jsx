@@ -218,6 +218,9 @@ export default function WebDevStore() {
     setIsIntroTearing(true)
     setTimeout(() => {
       setIsIntroActive(false)
+      if (typeof ScrollTrigger !== 'undefined') {
+        ScrollTrigger.refresh()
+      }
     }, 850)
   }
 
@@ -229,20 +232,25 @@ export default function WebDevStore() {
   }, [])
 
   // Draggable Sticker Cards State (Scroll 2 "Why We Are Loved")
+  const [activeCardKey, setActiveCardKey] = useState(null)
   const [cardOffsets, setCardOffsets] = useState({
     card1: { x: 0, y: 0 },
     card2: { x: 0, y: 0 },
     card3: { x: 0, y: 0 },
+    card4: { x: 0, y: 0 },
+    card5: { x: 0, y: 0 },
+    card6: { x: 0, y: 0 },
   })
   const activeDragRef = useRef(null)
 
   const handlePointerDown = (cardKey, e) => {
+    setActiveCardKey(cardKey)
     activeDragRef.current = {
       cardKey,
       startX: e.clientX,
       startY: e.clientY,
-      initX: cardOffsets[cardKey].x,
-      initY: cardOffsets[cardKey].y,
+      initX: cardOffsets[cardKey]?.x || 0,
+      initY: cardOffsets[cardKey]?.y || 0,
     }
     e.currentTarget.setPointerCapture?.(e.pointerId)
   }
@@ -372,19 +380,37 @@ export default function WebDevStore() {
       })
     }
 
-    // 3. Why We Are Loved — 3 Tilted Cards Fly-In
+    // 3. Why We Are Loved — Front Cards & Giant Background Text Entrance
     if (lovedRef.current) {
-      gsap.from('.lumos-tilt-card', {
-        y: 110,
-        opacity: 0,
-        stagger: 0.18,
-        duration: 0.9,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: lovedRef.current,
-          start: 'top 75%',
+      gsap.from(
+        '.lumos-drag-card',
+        {
+          y: 70,
+          scale: 0.9,
+          stagger: 0.08,
+          duration: 0.85,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: lovedRef.current,
+            start: 'top 95%',
+            toggleActions: 'play none none none',
+          }
         }
-      })
+      )
+      gsap.from(
+        '.lumos-heading-xlarge',
+        {
+          y: 40,
+          scale: 0.95,
+          duration: 1.0,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: lovedRef.current,
+            start: 'top 95%',
+            toggleActions: 'play none none none',
+          }
+        }
+      )
     }
 
     // 4. All Products List Stagger Rows
@@ -813,65 +839,189 @@ export default function WebDevStore() {
       </section>
 
       {/* ══════════════════════════════════════════════════════════════════════════
-         3. STORE PAGE SCROLL 2 - WHY WE ARE LOVED (DRAGGABLE STICKER CARDS)
+         3. STORE PAGE SCROLL 2 - WHY WE ARE LOVED (FRONT CARDS & BACKGROUND TEXT)
          ══════════════════════════════════════════════════════════════════════════ */}
-      <section ref={lovedRef} className="lumos-loved-section">
-        <div className="lumos-loved-inner">
-          <h2 className="lumos-loved-title">
-            <span className="white-text">why we are </span>
-            <span className="grey-text">loved</span>
-          </h2>
+      <section
+        ref={lovedRef}
+        className="lumos-loved-section"
+        onPointerMove={handlePointerMove}
+        onPointerUp={handlePointerUp}
+      >
+        {/* Atmospheric Magenta Glow Behind Text */}
+        <img
+          src="/lumos/pink_bg.webp"
+          alt="Pink atmospheric glow background"
+          className="lumos-pink-bg-glow"
+          loading="eager"
+        />
 
-          <div className="lumos-cards-cluster">
-            {/* Card 1: Fast & Reliable (Polaroid Off-White Style with Hazard Tape) */}
+        <div className="lumos-loved-inner">
+          {/* GIANT BACKGROUND TYPOGRAPHY (Layer 1 - Sits Behind Foreground Cards) */}
+          <div className="lumos-h2-wrapper">
+            <h2 className="lumos-heading-xlarge">
+              why <span className="lumos-low-opacity">we</span>
+            </h2>
+            <h2 className="lumos-heading-xlarge lumos-minus-margin">
+              <span className="lumos-low-opacity">are</span> loved
+            </h2>
+          </div>
+
+          {/* FOREGROUND OVERLAPPING CARDS CLUSTER (Layer 2 - Sits Directly in Front of Giant Text) */}
+          <div className="lumos-drag-stage">
+            {/* Card 1: Left Polaroid (Cooperative) */}
             <div
-              className="lumos-drag-card card-polaroid interactive"
+              className={`lumos-drag-card card-polaroid-1 interactive ${activeCardKey === 'card1' ? 'is-dragging' : ''}`}
               style={{
-                transform: `translate(${cardOffsets.card1.x}px, ${cardOffsets.card1.y}px) rotate(-6deg)`,
+                transform: `translate(${cardOffsets.card1.x}px, ${cardOffsets.card1.y}px) rotate(-18deg)`,
+                zIndex: activeCardKey === 'card1' ? 30 : 5,
               }}
               onPointerDown={(e) => handlePointerDown('card1', e)}
+              onPointerUp={handlePointerUp}
             >
               <span className="lumos-drag-pill">DRAG</span>
-              <span className="lumos-card-badge">Instant Setup</span>
-              <h3 className="lumos-card-title">Fast & Reliable</h3>
-              <p className="lumos-card-desc">
-                Instant Google Drive delivery in 60 seconds. Battle-tested formulas, XLOOKUP logic, and dynamic arrays pre-calculated with zero errors.
-              </p>
-              <div className="lumos-hazard-tape" />
+              <div className="lumos-polaroid-inner">
+                <img
+                  src="/lumos/card_coop.webp"
+                  alt="Cooperative team"
+                  className="lumos-card-photo"
+                  draggable={false}
+                />
+                <div className="lumos-polaroid-meta">
+                  <span className="lumos-polaroid-title">cooperative</span>
+                  <span className="lumos-polaroid-date">08.07.24</span>
+                </div>
+                <div className="lumos-hazard-stripe-tape" />
+              </div>
             </div>
 
-            {/* Card 2: Custom To You (Mint Teal Card with Barcode Stripes) */}
+            {/* Card 2: Mint Teal Sticker (We are always near) */}
             <div
-              className="lumos-drag-card card-mint interactive"
+              className={`lumos-drag-card card-mint-near interactive ${activeCardKey === 'card2' ? 'is-dragging' : ''}`}
               style={{
-                transform: `translate(${cardOffsets.card2.x}px, ${cardOffsets.card2.y}px) rotate(2deg)`,
+                transform: `translate(${cardOffsets.card2.x}px, ${cardOffsets.card2.y}px) rotate(3deg)`,
+                zIndex: activeCardKey === 'card2' ? 30 : 8,
               }}
               onPointerDown={(e) => handlePointerDown('card2', e)}
+              onPointerUp={handlePointerUp}
             >
               <span className="lumos-drag-pill">DRAG</span>
-              <span className="lumos-card-badge">100+ Verticals</span>
-              <h3 className="lumos-card-title">Custom To You</h3>
-              <p className="lumos-card-desc">
-                100% editable .xlsx & Google Sheets tailored for high-growth tech startups, e-commerce, retail, manufacturing, logistics, and consultancies.
+              <img
+                src="/lumos/paper_top.webp"
+                alt="Paper texture"
+                className="lumos-paper-topper"
+                draggable={false}
+              />
+              <span className="lumos-sticker-badge">[instant setup]</span>
+              <h3 className="lumos-sticker-title">
+                We are <br />always near
+              </h3>
+              <p className="lumos-sticker-desc">
+                We are always available to understand your spreadsheet needs and come up with a quick, battle-tested solution.
               </p>
-              <div className="lumos-hazard-tape" />
             </div>
 
-            {/* Card 3: Easy To Use (Hot Pink Card) */}
+            {/* Card 3: Center-Top Polaroid (Concert / Movie Day) */}
             <div
-              className="lumos-drag-card card-pink interactive"
+              className={`lumos-drag-card card-polaroid-2 interactive ${activeCardKey === 'card3' ? 'is-dragging' : ''}`}
               style={{
-                transform: `translate(${cardOffsets.card3.x}px, ${cardOffsets.card3.y}px) rotate(7deg)`,
+                transform: `translate(${cardOffsets.card3.x}px, ${cardOffsets.card3.y}px) rotate(1deg)`,
+                zIndex: activeCardKey === 'card3' ? 30 : 6,
               }}
               onPointerDown={(e) => handlePointerDown('card3', e)}
+              onPointerUp={handlePointerUp}
             >
               <span className="lumos-drag-pill">DRAG</span>
-              <span className="lumos-card-badge">Zero VBA Math</span>
-              <h3 className="lumos-card-title">Easy To Use</h3>
-              <p className="lumos-card-desc">
-                No complex VBA macro coding or formula wrestling. Clean interactive slicers and executive BI visuals ready for your Monday leadership reviews.
+              <div className="lumos-polaroid-inner">
+                <img
+                  src="/lumos/card_concert.webp"
+                  alt="Movie day crowd"
+                  className="lumos-card-photo"
+                  draggable={false}
+                />
+                <div className="lumos-polaroid-meta">
+                  <span className="lumos-polaroid-title">movie day</span>
+                  <span className="lumos-polaroid-date">12.08.24</span>
+                </div>
+                <div className="lumos-hazard-stripe-tape" />
+              </div>
+            </div>
+
+            {/* Card 4: Center-Bottom Polaroid (Picnic Skyline) */}
+            <div
+              className={`lumos-drag-card card-polaroid-3 interactive ${activeCardKey === 'card4' ? 'is-dragging' : ''}`}
+              style={{
+                transform: `translate(${cardOffsets.card4.x}px, ${cardOffsets.card4.y}px) rotate(-6deg)`,
+                zIndex: activeCardKey === 'card4' ? 30 : 9,
+              }}
+              onPointerDown={(e) => handlePointerDown('card4', e)}
+              onPointerUp={handlePointerUp}
+            >
+              <span className="lumos-drag-pill">DRAG</span>
+              <div className="lumos-polaroid-inner">
+                <img
+                  src="/lumos/card_picnic.webp"
+                  alt="Picnic skyline"
+                  className="lumos-card-photo"
+                  draggable={false}
+                />
+                <div className="lumos-polaroid-meta">
+                  <span className="lumos-polaroid-title">Picnic</span>
+                  <span className="lumos-polaroid-date">24.09.24</span>
+                </div>
+                <div className="lumos-hazard-stripe-tape" />
+              </div>
+            </div>
+
+            {/* Card 5: Hot Pink Sticker (We are playing the long game) */}
+            <div
+              className={`lumos-drag-card card-pink-long interactive ${activeCardKey === 'card5' ? 'is-dragging' : ''}`}
+              style={{
+                transform: `translate(${cardOffsets.card5.x}px, ${cardOffsets.card5.y}px) rotate(8deg)`,
+                zIndex: activeCardKey === 'card5' ? 30 : 7,
+              }}
+              onPointerDown={(e) => handlePointerDown('card5', e)}
+              onPointerUp={handlePointerUp}
+            >
+              <span className="lumos-drag-pill">DRAG</span>
+              <img
+                src="/lumos/paper_top.webp"
+                alt="Paper texture"
+                className="lumos-paper-topper"
+                draggable={false}
+              />
+              <span className="lumos-sticker-badge is-pink">[lifetime roi]</span>
+              <h3 className="lumos-sticker-title">
+                We are <br />playing the<br />long game
+              </h3>
+              <p className="lumos-sticker-desc">
+                Our clients stay with us, continuing to automate and scale their business operations for years.
               </p>
-              <div className="lumos-hazard-tape" />
+            </div>
+
+            {/* Card 6: Mint Cyan Sticker (We are for a comprehensive approach) */}
+            <div
+              className={`lumos-drag-card card-mint-approach interactive ${activeCardKey === 'card6' ? 'is-dragging' : ''}`}
+              style={{
+                transform: `translate(${cardOffsets.card6.x}px, ${cardOffsets.card6.y}px) rotate(-3deg)`,
+                zIndex: activeCardKey === 'card6' ? 30 : 10,
+              }}
+              onPointerDown={(e) => handlePointerDown('card6', e)}
+              onPointerUp={handlePointerUp}
+            >
+              <span className="lumos-drag-pill">DRAG</span>
+              <img
+                src="/lumos/paper_top.webp"
+                alt="Paper texture"
+                className="lumos-paper-topper"
+                draggable={false}
+              />
+              <span className="lumos-sticker-badge">[1000+ templates]</span>
+              <h3 className="lumos-sticker-title">
+                We are for a <br />comprehensive <br />approach
+              </h3>
+              <p className="lumos-sticker-desc">
+                We select the optimal set of templates specifically for your business to deliver maximum commercial results.
+              </p>
             </div>
           </div>
 

@@ -551,72 +551,117 @@
 }
 
 /* ══════════════════════════════════════════════════════════════════════════
-   3. STORE PAGE SCROLL 2 - WHY WE ARE LOVED & DRAGGABLE STICKERS
+   3. STORE PAGE SCROLL 2 - WHY WE ARE LOVED (FRONT CARDS & BACKGROUND TEXT)
    ══════════════════════════════════════════════════════════════════════════ */
 .lumos-loved-section {
   position: relative;
   width: 100%;
-  background: radial-gradient(circle at 50% 46%, rgba(230, 0, 122, 0.26) 0%, rgba(7, 7, 7, 0.98) 65%, #070707 100%);
+  min-height: 870px;
+  background-color: #070707;
   color: #ffffff;
-  padding: 130px 48px 120px;
+  padding: 85px 32px 75px;
   z-index: 10;
   box-sizing: border-box;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.lumos-pink-bg-glow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.88;
+  z-index: 0;
+  pointer-events: none;
+  mix-blend-mode: screen;
 }
 
 .lumos-loved-inner {
-  max-width: 1240px;
-  margin: 0 auto;
-}
-
-.lumos-loved-title {
-  font-family: 'Syne', 'Outfit', sans-serif;
-  font-size: clamp(3.8rem, 9.2vw, 9.2rem);
-  font-weight: 950;
-  line-height: 0.96;
-  letter-spacing: -0.05em;
-  margin: 0 0 50px 0;
-  text-transform: lowercase;
-}
-
-.lumos-loved-title .white-text {
-  color: #ffffff;
-}
-
-.lumos-loved-title .grey-text {
-  color: #4b5563;
-}
-
-/* Overlapping Draggable Sticker Cards Cluster */
-.lumos-cards-cluster {
   position: relative;
   width: 100%;
-  min-height: 480px;
+  max-width: 1320px;
+  margin: 0 auto;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 740px;
+}
+
+/* GIANT BACKGROUND TYPOGRAPHY (Layer 1 - Sits directly behind foreground cards) */
+.lumos-h2-wrapper {
+  position: absolute;
+  top: 42%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  text-align: center;
+  pointer-events: none;
+  z-index: 1;
+  user-select: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.lumos-heading-xlarge {
+  font-family: 'Syne', 'Impact', -apple-system, sans-serif;
+  font-size: clamp(5.2rem, 16vw, 16.5rem);
+  font-weight: 950;
+  line-height: 0.88;
+  letter-spacing: -0.05em;
+  text-transform: lowercase;
+  margin: 0;
+  color: #ffffff;
+  white-space: nowrap;
+}
+
+.lumos-heading-xlarge.lumos-minus-margin {
+  margin-top: -0.06em;
+}
+
+.lumos-low-opacity {
+  color: rgba(236, 236, 236, 0.22);
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.08);
+}
+
+/* FOREGROUND DRAGGABLE STAGE (Layer 2 - Clustered directly in front of the text) */
+.lumos-drag-stage {
+  position: relative;
+  z-index: 5;
+  width: 100%;
+  max-width: 1180px;
+  height: 570px;
   margin: 30px auto 0;
 }
 
+/* Base Draggable Card */
 .lumos-drag-card {
   position: absolute;
-  width: 320px;
-  padding: 28px 24px 22px;
-  border-radius: 20px;
-  box-sizing: border-box;
   user-select: none;
   touch-action: none;
   cursor: grab;
-  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.65), 0 0 15px rgba(0, 0, 0, 0.4);
-  transition: box-shadow 0.2s ease, transform 0.1s ease;
+  opacity: 1;
+  transition: box-shadow 0.2s ease, transform 0.06s ease;
 }
 
-.lumos-drag-card:active {
-  cursor: grabbing;
-  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.85), 0 0 25px rgba(230, 0, 122, 0.4);
+.lumos-drag-card:active,
+.lumos-drag-card.is-dragging {
+  cursor: grabbing !important;
+  z-index: 35 !important;
+  box-shadow: 0 35px 75px rgba(0, 0, 0, 0.95), 0 0 25px rgba(230, 0, 122, 0.5) !important;
 }
 
 .lumos-drag-pill {
   position: absolute;
   top: -12px;
-  right: -10px;
+  right: -8px;
   background: #E6007A;
   color: #ffffff;
   font-family: 'Syne', 'Outfit', sans-serif;
@@ -631,6 +676,7 @@
   transform: scale(0.8);
   transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
   pointer-events: none;
+  z-index: 12;
 }
 
 .lumos-drag-card:hover .lumos-drag-pill {
@@ -638,105 +684,188 @@
   transform: scale(1);
 }
 
-/* Card 1: Fast & Reliable (Polaroid Off-White Style with Hazard Tape) */
-.lumos-drag-card.card-polaroid {
-  background: #F4F2EC;
-  color: #111111;
-  top: 20px;
-  left: 3%;
-  transform: rotate(-6deg);
-  border: 1px solid rgba(0, 0, 0, 0.1);
-}
-.lumos-drag-card.card-polaroid .lumos-card-title {
-  color: #111111;
-}
-.lumos-drag-card.card-polaroid .lumos-card-desc {
-  color: #444444;
+/* 1. Polaroid Photo Cards Style */
+.lumos-polaroid-inner {
+  position: relative;
+  background-color: #ECECEC;
+  padding: 10px 10px 14px;
+  border-radius: 4px;
+  box-shadow: 0 22px 50px rgba(0, 0, 0, 0.78), 0 2px 10px rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+  box-sizing: border-box;
 }
 
-/* Card 2: Custom To You (Mint Teal Card with Barcode Stripes) */
-.lumos-drag-card.card-mint {
-  background: #A6F4E0;
-  color: #064E3B;
-  top: 50px;
-  left: 33%;
-  transform: rotate(2deg);
-  border: 1px solid rgba(6, 78, 59, 0.2);
-}
-.lumos-drag-card.card-mint .lumos-card-title {
-  color: #064E3B;
-}
-.lumos-drag-card.card-mint .lumos-card-desc {
-  color: #0d5c4b;
-}
-
-/* Card 3: Easy To Use (Hot Pink Textured Card) */
-.lumos-drag-card.card-pink {
-  background: #E6007A;
-  color: #FFFFFF;
-  top: 15px;
-  left: 63%;
-  transform: rotate(7deg);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-}
-.lumos-drag-card.card-pink .lumos-card-title {
-  color: #FFFFFF;
-}
-.lumos-drag-card.card-pink .lumos-card-desc {
-  color: rgba(255, 255, 255, 0.9);
-}
-
-.lumos-hazard-tape {
-  height: 12px;
+.lumos-card-photo {
+  display: block;
   width: 100%;
-  margin-top: 16px;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 2px;
+  filter: grayscale(100%) contrast(1.15);
+  pointer-events: none;
+}
+
+.lumos-polaroid-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 10px;
+  padding-bottom: 4px;
+  font-family: 'Syne', 'Outfit', sans-serif;
+  color: #191A19;
+}
+
+.lumos-polaroid-title {
+  font-size: 0.88rem;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+}
+
+.lumos-polaroid-date {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #555555;
+  font-family: monospace;
+}
+
+/* Diagonal Hazard Tape at bottom of polaroids */
+.lumos-hazard-stripe-tape {
+  width: 100%;
+  height: 14px;
+  margin-top: 6px;
   border-radius: 2px;
   background: repeating-linear-gradient(
-    -45deg,
-    #111111,
-    #111111 6px,
-    #ffffff 6px,
-    #ffffff 12px
+    37deg,
+    #191A19,
+    #191A19 9px,
+    #ECECEC 9px,
+    #ECECEC 18px
   );
 }
 
-.lumos-card-badge {
-  display: inline-block;
-  font-size: 0.72rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  padding: 4px 10px;
-  border-radius: 999px;
-  margin-bottom: 14px;
+/* 2. Text Sticker Cards Style (Mint Teal & Hot Pink) */
+.card-mint-near,
+.card-mint-approach {
+  background-color: #A6F4E0;
+  color: #064E3B;
+  border-radius: 18px;
+  padding: 24px 22px 22px;
+  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.72);
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
-.card-polaroid .lumos-card-badge {
-  background: rgba(0, 0, 0, 0.08);
-  color: #111111;
+.card-pink-long {
+  background-color: #E6007A;
+  color: #FFFFFF;
+  border-radius: 18px;
+  padding: 24px 22px 22px;
+  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.72), 0 0 20px rgba(230, 0, 122, 0.35);
+  box-sizing: border-box;
+  overflow: hidden;
 }
-.card-mint .lumos-card-badge {
-  background: rgba(6, 78, 59, 0.15);
+
+.lumos-paper-topper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  mix-blend-mode: color-burn;
+  opacity: 0.65;
+  pointer-events: none;
+}
+
+.lumos-sticker-badge {
+  display: inline-block;
+  font-family: monospace;
+  font-size: 0.72rem;
+  font-weight: 750;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  color: #064E3B;
+  opacity: 0.85;
+}
+
+.lumos-sticker-badge.is-pink {
+  color: #FFFFFF;
+  opacity: 0.9;
+}
+
+.lumos-sticker-title {
+  font-family: 'Syne', 'Outfit', sans-serif;
+  font-size: 1.55rem;
+  font-weight: 950;
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+  margin: 0 0 10px 0;
+}
+
+.card-mint-near .lumos-sticker-title,
+.card-mint-approach .lumos-sticker-title {
   color: #064E3B;
 }
-.card-pink .lumos-card-badge {
-  background: rgba(255, 255, 255, 0.22);
-  color: #ffffff;
+
+.card-pink-long .lumos-sticker-title {
+  color: #FFFFFF;
 }
 
-.lumos-card-title {
-  font-family: 'Syne', 'Outfit', sans-serif;
-  font-size: 1.8rem;
-  font-weight: 900;
-  letter-spacing: -0.03em;
-  margin: 0 0 10px 0;
-  line-height: 1.1;
-}
-
-.lumos-card-desc {
-  font-size: 0.94rem;
-  line-height: 1.5;
+.lumos-sticker-desc {
+  font-size: 0.85rem;
+  line-height: 1.45;
   margin: 0;
+  font-weight: 550;
+}
+
+.card-mint-near .lumos-sticker-desc,
+.card-mint-approach .lumos-sticker-desc {
+  color: rgba(6, 78, 59, 0.9);
+}
+
+.card-pink-long .lumos-sticker-desc {
+  color: rgba(255, 255, 255, 0.92);
+}
+
+/* Foreground Placement & Proportions */
+.card-polaroid-1 {
+  width: 235px;
+  top: 15px;
+  left: 7%;
+}
+
+.card-mint-near {
+  width: 220px;
+  min-height: 270px;
+  top: 55px;
+  left: 23%;
+}
+
+.card-polaroid-2 {
+  width: 250px;
+  top: -5px;
+  left: 39%;
+}
+
+.card-polaroid-3 {
+  width: 245px;
+  top: 215px;
+  left: 35%;
+}
+
+.card-pink-long {
+  width: 230px;
+  min-height: 255px;
+  top: 30px;
+  left: 63%;
+}
+
+.card-mint-approach {
+  width: 245px;
+  min-height: 275px;
+  top: 205px;
+  left: 55%;
 }
 
 /* Bottom Continuous Marquee Ticker Strip */
@@ -1513,22 +1642,44 @@
   }
 
   .lumos-loved-section {
-    padding: 80px 20px 90px;
+    padding: 70px 18px 80px;
+    min-height: auto;
   }
 
-  .lumos-cards-cluster {
+  .lumos-loved-inner {
     min-height: auto;
+  }
+
+  .lumos-h2-wrapper {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    transform: none !important;
+    margin-bottom: 24px;
+  }
+
+  .lumos-heading-xlarge {
+    font-size: clamp(3.2rem, 14.5vw, 5.2rem);
+    white-space: normal;
+  }
+
+  .lumos-drag-stage {
+    position: relative !important;
+    height: auto !important;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 24px;
+    margin: 0 auto 30px;
   }
 
   .lumos-drag-card {
     position: relative !important;
-    top: 0 !important;
-    left: 0 !important;
+    top: auto !important;
+    left: auto !important;
     transform: none !important;
     width: 100% !important;
+    max-width: 340px;
+    margin: 0 auto;
   }
 
   .lumos-ticker-strip {
