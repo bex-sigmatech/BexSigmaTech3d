@@ -120,7 +120,7 @@ const SUITE_REVIEWS = [
     author: 'Rohan Kulkarni',
     role: 'Founder, FinEdge Commerce',
     tags: ['Sales Dashboard', '₹199 All-in-One', 'Instant Drive'],
-    image: '/lumos/card_coop.webp',
+    image: '/one_dashboard_suite.jpg',
   },
   {
     id: 'rev-2',
@@ -138,7 +138,7 @@ const SUITE_REVIEWS = [
     author: 'Karthik Nair',
     role: 'Operations Director, SwiftLogix',
     tags: ['HR & KPI', 'Inventory Tracker', 'Zero Coding'],
-    image: '/lumos/card_picnic.webp',
+    image: '/hr_kpi.jpg',
   },
   {
     id: 'rev-4',
@@ -1044,16 +1044,16 @@ export default function WebDevStore() {
           {/* GIANT BACKGROUND TYPOGRAPHY (Layer 1 - Sits Behind Foreground Cards) */}
           <div className="lumos-h2-wrapper">
             <h2 className="lumos-heading-xlarge">
-              why <span className="lumos-low-opacity">we</span>
+              built <span className="lumos-low-opacity">for</span>
             </h2>
             <h2 className="lumos-heading-xlarge lumos-minus-margin">
-              <span className="lumos-low-opacity">are</span> loved
+              <span className="lumos-low-opacity">excel</span> pros
             </h2>
           </div>
 
           {/* FOREGROUND OVERLAPPING CARDS CLUSTER (Layer 2 - Sits Directly in Front of Giant Text) */}
           <div className="lumos-drag-stage">
-            {/* Card 7: Hot Pink Peeking Sticker ("We create worldwide" - matching Lumos Video Frame 5) */}
+            {/* Card 7: Hot Pink Peeking Sticker */}
             <div
               className={`lumos-drag-card card-pink-worldwide interactive ${activeCardKey === 'card7' ? 'is-dragging' : ''}`}
               style={{
@@ -1072,14 +1072,14 @@ export default function WebDevStore() {
               />
               <span className="lumos-sticker-badge is-pink">[100+ industries]</span>
               <h3 className="lumos-sticker-title">
-                We build <br />worldwide
+                Trusted across <br />100+ teams
               </h3>
               <p className="lumos-sticker-desc">
-                Ready for any business vertical across retail, finance, SaaS, logistics & services.
+                Battle-tested Excel &amp; BI suites across retail, finance, SaaS, logistics, agency &amp; D2C brands.
               </p>
             </div>
 
-            {/* Card 1: Left Polaroid (Cooperative) */}
+            {/* Card 1: Left Polaroid (BEX Sales Dashboard) */}
             <div
               className={`lumos-drag-card card-polaroid-1 interactive ${activeCardKey === 'card1' ? 'is-dragging' : ''}`}
               style={{
@@ -1092,20 +1092,20 @@ export default function WebDevStore() {
               <span className="lumos-drag-pill">DRAG</span>
               <div className="lumos-polaroid-inner">
                 <img
-                  src="/lumos/card_coop.webp"
-                  alt="Cooperative team"
+                  src="/sales_dashboard.jpg"
+                  alt="BEX Sales Intelligence Dashboard"
                   className="lumos-card-photo"
                   draggable={false}
                 />
                 <div className="lumos-polaroid-meta">
-                  <span className="lumos-polaroid-title">cooperative</span>
-                  <span className="lumos-polaroid-date">08.07.24</span>
+                  <span className="lumos-polaroid-title">sales suite</span>
+                  <span className="lumos-polaroid-date">₹199 ONLY</span>
                 </div>
                 <div className="lumos-hazard-stripe-tape" />
               </div>
             </div>
 
-            {/* Card 2: Mint Teal Sticker (We are always near) */}
+            {/* Card 2: Mint Teal Sticker (Instant Setup) */}
             <div
               className={`lumos-drag-card card-mint-near interactive ${activeCardKey === 'card2' ? 'is-dragging' : ''}`}
               style={{
@@ -1124,14 +1124,14 @@ export default function WebDevStore() {
               />
               <span className="lumos-sticker-badge">[instant setup]</span>
               <h3 className="lumos-sticker-title">
-                We are <br />always near
+                Zero setup. <br />Download &amp; run
               </h3>
               <p className="lumos-sticker-desc">
-                We are always available to understand your spreadsheet needs and come up with a quick, battle-tested solution.
+                Open any BEX sheet in Excel or Google Sheets immediately — dynamic formulas come pre-wired.
               </p>
             </div>
 
-            {/* Card 3: Center-Top Polaroid (Concert / Movie Day) */}
+            {/* Card 3: Center-Top Polaroid (BEX Finance Trend Model) */}
             <div
               className={`lumos-drag-card card-polaroid-2 interactive ${activeCardKey === 'card3' ? 'is-dragging' : ''}`}
               style={{
@@ -1144,20 +1144,20 @@ export default function WebDevStore() {
               <span className="lumos-drag-pill">DRAG</span>
               <div className="lumos-polaroid-inner">
                 <img
-                  src="/lumos/card_concert.webp"
-                  alt="Movie day crowd"
+                  src="/financial_trend.jpg"
+                  alt="BEX Financial Trend Dashboard"
                   className="lumos-card-photo"
                   draggable={false}
                 />
                 <div className="lumos-polaroid-meta">
-                  <span className="lumos-polaroid-title">movie day</span>
-                  <span className="lumos-polaroid-date">12.08.24</span>
+                  <span className="lumos-polaroid-title">finance kpi</span>
+                  <span className="lumos-polaroid-date">AUTO CHARTS</span>
                 </div>
                 <div className="lumos-hazard-stripe-tape" />
               </div>
             </div>
 
-            {/* Card 4: Center-Bottom Polaroid (Picnic Skyline) */}
+            {/* Card 4: Center-Bottom Polaroid (BEX All-in-One Dashboard Suite) */}
             <div
               className={`lumos-drag-card card-polaroid-3 interactive ${activeCardKey === 'card4' ? 'is-dragging' : ''}`}
               style={{
@@ -1170,20 +1170,20 @@ export default function WebDevStore() {
               <span className="lumos-drag-pill">DRAG</span>
               <div className="lumos-polaroid-inner">
                 <img
-                  src="/lumos/card_picnic.webp"
-                  alt="Picnic skyline"
+                  src="/one_dashboard_suite.jpg"
+                  alt="BEX All-in-One Business Dashboard Suite"
                   className="lumos-card-photo"
                   draggable={false}
                 />
                 <div className="lumos-polaroid-meta">
-                  <span className="lumos-polaroid-title">Picnic</span>
-                  <span className="lumos-polaroid-date">24.09.24</span>
+                  <span className="lumos-polaroid-title">master pack</span>
+                  <span className="lumos-polaroid-date">DRIVE VAULT</span>
                 </div>
                 <div className="lumos-hazard-stripe-tape" />
               </div>
             </div>
 
-            {/* Card 5: Hot Pink Sticker (We are playing the long game) */}
+            {/* Card 5: Hot Pink Sticker (Lifetime ROI) */}
             <div
               className={`lumos-drag-card card-pink-long interactive ${activeCardKey === 'card5' ? 'is-dragging' : ''}`}
               style={{
@@ -1200,16 +1200,16 @@ export default function WebDevStore() {
                 className="lumos-paper-topper"
                 draggable={false}
               />
-              <span className="lumos-sticker-badge is-pink">[lifetime roi]</span>
+              <span className="lumos-sticker-badge is-pink">[lifetime access]</span>
               <h3 className="lumos-sticker-title">
-                We are <br />playing the<br />long game
+                One-time ₹199. <br />Lifetime<br />ownership
               </h3>
               <p className="lumos-sticker-desc">
-                Our clients stay with us, continuing to automate and scale their business operations for years.
+                Unlock the complete BEX Sigma Tech vault once — zero recurring subscriptions or per-seat SaaS fees.
               </p>
             </div>
 
-            {/* Card 6: Mint Cyan Sticker (We are for a comprehensive approach) */}
+            {/* Card 6: Mint Cyan Sticker (1000+ Business Suites) */}
             <div
               className={`lumos-drag-card card-mint-approach interactive ${activeCardKey === 'card6' ? 'is-dragging' : ''}`}
               style={{
@@ -1228,10 +1228,10 @@ export default function WebDevStore() {
               />
               <span className="lumos-sticker-badge">[1000+ templates]</span>
               <h3 className="lumos-sticker-title">
-                We are for a <br />comprehensive <br />approach
+                Built for real <br />company <br />metrics
               </h3>
               <p className="lumos-sticker-desc">
-                We select the optimal set of templates specifically for your business to deliver maximum commercial results.
+                From revenue pipelines and 3-statement finance models to HR scorecards — ready for boardrooms today.
               </p>
             </div>
           </div>
@@ -1246,14 +1246,12 @@ export default function WebDevStore() {
             </button>
             <div className="lumos-ticker-track">
               <div className="lumos-ticker-content">
-                <span>Do you like this approach?</span><span className="cross">✖</span>
-                <span>Do you like this approach?</span><span className="cross">✖</span>
-                <span>Do you like this approach?</span><span className="cross">✖</span>
-                <span>Do you like this approach?</span><span className="cross">✖</span>
-                <span>Do you like this approach?</span><span className="cross">✖</span>
-                <span>Do you like this approach?</span><span className="cross">✖</span>
-                <span>Do you like this approach?</span><span className="cross">✖</span>
-                <span>Do you like this approach?</span><span className="cross">✖</span>
+                <span>1,000+ Excel &amp; BI Dashboards · ₹199 Only</span><span className="cross">✖</span>
+                <span>1,000+ Excel &amp; BI Dashboards · ₹199 Only</span><span className="cross">✖</span>
+                <span>1,000+ Excel &amp; BI Dashboards · ₹199 Only</span><span className="cross">✖</span>
+                <span>1,000+ Excel &amp; BI Dashboards · ₹199 Only</span><span className="cross">✖</span>
+                <span>1,000+ Excel &amp; BI Dashboards · ₹199 Only</span><span className="cross">✖</span>
+                <span>1,000+ Excel &amp; BI Dashboards · ₹199 Only</span><span className="cross">✖</span>
               </div>
             </div>
           </div>
