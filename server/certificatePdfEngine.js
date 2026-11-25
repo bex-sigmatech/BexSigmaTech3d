@@ -175,67 +175,35 @@ async function generateCertificatePdf(cert) {
 
   // ══════════════════════════════════════════════════════════════════════════
   // 1. CLEAR dynamic text areas with white rectangles
-  //    (Erases the placeholder text from the template)
+  //    (Erases ALL placeholder text from the Canva template image)
   // ══════════════════════════════════════════════════════════════════════════
 
   const white = rgb(1, 1, 1)
 
-  // Clear: Recipient Name area — exactly where original "KANDAVEL J" was
+  // ONE large rect erases the entire dynamic zone:
+  // "CERTIFICATE OF COMPLETION AWARDED TO" + name + description (all baked into template)
   page.drawRectangle({
     x: 60,
-    y: fromTop(260),   // original name y_from_top=227, text height ~32pt, clear from 227 to 260
-    width: 540,
-    height: 42,        // just enough for the name text
+    y: fromTop(420),   // bottom of area = 420pt from top
+    width: 600,
+    height: 230,       // covers y=190 to y=420 from top — the entire text body zone
     color: white,
     opacity: 1,
   })
 
-  // Clear: Description / body text area — matches original 3-line block
+  // Clear: Badge TEXT areas only (not the icons at left of each badge group)
+  // Icons (calendar, clock, cert) are at x=70-100; text starts at x=100+
+  page.drawRectangle({ x: 100, y: fromTop(468), width: 130, height: 48, color: white, opacity: 1 })
+  page.drawRectangle({ x: 253, y: fromTop(468), width: 155, height: 48, color: white, opacity: 1 })
+  page.drawRectangle({ x: 405, y: fromTop(468), width: 230, height: 48, color: white, opacity: 1 })
+
+  // Clear: Verify Authenticity label + link at bottom (template has both baked in)
+  // fromTop(595) = 0pt from bottom; height 85 covers y=510 to y=595 from top
   page.drawRectangle({
     x: 60,
-    y: fromTop(400),   // original desc lines from ~321 to ~405
-    width: 540,
+    y: 1,
+    width: 480,
     height: 85,
-    color: white,
-    opacity: 1,
-  })
-
-  // Clear: Badge date value area — small rect, only covers the value text NOT the rounded border
-  page.drawRectangle({
-    x: 92,
-    y: fromTop(463),
-    width: 120,
-    height: 14,
-    color: white,
-    opacity: 1,
-  })
-
-  // Clear: Badge duration value area
-  page.drawRectangle({
-    x: 244,
-    y: fromTop(463),
-    width: 140,
-    height: 14,
-    color: white,
-    opacity: 1,
-  })
-
-  // Clear: Badge cert no value area
-  page.drawRectangle({
-    x: 412,
-    y: fromTop(463),
-    width: 220,
-    height: 14,
-    color: white,
-    opacity: 1,
-  })
-
-  // Clear: Verification URL area (only the link text, not "Verify Authenticity:" label)
-  page.drawRectangle({
-    x: 60,
-    y: fromTop(558),
-    width: 350,
-    height: 20,
     color: white,
     opacity: 1,
   })
@@ -257,9 +225,10 @@ async function generateCertificatePdf(cert) {
   // Dark navy: #0f172a = rgb(15/255, 23/255, 42/255)
   const navyDark = rgb(0.059, 0.09, 0.165)
 
+  // Name goes inside the cleared zone (250–400pt from top), at ~290pt from top
   page.drawText(displayName, {
     x: 65,
-    y: fromTop(227),   // exact original: y=367.63 from bottom = 227.33 from top
+    y: fromTop(290),
     font: fontBold,
     size: nameFontSize,
     color: navyDark,
@@ -273,21 +242,21 @@ async function generateCertificatePdf(cert) {
   const darkGreen = rgb(0.024, 0.306, 0.235)   // #064e3b
 
   if (isExcel) {
-    // Excel description — exact original positions from PDF stream analysis
+    // Description lines start at ~355pt from top (after name + gap)
     const descLine1 = 'For successfully completing the Microsoft Excel Productivity Masterclass and'
     const descLine2 = 'demonstrating practical skills in data management, formulas and functions,'
     const descLine3 = 'PivotTables, Charts, and workplace productivity.'
 
     page.drawText(descLine1, {
-      x: 65, y: fromTop(321),    // original: y=273.72 from bottom = 321.24 from top
+      x: 65, y: fromTop(355),
       font: fontRegular, size: 10.5, color: slateGray,
     })
     page.drawText(descLine2, {
-      x: 65, y: fromTop(341),    // original: y=253.51 from top
+      x: 65, y: fromTop(372),
       font: fontRegular, size: 10.5, color: slateGray,
     })
     page.drawText(descLine3, {
-      x: 65, y: fromTop(357),    // original: y=237.55 → 357.41 from top
+      x: 65, y: fromTop(389),
       font: fontRegular, size: 10.5, color: slateGray,
     })
   } else {
@@ -302,13 +271,13 @@ async function generateCertificatePdf(cert) {
 
     const fullDesc = `For successfully completing the ${courseTitle} and demonstrating practical skills in ${skillsText}`
     const lines = wrapText(fullDesc, 78)
-    let descY = 354
+    let descY = 355
     for (const line of lines.slice(0, 4)) {
       page.drawText(line, {
         x: 65, y: fromTop(descY),
         font: fontRegular, size: 10.5, color: slateGray,
       })
-      descY += 15
+      descY += 17
     }
   }
 
@@ -320,11 +289,11 @@ async function generateCertificatePdf(cert) {
   const durationDisplay = cert.courseDuration || (isExcel ? '12 Hours' : '3 Months (120 Hours)')
   const certNo = cert.certificateId || 'BEX-CERT-EXL-2026-0001'
 
-  // Badge Y position — exact from original: y=152.59 from bottom = 442.37 from top
+  // Badge value Y position — from observed screenshot the badges are at ~442pt from top
   const badgeValY = 442
 
   page.drawText(formattedDate, {
-    x: 104.5,          // original: x=104.50
+    x: 104.5,
     y: fromTop(badgeValY),
     font: fontBold,
     size: 10.5,
@@ -332,7 +301,7 @@ async function generateCertificatePdf(cert) {
   })
 
   page.drawText(durationDisplay, {
-    x: 259.68,         // original: x=259.68
+    x: 259.68,
     y: fromTop(badgeValY),
     font: fontBold,
     size: 10.5,
@@ -340,22 +309,47 @@ async function generateCertificatePdf(cert) {
   })
 
   page.drawText(certNo, {
-    x: 423.46,         // original: x=423.46
+    x: 423.46,
     y: fromTop(badgeValY),
     font: fontBold,
     size: 10.5,
     color: navyDark,
   })
 
+  // Re-draw badge label text (cleared above with the large badge rect)
+  const slateLight = rgb(0.45, 0.52, 0.60)  // lighter gray for sub-labels
+  page.drawText('Date of Completion', {
+    x: 104.5, y: fromTop(badgeValY + 15),
+    font: fontRegular, size: 7.5, color: slateLight,
+  })
+  page.drawText('Duration', {
+    x: 259.68, y: fromTop(badgeValY + 15),
+    font: fontRegular, size: 7.5, color: slateLight,
+  })
+  page.drawText('Certificate No.', {
+    x: 423.46, y: fromTop(badgeValY + 15),
+    font: fontRegular, size: 7.5, color: slateLight,
+  })
+
   // ══════════════════════════════════════════════════════════════════════════
-  // 5. VERIFICATION URL — clickable hyperlink (full verify link)
+  // 5. VERIFICATION URL — "Verify Authenticity:" label + clickable link
   // ══════════════════════════════════════════════════════════════════════════
 
   const verifyDisplayUrl = `www.bexsigmatech.com/verify/${cert.certificateId}`
 
+  // Re-draw the "Verify Authenticity:" label (we cleared it above)
+  page.drawText('Verify Authenticity:', {
+    x: 65,
+    y: fromTop(548),
+    font: fontRegular,
+    size: 9.5,
+    color: navyDark,
+  })
+
+  // Draw the clickable URL link below the label
   page.drawText(verifyDisplayUrl, {
     x: 65,
-    y: fromTop(552),
+    y: fromTop(562),
     font: fontBold,
     size: 10,
     color: darkGreen,
@@ -368,7 +362,7 @@ async function generateCertificatePdf(cert) {
     annotContext.obj({
       Type: 'Annot',
       Subtype: 'Link',
-      Rect: [65, fromTop(555), 65 + urlTextWidth, fromTop(543)],
+      Rect: [65, fromTop(565), 65 + urlTextWidth, fromTop(553)],
       Border: [0, 0, 0],
       A: {
         Type: 'Action',
